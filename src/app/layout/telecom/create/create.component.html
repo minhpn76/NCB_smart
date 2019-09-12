@@ -1,0 +1,76 @@
+<div>
+    <app-page-header [heading]="'Danh sách nhà mạng'" [heading_second]="'Thêm mới nhà mạng'" [url_heading]="'/telecom'"> </app-page-header>
+    <div class="row">
+        <div class="col-md-8">
+            <form [formGroup]="telecomForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã nhà mạng(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="paramNo"
+                            class="form-control col-lg-12"
+                            placeholder="Mã nhà mạng"
+                            [ngClass]="{ 'is-invalid': submitted && Form.paramNo.errors }"
+                        />
+                        <div *ngIf="submitted && Form.paramNo.errors" class="invalid-feedback">
+                            <div *ngIf="Form.paramNo.errors.required">Mã nhà mạng là bắt buộc</div>
+                            <div *ngIf="Form.paramNo.errors.pattern">Mã nhà mạng không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên nhà mạng(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="paramName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên nhà mạng"
+                            [ngClass]="{ 'is-invalid': submitted && Form.paramName.errors }"
+                        />
+                        <div *ngIf="submitted && Form.paramName.errors" class="invalid-feedback">
+                            <div *ngIf="Form.paramName.errors.required">Tên nhà mạng là bắt buộc</div>
+                            <div *ngIf="Form.paramName.errors.pattern">Tên nhà mạng không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Giá trị(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="paramValue"
+                            class="form-control col-lg-12"
+                            placeholder="Giá trị"
+                            [ngClass]="{ 'is-invalid': submitted && Form.paramValue.errors }"
+                        />
+                        <div *ngIf="submitted && Form.paramValue.errors" class="invalid-feedback">
+                            <div *ngIf="Form.paramValue.errors.required">Giá trị là bắt buộc</div>
+                            <div *ngIf="Form.paramValue.errors.pattern">Giá trị không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mô tả(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="note"
+                            class="form-control col-lg-12"
+                            placeholder="Mô tả"
+                            [ngClass]="{ 'is-invalid': submitted && Form.note.errors }"
+                        />
+                        <div *ngIf="submitted && Form.note.errors" class="invalid-feedback">
+                            <div *ngIf="Form.note.errors.pattern">Mô tả không hợp lệ</div>
+                            <div *ngIf="Form.note.errors.required">Mô tả là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3"><i class="fa fa-save"></i>&nbsp;Lưu lại</button>
+                        <button class="btn btn-light" (click)="resetForm()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

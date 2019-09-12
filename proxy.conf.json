@@ -1,0 +1,11 @@
+{
+  "/NCB-smart/*": {
+      "target": "http://113.20.126.169:8081/",
+      "secure": false,
+      "logLevel": "debug",
+      "changeOrigin": true,
+      "pathRewrite": {
+          "^/NCB-smart": "http://113.20.126.169:8081/NCB-smart"
+      }
+  }
+}

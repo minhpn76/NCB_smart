@@ -1,0 +1,358 @@
+<div>
+    <app-page-header 
+        [heading]="'Danh sách dịch vụ đã đăng ký'"
+        [url_heading]="'/registered-service'">
+    </app-page-header>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Mã chi nhánh/ phòng giao dịch:</label>
+                <div class="col-sm-6">
+                    <input class="form-control col-lg-12"
+                    itrim type="text" id="search" [(ngModel)]="re_search.comp_code"
+                    placeholder="Mã chi nhánh/ phòng giao dịch">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Hộ chiếu:</label>
+                <div class="col-sm-6">
+                    <input class="form-control col-lg-12"
+                    itrim type="text" id="search" [(ngModel)]="re_search.id_card"
+                    placeholder="Hộ chiếu">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Phân hệ:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="re_search.type" (change)="onSearch(re_search)">
+                        <option *ngFor="let status of listPHe" [value]="status.code" selected="selected">{{status.name}}</option>
+
+                    </select>
+                </div>
+                
+            </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Từ ngày:</label>
+                <div class="col-sm-6 input-group">
+                    <input readonly class="form-control" placeholder="Từ ngày"
+                        name="dFS" ngbDatepicker #dFS="ngbDatepicker"
+                        [(ngModel)]="mRatesDateS"
+                        > 
+                        
+                        <!-- [(ngModel)]="mRatesDateS" -->
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="dFS.toggle()" type="button">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Dịch vụ:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="re_search.service">
+                        <option *ngFor="let status of listService" [value]="status.code" selected="selected">{{status.name}}</option>
+
+                    </select>
+                </div>
+                
+            </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="re_search.status">
+                        <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
+
+                    </select>
+                </div>
+                
+            </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Đến ngày:</label>
+                <div class="col-sm-6 input-group">
+                    <input readonly class="form-control" placeholder="Đến ngày"
+                        name="dTS" ngbDatepicker #dTS="ngbDatepicker"
+                        [(ngModel)]="mRatesDateS_7"
+                        > 
+                        <!-- (ngModelChange)="getOrder(search); -->
+                        
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="dTS.toggle()" type="button">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div> 
+        <div class="col-md-12 text-center">
+            <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
+                <i class="fa fa-search"></i>&nbsp;Tìm kiếm
+            </button>
+        </div>
+    </div>
+    <div class="row mt-50">
+        <div class="col-md-8">
+            <div class="form-group row">
+                <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
+                    <select 
+                        class="form-control col-sm-1" 
+                        [(ngModel)]="re_search.size"
+                        (ngModelChange)="changeSize($event)"
+                    >
+                        <option *ngFor="let page_size of listPageSize" [value]="page_size">{{page_size}}</option>
+                    </select> &nbsp;
+                    <label for="search" class=" col-form-label">Bản ghi</label>  
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 table-responsive">
+            <table class="table table-striped table-bordered" *ngIf="re_search.type === '2'">
+                <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Mã chi nhánh - PGD</th>
+                        <th scope="col">Tên chi nhánh - PGD</th>
+                        <th scope="col">Tên KH</th>
+                        <th scope="col">CMND/ Hộ chiếu</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col">Dịch vụ</th>
+                        <th scope="col">Mã card</th>
+                        <th scope="col">Mã acct</th>
+                        <th scope="col">Lý do</th>
+                        <th scope="col">Sản phẩm</th>
+                        <th scope="col">Phí</th>
+                        <th scope="col">Lý do</th>
+                        <th scope="col">Ngày đăng ký</th>
+                        <th scope="col">Ngày hoàn thành</th>
+                        <th scope="col">Trạng thái</th>
+                        <!-- <th scope="col">Thao tác</th> -->
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <tr *ngIf="isProcessLoad == 1" class="text-center">
+                        <td colspan=16><i class="fa fa-spin fa-spinner font-30"></i></td>
+                    </tr>
+                    <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
+                        <td colspan=16>Không tìm thấy kết quả</td>
+                    </tr>
+                    <tr *ngFor ="let data of listData; let i = index" style="cursor: pointer" (click)="openPopUpRequest(data.id, data)">
+                        
+                        <th scope="row">
+                            {{i+1}}
+                        </th>
+                        <td>{{data?.comp_code}} 
+                        </td>
+                        <td>{{data?.comp_name}}</td>
+                        <td>{{data?.customer_name}}</td>
+                        <td>{{data?.id_card}}</td>
+                        <td>{{data?.phone}}</td>
+                        <td>{{data?.service}}</td>
+                        <td>{{data?.card_no}}</td>
+                        <td>{{data?.acct_no}}</td>
+                        <td>{{data?.reissue_reason}}</td>
+                        <td>{{data?.product}}</td>
+                        <td>{{data?.fee}}</td>
+                        <td>{{data?.description}}</td>
+                        <td>{{data?.request_date}}</td>
+                        <td>{{data?.completed_date}}</td>
+                        <td>
+                            <span class="badge badge-success" *ngIf="data?.status === '1'">NEW</span>
+                            <span class="badge badge-warning"  *ngIf="data?.status === '2'">PROCESSING</span>
+                            <span class="badge badge-danger" *ngIf="data?.status === '3'" >CLOSED</span>
+                        </td>
+                        <!-- <td>
+                            <a class="mr-2 cursor-pointer text-blue" routerLink="/registered-service/edit/{{data.id}}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td> -->
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <table class="table table-striped table-bordered"  *ngIf="re_search.type !== '2'">
+                <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Mã yêu cầu</th>
+                        <th scope="col">Họ và tên</th>
+                        <th scope="col">CMND /Hộ chiếu</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col">Sản phẩm/ Dịch vụ</th>
+                        <th scope="col">CN/ PGD</th>
+                        <th scope="col">Trạng thái</th>
+                        <th scope="col">Ngày yêu cầu</th>
+                        <!-- <th scope="col">Thao tác</th> -->
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <tr *ngIf="isProcessLoad == 1" class="text-center">
+                        <td colspan=10><i class="fa fa-spin fa-spinner font-30"></i></td>
+                    </tr>
+                    <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
+                        <td colspan=10>Không tìm thấy kết quả</td>
+                    </tr>
+                    <tr *ngFor ="let data of listData; let i = index" style="cursor: pointer" (click)="openPopUpRequest(data.id, data)">
+                        
+                        <th scope="row">
+                            {{i+1}}
+                        </th>
+                        <td> CARD {{data?.id}} 
+                        </td>
+                        <td>{{data?.customer_name}}</td>
+                        <td>{{data?.id_card}}</td>
+                        <td>{{data?.phone}}</td>
+                        <td>{{data?.service}}</td>
+                        <td>{{data?.comp_name}}</td>
+                        <td>
+                            <span class="badge badge-success" *ngIf="data?.status === '1'">NEW</span>
+                            <span class="badge badge-warning"  *ngIf="data?.status === '2'">PROCESSING</span>
+                            <span class="badge badge-danger" *ngIf="data?.status === '3'" >CLOSED</span>
+                        </td>
+                        <td>{{data?.request_date}}</td>
+                        <!-- <td>
+                            <a class="mr-2 cursor-pointer text-blue" routerLink="/registered-service/edit/{{data.id}}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td> -->
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div> 
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <ngb-pagination 
+                *ngIf="totalSearch > 0 && totalSearch > re_search.size"
+                [collectionSize]="totalSearch" 
+                [(page)]="re_search.page" [maxSize]="10" [rotate]="true" 
+                [boundaryLinks]="true"
+                (pageChange)="loadPage($event)"
+            >
+            </ngb-pagination>
+        </div>
+    </div>
+    <!-- /.row -->
+</div>
+
+<ng-template #popupReqest let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title">Yêu cầu trực tuyến</h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body p-t-0">
+        <div class="row m-t-10">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã yêu cầu:</label>
+                    <div class="col-sm-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">CARD</span>
+                            </div>
+                            <input class="form-control col-lg-12"
+                                (keydown)="keyDownFunction($event, passData.id)"
+                                itrim type="text" id="search" [(ngModel)]="passData.id"
+                                placeholder="Mã yêu cầu"
+                            >
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" (click)="getItem(passData.id)" type="button">Tìm kiếm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row m-t-10" *ngIf="isSearchItem === 1">
+            <div class="text-center col-md-12">
+                <i class="fa fa-spin fa-spinner font-30"></i>
+            </div>
+        </div>
+        <div class="row m-t-10" *ngIf="isSearchItem === 0">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Sản phẩm/ dịch vụ:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control col-lg-12"
+                            itrim type="text" id="search"
+                            placeholder="Sản phẩm/ dịch vụ"
+                            [(ngModel)]="passData.service"
+                        >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">CMND/HC:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control col-lg-12"
+                            itrim type="text" id="search"
+                            [(ngModel)]="passData.id_card"
+                            placeholder="CMND/HC"
+                        >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Ngày yêu cầu:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control col-lg-12"
+                        itrim type="text" id="search" 
+                        [(ngModel)]="passData.request_date"
+                        placeholder="Ngày yêu cầu">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Chi nhánh:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" [(ngModel)]="passData.comp_code">
+                            <option *ngFor="let item of listBranch" [value]="item.code">{{item.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" [(ngModel)]="passData.status">
+                            <option *ngFor="let item of listStatus" [value]="item.code">{{item.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Cập nhập chi tiết:</label>
+                    <div class="col-sm-6">
+                        <div *ngIf="listLog.length > 0">
+                            <ul *ngFor="let item of listLog">
+                                <li>{{ item.datetime | date:'yyyy-MM-dd HH:mm'}} - {{item.user_id}} - {{item.new_value}}</li>
+                            </ul>
+                        </div>
+                        <div *ngIf="listLog.length === 0">
+                            <i>Không có thông tin cập nhập chi tiết</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label"></label>
+                    <div class="col-sm-6">
+                        <textarea name="" id="" [(ngModel)]="comment" rows="3" style="width: 100%"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label"></label>
+                    <div class="col-sm-6">
+                        <button class="btn btn-primary" (click)="updateService()">Lưu</button>
+                        &nbsp;
+                        <button class="btn btn-default"  (click)="d('Cross click')">Bỏ qua</button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,140 @@
+<div>
+    <app-page-header 
+        [heading]="'Danh sách tính năng trên app'" 
+        [heading_second]="'Thêm mới tính năng trên app'" 
+        [url_heading]="'/feature-app'">
+    </app-page-header>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="">
+                <a class="btn btn-primary" (click)="openModal(uploadMultiFile)">
+                    <i class="fa fa-upload"></i>&nbsp;Upload multiple
+                </a>
+            </div>
+            <form [formGroup]="branchForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã chi nhánh(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input 
+                            formControlName="branchCode"
+                            class="form-control col-lg-12"
+                            placeholder="Mã chi nhánh"
+                            [ngClass]="{ 'is-invalid': submitted && Form.branchCode.errors }"
+                        >
+                        <div *ngIf="submitted && Form.branchCode.errors" class="invalid-feedback">
+                            <div *ngIf="Form.branchCode.errors.required">Mã chi nhánh là bắt buộc</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên chi nhánh(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input 
+                            formControlName="branchName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên chi nhánh"
+                            [ngClass]="{ 'is-invalid': submitted && Form.branchName.errors }"
+                        >
+                        <div *ngIf="submitted && Form.branchName.errors" class="invalid-feedback">
+                            <div *ngIf="Form.branchName.errors.required">Tên chi nhánh là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tỉnh/Thành phố(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select 
+                            class="form-control" 
+                            formControlName="optionProvince"
+                            [ngClass]="{ 'is-invalid': submitted && Form.optionProvince.errors}"
+
+                        >
+                            <option *ngFor="let province of listProvice" selected [value]="province.code">{{province.name}}</option>
+
+                        </select>
+                        <div *ngIf="submitted && Form.optionProvince.errors" class="invalid-feedback">
+                            <div *ngIf="Form.optionProvince.errors.required">Tỉnh/Thành phố là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Quận/Huyện(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select 
+                            class="form-control" 
+                            formControlName="optionDistrict"
+                            [ngClass]="{ 'is-invalid': submitted && Form.optionDistrict.errors }"
+                        >
+                            <option *ngFor="let district of listDistrict" selected [value]="district.code">{{district.name}}</option>
+                            
+                        </select>
+                        <div *ngIf="submitted && Form.optionDistrict.errors" class="invalid-feedback">
+                            <div *ngIf="Form.optionDistrict.errors.required">Quận/Huyện là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Địa chỉ:</label>
+                    <div class="col-sm-7">
+                        <input 
+                            class="form-control col-lg-12"
+                            placeholder="Địa chỉ"
+                        >
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3">
+                            <i class="fa fa-save"></i>&nbsp;Lưu lại
+                        </button>
+                        <button class="btn btn-light" (click)="resetForm()">
+                            <i class="fa fa-close"></i>&nbsp;Huỷ
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<ng-template #uploadMultiFile let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title"><i class="icon-plus"></i>
+            Upload nhiều bản ghi
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+        <h5>Bước 1:</h5>
+        <span>Download template mẫu: <a href="assets/template-excel/Template_Branch.xlsx"><i>tại đây</i></a></span>
+        </div>
+        <div class="col-md-12 mt-3">
+        <h5>Bước 2:</h5>
+        <div>
+            
+            <p-fileUpload #fubauto name="Excel" accept=".csv,.xlsx,.xls" customUpload="true" mode="basic"
+            maxFileSize="1000000" (uploadHandler)="onUploadFile($event)" auto="true" iconLabel="fa-cloud-upload"
+            chooseLabel="Chọn tệp tin"></p-fileUpload>
+            <p *ngIf="fileExcel.name" class="m-b-0 text-primary">{{fileExcel.name}}</p>
+
+        </div>
+        </div>
+        <div class="col-md-12 mt-3 text-right">
+            <button [disabled]="!fileExcel.name || temp.loading" (click)="onUploadServer()" class="btn btn-primary"
+            type="submit">
+            <i class="fa fa-save"></i> Cập nhật
+            <i *ngIf="temp.loading" class="fa fa-spin fa-spinner"></i>
+        </button>
+        </div>
+    </div>
+    
+    </div>
+</ng-template>

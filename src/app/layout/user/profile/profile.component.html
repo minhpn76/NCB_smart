@@ -1,0 +1,40 @@
+<div>
+    <app-page-header [heading]="'Thông tin cá nhân'">
+    </app-page-header>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mt-2">Tên tài khoản:</div>
+            
+            <div class="mt-2">Họ và tên:</div>
+            
+            <div class="mt-2">Chi nhánh:</div>
+            
+            <div class="mt-2">Điểm giao dịch:</div>
+            
+            <div class="mt-2">Lần cuối đăng nhập cuối cùng:</div>
+            
+            <div class="mt-2">IP đăng nhập cuối cùng:</div>
+            
+
+
+        </div>
+        <div class="col-md-6">
+            <div class="mt-2"><b>{{profile?.userName}}</b></div>
+            
+            <div class="mt-2"><b>{{profile?.fullName}}</b></div>
+            
+
+            <div class="mt-2"><b>{{profile?.branchName}}</b></div>
+            
+
+            <div class="mt-2"><b>{{profile?.posName}}</b></div>
+            
+
+            <div class="mt-2"><b>{{profile?.lastTime}}</b></div>
+            
+
+            <div class="mt-2"><b>{{profile?.lastIp}}</b></div>
+
+        </div>
+    </div>  
+</div>

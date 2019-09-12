@@ -1,0 +1,143 @@
+<div>
+        <app-page-header 
+            [heading]="'Khuyễn mãi/ ưu đãi'" 
+            [heading_second]="'Thêm mới khuyến mãi ưu đãi'" 
+            [url_heading]="'/promotion'">
+        </app-page-header>
+        <div class="row">
+            <div class="col-md-8">
+                <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group row">
+                        <label for="search" class="col-sm-4 col-form-label">Tên chương trình(<span class="text-danger">*</span>):</label>
+                        <div class="col-sm-7">
+                            <input 
+                                formControlName="name"
+                                class="form-control col-lg-12"
+                                placeholder="Tên chương trình"
+                                [ngClass]="{ 'is-invalid': submitted && Form.name.errors }"
+                            >
+                            <div *ngIf="submitted && Form.name.errors" class="invalid-feedback">
+                                <div *ngIf="Form.name.errors.required">Tên chương trình là bắt buộc</div>
+                            </div>
+                        </div>
+    
+                    </div>
+                    <div class="form-group row">
+                        <label for="search" class="col-sm-4 col-form-label">Nội dung(<span class="text-danger">*</span>):</label>
+                        <div class="col-sm-7">
+                            <textarea 
+                                formControlName="description"
+                                class="form-control col-lg-12"
+                                placeholder="Nội dung"
+                                [ngClass]="{ 'is-invalid': submitted && Form.content.errors }"
+                            ></textarea>
+                            
+                            <div *ngIf="submitted && Form.description.errors" class="invalid-feedback">
+                                <div *ngIf="Form.description.errors.required">Nội dung là bắt buộc</div>
+                            </div>
+                        </div>
+    
+    
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Phí thường niên(<span class="text-danger">*</span>):</label>
+                        <div class="col-sm-7">
+                            <select 
+                                class="form-control" 
+                                formControlName="phithuongnien"
+                                [ngClass]="{ 'is-invalid': submitted && Form.phithuongnien.errors}"
+    
+                            >
+                                <option *ngFor="let data of listSelect" selected [value]="data.code">{{data.name}}</option>
+    
+                            </select>
+                            <div *ngIf="submitted && Form.phithuongnien.errors" class="invalid-feedback">
+                                <div *ngIf="Form.phithuongnien.required">Phí thường niên là bắt buộc</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Phí chuyển khoản liên ngân hàng(<span class="text-danger">*</span>):</label>
+                        <div class="col-sm-7">
+                            <select 
+                                class="form-control" 
+                                formControlName="philienNH"
+                                [ngClass]="{ 'is-invalid': submitted && Form.philienNH.errors}"
+    
+                            >
+                                <option *ngFor="let data of listSelect" selected [value]="data.code">{{data.name}}</option>
+    
+                            </select>
+                            <div *ngIf="submitted && Form.philienNH.errors" class="invalid-feedback">
+                                <div *ngIf="Form.philienNH.required">Phí chuyển khoản liên ngân hàng là bắt buộc</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Phí chuyển khoản nội bộ(<span class="text-danger">*</span>):</label>
+                        <div class="col-sm-7">
+                            <select 
+                                class="form-control" 
+                                formControlName="phinoibo"
+                                [ngClass]="{ 'is-invalid': submitted && Form.phinoibo.errors}"
+    
+                            >
+                                <option *ngFor="let data of listSelect" selected [value]="data.code">{{data.name}}</option>
+    
+                            </select>
+                            <div *ngIf="submitted && Form.phinoibo.errors" class="invalid-feedback">
+                                <div *ngIf="Form.phinoibo.required">Phí chuyển khoản nội bộ là bắt buộc</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Phí chuyển khoản 247(<span class="text-danger">*</span>):</label>
+                        <div class="col-sm-7">
+                            <select 
+                                class="form-control" 
+                                formControlName="phi247"
+                                [ngClass]="{ 'is-invalid': submitted && Form.phi247.errors}"
+    
+                            >
+                                <option *ngFor="let data of listSelect" selected [value]="data.code">{{data.name}}</option>
+    
+                            </select>
+                            <div *ngIf="submitted && Form.phi247.errors" class="invalid-feedback">
+                                <div *ngIf="Form.phi247.required">Phí chuyển 247 là bắt buộc</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Gói sp áp dụng(<span class="text-danger">*</span>):</label>
+                        <div class="col-sm-7">
+                            <select 
+                                class="form-control" 
+                                formControlName="goisp"
+                                [ngClass]="{ 'is-invalid': submitted && Form.goisp.errors}"
+    
+                            >
+                                <option *ngFor="let data of listPromotion" selected [value]="data.code">{{data.name}}</option>
+    
+                            </select>
+                            <div *ngIf="submitted && Form.goisp.errors" class="invalid-feedback">
+                                <div *ngIf="Form.goisp.required">Gói sp áp dụng là bắt buộc</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-7">
+                            <button class="btn btn-success mr-3">
+                                <i class="fa fa-save"></i>&nbsp;Lưu lại
+                            </button>
+                            <button class="btn btn-light" (click)="resetForm()">
+                                <i class="fa fa-close"></i>&nbsp;Huỷ
+                            </button>
+                        </div>
+                    </div>
+                </form>
+    
+            </div>
+        </div>
+    </div>
+    

@@ -1,0 +1,75 @@
+<div>
+    <app-page-header 
+        [heading]="'Thông tin Q&As'" 
+        [heading_second]="'Sửa thông tin Q&As'" 
+        [url_heading]="'/qas-info'">
+    </app-page-header>
+    <div class="row">
+        <div class="col-md-8">
+            <form>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã QA(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input 
+                            [(ngModel)]="obj.productCode"
+                            name="productCode"
+                            class="form-control col-lg-12"
+                            placeholder="Mã QA"
+                        >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên QA(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input 
+                            [(ngModel)]="obj.productName"
+                            name="productName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên QA"
+                        >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Câu hỏi(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input 
+                            [(ngModel)]="obj.question"
+                            name="question"
+                            class="form-control col-lg-12"
+                            placeholder="Câu hỏi"
+                        >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Câu trả lời(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <ckeditor [editor]="Editor"
+                            [(ngModel)]="obj.answer"
+                            name="answer"
+                        ></ckeditor>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select class="form-control " [(ngModel)]="obj.status" name="status">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3" (click)="onSubmit()">
+                            <i class="fa fa-save"></i>&nbsp;Lưu lại
+                        </button>
+                        <button class="btn btn-light" (click)="resetForm()">
+                            <i class="fa fa-close"></i>&nbsp;Huỷ
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

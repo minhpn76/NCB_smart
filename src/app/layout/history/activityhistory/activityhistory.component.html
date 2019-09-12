@@ -1,0 +1,70 @@
+<div>
+  <app-page-header [heading]="'Danh sách lịch sử người dùng '" [url_heading]="'/province'">
+  </app-page-header>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label for="search" class="col-sm-4 col-form-label">Tên đăng nhập:</label>
+        <div class="col-sm-6">
+          <input class="form-control col-lg-12" itrim type="text" id="search"
+            placeholder="Tên đăng nhập">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="search" class="col-sm-4 col-form-label">Từ ngày:</label>
+        <div class="col-sm-6 input-group">
+          <input readonly class="form-control" placeholder="Từ ngày"
+              name="dFS" ngbDatepicker #dFS="ngbDatepicker"
+              > 
+              <!-- (ngModelChange)="getOrder(search); -->
+              <!-- [(ngModel)]="mRatesDateS" -->
+          <div class="input-group-append">
+              <button class="btn btn-outline-secondary" (click)="dFS.toggle()" type="button">
+                  <i class="fa fa-calendar"></i>
+              </button>
+          </div>
+      </div>
+
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      
+      <div class="form-group row">
+        <label for="search" class="col-sm-4 col-form-label">Loại truy cập:</label>
+        <div class="col-sm-6">
+          <select class="form-control">
+            <option value="0">-- Tất cả --</option>
+            <option value="1">2</option>
+            <option value="2">3</option>
+            <option value="3">4</option>
+            <option value="4">5</option>
+          </select>
+        </div>
+      </div>
+        <div class="form-group row">
+          <label for="search" class="col-sm-4 col-form-label">Đến ngày:</label>
+          <div class="col-sm-6 input-group">
+            <input readonly class="form-control" placeholder="Từ ngày"
+                name="dFS" ngbDatepicker #dFS="ngbDatepicker"
+                > 
+                <!-- (ngModelChange)="getOrder(search); -->
+                <!-- [(ngModel)]="mRatesDateS" -->
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" (click)="dFS.toggle()" type="button">
+                    <i class="fa fa-calendar"></i>
+                </button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="col-md-12 text-center">
+      <button class="btn btn-primary mr-3" (click)="onSearch()">
+        <i class="fa fa-search"></i>&nbsp;Tìm kiếm
+      </button>
+      <a class="btn btn-warning" [routerLink]="['/provision/create']">
+        <i class="fa fa-table"></i>&nbsp;Báo cáo
+      </a>
+    </div>
+  </div>
+</div>

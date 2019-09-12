@@ -1,0 +1,81 @@
+<div>
+  <app-page-header [heading]="'Danh sách lịch sử người dùng '" [url_heading]="'/province'">
+  </app-page-header>
+  <div class="row">
+    <div class="col-md-6">
+        <div class="form-group row">
+            <label for="search" class="col-sm-4 col-form-label">Tên điều khoản:</label>
+            <div class="col-sm-6">
+                <input class="form-control col-lg-12"
+                itrim type="text" id="search" [(ngModel)]="search.name_provision"
+                placeholder="Tên điều khoản">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+            <div class="col-sm-6">
+                <select class="form-control" [(ngModel)]="search.active">
+                    <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
+
+                </select>
+            </div>
+            
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <label for="search" class="col-sm-4 col-form-label">Đường dẫn:</label>
+            <div class="col-sm-6">
+                <input class="form-control col-lg-12"
+                    itrim type="text" [(ngModel)]="search.link"
+                    placeholder="Đường dẫn">
+            </div>
+            
+        </div>
+    </div> 
+    <div class="col-md-12 text-center">
+        <button class="btn btn-primary mr-3" (click)="onSearch()">
+            <i class="fa fa-search"></i>&nbsp;Tìm kiếm
+        </button>
+        <a class="btn btn-warning" [routerLink]="['/provision/create']">
+            <i class="fa fa-table"></i>&nbsp;Báo cáo
+        </a>
+    </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+      <table class="table table-striped table-bordered">
+          <thead>
+              <tr>
+              <th scope="col">STT</th>
+              <th scope="col">Tên đăng nhập</th>
+              <th scope="col">Ip Request</th>
+              <th scope="col">Thời gian truy cập</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngIf="search.process_load == 1" class="text-center">
+                  <td colspan=6><i class="fa fa-spin fa-spinner font-30"></i></td>
+              </tr>
+              <tr *ngIf="search.total_items == 0 && search.process_load == 0" class="text-center">
+                  <td colspan=6>Không tìm thấy kết quả</td>
+              </tr>
+              <tr *ngFor ="let province of listProvision; let i = index">
+                  
+                  <th scope="row">
+                      {{i+1 + (search.page>1?(search.page-1)*search.page_size:0)}}
+                  </th>
+                  <td>admin</td>
+                  <td>10.52.12.27</td>
+                  <td>
+                      22/04/2019 4:23:23 AM
+
+                  </td>
+                  
+              </tr>
+              
+          </tbody>
+      </table>
+  </div> 
+</div>  
+</div>

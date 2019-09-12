@@ -1,0 +1,184 @@
+<div>
+    <app-page-header [heading]="'Danh sách người dùng'">
+    </app-page-header>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Họ và tên:</label>
+                <div class="col-sm-6">
+                    <input class="form-control col-lg-12"
+                    itrim type="text" id="search" [(ngModel)]="re_search.fullName"
+                    placeholder="Họ và tên">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Tên đăng nhập:</label>
+                <div class="col-sm-6">
+                    <input class="form-control col-lg-12"
+                    itrim type="text" id="search" [(ngModel)]="re_search.userName"
+                    placeholder="Tên đăng nhập">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Đến ngày:</label>
+                <div class="col-sm-6 input-group">
+                    <input readonly class="form-control" placeholder="Đến ngày"
+                        name="dTS" ngbDatepicker #dTS="ngbDatepicker"
+                        [(ngModel)]="mRatesDateS_7"
+                        > 
+                        <!-- (ngModelChange)="getOrder(search); -->
+                        
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="dTS.toggle()" type="button">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Chi nhánh:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="re_search.branchCode" (change)="onChangePGD(re_search.branchCode)">
+                        <option *ngFor="let item of listBranch" [value]="item.code">{{item.name}}</option>
+                    </select>
+                </div>
+                
+            </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">PGD:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="re_search.transactionCode">
+                        <option *ngFor="let item of listPGD" [value]="item.code">{{item.name}}</option>
+                    </select>
+                </div>
+                
+            </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Từ ngày:</label>
+                <div class="col-sm-6 input-group">
+                    <input readonly class="form-control" placeholder="Từ ngày"
+                        name="dFS" ngbDatepicker #dFS="ngbDatepicker"
+                        [(ngModel)]="mRatesDateS"
+                        > 
+                        
+                        <!-- [(ngModel)]="mRatesDateS" -->
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="dFS.toggle()" type="button">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+        <div class="col-md-12 text-center">
+            <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
+                <i class="fa fa-search"></i>&nbsp;Tìm kiếm
+            </button>
+            <a class="btn btn-warning mr-3"  [routerLink]="['/user/create']">
+                <i class="fa fa-plus"></i>&nbsp;Thêm mới
+            </a>
+            <button class="btn btn-success" (click)="exportExcel()">
+                <i *ngIf="isProcessLoadExcel === 1"
+                    class="fa fa-spinner font-20"></i>
+                <i  *ngIf="isProcessLoadExcel === 0" class="fa fa-file"></i>&nbsp;Xuất excel
+            </button>
+        </div>
+    
+
+    </div>
+    <div class="row mt-50">
+        <div class="col-md-8">
+            <div class="form-group row">
+                <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
+                    <select 
+                        class="form-control col-sm-1" 
+                        [(ngModel)]="re_search.size" 
+                        (ngModelChange)="changeSize($event)"
+                    >
+                        <option *ngFor="let page_size of listPageSize" [value]="page_size" checked>{{page_size}}</option>
+                    </select> &nbsp;
+                    <label for="search" class=" col-form-label">Bản ghi</label>  
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên đăng nhập</th>
+                    <th scope="col">Họ tên</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phân quyền</th>
+                    <th scope="col">Ngày tạo</th>
+                    <th scope="col">Người tạo</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Thao tác</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="isProcessLoad == 1" class="text-center">
+                        <td colspan=9><i class="fa fa-spin fa-spinner font-30"></i></td>
+                    </tr>
+                    <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
+                        <td colspan=9>Không tìm thấy kết quả</td>
+                    </tr>
+                    <tr *ngFor ="let data of listData; let i = index">
+                        <th scope="row">
+                            <!-- {{i+1 + (search.page>1?(search.page-1)*search.size:0)}} -->
+                            {{i + 1}}
+                        </th>
+                        <td>{{data.userName}}</td>
+
+                        <td>{{data.fullName}}</td>
+                        <td>{{data?.email}}</td>
+                        <td>{{data?.role?.roleName}}</td>
+                        <td>{{data?.createdDate | date:'MM.dd.yyyy HH:mm'}}</td>
+                        <td>{{data?.updatedBy}}</td>
+                        <td>
+                            <span *ngIf="data?.status =='A'" class="badge badge-success">ACTIVE</span>
+                            <span *ngIf="data?.status == 'D'" class="badge badge-danger">Inactive</span>
+
+                        </td>
+
+                        <td>
+                            <a class="mr-2 cursor-pointer text-blue" routerLink="/user/edit/{{data.userName}}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <!-- <span class="mr-2 cursor-pointer text-blue">
+                                <i class="fa fa-lock"></i>
+                            </span> -->
+                            <!-- <span class="mr-2 cursor-pointer text-danger">
+                                <i class="fa fa-unlock-alt"></i>
+                            </span> -->
+
+                            <span class="mr-2 cursor-pointer text-danger">
+                                <i class="fa fa-trash" (click)="deleteItem(1, i, data.userId)"></i>
+                            </span>
+                        
+                        </td>
+
+                    
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div> 
+    </div>  
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <ngb-pagination *ngIf="totalSearch > 0 && totalSearch > re_search.size"
+                [collectionSize]="totalSearch" [pageSize]="re_search.size" [(page)]="re_search.page"
+                [boundaryLinks]="true"
+                [maxSize]="10" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

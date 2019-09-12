@@ -1,0 +1,114 @@
+<div>
+    <app-page-header 
+        [heading]="'Danh sách nhà cung cấp thanh toán hoá đơn'" 
+        [heading_second]="'Thêm mới nhà cung cấp thanh toán hoá đơn'" 
+        [url_heading]="'/bill-service'">
+    </app-page-header>
+    <div class="row">
+        <div class="col-md-8">
+            <form  [formGroup]="billServiceForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã dịch vụ TTHD(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="serviceTTHDCode"
+                            class="form-control col-lg-12"
+                            placeholder="Mã dịch vụ TTHD"
+                            [ngClass]="{ 'is-invalid': submitted && Form.serviceTTHDCode.errors }"
+                        >
+                        <div *ngIf="submitted && Form.serviceTTHDCode.errors" class="invalid-feedback">
+                            <div *ngIf="Form.serviceTTHDCode.errors.required">Mã dịch vụ TTHD là bắt buộc</div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Loại dịch vụ TTHD(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="optionServiceTTHD"
+                            class="form-control col-lg-12"
+                            placeholder="Loại dịch vụ TTHD"
+                            [ngClass]="{ 'is-invalid': submitted && Form.optionServiceTTHD.errors }"
+                        >
+                        <!-- <select 
+                            class="form-control" 
+                            formControlName="optionServiceTTHD"
+                            [ngClass]="{ 'is-invalid': submitted && Form.optionServiceTTHD.errors }"
+                        >
+                            <option>Tất cả</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select> -->
+                        <div *ngIf="submitted && Form.optionServiceTTHD.errors" class="invalid-feedback">
+                            <div *ngIf="Form.optionServiceTTHD.errors.required">Loại dịch vụ TTHD là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã nhà cung cấp TTHD(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input 
+                            class="form-control col-lg-12"
+                            placeholder="Mã nhà cung cấp TTHD"
+                            formControlName="servicepPartnerTTHDCode"
+                            [ngClass]="{ 'is-invalid': submitted && Form.servicepPartnerTTHDCode.errors }"
+
+                        >
+                        <div *ngIf="submitted && Form.servicepPartnerTTHDCode.errors" class="invalid-feedback">
+                            <div *ngIf="Form.servicepPartnerTTHDCode.errors.required">Mã nhà cung cấp TTHD là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã nhà cung cấp NCB:</label>
+                    <div class="col-sm-7">
+                        <input 
+                            class="form-control col-lg-12"
+                            placeholder="Mã nhà cung cấp NCB"
+                            formControlName="PartnerNCBCode"
+                            [ngClass]="{ 'is-invalid': submitted && Form.PartnerNCBCode.errors }"
+                        >
+                        <div *ngIf="submitted && Form.PartnerNCBCode.errors" class="invalid-feedback">
+                            <div *ngIf="Form.PartnerNCBCode.errors.required">Mã nhà cung cấp NCB là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên nhà cung cấp TTHD VN(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input 
+                            class="form-control col-lg-12"
+                            placeholder="Tên nhà cung cấp TTHD VN"
+                            formControlName="namePartnerTTHDVN"
+                            [ngClass]="{ 'is-invalid': submitted && Form.namePartnerTTHDVN.errors }"
+                        >
+                        <div *ngIf="submitted && Form.namePartnerTTHDVN.errors" class="invalid-feedback">
+                            <div *ngIf="Form.namePartnerTTHDVN.errors.required">Tên nhà cung cấp TTHD VN là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên nhà cung cấp TTHD EN:</label>
+                    <div class="col-sm-7">
+                        <input class="form-control col-lg-12"
+                        placeholder="Tên nhà cung cấp TTHD EN">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3">
+                            <i class="fa fa-save"></i>&nbsp;Lưu lại
+                        </button>
+                        <button class="btn btn-light"  (click)="resetForm()">
+                            <i class="fa fa-close"></i>&nbsp;Huỷ
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

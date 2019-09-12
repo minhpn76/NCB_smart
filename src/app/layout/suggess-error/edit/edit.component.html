@@ -1,0 +1,123 @@
+<div>
+    <app-page-header 
+        [heading]="'Góp ý - lỗi'" 
+        [heading_second]="'Góp ý - lỗi'" 
+        [url_heading]="'/suggesstions-error'">
+    </app-page-header>
+    <div class="row">
+        <div class="col-md-8">
+            <form>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã góp ý - lỗi(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input 
+                            [(ngModel)]="obj.productCode"
+                            name="productCode"
+                            class="form-control col-lg-12"
+                            placeholder="Mã góp ý - lỗi"
+                        >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên góp ý - lỗi(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input 
+                            [(ngModel)]="obj.productName"
+                            name="productName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên góp ý - lỗi"
+                        >
+                    </div>
+                </div>
+                <!-- ----start -->
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Loại(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input 
+                            [(ngModel)]="obj.type"
+                            name="type"
+                            class="form-control col-lg-12"
+                            placeholder="Loại"
+                        >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Email(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input 
+                            [(ngModel)]="obj.email"
+                            name="email"
+                            class="form-control col-lg-12"
+                            placeholder="Email"
+                        >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Số điện thoại(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input 
+                            [(ngModel)]="obj.phone"
+                            name="phone"
+                            class="form-control col-lg-12"
+                            placeholder="Số điện thoại"
+                        >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input 
+                            [(ngModel)]="obj.name"
+                            name="name"
+                            class="form-control col-lg-12"
+                            placeholder="Tên"
+                        >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Địa chỉ(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input 
+                            [(ngModel)]="obj.address"
+                            name="address"
+                            class="form-control col-lg-12"
+                            placeholder="Địa chỉ"
+                        >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mô tả(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input 
+                            [(ngModel)]="obj.description"
+                            name="description"
+                            class="form-control col-lg-12"
+                            placeholder="Mô tả"
+                        >
+                    </div>
+                </div>
+                <!-- end -->
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select class="form-control " [(ngModel)]="obj.status" name="status">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3" (click)="onSubmit()">
+                            <i class="fa fa-save"></i>&nbsp;Lưu lại
+                        </button>
+                        <button class="btn btn-light" (click)="resetForm()">
+                            <i class="fa fa-close"></i>&nbsp;Huỷ
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

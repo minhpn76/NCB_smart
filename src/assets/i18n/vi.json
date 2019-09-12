@@ -1,0 +1,24 @@
+{
+    "Quan_tri": "Quản trị",
+    "Customer": "Người dùng",
+    "Role": "Phân quyền",
+    "Menh_gia": "Mệnh giá",
+    "Function": "Chức năng",
+    "Quantri_he_thong": "Quản trị hệ thống",
+    "Quantri_nguoi_dung": "Quản trị người dùng",
+    "Support": "Hỗ trợ",
+    "Btn_save": "Lưu lại",
+    "Btn_huy": "Huỷ",
+    "Admin_function" : {
+        "DS_province" : "Danh sách tỉnh/thành phố",
+        "QL_province": "Quản lý tỉnh/thành phố",
+        "Create_province": "Thêm mới tỉnh/thành phố",
+        "Ma_province": "Mã Tỉnh/Thành phố",
+        "Ten_province": "Tên Tỉnh/Thành phố",
+        "Tinh_thanh_pho": "Tỉnh/Thành phố",
+        "Quan_huyen": "Quận/Huyện",
+
+
+
+    }
+}

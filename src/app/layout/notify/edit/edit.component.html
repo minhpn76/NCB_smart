@@ -1,0 +1,111 @@
+<div>
+    <app-page-header 
+        [heading]="'Notify in Appp'" 
+        [heading_second]="'Sửa notify in app'" 
+        [url_heading]="'/notify'">
+    </app-page-header>
+    <div class="row">
+        <div class="col-md-8">
+            <form>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Nhà cung cấp(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            name="provider"
+                            [(ngModel)]="obj.provider"
+                            class="form-control col-lg-12"
+                            placeholder="Nhà cung cấp"
+                        >
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Kiểu loại(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input 
+                            [(ngModel)]="obj.type"
+                            name="type"
+                            class="form-control col-lg-12"
+                            placeholder="Kiểu loại"
+                        >
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Lỗi(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input 
+                            [(ngModel)]="obj.error"
+                            name="error"
+                            class="form-control col-lg-12"
+                            placeholder="Lỗi"
+                        >
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã tin nhắn(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input 
+                            [(ngModel)]="obj.msg_Code"
+                            name="msg_Code"
+                            class="form-control col-lg-12"
+                            placeholder="Mã tin nhắn"
+                        >
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã tin nhắn 1(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input 
+                            [(ngModel)]="obj.msg_Code_1"
+                            name="msg_Code_1"
+                            class="form-control col-lg-12"
+                            placeholder="Mã tin nhắn 1"
+                        >
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tin nhắn Tiếng Việt(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input 
+                            [(ngModel)]="obj.mes_Vn"
+                            name="mes_Vn"
+                            class="form-control col-lg-12"
+                            placeholder="Tin nhắn Tiếng Việt"
+                        >
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tin nhắn Tiếng Anh(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input 
+                            [(ngModel)]="obj.mes_En"
+                            name="mes_En"
+                            class="form-control col-lg-12"
+                            placeholder="Tin nhắn Tiếng Anh"
+                        >
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3" (click)="onSubmit()">
+                            <i class="fa fa-save"></i>&nbsp;Lưu lại
+                        </button>
+                        <button class="btn btn-light" (click)="resetForm()">
+                            <i class="fa fa-close"></i>&nbsp;Huỷ
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+    
