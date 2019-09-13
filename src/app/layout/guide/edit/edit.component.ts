@@ -7,7 +7,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'provision-edit',
+  selector: 'guide-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
   providers: [NCBService]
@@ -17,11 +17,6 @@ export class EditComponent implements OnInit {
   dataForm: FormGroup;
   submitted = false;
   itemId: any;
-  obj: any = {
-    status: '',
-    serviceId: '',
-    content: ''
-  };
   listStatus: any = [
     {
       name: 'Active',
@@ -40,25 +35,30 @@ export class EditComponent implements OnInit {
     private route: ActivatedRoute,
     private ncbService: NCBService
   ) {
-      this.route.params.subscribe(params => {
-        this.itemId = parseInt(params.itemId);
+    this.route.params.subscribe(params => {
+      this.itemId = parseInt(params.itemId);
     });
-   }
+    this.dataForm = this.formBuilder.group({
+      serviceId: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      content: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      status: ''
+    });
+  }
+  get Form() { return this.dataForm.controls; }
 
   ngOnInit() {
     this.getItem({id: this.itemId});
   }
   onSubmit() {
     this.submitted = true;
-    if (this.obj.content === '' || this.obj.serviceId === '') {
-      this.toastr.error('Không được để trống các trường', 'Lỗi!');
+    if (this.dataForm.invalid) {
       return;
     }
     const id = {
       id: this.itemId
     };
     const data = {
-      ...this.obj,
+      ...this.dataForm.value,
       ...id
     };
     this.ncbService.updateNcbGuide(data).then((result) => {
@@ -68,7 +68,7 @@ export class EditComponent implements OnInit {
         } else {
           this.toastr.success('Sửa thành công', 'Thành công!');
           setTimeout(() => {
-            this.router.navigateByUrl('/provision');
+            this.router.navigateByUrl('/guide');
           }, 500);
         }
       } else {
@@ -80,14 +80,16 @@ export class EditComponent implements OnInit {
     });
   }
   resetForm() {
-    this.router.navigateByUrl('/provision');
+    this.router.navigateByUrl('/guide');
   }
   getItem(params) {
     this.ncbService.detailNcbGuide(params).then((result) => {
       const body = result.json().body;
-      this.obj.status = body.status;
-      this.obj.serviceId = body.serviceId;
-      this.obj.content = body.content;
+      this.dataForm.patchValue({
+        status: body.status,
+        serviceId: body.serviceId,
+        content: body.content
+      });
     }).catch(err => {
 
     });
