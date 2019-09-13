@@ -1,85 +1,112 @@
 <div>
-    <app-page-header [heading]="'Danh sách chi nhánh'" [heading_second]="'Sửa chi nhánh'" [url_heading]="'/branch'"> </app-page-header>
+    <app-page-header [heading]="'Mạng lứoi chi nhánh'" [heading_second]="'Sửa
+        mạng lưới chi nhánh'" [url_heading]="'/transaction-room'"> </app-page-header>
     <div class="row">
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã chi nhánh(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Mã chi
+                        nhánh(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="brnCode"
                             class="form-control col-lg-12"
                             placeholder="Mã chi nhánh"
-                            [ngClass]="{ 'is-invalid': submitted && Form.brnCode.errors }"
-                        />
-                        <div *ngIf="submitted && Form.brnCode.errors" class="invalid-feedback">
-                            <div *ngIf="Form.brnCode.errors.required">Mã chi nhánh là bắt buộc</div>
-                            <div *ngIf="Form.brnCode.errors.pattern">Mã chi nhánh không hợp lê</div>
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.brnCode.errors }"
+                            />
+                        <div *ngIf="submitted && Form.brnCode.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.brnCode.errors.required">Mã chi
+                                nhánh là bắt buộc</div>
+                            <div *ngIf="Form.brnCode.errors.pattern">Mã chi
+                                nhánh không hợp lê</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên chi nhánh(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Tên chi
+                        nhánh(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="branchName"
                             class="form-control col-lg-12"
                             placeholder="Tên chi nhánh"
-                            [ngClass]="{ 'is-invalid': submitted && Form.branchName.errors }"
-                        />
-                        <div *ngIf="submitted && Form.branchName.errors" class="invalid-feedback">
-                            <div *ngIf="Form.branchName.errors.required">Tên chi nhánh là bắt buộc</div>
-                            <div *ngIf="Form.branchName.errors.pattern">Tên chi nhánh không hợp lê</div>
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.branchName.errors }"
+                            />
+                        <div *ngIf="submitted && Form.branchName.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.branchName.errors.required">Tên chi
+                                nhánh là bắt buộc</div>
+                            <div *ngIf="Form.branchName.errors.pattern">Tên chi
+                                nhánh không hợp lê</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã phòng giao dịch(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Mã phòng
+                        giao dịch(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="departCode"
                             class="form-control col-lg-12"
                             placeholder="Mã phòng giao dịch"
-                            [ngClass]="{ 'is-invalid': submitted && Form.departCode.errors }"
-                        />
-                        <div *ngIf="submitted && Form.departCode.errors" class="invalid-feedback">
-                            <div *ngIf="Form.departCode.errors.required">Mã phòng giao dịch là bắt buộc</div>
-                            <div *ngIf="Form.departCode.errors.pattern">Mã phòng giao dịch không hợp lê</div>
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.departCode.errors }"
+                            />
+                        <div *ngIf="submitted && Form.departCode.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.departCode.errors.required">Mã
+                                phòng giao dịch là bắt buộc</div>
+                            <div *ngIf="Form.departCode.errors.pattern">Mã phòng
+                                giao dịch không hợp lê</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên phòng giao dịch(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Tên
+                        phòng giao dịch(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="departName"
                             class="form-control col-lg-12"
                             placeholder="Tên phòng giao dịch"
-                            [ngClass]="{ 'is-invalid': submitted && Form.departName.errors }"
-                        />
-                        <div *ngIf="submitted && Form.departName.errors" class="invalid-feedback">
-                            <div *ngIf="Form.departName.errors.required">Tên phòng giao dịch là bắt buộc</div>
-                            <div *ngIf="Form.departName.errors.pattern">Tên phòng giao dịch không hợp lê</div>
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.departName.errors }"
+                            />
+                        <div *ngIf="submitted && Form.departName.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.departName.errors.required">Tên
+                                phòng giao dịch là bắt buộc</div>
+                            <div *ngIf="Form.departName.errors.pattern">Tên
+                                phòng giao dịch không hợp lê</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Địa chỉ(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Địa chỉ(<span
+                            class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="address"
                             class="form-control col-lg-12"
                             placeholder="Địa chỉ"
-                            [ngClass]="{ 'is-invalid': submitted && Form.address.errors }"
-                        />
-                        <div *ngIf="submitted && Form.address.errors" class="invalid-feedback">
-                            <div *ngIf="Form.address.errors.required">Địa chỉ là bắt buộc</div>
-                            <div *ngIf="Form.address.errors.pattern">Địa chỉ không hợp lê</div>
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.address.errors }"
+                            />
+                        <div *ngIf="submitted && Form.address.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.address.errors.required">Địa chỉ là
+                                bắt buộc</div>
+                            <div *ngIf="Form.address.errors.pattern">Địa chỉ
+                                không hợp lê</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Số điện thoại(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Số điện
+                        thoại(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="phone"
@@ -87,54 +114,67 @@
                             placeholder="Số điện thoại"
                             minlength="10"
                             pattern="^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$"
-                            [ngClass]="{ 'is-invalid': submitted && Form.phone.errors }"
-                        />
-                        <div *ngIf="submitted && Form.phone.errors" class="invalid-feedback">
-                            <div *ngIf="Form.phone.errors.pattern">Số điện thoại không đúng định dạng</div>
-                            <div *ngIf="Form.phone.errors.maxlength">Số điện thoại quá dài</div>
-                            <div *ngIf="Form.phone.errors.minlength">Số điện thoại quá ngắn</div>
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.phone.errors }"
+                            />
+                        <div *ngIf="submitted && Form.phone.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.phone.errors.pattern">Số điện thoại
+                                không đúng định dạng</div>
+                            <div *ngIf="Form.phone.errors.maxlength">Số điện
+                                thoại quá dài</div>
+                            <div *ngIf="Form.phone.errors.minlength">Số điện
+                                thoại quá ngắn</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Fax:</label>
                     <div class="col-sm-7">
-                        <input formControlName="fax" class="form-control col-lg-12" placeholder="Fax" />
+                        <input formControlName="fax" class="form-control
+                            col-lg-12" placeholder="Fax" />
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Vĩ độ:</label>
                     <div class="col-sm-7">
-                        <input formControlName="latitude" class="form-control col-lg-12" placeholder="Vĩ độ" />
+                        <input formControlName="latitude" class="form-control
+                            col-lg-12" placeholder="Vĩ độ" />
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label"> Kinh độ:</label>
+                    <label for="search" class="col-sm-4 col-form-label">Kinh độ:</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="longitude"
                             class="form-control col-lg-12"
                             placeholder="Kinh độ"
-                        />
+                            />
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Đường đãn hình ảnh:</label>
+                    <label for="search" class="col-sm-4 col-form-label">Đường
+                        đãn hình ảnh:</label>
                     <div class="col-sm-7">
-                        <input formControlName="urlImg" class="form-control col-lg-12" placeholder="urlImg" />
+                        <input formControlName="urlImg" class="form-control
+                            col-lg-12" placeholder="Đường dẫn hình ảnh" />
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Dao:</label>
                     <div class="col-sm-7">
-                        <input formControlName="dao" class="form-control col-lg-12" placeholder="dao" />
+                        <input formControlName="dao" class="form-control
+                            col-lg-12" placeholder="dao" />
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Trạng
+                        thái(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select class="form-control" formControlName="status" name="status">
-                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
+                        <select class="form-control" formControlName="status"
+                            name="status">
+                            <option *ngFor="let status of listStatus"
+                                [value]="status.code" selected="selected">{{status.name}}</option>
                         </select>
                     </div>
                 </div>
@@ -142,8 +182,10 @@
                 <div class="form-group row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-7">
-                        <button class="btn btn-success mr-3"><i class="fa fa-save"></i>&nbsp;Lưu lại</button>
-                        <button class="btn btn-light" (click)="resetForm()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
+                        <button class="btn btn-success mr-3"><i class="fa
+                                fa-save"></i>&nbsp;Lưu lại</button>
+                        <button class="btn btn-light" (click)="resetForm()"><i
+                                class="fa fa-close"></i>&nbsp;Huỷ</button>
                     </div>
                 </div>
             </form>

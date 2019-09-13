@@ -90,7 +90,7 @@
                         <td>{{ service.providerPartner }}</td>
                         <td>
                             <span class="badge badge-success" *ngIf="service.providerStatus === 'A'">Active</span>
-                            <span class="badge badge-success" *ngIf="service.providerStatus === 'D'">Inactive</span>
+                            <span class="badge badge-success" *ngIf="service.providerStatus === 'D'">Deactive</span>
                         </td>
                         <td>
                             <a class="mr-2 cursor-pointer text-blue" routerLink="/bill-service/edit/{{ i }}">

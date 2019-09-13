@@ -18,22 +18,14 @@ export class EditComponent implements OnInit {
   dataForm: FormGroup;
   submitted = false;
   itemId: any;
-  obj: any = {
-    provider: '',
-    type: '',
-    error: '',
-    msg_Code: '',
-    msg_Code_1: '',
-    mes_Vn: '',
-    mes_En: ''
-  };
+  userInfo: any;
   listStatus: any = [
     {
       name: 'Active',
       code: 'A',
     },
     {
-      name: 'Inactive',
+      name: 'Deactive',
       code: 'D',
     }
   ];
@@ -46,6 +38,7 @@ export class EditComponent implements OnInit {
     private ncbService: NCBService,
     private helper: Helper
   ) {
+    this.userInfo = localStorage.getItem('profile') ? JSON.parse(localStorage.getItem('profile')) : '';
     this.route.params.subscribe(params => {
       this.itemId = params.itemId;
     });
@@ -61,7 +54,8 @@ export class EditComponent implements OnInit {
       msg_Code: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       msg_Code_1: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       mes_Vn: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      mes_En: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      mes_En: [''],
+      user_Id: [this.userInfo.userId],
       // status: ['']
     });
   }

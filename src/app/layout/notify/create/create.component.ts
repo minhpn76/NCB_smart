@@ -17,6 +17,7 @@ export class CreateComponent implements OnInit {
   public Editor = ClassicEditor;
   dataForm: FormGroup;
   submitted = false;
+  userInfo: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,7 +25,9 @@ export class CreateComponent implements OnInit {
     private ncbService: NCBService,
     public router: Router,
     private helper: Helper
-  ) { }
+  ) {
+    this.userInfo = localStorage.getItem('profile') ? JSON.parse(localStorage.getItem('profile')) : '';
+   }
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
@@ -35,6 +38,7 @@ export class CreateComponent implements OnInit {
       msg_Code_1: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       mes_Vn: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       mes_En: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      user_Id: [this.userInfo.userId],
     });
   }
   get Form() { return this.dataForm.controls; }

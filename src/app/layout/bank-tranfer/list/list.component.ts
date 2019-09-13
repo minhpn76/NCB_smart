@@ -40,7 +40,7 @@ export class ListComponent implements OnInit {
       code: 'A',
     },
     {
-      name: 'Inactive',
+      name: 'Deactive',
       code: 'D',
     }
   ];
@@ -88,12 +88,13 @@ export class ListComponent implements OnInit {
         this.ncbService.deleteBankTranfer({ bankCode: code }).then((result) => {
           if (result.status === 200) {
             if (result.json().code === '00') {
-              this.listData.splice(index, 1);
               Swal.fire(
                 'Đã xoá!',
                 'Dữ liệu đã xoá hoàn toàn.',
                 'success'
               );
+              this.re_search.page = 0;
+              this.onSearch(this.re_search);
             } else {
               this.toastr.error('Xoá thất bại', 'Lỗi hệ thống!');
             }
@@ -120,7 +121,7 @@ export class ListComponent implements OnInit {
     }
   }
   onSearch(payload) {
-    if (payload.bankCode !== '') {
+    if (payload.bankCode !== '' || payload.status !== '') {
       payload.page = 0;
     }
     this.getListData(payload);

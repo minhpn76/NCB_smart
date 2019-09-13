@@ -40,7 +40,7 @@ export class EditComponent implements OnInit {
       code: 'A',
     },
     {
-      name: 'Inactive',
+      name: 'Deactive',
       code: 'D',
     }
   ];

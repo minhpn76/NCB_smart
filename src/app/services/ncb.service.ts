@@ -669,7 +669,7 @@ export class NCBService {
   // provider, type, error, msg_Code
   updateNotify(data): Promise<any> {
     const url =  `${API_URL}/notify/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PATCH'});
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true});
   }
   deleteNotify(data): Promise<any> {
     const url = `${API_URL}/notify/delete`;

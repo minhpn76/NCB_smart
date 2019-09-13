@@ -16,6 +16,7 @@ export class ListComponent implements OnInit {
   totalSearch: any = 0;
   re_search = {
     provider: '',
+    type: '',
     size: 10,
     page: 0,
     previous_page: 0
@@ -35,7 +36,7 @@ export class ListComponent implements OnInit {
       code: 'A',
     },
     {
-      name: 'Inactive',
+      name: 'Deactive',
       code: 'D',
     }
   ];
@@ -47,7 +48,7 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getListData({});
+    this.getListData(this.re_search);
   }
 
   getListData(params) {
@@ -65,7 +66,7 @@ export class ListComponent implements OnInit {
     });
   }
 
-  deleteItem(event, index, id) {
+  deleteItem(event, index, code) {
     Swal.fire({
       title: 'Bạn có chắc chắn xoá?',
       text: 'Dữ liệu đã xoá không thể khôi phục lại',
@@ -75,23 +76,14 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.toastr.warning('API chưa hoàn thiện', 'Vui lòng kiểm tra sau!');
-        this.listData.splice(index, 1);
-        Swal.fire(
-          'Đã xoá!',
-          'Dữ liệu đã xoá hoàn toàn.',
-          'success'
-        );
-        // this.ncbService.deleteNcbGuide({ id: id }).then(() => {
-        //   this.listData.splice(index, 1);
-        //   Swal.fire(
-        //     'Đã xoá!',
-        //     'Dữ liệu đã xoá hoàn toàn.',
-        //     'success'
-        //   );
-        // });
-      // For more information about handling dismissals please visit
-      // https://sweetalert2.github.io/#handling-dismissals
+        this.ncbService.deleteNotify({type: code}).then(() => {
+          this.listData.splice(index, 1);
+          Swal.fire(
+            'Đã xoá!',
+            'Dữ liệu đã xoá hoàn toàn.',
+            'success'
+          );
+        });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Huỷ bỏ',
@@ -111,38 +103,14 @@ export class ListComponent implements OnInit {
       this.re_search.page = page_number;
       this.re_search.previous_page = page_number;
       this.onSearch(this.re_search);
+      this.re_search.page = page;
     }
-    // if (this.isSearch === false) {
-    //   if (page_number !== this.re_search.previous_page) {
-    //     this.re_search.page = page_number;
-    //     this.re_search.previous_page = page_number;
-    //     this.getListData(this.re_search);
-    //   }
-    // } else {
-    //   if (page_number !== this.re_search.previous_page) {
-    //     this.re_search.page = page_number;
-    //     this.re_search.previous_page = page_number;
-    //     this.onSearch(this.re_search);
-    //   }
-    // }
   }
   onSearch(payload) {
-    this.toastr.warning('API chưa hoàn thiện', 'Vui lòng kiểm tra sau!');
-    // this.isSearch = true;
-    // this.listData = [];
-    // this.isProcessLoad = 1;
-    // this.ncbService.searchNcbGuide(payload).then(result => {
-    //   setTimeout(() => {
-    //     const body = result.json().body;
-    //     this.listData = body.content;
-    //     this.totalSearch = body.totalElements;
-    //     this.isProcessLoad = 0;
-    //   }, 300);
-    // }).catch(err => {
-    //   this.isProcessLoad = 0;
-    //   this.listData = [];
-    //   this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
-    // });
+    if (payload.provider !== '' || payload.type !== '') {
+      payload.page = 0;
+    }
+    this.getListData(payload)
   }
   // keyDownFunction(event) {
   //   if (event.keyCode === 13) {
@@ -153,12 +121,7 @@ export class ListComponent implements OnInit {
   // }
   changePageSize() {
     this.re_search.page = 0;
-    this.isSearch = false;
     this.getListData(this.re_search);
-  }
-  passData(value) {
-    this.toastr.warning('API chưa hoàn thiện', 'Vui lòng thử lại sau!');
-    console.log('!@#!@', value);
   }
 
 }

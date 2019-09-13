@@ -44,7 +44,7 @@ export class ListComponent implements OnInit {
       code: 'A',
     },
     {
-      name: 'Inactive',
+      name: 'Deactive',
       code: 'D',
     }
   ];

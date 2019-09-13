@@ -62,6 +62,8 @@ export class CreateComponent implements OnInit {
           setTimeout(() => {
             this.router.navigateByUrl('/bank-tranfer');
           }, 500);
+        } else if (result.json().code === '904') {
+          this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
         } else {
           this.toastr.error('Thêm mới thất bại', 'Thất bại!');
         }

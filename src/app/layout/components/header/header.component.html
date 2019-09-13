@@ -11,20 +11,25 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown" ngbDropdown>
                 <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
-                    <i class="fa fa-user"></i> {{profile?.userName}} <b class="caret"></b>
+                    <i class="fa fa-user"></i> {{profile?.userName}} <b
+                        class="caret"></b>
                 </a>
-                <div class="dropdown-menu-right" ngbDropdownMenu style="left: -70px">
+                <div class="dropdown-menu-right" ngbDropdownMenu style="left:
+                    -70px">
                     <a class="dropdown-item" [routerLink]="['/user/profile']">
                         <i class="fa fa-fw fa-user"></i> Hồ sơ
                     </a>
-
+                    <!-- 
                     <a class="dropdown-item" href="javascript:void(0)">
                         <i class="fa fa-fw fa-gear"></i> Cài đặt
+                    </a> -->
+                    <a class="dropdown-item"
+                        [routerLink]="['/user/change-password']"
+                        href="javascript:void(0)">
+                        <i class="fa fa-exchange"></i> Đổi mật khẩu
                     </a>
-                    <a class="dropdown-item" [routerLink]="['/user/change-password']" href="javascript:void(0)">
-                        <i class="fa fa-exchange"></i> Đổi mật khẩu                    
-                    </a>
-                    <a class="dropdown-item" [routerLink]="['/login']" (click)="onLoggedout()">
+                    <a class="dropdown-item" [routerLink]="['/login']"
+                        (click)="onLoggedout()">
                         <i class="fa fa-fw fa-power-off"></i> Đăng xuất
                     </a>
                 </div>

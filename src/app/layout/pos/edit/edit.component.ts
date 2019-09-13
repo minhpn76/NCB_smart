@@ -20,7 +20,7 @@ export class EditComponent implements OnInit {
       code: 'A',
     },
     {
-      name: 'Inactive',
+      name: 'Deactive',
       code: 'D',
     }
   ];
@@ -66,7 +66,7 @@ export class EditComponent implements OnInit {
       if (result.json().code === '00') {
         this.toastr.success('Sửa thành công', 'Thành công!');
         setTimeout(() => {
-            this.router.navigateByUrl('/branch');
+            this.router.navigateByUrl('/transaction-room');
         }, 500);
       } else {
           this.toastr.error('Sửa chi nhánh thất bại', 'Thất bại!');
@@ -74,8 +74,6 @@ export class EditComponent implements OnInit {
     }).catch(err => {
       this.toastr.error(err.json().desciption, 'Thất bại!');
     });
-
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.dataForm.value));
   }
   getItem(params) {
     this.ncbService.detailBranch({departCode: params}).then((result) => {
@@ -98,7 +96,7 @@ export class EditComponent implements OnInit {
     });
   }
   resetForm() {
-    this.router.navigateByUrl('/branch');
+    this.router.navigateByUrl('/transaction-room');
   }
 }
 

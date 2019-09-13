@@ -67,7 +67,7 @@
         </div>
         <div class="col-md-12 text-center">
             <button class="btn btn-primary mr-3" (click)="onSearch(re_search)"><i class="fa fa-search"></i>&nbsp;Tìm kiếm</button>
-            <a class="btn btn-warning mr-3" [routerLink]="['/branch/create']"> <i class="fa fa-plus"></i>&nbsp;Thêm mới </a>
+            <a class="btn btn-warning mr-3" [routerLink]="['/transaction-room/create']"> <i class="fa fa-plus"></i>&nbsp;Thêm mới </a>
         </div>
     </div>
     <div class="row mt-50">
@@ -116,10 +116,10 @@
 
                         <td>
                             <span *ngIf="branch.status == 'A'" class="badge badge-success">Active</span>
-                            <span *ngIf="branch.status == 'D'" class="badge badge-danger">Inactive</span>
+                            <span *ngIf="branch.status == 'D'" class="badge badge-danger">Deactive</span>
                         </td>
                         <td>
-                            <a class="mr-2 cursor-pointer text-blue" routerLink="/branch/edit/{{ branch.departCode }}">
+                            <a class="mr-2 cursor-pointer text-blue" routerLink="/transaction-room/edit/{{ branch.departCode }}">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <!-- <span class="mr-2 cursor-pointer text-blue">

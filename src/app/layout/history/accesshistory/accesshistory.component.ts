@@ -29,7 +29,7 @@ export class AccesshistoryComponent implements OnInit {
       code: 1,
     },
     {
-      name: 'Inactive',
+      name: 'Deactive',
       code: 0,
     }
   ];
