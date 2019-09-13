@@ -32,7 +32,7 @@ const routes: Routes = [
       }
     },
     {
-      path: 'edit/:id',
+      path: 'edit/:itemId',
       component: EditComponent,
       data: {
         icon: 'icon-plus',

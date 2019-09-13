@@ -28,13 +28,13 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
-      provider: ['', Validators.required],
-      type: ['', Validators.required],
-      error: ['', Validators.required],
-      msg_Code: ['', Validators.required],
-      msg_Code_1: ['', Validators.required],
-      mes_Vn: ['', Validators.required],
-      mes_En: ['', Validators.required],
+      provider: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      type: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      error: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      msg_Code: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      msg_Code_1: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      mes_Vn: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      mes_En: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
     });
   }
   get Form() { return this.dataForm.controls; }

@@ -1,44 +1,42 @@
 <div>
-    <app-page-header 
-        [heading]="'Danh sách điều khoản'" 
-        [heading_second]="'Sửa điều khoản'" 
+    <app-page-header
+        [heading]="'Danh sách điều khoản'"
+        [heading_second]="'Sửa điều khoản'"
         [url_heading]="'/provision'">
     </app-page-header>
     <div class="row">
         <div class="col-md-8">
-            <form>
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên điều khoản(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Tên điều
+                        khoản(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
-                        <input 
-                            [(ngModel)]="obj.provisionName"
-                            name="provisionName"
+                        <input
+                            formControlName="provisionName"
                             class="form-control col-lg-12"
                             placeholder="Tên điều khoản"
-                        >
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.provisionName.errors }">
+                        <div *ngIf="submitted && Form.provisionName.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.provisionName.errors.required">Tên
+                                điều khoản là bắt buộc</div>
+                        </div>
                     </div>
+
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Nội dung(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Nội
+                        dung(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <ckeditor [editor]="Editor"
-                            name="provisionLink"
-                            [(ngModel)]="obj.provisionLink"
-                        ></ckeditor>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <select class="form-control " [(ngModel)]="obj.status" name="status">
-                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
-                        </select>
+                            formControlName="provisionLink"></ckeditor>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-7">
-                        <button class="btn btn-success mr-3" (click)="onSubmit()">
+                        <button class="btn btn-success mr-3">
                             <i class="fa fa-save"></i>&nbsp;Lưu lại
                         </button>
                         <button class="btn btn-light" (click)="resetForm()">

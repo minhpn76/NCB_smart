@@ -65,7 +65,7 @@
                     <tr *ngIf="isProcessLoad == 1" class="text-center">
                         <td colspan=6><i class="fa fa-spin fa-spinner font-30"></i></td>
                     </tr>
-                    <tr *ngIf="search.total_items == 0 && isProcessLoad == 0" class="text-center">
+                    <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan=6>Không tìm thấy kết quả</td>
                     </tr>
                     <tr *ngFor ="let data of listData; let i = index">
@@ -82,14 +82,11 @@
 
                         </td>
                         <td>
-                            <a class="mr-2 cursor-pointer text-blue" routerLink="/bank-tranfer/edit/{{i}}">
+                            <a class="mr-2 cursor-pointer text-blue" routerLink="/bank-tranfer/edit/{{data.bankCode}}">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <span class="mr-2 cursor-pointer text-blue">
-                                <i class="fa fa-lock"></i>
-                            </span>
                             <span class="mr-2 cursor-pointer text-danger">
-                                <i class="fa fa-trash" (click)="deleteItem(1, i)"></i>
+                                <i class="fa fa-trash" (click)="deleteItem(1, i, data.bankCode)"></i>
                             </span>
                             
                         </td>

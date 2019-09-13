@@ -74,7 +74,7 @@ export class ListComponent implements OnInit {
   }
 
 
-  deleteItem(event, index) {
+  deleteItem(event, index, code) {
     Swal.fire({
       title: 'Bạn có chắc chắn xoá?',
       text: 'Dữ liệu đã xoá không thể khôi phục lại',
@@ -84,14 +84,23 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.listData.splice(index, 1);
-        Swal.fire(
-          'Đã xoá!',
-          'Dữ liệu đã xoá hoàn toàn.',
-          'success'
-        );
-      // For more information about handling dismissals please visit
-      // https://sweetalert2.github.io/#handling-dismissals
+        // tslint:disable-next-line:no-shadowed-variable
+        this.ncbService.deleteBankTranfer({ bankCode: code }).then((result) => {
+          if (result.status === 200) {
+            if (result.json().code === '00') {
+              this.listData.splice(index, 1);
+              Swal.fire(
+                'Đã xoá!',
+                'Dữ liệu đã xoá hoàn toàn.',
+                'success'
+              );
+            } else {
+              this.toastr.error('Xoá thất bại', 'Lỗi hệ thống!');
+            }
+          } else {
+            this.toastr.error('Xoá thất bại', 'Lỗi hệ thống!');
+          }
+        });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Huỷ bỏ',

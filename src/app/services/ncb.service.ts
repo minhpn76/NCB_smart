@@ -64,16 +64,28 @@ export class NCBService {
     const url = `${API_URL}/city/createCity`;
     return this.auth.authRequest({ url: url, data: body, method: 'POST'});
   }
-  getListBankTranfer(params): Promise<any> {
-    const url = `${API_URL}/bankTransfer/getAll`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
-  }
   /**
    * search bank tranfer
   */
   searchBankTranfer(params): Promise<any> {
-    const url = `${API_URL}/bankTransfer/searchBankTransfer`;
+    const url = `${API_URL}/bank-transfer/search`;
     return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+  }
+  createBankTranfer(body): Promise<any> {
+    const url = `${API_URL}/bank-transfer/create`;
+    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true});
+  }
+  detailBankTranfer(params): Promise<any> {
+    const url = `${API_URL}/bank-transfer/detail`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+  }
+  updateBankTranfer(data): Promise<any> {
+    const url = `${API_URL}/bank-transfer/update`;
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true});
+  }
+  deleteBankTranfer(params): Promise<any> {
+    const url = `${API_URL}/bank-transfer/delete`;
+    return this.auth.authRequest({ url: url, params: params, method: 'DELETE'});
   }
   getListProvider(params): Promise<any> {
     const url = `${API_URL}/provider/getAll`;

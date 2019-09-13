@@ -37,8 +37,8 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.provinceForm = this.formBuilder.group({
-      cityCode: ['', Validators.required],
-      cityName: ['', Validators.required],
+      cityCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      cityName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       status: 'A'
     });
   }

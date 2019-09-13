@@ -37,9 +37,12 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.provinceForm = this.formBuilder.group({
-      cityCode: ['', Validators.required],
-      cityName: ['', Validators.required],
-      status: 'A'
+      bankCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      bankName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      shtname: [''],
+      bin: [''],
+      citad_gt: [''],
+      citad_tt: ['']
     });
   }
   get Form() { return this.provinceForm.controls; }
@@ -49,18 +52,25 @@ export class CreateComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.provinceForm.invalid) {
-        return;
+      return;
     }
     // const formData = this.helper.urlEncodeParams(this.provinceForm.value);
-    this.ncbService.createProvince(this.provinceForm.value).then((result) => {
-      this.toastr.success('Thêm mới thành công', 'Thành công!');
-      setTimeout(() => {
-        this.router.navigateByUrl('/province');
-      }, 500);
-
+    this.ncbService.createBankTranfer(this.provinceForm.value).then((result) => {
+      if (result.status === 200) {
+        if (result.json().code === '00') {
+          this.toastr.success('Thêm mới thành công', 'Thành công!');
+          setTimeout(() => {
+            this.router.navigateByUrl('/bank-tranfer');
+          }, 500);
+        } else {
+          this.toastr.error('Thêm mới thất bại', 'Thất bại!');
+        }
+      } else {
+        this.toastr.error('Thêm mới thất bại', 'Thất bại!');
+      }
     }).catch((err) => {
 
-      this.toastr.error(err.message, 'Thất bại!');
+      this.toastr.error(err.json().description, 'Thất bại!');
 
     });
   }
@@ -75,9 +85,9 @@ export class CreateComponent implements OnInit {
   onUploadFile(event) {
     const fileList: FileList = event.files;
     if (fileList.length > 0) {
-        this.fileExcel.file = fileList[0];
-        this.fileExcel.name = fileList[0].name;
-        this.fileExcel.size = fileList[0].size;
+      this.fileExcel.file = fileList[0];
+      this.fileExcel.name = fileList[0].name;
+      this.fileExcel.size = fileList[0].size;
     }
   }
   onUploadServer() {

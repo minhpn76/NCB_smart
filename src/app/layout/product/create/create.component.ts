@@ -18,8 +18,8 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.productForm = this.formBuilder.group({
-      nameProductVN: ['', Validators.required],
-      nameProductEN: ['', Validators.required]
+      nameProductVN: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      nameProductEN: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])]
     });
   }
   get Form() { return this.productForm.controls; }

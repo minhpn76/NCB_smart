@@ -45,11 +45,11 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.branchForm = this.formBuilder.group({
-      branchCode: ['', Validators.required],
-      branchName: ['', Validators.required],
-      optionProvince: ['', Validators.required],
-      optionDistrict: ['', Validators.required],
-      addressName: ['', Validators.required],
+      branchCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      branchName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      optionProvince: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      optionDistrict: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      addressName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
 
     });
   }

@@ -1,38 +1,110 @@
 <div>
-    <app-page-header 
-        [heading]="'Danh sách Tỉnh/Thành phố'" 
-        [heading_second]="'Sửa Tỉnh/Thành phố'" 
-        [url_heading]="'/province'">
+    <app-page-header
+        [heading]="'Danh sách ngân hàng chuyển khoản'"
+        [heading_second]="'Sửa ngân hàng chuyển khoản'"
+        [url_heading]="'/bank-tranfer'">
     </app-page-header>
-    <!-- {{'Admin_function.DS_province' | translate}} -->
     <div class="row">
         <div class="col-md-8">
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Mã Tỉnh/Thành phố(<span class="text-danger">*</span>):</label>
-                <div class="col-sm-7">
-                    <input class="form-control col-lg-12"
-                    placeholder="Mã Tỉnh/Thành phố">
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã ngân
+                        hàng chuyển khoản(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="bankCode"
+                            class="form-control col-lg-12"
+                            placeholder="Mã ngân hàng chuyển khoản"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.bankCode.errors }"
+                            />
+                        <div *ngIf="submitted && Form.bankCode.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.bankCode.errors.required">Mã ngân
+                                hàng chuyển khoản là bắt buộc</div>
+                            <div *ngIf="Form.bankCode.errors.pattern">Mã ngân
+                                hàng chuyển khoản là không hợp lệ</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Tên Tỉnh/Thành phố(<span class="text-danger">*</span>):</label>
-                <div class="col-sm-7">
-                    <input class="form-control col-lg-12"
-                    placeholder="Tên Tỉnh/Thành phố">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên ngân
+                        hàng chuyển khoản(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="bankName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên ngân hàng chuyển khoản"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.bankName.errors }"
+                            />
+                        <div *ngIf="submitted && Form.bankName.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.bankName.errors.required">Tên ngân
+                                hàng chuyển khoản là bắt buộc</div>
+                            <div *ngIf="Form.bankName.errors.pattern">Tên ngân
+                                hàng chuyển khoản là không hợp lệ</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-4"></div>
-                <div class="col-sm-7">
-                    <button class="btn btn-success mr-3">
-                        <i class="fa fa-save"></i>&nbsp;Lưu lại
-                    </button>
-                    <button class="btn btn-light">
-                        <i class="fa fa-close"></i>&nbsp;Huỷ
-                    </button>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Shtname:</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="shtname"
+                            class="form-control col-lg-12"
+                            placeholder="Shtname"
+                            />
+                    </div>
                 </div>
-            </div>
-
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">bin:</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="bin"
+                            class="form-control col-lg-12"
+                            placeholder="Bin"
+                            />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Citad_gt:</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="citad_gt"
+                            class="form-control col-lg-12"
+                            placeholder="Citad_gt"
+                            />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Citad_tt:</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="citad_tt"
+                            class="form-control col-lg-12"
+                            placeholder="Citad_tt"
+                            />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" formControlName="status" name="status">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3"><i class="fa
+                                fa-save"></i>&nbsp;Lưu lại</button>
+                        <button class="btn btn-light" (click)="resetForm()"><i
+                                class="fa fa-close"></i>&nbsp;Huỷ</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

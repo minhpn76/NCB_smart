@@ -40,25 +40,30 @@ export class EditComponent implements OnInit {
     private route: ActivatedRoute,
     private ncbService: NCBService
   ) {
-      this.route.params.subscribe(params => {
+    this.route.params.subscribe(params => {
         this.itemId = parseInt(params.itemId);
     });
-   }
+    this.dataForm = this.formBuilder.group({
+      provisionName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      provisionLink: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      status: 'A'
+    });
+  }
+  get Form() { return this.dataForm.controls; }
 
   ngOnInit() {
-    this.getItem({id: this.itemId});
+    this.getItem({ id: this.itemId });
   }
   onSubmit() {
     this.submitted = true;
-    if (this.obj.provisionLink === '' || this.obj.provisionName === '') {
-      this.toastr.error('Không được để trống các trường', 'Lỗi!');
+    if (this.dataForm.invalid) {
       return;
     }
     const id = {
       id: this.itemId
     };
     const data = {
-      ...this.obj,
+      ...this.dataForm.value,
       ...id
     };
     this.ncbService.updateMBProvision(data).then((result) => {
@@ -85,11 +90,15 @@ export class EditComponent implements OnInit {
   getItem(params) {
     this.ncbService.detailMBProvision(params).then((result) => {
       const body = result.json().body;
-      this.obj.status = body.status;
-      this.obj.provisionLink = body.provisionLink;
-      this.obj.provisionName = body.provisionName;
-    }).catch(err => {
+      this.dataForm.patchValue({
+        status: body.status,
+        provisionLink: body.provisionLink,
+        provisionName: body.provisionName
+      });
 
+    }).catch(err => {
+      console.log('errr===', err.json());
+      this.toastr.error(err.json().decription, 'Thất bại!');
     });
   }
 }

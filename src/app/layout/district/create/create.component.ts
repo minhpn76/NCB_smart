@@ -29,9 +29,9 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.districtForm = this.formBuilder.group({
-      districtCode: ['', Validators.required],
-      districtName: ['', Validators.required],
-      optionProvince: ['', Validators.required]
+      districtCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      districtName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      optionProvince: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])]
     });
   }
   get Form() { return this.districtForm.controls; }

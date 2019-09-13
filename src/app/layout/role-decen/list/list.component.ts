@@ -44,7 +44,7 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
-      roleName: ['', Validators.required],
+      roleName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       status: ['A'],
       page: ['1'],
       size: ['1000']

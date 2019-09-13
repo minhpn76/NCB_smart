@@ -103,7 +103,6 @@ export class ListComponent implements OnInit {
         this.listData.splice(index, 1);
         const formData = this.helper.urlEncodeParams({ prdCode: code });
         this.ncbService.deletePayCard(formData).then((res) => {
-          console.log('--res', res.json());
           Swal.fire(
             'Đã xoá!',
             'Dữ liệu đã xoá hoàn toàn.',

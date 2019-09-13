@@ -37,9 +37,9 @@ export class EditComponent implements OnInit {
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
-      branchCode: ['', Validators.required],
-      transactionCode: ['', Validators.required],
-      status: ['', Validators.required],
+      branchCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      transactionCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      status: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       username: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       // tslint:disable-next-line:max-line-length
       fullName: ['', Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern(/^((?!\s{2,}).)*$/)])],

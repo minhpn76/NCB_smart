@@ -92,7 +92,7 @@ export class EditComponent implements OnInit {
         status: body.status
       });
     }).catch(err => {
-      this.toastr.error(err.json().message, 'Thất bại!');
+      this.toastr.error(err.json().decription, 'Thất bại!');
     });
   }
   resetForm() {

@@ -50,7 +50,7 @@
                     <li *ngIf="giaodich.code === 'NHA_CC_DICH_VU' && giaodich.isAll === true">
                         <a [routerLink]="['/bill-service']" [routerLinkActive]="['router-link-active']" class="list-group-item">
                             <i class="fa fa-home"></i>&nbsp;
-                            <span>Nhà cung cấp dịch vụ thanh toán</span>
+                            <span>Nhà cung cấp dịch vụ TT</span>
                         </a>
                     </li>
                     <li *ngIf="giaodich.code === 'HINH_THE' && giaodich.isAll === true">
@@ -85,7 +85,7 @@
                     <li *ngIf="khachhang.code === 'GOI_KH_SU_DUNG' && khachhang.isAll === true">
                         <a [routerLink]="['/package-user']" [routerLinkActive]="['router-link-active']" class="list-group-item">
                             <i class="fa fa-barcode"></i>&nbsp;
-                            <span>Gói khách hàng sử dụng gói sản phẩm</span>
+                            <span>Gói KH sử dụng gói SP</span>
                         </a>
                     </li>
                     <li *ngIf="khachhang.code === 'KHUYEN_MAI' && khachhang.isAll === true">
@@ -148,7 +148,7 @@
                         <!-- Giao diện tổ hợp giữa chi nhánh, pgd -> điểm giao dịch -->
                         <a [routerLink]="['/transaction-room']" [routerLinkActive]="['router-link-active']" class="list-group-item">
                             <i class="fa fa-plug"></i>&nbsp;
-                            <span>Mạng lưới chi nhánh, phòng giao dịch</span>
+                            <span>Mạng lưới chi nhánh, PGD</span>
                         </a>
                     </li>
                     <li *ngIf="tracuu.code === 'HD_SU_DUNG' && tracuu.isAll === true">

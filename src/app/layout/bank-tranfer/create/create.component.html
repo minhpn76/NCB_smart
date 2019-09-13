@@ -2,48 +2,98 @@
     <app-page-header
         [heading]="'Danh sách ngân hàng chuyển khoản'"
         [heading_second]="'Thêm mới ngân hàng chuyển khoản'"
-        [url_heading]="'/bank-tranfer'"
-    >
+        [url_heading]="'/bank-tranfer'">
     </app-page-header>
     <div class="row">
         <div class="col-md-8">
-            <div class="">
-                <a class="btn btn-primary" (click)="openModal(uploadMultiFile)"> <i class="fa fa-upload"></i>&nbsp;Upload multiple </a>
-            </div>
             <form [formGroup]="provinceForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã Tỉnh/Thành phố(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Mã ngân
+                        hàng chuyển khoản(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
-                            formControlName="cityCode"
+                            formControlName="bankCode"
                             class="form-control col-lg-12"
-                            placeholder="Mã Tỉnh/Thành phố"
-                            [ngClass]="{ 'is-invalid': submitted && Form.cityCode.errors }"
-                        />
-                        <div *ngIf="submitted && Form.cityCode.errors" class="invalid-feedback">
-                            <div *ngIf="Form.cityCode.errors.required">Mã Tỉnh/Thành phố là bắt buộc</div>
+                            placeholder="Mã ngân hàng chuyển khoản"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.bankCode.errors }"
+                            />
+                        <div *ngIf="submitted && Form.bankCode.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.bankCode.errors.required">Mã ngân
+                                hàng chuyển khoản là bắt buộc</div>
+                            <div *ngIf="Form.bankCode.errors.pattern">Mã ngân
+                                hàng chuyển khoản là không hợp lệ</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên Tỉnh/Thành phố(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Tên ngân
+                        hàng chuyển khoản(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
-                            formControlName="cityName"
+                            formControlName="bankName"
                             class="form-control col-lg-12"
-                            placeholder="Tên Tỉnh/Thành phố"
-                            [ngClass]="{ 'is-invalid': submitted && Form.cityName.errors }"
-                        />
-                        <div *ngIf="submitted && Form.cityName.errors" class="invalid-feedback">
-                            <div *ngIf="Form.cityName.errors.required">Tên Tỉnh/Thành phố là bắt buộc</div>
+                            placeholder="Tên ngân hàng chuyển khoản"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.bankName.errors }"
+                            />
+                        <div *ngIf="submitted && Form.bankName.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.bankName.errors.required">Tên ngân
+                                hàng chuyển khoản là bắt buộc</div>
+                            <div *ngIf="Form.bankName.errors.pattern">Tên ngân
+                                hàng chuyển khoản là không hợp lệ</div>
                         </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Shtname:</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="shtname"
+                            class="form-control col-lg-12"
+                            placeholder="Shtname"
+                            />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Bin:</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="bin"
+                            class="form-control col-lg-12"
+                            placeholder="Bin"
+                            />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Citad_gt:</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="citad_gt"
+                            class="form-control col-lg-12"
+                            placeholder="Citad_gt"
+                            />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Citad_tt:</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="citad_tt"
+                            class="form-control col-lg-12"
+                            placeholder="Citad_tt"
+                            />
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-7">
-                        <button class="btn btn-success mr-3"><i class="fa fa-save"></i>&nbsp;Lưu lại</button>
-                        <button class="btn btn-light" (click)="resetForm()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
+                        <button class="btn btn-success mr-3"><i class="fa
+                                fa-save"></i>&nbsp;Lưu lại</button>
+                        <button class="btn btn-light" (click)="resetForm()"><i
+                                class="fa fa-close"></i>&nbsp;Huỷ</button>
                     </div>
                 </div>
             </form>
@@ -57,7 +107,7 @@
             <i class="icon-plus"></i>
             Upload nhiều bản ghi
         </h5>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <button type="button" class="close" aria-label="Close" (click)="d('Crossclick')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -65,9 +115,9 @@
         <div class="row">
             <div class="col-md-12">
                 <h5>Bước 1:</h5>
-                <span
-                    >Download template mẫu: <a href="assets/template-excel/Template_Branch.xlsx"><i>tại đây</i></a></span
-                >
+                <span>Download template mẫu: <a
+                        href="assets/template-excel/Template_Branch.xlsx"><i>tại
+                            đây</i></a></span>
             </div>
             <div class="col-md-12 mt-3">
                 <h5>Bước 2:</h5>
@@ -82,13 +132,15 @@
                         (uploadHandler)="onUploadFile($event)"
                         auto="true"
                         iconLabel="fa-cloud-upload"
-                        chooseLabel="Chọn tệp tin"
-                    ></p-fileUpload>
-                    <p *ngIf="fileExcel.name" class="m-b-0 text-primary">{{ fileExcel.name }}</p>
+                        chooseLabel="Chọn tệp tin"></p-fileUpload>
+                    <p *ngIf="fileExcel.name" class="m-b-0 text-primary">{{
+                        fileExcel.name }}</p>
                 </div>
             </div>
             <div class="col-md-12 mt-3 text-right">
-                <button [disabled]="!fileExcel.name || temp.loading" (click)="onUploadServer()" class="btn btn-primary" type="submit">
+                <button [disabled]="!fileExcel.name || temp.loading"
+                    (click)="onUploadServer()" class="btn btn-primary"
+                    type="submit">
                     <i class="fa fa-save"></i> Cập nhật
                     <i *ngIf="temp.loading" class="fa fa-spin fa-spinner"></i>
                 </button>

@@ -27,8 +27,8 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
-      provisionName: ['', Validators.required],
-      provisionLink: ['', Validators.required],
+      provisionName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      provisionLink: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       status: 'A'
     });
   }
