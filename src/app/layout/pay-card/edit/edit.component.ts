@@ -126,7 +126,7 @@ export class EditComponent implements OnInit {
     if (type === 'static') {
       this.modalOp = this.modalService.open(content, { keyboard: false, backdrop: 'static', windowClass: classLayout, size: 'lg' });
     } else {
-        this.modalOp = this.modalService.open(content, { windowClass: classLayout, size: 'lg' });
+      this.modalOp = this.modalService.open(content, { windowClass: classLayout, size: 'lg' });
     }
     this.modalOp.result.then((result) => {
     }, (reason) => {
@@ -143,29 +143,29 @@ export class EditComponent implements OnInit {
     }
   }
   getItem(params) {
-    this.ncbService.detailPayCard({prdcode: params}).then((result) => {
+    this.ncbService.detailPayCard({ prdcode: params }).then((result) => {
       const body = result.json().body;
       this.objItemFile = {
         fileName: body.fileName,
         linkUrl: body.linkUrl
       };
       this.dataForm.patchValue({
-        prdcode : body.prdcode,
-        product : body.product,
-        activeFee : body.activeFee,
-        cardtype : body.cardtype,
-        changesttFee : body.changesttFee,
-        class_ : body.class_,
-        directddFee : body.directddFee,
-        f01 : body.f01,
-        f02 : body.f02,
-        f03 : body.f03,
-        f04 : body.f04,
-        f05 : body.f05,
-        issueFee : body.issueFee,
-        reissueFee : body.reissueFee,
-        repinFee : body.repinFee,
-        status : body.status
+        prdcode: body.prdcode,
+        product: body.product,
+        activeFee: body.activeFee,
+        cardtype: body.cardtype,
+        changesttFee: body.changesttFee,
+        class_: body.class_,
+        directddFee: body.directddFee,
+        f01: body.f01,
+        f02: body.f02,
+        f03: body.f03,
+        f04: body.f04,
+        f05: body.f05,
+        issueFee: body.issueFee,
+        reissueFee: body.reissueFee,
+        repinFee: body.repinFee,
+        status: body.status
       });
     }).catch(err => {
       this.toastr.error('Không lấy được dữ liệu item', 'Thất bại!');

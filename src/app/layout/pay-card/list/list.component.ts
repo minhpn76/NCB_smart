@@ -87,14 +87,14 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.ncbService.deletePayCard({prdCode: code}).then((res) => {
+        this.ncbService.deletePayCard({ prdCode: code }).then((res) => {
           this.listData.splice(index, 1);
           Swal.fire(
             'Đã xoá!',
             'Dữ liệu đã xoá hoàn toàn.',
             'success'
           );
-        }).catch((err) => {});
+        }).catch((err) => { });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Huỷ bỏ',
