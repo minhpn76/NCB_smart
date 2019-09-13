@@ -6,69 +6,29 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Tên:</label>
+                <label for="search" class="col-sm-4 col-form-label">Sản phẩm:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
                         itrim type="text" id="search"
-                        [(ngModel)]="re_search.fullName"
-                        placeholder="Tên">
+                        [(ngModel)]="re_search.product"
+                        placeholder="Sản phẩm">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Chi nhánh:</label>
-                <div class="col-sm-6">
-                    <select class="form-control"
-                        [(ngModel)]="re_search.branchCode">
-                        <option *ngFor="let item of listBranch"
-                            [value]="item.code">{{item.name}}</option>
-                    </select>
-                </div>
-
-            </div>
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Mã giao
-                    dịch:</label>
+                <label for="search" class="col-sm-4 col-form-label">Mã sản phẩm:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
                         itrim type="text" id="search"
-                        [(ngModel)]="re_search.transactionCode"
-                        placeholder="Mã giao dịch">
+                        [(ngModel)]="re_search.prdcode"
+                        placeholder="Mã sản phẩm">
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Từ ngày:</label>
-                <div class="col-sm-6 input-group">
-                    <input readonly class="form-control" placeholder="Từ ngày"
-                        name="dFS" ngbDatepicker #dFS="ngbDatepicker"
-                        [(ngModel)]="mRatesDateS">
-
-                    <!-- [(ngModel)]="mRatesDateS" -->
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary"
-                            (click)="dFS.toggle()" type="button">
-                            <i class="fa fa-calendar"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
         </div>
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Phân quyền:</label>
-                <div class="col-sm-6">
-                    <select class="form-control" [(ngModel)]="re_search.roleId">
-                        <option *ngFor="let item of listRole"
-                            [value]="item.code">{{item.name}}</option>
-
-                    </select>
-                </div>
-
-            </div>
-            <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
                 <div class="col-sm-6">
-                    <select class="form-control" [(ngModel)]="search.status">
+                    <select class="form-control" [(ngModel)]="re_search.status">
                         <option *ngFor="let status of listStatus"
                             [value]="status.code" selected="selected">{{status.name}}</option>
                     </select>
@@ -76,22 +36,7 @@
 
             </div>
 
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Đến ngày:</label>
-                <div class="col-sm-6 input-group">
-                    <input readonly class="form-control" placeholder="Đến ngày"
-                        name="dTS" ngbDatepicker #dTS="ngbDatepicker"
-                        [(ngModel)]="mRatesDateS_7">
-                    <!-- (ngModelChange)="getOrder(search); -->
 
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary"
-                            (click)="dTS.toggle()" type="button">
-                            <i class="fa fa-calendar"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="col-md-12 text-center">
             <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
@@ -109,8 +54,8 @@
         <div class="col-md-8">
             <div class="form-group row">
                 <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
-                <select class="form-control col-sm-1" [(ngModel)]="search.size"
-                    (change)="changePageSize()">
+                <select class="form-control col-sm-1" [(ngModel)]="re_search.size"
+                    (change)="changeSize()">
                     <option *ngFor="let page_size of listPageSize"
                         [value]="page_size">{{page_size}}</option>
                 </select> &nbsp;
@@ -119,7 +64,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 table-responsive">
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -138,7 +83,7 @@
                     <tr *ngIf="isProcessLoad == 1" class="text-center">
                         <td colspan=8><i class="fa fa-spin fa-spinner font-30"></i></td>
                     </tr>
-                    <tr *ngIf="search.total_items == 0 && isProcessLoad == 0"
+                    <tr *ngIf="totalSearch == 0 && isProcessLoad == 0"
                         class="text-center">
                         <td colspan=8>Không tìm thấy kết quả</td>
                     </tr>
@@ -150,15 +95,14 @@
                         <td>{{data?.prdcode}}</td>
                         <td>{{data?.product}}</td>
                         <td>{{data?.cardtype}}</td>
-                        <td>{{data?.fileName}}</td>
                         <td>{{data?.class_}}</td>
+                        <td>{{data?.fileName}}</td>
+                        
                         <td>
-                            <span *ngIf="data.status == 'ACTIVE'" class="badge
+                            <span *ngIf="data.status === 'A' || data.status === 'ACTIVE'" class="badge
                                 badge-success">Active</span>
-                            <span *ngIf="data.status == 'Inactive'" class="badge
+                            <span *ngIf="data.status === 'D' || data.status === 'DEACTIVE'" class="badge
                                 badge-danger">Inactive</span>
-
-
                         </td>
                         <td>
                             <a class="mr-2 cursor-pointer text-blue"
@@ -180,14 +124,8 @@
 
     <div class="row mt-3">
         <div class="col-md-12">
-            <ngb-pagination *ngIf="totalSearch> 0 && totalSearch > search.size
-                && isSearch === false"
-                [collectionSize]="totalSearch" [pageSize]="search.size"
-                [(page)]="search.page"
-                [boundaryLinks]="true"
-                [maxSize]="10" (pageChange)="loadPage($event)"></ngb-pagination>
             <ngb-pagination *ngIf="totalSearch> 0 && totalSearch >
-                re_search.size && isSearch === true"
+                re_search.size"
                 [collectionSize]="totalSearch" [pageSize]="re_search.size"
                 [(page)]="re_search.page"
                 [boundaryLinks]="true"

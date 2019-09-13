@@ -130,7 +130,7 @@ export class ListComponent implements OnInit {
 
   onSearch(params) {
     // date
-    if (params.brncode !== '' || params.usrfname !== '' || params.officecode !== '' || params.cifname !== '' || params.usrstatus !== '') {
+    if (params.brncode !== '' || params.usrfname !== '' || params.officecode !== '' || params.cifname !== '' || params.usrstatus !== '' || params.status !== '') {
       params.page = 0;
     }
     this.listData = [];

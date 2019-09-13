@@ -123,7 +123,7 @@ export class ListComponent implements OnInit {
 
   onSearch(params) {
     // date
-    if (params.paramNo !== '' || params.paramName !== '') {
+    if (params.paramNo !== '' || params.paramName !== '' || params.status !== '') {
       params.page = 0;
     }
     this.getListData(params);

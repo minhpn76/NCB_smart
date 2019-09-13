@@ -31,6 +31,19 @@ export class EditComponent implements OnInit {
   temp: any = {
     loading: false
   };
+  isEdit = true;
+  editData: any = {};
+  objItemFile: any = {};
+  listStatus: any = [
+    {
+      name: 'Active',
+      code: 'A',
+    },
+    {
+      name: 'Inactive',
+      code: 'D',
+    }
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -76,18 +89,18 @@ export class EditComponent implements OnInit {
     if (this.dataForm.invalid) {
       return;
     }
-    console.log('-asdas', this.dataForm.value);
-    const id = {
-      id: this.itemId
-    };
-    const payload = {
-      ...this.dataForm.value,
-      ...this.objFile,
-      ...id
-    };
-    console.log('payload===', payload);
-
-    this.ncbService.editPayCard(payload).then((result) => {
+    if (this.isEdit === true) {
+      this.editData = {
+        ...this.dataForm.value,
+        ...this.objItemFile
+      };
+    } else {
+      this.editData = {
+        ...this.dataForm.value,
+        ...this.objFile
+      };
+    }
+    this.ncbService.editPayCard(this.editData).then((result) => {
       if (result.status === 200) {
         if (result.json().code !== '00') {
           this.toastr.error('Lỗi hệ thống', 'Thất bại!');
@@ -121,16 +134,21 @@ export class EditComponent implements OnInit {
   }
 
   async handleFileInput(files: FileList): Promise<any> {
+    this.isEdit = false;
     const check = await this.helper.validateFileImage(
       files[0], AppSettings.UPLOAD_IMAGE.file_size, AppSettings.UPLOAD_IMAGE.file_ext
     );
     if (check === true) {
-        this.uploadFile(files.item(0));
+      this.deleteFile(this.dataForm.value.fileName, files.item(0));
     }
   }
   getItem(params) {
     this.ncbService.detailPayCard({prdcode: params}).then((result) => {
       const body = result.json().body;
+      this.objItemFile = {
+        fileName: body.fileName,
+        linkUrl: body.linkUrl
+      };
       this.dataForm.patchValue({
         prdcode : body.prdcode,
         product : body.product,
@@ -144,15 +162,34 @@ export class EditComponent implements OnInit {
         f03 : body.f03,
         f04 : body.f04,
         f05 : body.f05,
-        fileName : body.fileName,
         issueFee : body.issueFee,
-        linkUlr : body.linkUlr,
         reissueFee : body.reissueFee,
         repinFee : body.repinFee,
         status : body.status
-      })
+      });
     }).catch(err => {
-      this.toastr.error(err.json().message, 'Thất bại!');
+      this.toastr.error('Không lấy được dữ liệu item', 'Thất bại!');
+    });
+  }
+  deleteFile(value, file) {
+    this.ncbService.deleteFilePayCard({
+      fileName: value
+    }).then(result => {
+      if (result.status === 200) {
+        if (result.json().code !== '00') {
+          this.isLockSave = true;
+          this.toastr.error('Upload ảnh thất bại', 'Thất bại!');
+        } else {
+          this.uploadFile(file);
+          this.isLockSave = false;
+        }
+      } else {
+        this.isLockSave = true;
+        this.toastr.error('Upload ảnh thất bại', 'Thất bại!');
+      }
+    }).catch(err => {
+      this.isLockSave = true;
+      this.toastr.error('Upload ảnh thất bại', 'Thất bại!');
     });
   }
   uploadFile(value) {
@@ -161,7 +198,7 @@ export class EditComponent implements OnInit {
       if (result.status === 200) {
         if (result.json().code !== '00') {
           this.isLockSave = true;
-          this.toastr.error(result.json().message, 'Thất bại!');
+          this.toastr.error('Upload ảnh thất bại', 'Thất bại!');
         } else {
           this.objFile = result.json().body;
           this.isLockSave = false;
@@ -169,12 +206,12 @@ export class EditComponent implements OnInit {
         }
       } else {
         this.isLockSave = true;
-        this.toastr.error(result.message, 'Thất bại!');
+        this.toastr.error('Upload ảnh thất bại', 'Thất bại!');
       }
 
     }).catch((err) => {
       this.isLockSave = true;
-      this.toastr.error(err.json().message, 'Thất bại!');
+      this.toastr.error('Upload ảnh thất bại', 'Thất bại!');
 
     });
   }

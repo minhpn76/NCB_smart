@@ -107,7 +107,7 @@ export class ListComponent implements OnInit {
     }
   }
   onSearch(payload) {
-    if (payload.productCode !== '' || payload.productName !== '') {
+    if (payload.productCode !== '' || payload.productName !== '' || payload.status !== '') {
       payload.page = 0;
     }
     this.getListData(payload);

@@ -145,12 +145,12 @@ export class NCBService {
     return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true});
   }
   editPayCard(body): Promise<any> {
-    const url = `${API_URL}/par-card/edit`;
-    return this.auth.authRequest({ url: url, params: body, method: 'POST'});
+    const url = `${API_URL}/par-card/update`;
+    return this.auth.authRequest({ url: url, data: body, method: 'PUT', application: true});
   }
   deletePayCard(body): Promise<any> {
     const url = `${API_URL}/par-card/delete`;
-    return this.auth.authRequest({ url: url, data: body, method: 'POST'});
+    return this.auth.authRequest({ url: url, param: body, method: 'DELETE'});
   }
   // @param prdcode
   detailPayCard(body): Promise<any> {
@@ -702,5 +702,10 @@ export class NCBService {
     formData.append('img', file, file.name);
     const url = `${API_URL}/img/uploadFile`;
     return this.auth.authRequestFile({ url: url, data: formData, method: 'POST' });
+  }
+  // delete file
+  deleteFilePayCard(payload) {
+    const url = `${API_URL}/img/deleteFile`;
+    return this.auth.authRequest({ url: url, param: payload, method: 'DELETE' });
   }
 }

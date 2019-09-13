@@ -145,7 +145,7 @@ export class ListComponent implements OnInit {
   }
   onSearch(params) {
     // date
-    if (params.userName !== '' || params.fullName !== '' || params.transactionCode !== '' || params.branchCode !== '') {
+    if (params.userName !== '' || params.fullName !== '' || params.transactionCode !== '' || params.branchCode !== '' || params.status !== '') {
       params.page = 0;
     }
     this.getListData(params);

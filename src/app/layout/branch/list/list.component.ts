@@ -98,7 +98,7 @@ export class ListComponent implements OnInit {
         }
     }
     onSearch(payload) {
-        if (payload.brnCode !== '' || payload.branchName !== '' || payload.departCode !== '' || payload.departName !== '') {
+        if (payload.brnCode !== '' || payload.branchName !== '' || payload.departCode !== '' || payload.departName !== '' || payload.status !== '') {
             payload.page = 0;
         }
         this.getListData(payload);
