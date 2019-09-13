@@ -22,7 +22,7 @@
                             <div *ngIf="Form.productCode.errors.required">Mã góp
                                 ý - lỗi là bắt buộc</div>
                             <div *ngIf="Form.productCode.errors.pattern">Mã góp
-                                    ý - lỗi không hợp lệ</div>
+                                ý - lỗi không hợp lệ</div>
                         </div>
                     </div>
 
@@ -41,8 +41,8 @@
                             class="invalid-feedback">
                             <div *ngIf="Form.productName.errors.required">Tên
                                 góp ý - lỗi là bắt buộc</div>
-                            <div *ngIf="Form.productName.errors.pattern">Mã góp
-                                    ý - lỗi không hợp lệ</div>
+                            <div *ngIf="Form.productName.errors.pattern">Tên góp
+                                ý - lỗi không hợp lệ</div>
                         </div>
                     </div>
 
@@ -61,8 +61,8 @@
                             class="invalid-feedback">
                             <div *ngIf="Form.type.errors.required">Loại là bắt
                                 buộc</div>
-                            <div *ngIf="Form.type.errors.pattern">Mã góp
-                                    ý - lỗi không hợp lệ</div>
+                            <div *ngIf="Form.type.errors.pattern">Loại không hợp
+                                lệ</div>
                         </div>
                     </div>
 
@@ -103,7 +103,8 @@
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.email.errors}">
                         <div *ngIf="Form.email.errors" class="invalid-feedback">
-                            <div *ngIf="Form.email.errors.required && submitted">Email
+                            <div *ngIf="Form.email.errors.required &&
+                                submitted">Email
                                 là bắt buộc</div>
                             <div *ngIf="Form.email.errors.pattern">Email không
                                 đúng định dạng</div>
@@ -126,7 +127,7 @@
                             <div *ngIf="Form.name.errors.required">Tên là bắt
                                 buộc</div>
                             <div *ngIf="Form.name.errors.pattern">Mã góp
-                                    ý - lỗi không hợp lệ</div>
+                                ý - lỗi không hợp lệ</div>
                         </div>
                     </div>
 
@@ -146,7 +147,7 @@
                             <div *ngIf="Form.address.errors.required">Địa chỉ là
                                 bắt buộc</div>
                             <div *ngIf="Form.address.errors.pattern">Mã góp
-                                    ý - lỗi không hợp lệ</div>
+                                ý - lỗi không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -165,7 +166,7 @@
                             <div *ngIf="Form.description.errors.required">Mô tả
                                 là bắt buộc</div>
                             <div *ngIf="Form.description.errors.pattern">Mã góp
-                                    ý - lỗi không hợp lệ</div>
+                                ý - lỗi không hợp lệ</div>
                         </div>
                     </div>
 

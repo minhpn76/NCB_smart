@@ -41,7 +41,7 @@
                             class="invalid-feedback">
                             <div *ngIf="Form.productName.errors.required">Tên
                                 góp ý - lỗi là bắt buộc</div>
-                            <div *ngIf="Form.productName.errors.pattern">Mã góp
+                            <div *ngIf="Form.productName.errors.pattern">Tên góp
                                 ý - lỗi không hợp lệ</div>
                         </div>
                     </div>
@@ -61,8 +61,8 @@
                             class="invalid-feedback">
                             <div *ngIf="Form.type.errors.required">Loại là bắt
                                 buộc</div>
-                            <div *ngIf="Form.type.errors.pattern">Mã góp
-                                ý - lỗi không hợp lệ</div>
+                            <div *ngIf="Form.type.errors.pattern">Loại không hợp
+                                lệ</div>
                         </div>
                     </div>
 
@@ -171,10 +171,13 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Trạng
+                        thái(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select class="form-control " formControlName="status" name="status">
-                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
+                        <select class="form-control"formControlName="status"
+                            name="status">
+                            <option *ngFor="let status of listStatus"
+                                [value]="status.code" selected="selected">{{status.name}}</option>
                         </select>
                     </div>
                 </div>

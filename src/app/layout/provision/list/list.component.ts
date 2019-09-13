@@ -85,8 +85,8 @@ export class ListComponent implements OnInit {
             'success'
           );
         });
-      // For more information about handling dismissals please visit
-      // https://sweetalert2.github.io/#handling-dismissals
+        // For more information about handling dismissals please visit
+        // https://sweetalert2.github.io/#handling-dismissals
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Huỷ bỏ',
@@ -96,42 +96,20 @@ export class ListComponent implements OnInit {
       }
     });
   }
-  cancelAction(event) {
-    console.log('huy bo thanh con');
-
-  }
   loadPage(page: number) {
     const page_number = page - 1;
-    if (this.isSearch === false) {
-      if (page_number !== this.re_search.previous_page) {
-        this.re_search.page = page_number;
-        this.re_search.previous_page = page_number;
-        this.getListData(this.re_search);
-      }
-    } else {
-      if (page_number !== this.re_search.previous_page) {
-        this.re_search.page = page_number;
-        this.re_search.previous_page = page_number;
-        this.onSearch(this.re_search);
-      }
+    if (page_number !== this.re_search.previous_page) {
+      this.re_search.page = page_number;
+      this.re_search.previous_page = page_number;
+      this.onSearch(this.re_search);
+      this.re_search.page = page;
     }
   }
   onSearch(payload) {
-    this.isSearch = true;
-    this.listData = [];
-    this.isProcessLoad = 1;
-    this.ncbService.searchMBProvision(payload).then(result => {
-      setTimeout(() => {
-        const body = result.json().body;
-        this.listData = body.content;
-        this.totalSearch = body.totalElements;
-        this.isProcessLoad = 0;
-      }, 300);
-    }).catch(err => {
-      this.isProcessLoad = 0;
-      this.listData = [];
-      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
-    });
+    if (payload.provisionName !== '' || payload.status !== '') {
+      payload.page = 0;
+    }
+    this.getListData(payload);
   }
   // keyDownFunction(event) {
   //   if (event.keyCode === 13) {
@@ -142,8 +120,7 @@ export class ListComponent implements OnInit {
   // }
   changePageSize() {
     this.re_search.page = 0;
-    this.isSearch = false;
-    this.getListData(this.re_search);
+    this.onSearch(this.re_search);
   }
 
 }

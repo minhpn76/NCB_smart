@@ -21,6 +21,8 @@
                             class="invalid-feedback">
                             <div *ngIf="Form.provisionName.errors.required">Tên
                                 điều khoản là bắt buộc</div>
+                            <div *ngIf="Form.provisionName.errors.pattern">Tên
+                                điều khoản không đúng định dạng</div>
                         </div>
                     </div>
 
@@ -32,6 +34,8 @@
                         <ckeditor [editor]="Editor"
                             formControlName="provisionLink"></ckeditor>
                     </div>
+
+
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-4"></div>

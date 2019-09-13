@@ -1,114 +1,149 @@
 <div>
-    <app-page-header 
-        [heading]="'Notify in Appp'" 
-        [heading_second]="'Thêm mới notify in app'" 
+    <app-page-header
+        [heading]="'Notify in Appp'"
+        [heading_second]="'Thêm mới notify in app'"
         [url_heading]="'/notify'">
     </app-page-header>
     <div class="row">
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Nhà cung cấp(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Nhà cung
+                        cấp(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
-                        <input 
+                        <input
                             formControlName="provider"
                             class="form-control col-lg-12"
                             placeholder="Nhà cung cấp"
-                            [ngClass]="{ 'is-invalid': submitted && Form.provider.errors }"
-                        >
-                        <div *ngIf="submitted && Form.provider.errors" class="invalid-feedback">
-                            <div *ngIf="Form.provider.errors.required">Nhà cung cấp là bắt buộc</div>
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.provider.errors }">
+                        <div *ngIf="submitted && Form.provider.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.provider.errors.required">Nhà cung
+                                cấp là bắt buộc</div>
+                            <div *ngIf="Form.provider.errors.pattern">Nhà cung
+                                cấp không đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
 
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Kiểu loại(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Kiểu
+                        loại(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
-                        <input 
+                        <input
                             formControlName="type"
                             class="form-control col-lg-12"
                             placeholder="Kiểu loại"
-                            [ngClass]="{ 'is-invalid': submitted && Form.type.errors }"
-                        >
-                        <div *ngIf="submitted && Form.type.errors" class="invalid-feedback">
-                            <div *ngIf="Form.type.errors.required">Kiểu loại là bắt buộc</div>
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.type.errors }">
+                        <div *ngIf="submitted && Form.type.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.type.errors.required">Kiểu loại là
+                                bắt buộc</div>
+                            <div *ngIf="Form.type.errors.pattern">Kiểu loại
+                                không đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Lỗi(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Lỗi(<span
+                            class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
-                        <input 
+                        <input
                             formControlName="error"
                             class="form-control col-lg-12"
                             placeholder="Lỗi"
-                            [ngClass]="{ 'is-invalid': submitted && Form.error.errors }"
-                        >
-                        <div *ngIf="submitted && Form.error.errors" class="invalid-feedback">
-                            <div *ngIf="Form.error.errors.required">Lỗi là bắt buộc</div>
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.error.errors }">
+                        <div *ngIf="submitted && Form.error.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.error.errors.required">Lỗi là bắt
+                                buộc</div>
+                            <div *ngIf="Form.error.errors.pattern">Lỗi không
+                                đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã tin nhắn(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Mã tin
+                        nhắn(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
-                        <input 
+                        <input
                             formControlName="msg_Code"
                             class="form-control col-lg-12"
                             placeholder="Mã tin nhắn"
-                            [ngClass]="{ 'is-invalid': submitted && Form.msg_Code.errors }"
-                        >
-                        <div *ngIf="submitted && Form.msg_Code.errors" class="invalid-feedback">
-                            <div *ngIf="Form.msg_Code.errors.required">Mã tin nhắn là bắt buộc</div>
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.msg_Code.errors }">
+                        <div *ngIf="submitted && Form.msg_Code.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.msg_Code.errors.required">Mã tin
+                                nhắn là bắt buộc</div>
+                            <div *ngIf="Form.msg_Code.errors.pattern">Mã tin
+                                nhắn không đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã tin nhắn 1(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Mã tin
+                        nhắn 1(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
-                        <input 
+                        <input
                             formControlName="msg_Code_1"
                             class="form-control col-lg-12"
                             placeholder="Mã tin nhắn 1"
-                            [ngClass]="{ 'is-invalid': submitted && Form.msg_Code_1.errors }"
-                        >
-                        <div *ngIf="submitted && Form.msg_Code_1.errors" class="invalid-feedback">
-                            <div *ngIf="Form.msg_Code_1.errors.required">Mã tin nhắn 1 là bắt buộc</div>
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.msg_Code_1.errors }">
+                        <div *ngIf="submitted && Form.msg_Code_1.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.msg_Code_1.errors.required">Mã tin
+                                nhắn 1 là bắt buộc</div>
+                            <div *ngIf="Form.msg_Code_1.errors.pattern">Mã tin
+                                nhắn 1 không đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tin nhắn Tiếng Việt(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Tin nhắn
+                        Tiếng Việt(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
-                        <input 
+                        <input
                             formControlName="mes_Vn"
                             class="form-control col-lg-12"
                             placeholder="Tin nhắn Tiếng Việt"
-                            [ngClass]="{ 'is-invalid': submitted && Form.mes_Vn.errors }"
-                        >
-                        <div *ngIf="submitted && Form.mes_Vn.errors" class="invalid-feedback">
-                            <div *ngIf="Form.mes_Vn.errors.required">Tin nhắn Tiếng Việt là bắt buộc</div>
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.mes_Vn.errors }">
+                        <div *ngIf="submitted && Form.mes_Vn.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.mes_Vn.errors.required">Tin nhắn
+                                Tiếng Việt là bắt buộc</div>
+                            <div *ngIf="Form.mes_Vn.errors.pattern">Tin nhắn
+                                Tiếng Việt không đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tin nhắn Tiếng Anh(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Tin nhắn
+                        Tiếng Anh(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
-                        <input 
+                        <input
                             formControlName="mes_En"
                             class="form-control col-lg-12"
                             placeholder="Tin nhắn Tiếng Anh"
-                            [ngClass]="{ 'is-invalid': submitted && Form.mes_En.errors }"
-                        >
-                        <div *ngIf="submitted && Form.mes_En.errors" class="invalid-feedback">
-                            <div *ngIf="Form.mes_En.errors.required">Tin nhắn Tiếng Anh là bắt buộc</div>
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.mes_En.errors }">
+                        <div *ngIf="submitted && Form.mes_En.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.mes_En.errors.required">Tin nhắn
+                                Tiếng Anh là bắt buộc</div>
+                            <div *ngIf="Form.mes_En.errors.pattern">Tin nhắn
+                                Tiếng Anh không đúng định dạng</div>
                         </div>
                     </div>
 
@@ -129,4 +164,3 @@
         </div>
     </div>
 </div>
-    

@@ -118,7 +118,7 @@ export class ListComponent implements OnInit {
       this.re_search.page = page;
     }
   }
-  changeSize(size: number) {
+  changeSize() {
     this.re_search.page = 0;
     this.getListData(this.re_search);
 

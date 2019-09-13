@@ -46,31 +46,37 @@ export class EditComponent implements OnInit {
     private ncbService: NCBService,
     private helper: Helper
   ) {
-      this.route.params.subscribe(params => {
-        this.itemId = params.itemId;
+    this.route.params.subscribe(params => {
+      this.itemId = params.itemId;
     });
-   }
+  }
+  get Form() { return this.dataForm.controls; }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getItem(this.itemId);
+    this.dataForm = this.formBuilder.group({
+      provider: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      type: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      error: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      msg_Code: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      msg_Code_1: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      mes_Vn: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      mes_En: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      // status: ['']
+    });
+  }
   onSubmit() {
     this.submitted = true;
-    if (
-      this.obj.provider === '' ||
-      this.obj.type === '' ||
-      this.obj.error === '' ||
-      this.obj.msg_Code === '' ||
-      this.obj.msg_Code_1 === '' ||
-      this.obj.mes_Vn === '' ||
-      this.obj.mes_En === ''
-       ) {
-      this.toastr.error('Không được để trống các trường', 'Lỗi!');
+
+    // stop here if form is invalid
+    if (this.dataForm.invalid) {
       return;
     }
-    const formData = this.helper.urlEncodeParams(this.obj);
-    this.ncbService.updateNotify(formData).then((result) => {
+
+    this.ncbService.updateNotify(this.dataForm.value).then((result) => {
       if (result.status === 200) {
         if (result.json().code !== '00') {
-          this.toastr.error(result.json().message, 'Thất bại!');
+          this.toastr.error(result.json().description, 'Thất bại!');
         } else {
           this.toastr.success('Sửa thành công', 'Thành công!');
           setTimeout(() => {
@@ -89,11 +95,20 @@ export class EditComponent implements OnInit {
     this.router.navigateByUrl('/notify');
   }
   getItem(params) {
-    this.ncbService.detailNcbGuide(params).then((result) => {
+    this.ncbService.detailNotify({
+      type: params
+    }).then((result) => {
       const body = result.json().body;
-      this.obj.status = body.status;
-      this.obj.serviceId = body.serviceId;
-      this.obj.content = body.content;
+      this.dataForm.patchValue({
+        provider: body.provider,
+        type: body.provider,
+        error: body.error,
+        msg_Code: body.msg_Code,
+        msg_Code_1: body.msg_Code_1,
+        mes_Vn: body.mes_Vn,
+        mes_En: body.mes_En,
+        // status: body.status
+      });
     }).catch(err => {
 
     });
