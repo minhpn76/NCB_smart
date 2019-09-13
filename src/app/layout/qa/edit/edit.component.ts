@@ -18,13 +18,6 @@ export class EditComponent implements OnInit {
   dataForm: FormGroup;
   submitted = false;
   itemId: any;
-  obj: any = {
-    status: '',
-    productCode: '',
-    productName: '',
-    question: '',
-    answer: '',
-  };
   listStatus: any = [
     {
       name: 'Active',
@@ -43,29 +36,35 @@ export class EditComponent implements OnInit {
     private route: ActivatedRoute,
     private ncbService: NCBService
   ) {
-      this.route.params.subscribe(params => {
-        this.itemId = parseInt(params.itemId);
+    this.route.params.subscribe(params => {
+      this.itemId = parseInt(params.itemId);
     });
-   }
+    this.dataForm = this.formBuilder.group({
+      productCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      productName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      question: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      answer: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      status: ['']
+    });
+
+  }
+  get Form() { return this.dataForm.controls; }
 
   ngOnInit() {
-    this.getItem({id: this.itemId});
+    this.getItem({ id: this.itemId });
   }
   onSubmit() {
     this.submitted = true;
-    if (this.obj.productCode === ''
-      || this.obj.productName === ''
-      || this.obj.answer === ''
-      || this.obj.question === ''
-    ) {
-      this.toastr.error('Không được để trống các trường', 'Lỗi!');
+
+    // stop here if form is invalid
+    if (this.dataForm.invalid) {
       return;
     }
     const id = {
       id: this.itemId
     };
     const data = {
-      ...this.obj,
+      ...this.dataForm.value,
       ...id
     };
     this.ncbService.updateNcbQA(data).then((result) => {
@@ -92,11 +91,13 @@ export class EditComponent implements OnInit {
   getItem(params) {
     this.ncbService.detailNcbQA(params).then((result) => {
       const body = result.json().body;
-      this.obj.status = body.status;
-      this.obj.productCode = body.productCode;
-      this.obj.productName = body.productName;
-      this.obj.question = body.question;
-      this.obj.answer = body.answer;
+      this.dataForm.patchValue({
+        status: body.status,
+        productCode: body.productCode,
+        productName: body.productName,
+        question: body.question,
+        answer: body.answer
+      });
     }).catch(err => {
 
     });

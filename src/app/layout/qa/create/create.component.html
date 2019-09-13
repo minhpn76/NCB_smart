@@ -1,89 +1,95 @@
 <div>
-        <app-page-header 
-            [heading]="'Thông tin Q&As'" 
-            [heading_second]="'Thêm mới Q&As'" 
-            [url_heading]="'/qas-info'">
-        </app-page-header>
-        <div class="row">
-            <div class="col-md-8">
-                <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
-                    <div class="form-group row">
-                        <label for="search" class="col-sm-4 col-form-label">Mã QA(<span class="text-danger">*</span>):</label>
-                        <div class="col-sm-8">
-                            <input 
-                                formControlName="productCode"
-                                class="form-control col-lg-12"
-                                placeholder="Mã QA"
-                                [ngClass]="{ 'is-invalid': submitted && Form.productCode.errors }"
-                            >
-                            <div *ngIf="submitted && Form.productCode.errors" class="invalid-feedback">
-                                <div *ngIf="Form.productCode.errors.required">Mã QA là bắt buộc</div>
-                            </div>
-                        </div>
-    
-                    </div>
-                    <div class="form-group row">
-                        <label for="search" class="col-sm-4 col-form-label">Tên QA(<span class="text-danger">*</span>):</label>
-                        <div class="col-sm-8">
-                            <input 
-                                formControlName="productName"
-                                class="form-control col-lg-12"
-                                placeholder="Tên QA"
-                                [ngClass]="{ 'is-invalid': submitted && Form.productName.errors }"
-                            >
-                            <div *ngIf="submitted && Form.productName.errors" class="invalid-feedback">
-                                <div *ngIf="Form.productName.errors.required">Tên QA là bắt buộc</div>
-                            </div>
-                        </div>
-    
-                    </div>
-                    <div class="form-group row">
-                        <label for="search" class="col-sm-4 col-form-label">Câu hỏi(<span class="text-danger">*</span>):</label>
-                        <div class="col-sm-8">
-                            <input 
-                                formControlName="question"
-                                class="form-control col-lg-12"
-                                placeholder="Câu hỏi"
-                                [ngClass]="{ 'is-invalid': submitted && Form.question.errors }"
-                            >
-                            <div *ngIf="submitted && Form.question.errors" class="invalid-feedback">
-                                <div *ngIf="Form.question.errors.required">Câu hỏi là bắt buộc</div>
-                            </div>
-                        </div>
-    
-                    </div>
-                    <div class="form-group row">
-                        <label for="search" class="col-sm-4 col-form-label">Câu trả lời(<span class="text-danger">*</span>):</label>
-                        <div class="col-sm-8">
-                            <ckeditor [editor]="Editor"
-                                formControlName = "answer"
-                            ></ckeditor>
-                            <!-- <input 
-                                formControlName="answer"
-                                class="form-control col-lg-12"
-                                placeholder="Câu trả lời"
-                                [ngClass]="{ 'is-invalid': submitted && Form.answer.errors }"
-                            >
-                            <div *ngIf="submitted && Form.answer.errors" class="invalid-feedback">
-                                <div *ngIf="Form.answer.errors.required">Câu trả lời là bắt buộc</div>
-                            </div> -->
-                        </div>
-    
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-8">
-                            <button class="btn btn-success mr-3">
-                                <i class="fa fa-save"></i>&nbsp;Lưu lại
-                            </button>
-                            <button class="btn btn-light" (click)="resetForm()">
-                                <i class="fa fa-close"></i>&nbsp;Huỷ
-                            </button>
+    <app-page-header
+        [heading]="'Thông tin Q&As'"
+        [heading_second]="'Thêm mới Q&As'"
+        [url_heading]="'/qas-info'">
+    </app-page-header>
+    <div class="row">
+        <div class="col-md-8">
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã QA(<span
+                            class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="productCode"
+                            class="form-control col-lg-12"
+                            placeholder="Mã QA"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.productCode.errors }">
+                        <div *ngIf="submitted && Form.productCode.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.productCode.errors.required">Mã QA
+                                là bắt buộc</div>
+                            <div *ngIf="Form.productCode.errors.pattern">Mã QA
+                                không đúng định dạng</div>
                         </div>
                     </div>
-                </form>
-    
-            </div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên QA(<span
+                            class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="productName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên QA"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.productName.errors }">
+                        <div *ngIf="submitted && Form.productName.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.productName.errors.required">Tên QA
+                                là bắt buộc</div>
+                            <div *ngIf="Form.productName.errors.pattern">Tên QA
+                                không đúng định dạng</div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Câu hỏi(<span
+                            class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="question"
+                            class="form-control col-lg-12"
+                            placeholder="Câu hỏi"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.question.errors }">
+                        <div *ngIf="submitted && Form.question.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.question.errors.required">Câu hỏi
+                                là bắt buộc</div>
+                            <div *ngIf="Form.question.errors.pattern">Câu hỏi
+                                không đúng định dạng</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Câu trả
+                        lời(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <ckeditor [editor]="Editor"
+                            formControlName="answer"></ckeditor>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-8">
+                        <button class="btn btn-success mr-3">
+                            <i class="fa fa-save"></i>&nbsp;Lưu lại
+                        </button>
+                        <button class="btn btn-light" (click)="resetForm()">
+                            <i class="fa fa-close"></i>&nbsp;Huỷ
+                        </button>
+                    </div>
+                </div>
+            </form>
+
         </div>
     </div>
-    
+</div>
