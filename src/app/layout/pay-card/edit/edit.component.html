@@ -8,42 +8,42 @@
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã card(<span
-                            class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Sản phẩm
+                        thẻ trên HT(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             [attr.disabled]="true"
                             formControlName="prdcode"
                             class="form-control col-lg-12"
-                            placeholder="Mã card"
+                            placeholder="Sản phẩm thẻ trên HT"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.prdcode.errors }">
                         <div *ngIf="submitted && Form.prdcode.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.prdcode.errors.required">Mã card là
-                                bắt buộc</div>
-                            <div *ngIf="Form.prdcode.errors.pattern">Mã card
-                                không đúng định dạng</div>
+                            <div *ngIf="Form.prdcode.errors.required">Sản phẩm
+                                thẻ trên HT là bắt buộc</div>
+                            <div *ngIf="Form.prdcode.errors.pattern">Sản phẩm
+                                thẻ trên HT không đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Sản
+                    <label for="search" class="col-sm-4 col-form-label">Tên sản
                         phẩm(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="product"
                             class="form-control col-lg-12"
-                            placeholder="Sản phẩm"
+                            placeholder="Tên sản phẩm"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.product.errors }">
                         <div *ngIf="submitted && Form.product.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.product.errors.required">Sản phẩm
-                                là bắt buộc</div>
-                            <div *ngIf="Form.product.errors.pattern">Sản phẩm
-                                không đúng định dạng</div>
+                            <div *ngIf="Form.product.errors.required">Tên sản
+                                phẩm là bắt buộc</div>
+                            <div *ngIf="Form.product.errors.pattern">Tên sản
+                                phẩm không đúng định dạng</div>
                         </div>
                     </div>
 
@@ -91,220 +91,210 @@
 
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Phí
-                        chuyển đổi(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Phí thay
+                        đổi TT(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="changesttFee"
                             class="form-control col-lg-12"
-                            placeholder="Phí chuyển đổi"
+                            placeholder="Phí thay đổi TT"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.changesttFee.errors }">
                         <div *ngIf="submitted && Form.changesttFee.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.changesttFee.errors.required">Phí
-                                chuyển đổi là bắt buộc</div>
+                                thay đổi TT là bắt buộc</div>
                             <div *ngIf="Form.changesttFee.errors.pattern">Phí
-                                chuyển đổi không đúng định dạng</div>
+                                thay đổi TT không đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Thuộc
-                        tính(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Hạng
+                        thẻ(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="class_"
                             class="form-control col-lg-12"
-                            placeholder="Thuộc tính"
+                            placeholder="Hạng thẻ"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.class_.errors }">
                         <div *ngIf="submitted && Form.class_.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.class_.errors.required">Thuộc tính
-                                là bắt buộc</div>
-                            <div *ngIf="Form.class_.errors.pattern">Thuộc tính
+                            <div *ngIf="Form.class_.errors.required">Hạng thẻ là
+                                bắt buộc</div>
+                            <div *ngIf="Form.class_.errors.pattern">Hạng thẻ
                                 không đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Phí trực
-                        tiếp(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Phí ĐK
+                        trích nợ tự động(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="directddFee"
                             class="form-control col-lg-12"
-                            placeholder="Phí trực tiếp"
+                            placeholder="Phí ĐK trích nợ tự động"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.directddFee.errors }">
                         <div *ngIf="submitted && Form.directddFee.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.directddFee.errors.required">Phí
-                                trực tiếp là bắt buộc</div>
-                            <div *ngIf="Form.directddFee.errors.pattern">Phí
-                                trực tiếp không đúng định dạng</div>
+                            <div *ngIf="Form.directddFee.errors.required">Phí ĐK
+                                trích nợ tự động là bắt buộc</div>
+                            <div *ngIf="Form.directddFee.errors.pattern">Phí ĐK
+                                trích nợ tự động không đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">F01(<span
-                            class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Phí khác
+                        (nếu có)(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="f01"
                             class="form-control col-lg-12"
-                            placeholder="F01"
+                            placeholder="Phí khác (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.f01.errors }">
                         <div *ngIf="submitted && Form.f01.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.f01.errors.required">F01 là bắt
-                                buộc</div>
-                            <div *ngIf="Form.f01.errors.pattern">F01 không đúng
-                                định dạng</div>
+                            <div *ngIf="Form.f01.errors.pattern">Phí khác (nếu
+                                có) không đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">F02(<span
-                            class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Phí khác
+                        (nếu có)(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="f02"
                             class="form-control col-lg-12"
-                            placeholder="F02"
+                            placeholder="Phí khác (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.f02.errors }">
                         <div *ngIf="submitted && Form.f02.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.f02.errors.required">F02 là bắt
-                                buộc</div>
-                            <div *ngIf="Form.f02.errors.pattern">F02 không đúng
-                                định dạng</div>
+                            <div *ngIf="Form.f02.errors.pattern">Phí khác (nếu
+                                có) không đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">F03(<span
-                            class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Phí khác
+                        (nếu có)(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="f03"
                             class="form-control col-lg-12"
-                            placeholder="F03"
+                            placeholder="Phí khác (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.f03.errors }">
                         <div *ngIf="submitted && Form.f03.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.f03.errors.required">F03 là bắt
-                                buộc</div>
-                            <div *ngIf="Form.f04.errors.pattern">F04 không đúng
-                                định dạng</div>
+                            <div *ngIf="Form.f04.errors.pattern">Phí khác (nếu
+                                có) không đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">F04(<span
-                            class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Phí khác
+                        (nếu có)(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="f04"
                             class="form-control col-lg-12"
-                            placeholder="F04"
+                            placeholder="Phí khác (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.f04.errors }">
                         <div *ngIf="submitted && Form.f04.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.f04.errors.required">F04 là bắt
-                                buộc</div>
-                            <div *ngIf="Form.f04.errors.pattern">F04 không đúng
-                                định dạng</div>
+                            <div *ngIf="Form.f04.errors.pattern">Phí khác (nếu
+                                có) không đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">F05(<span
-                            class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Phí khác
+                        (nếu có)(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="f05"
                             class="form-control col-lg-12"
-                            placeholder="F05"
+                            placeholder="Phí khác (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.f05.errors }">
                         <div *ngIf="submitted && Form.f05.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.f05.errors.required">F05 là bắt
-                                buộc</div>
-                            <div *ngIf="Form.f05.errors.pattern">F05 không đúng
-                                định dạng</div>
+                            <div *ngIf="Form.f05.errors.pattern">Phí khác (nếu
+                                có) không đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Phí phát
-                        sinh(<span class="text-danger">*</span>):</label>
+                        mới(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="issueFee"
                             class="form-control col-lg-12"
-                            placeholder="Phí phát sinh"
+                            placeholder="Phí phát mới"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.issueFee.errors }">
                         <div *ngIf="submitted && Form.issueFee.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.issueFee.errors.required">Phí phát
-                                sinh là bắt buộc</div>
+                                mới là bắt buộc</div>
                             <div *ngIf="Form.issueFee.errors.pattern">Phí phát
-                                sinh không đúng định dạng</div>
+                                mới không đúng định dạng</div>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Phí phát
-                        sinh vấn đề(<span class="text-danger">*</span>):</label>
+                        hành lại thẻ(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="reissueFee"
                             class="form-control col-lg-12"
-                            placeholder="Phí phát sinh vấn đề"
+                            placeholder="Phí phát hành lại thẻ"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.reissueFee.errors }">
                         <div *ngIf="submitted && Form.reissueFee.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.reissueFee.errors.required">Phí
-                                phát sinh vấn đề là bắt buộc</div>
+                                phát hành lại thẻ là bắt buộc</div>
                             <div *ngIf="Form.reissueFee.errors.pattern">Phí phát
-                                sinh vấn đề không đúng định dạng</div>
+                                hành lại thẻ không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Phí xoay
-                        vòng(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Phí in
+                        lại PIN(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="repinFee"
                             class="form-control col-lg-12"
-                            placeholder="Phí xoay vòng"
+                            placeholder="Phí in lại PIN"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.repinFee.errors }">
                         <div *ngIf="submitted && Form.repinFee.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.repinFee.errors.required">Phí xoay
-                                vòng là bắt buộc</div>
-                            <div *ngIf="Form.repinFee.errors.pattern">Phí xoay
-                                vòng không đúng định dạng</div>
+                            <div *ngIf="Form.repinFee.errors.required">Phí in
+                                lại PIN là bắt buộc</div>
+                            <div *ngIf="Form.repinFee.errors.pattern">Phí in lại
+                                PIN không đúng định dạng</div>
                         </div>
                     </div>
 
@@ -329,13 +319,10 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Trạng
-                        thái(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select class="form-control" formControlName="status"
-                            name="status">
-                            <option *ngFor="let status of listStatus"
-                                [value]="status.code" selected="selected">{{status.name}}</option>
+                        <select class="form-control" formControlName="status" name="status">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
                         </select>
                     </div>
                 </div>
@@ -356,37 +343,3 @@
         </div>
     </div>
 </div>
-<ng-template #modalUpload let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <h5 class="modal-title">Upload Ảnh</h5>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross
-            click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body p-t-0">
-        <div class="col-md-12">
-            <form>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Hình
-                        ảnh(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <div class="custom-file">
-                            <input
-                                type="file" class="custom-file-input"
-                                id="inputGroupFile01"
-                                placeholder="Hình ảnh"
-                                type="file"
-                                name="img"
-                                accept="image/*"
-                                (change)="handleFileInput($event.target.files)"
-                                aria-describedby="inputGroupFileAddon01">
-                            <label class="custom-file-label" style="cursor:
-                                pointer" for="inputGroupFile01">Choose file</label>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</ng-template>
