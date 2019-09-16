@@ -14,11 +14,8 @@ export class ListComponent implements OnInit {
     private modalOp: NgbModalRef;
     search_keyword: any = '';
     re_search: any = {
-        brnCode: '',
-        branchName: '',
-        departCode: '',
-        departName: '',
-        status: '',
+        compCode: '',
+        compName: '',
         page: 0,
         size: 10
     };
@@ -53,7 +50,7 @@ export class ListComponent implements OnInit {
         // xu ly
         this.listData = [];
         this.ncbService
-            .searchBranch(params)
+            .searchCompany(params)
             .then(result => {
                 setTimeout(() => {
                     const body = result.json().body;
@@ -75,13 +72,17 @@ export class ListComponent implements OnInit {
             cancelButtonText: 'Không, trở lại'
         }).then(result => {
             if (result.value) {
-                this.ncbService.deleteBranch({departCode: code}).then(() => {
-                    this.listData.splice(index, 1);
-                    Swal.fire(
-                      'Đã xoá!',
-                      'Dữ liệu đã xoá hoàn toàn.',
-                      'success'
-                    );
+                this.ncbService.deleteCompany({ compCode: code }).then((res) => {
+                    if (res.json().code === '00') {
+                        this.listData.splice(index, 1);
+                        Swal.fire(
+                          'Đã xoá!',
+                          'Dữ liệu đã xoá hoàn toàn.',
+                          'success'
+                        );
+                    } else {
+                        this.toastr.error('Xoá thất bại', 'Thất bại');
+                    }
                   });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
                 Swal.fire('Huỷ bỏ', 'Dữ liệu được bảo toàn :)', 'error');

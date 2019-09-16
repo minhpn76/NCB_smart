@@ -56,18 +56,12 @@ export class CreateComponent implements OnInit {
 
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
-            brnCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            branchName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            departCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            departName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+            compCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+            compName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
             address: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            phone: ['', Validators.compose([Validators.maxLength(13), Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            fax: [''],
-            latitude: [''],
-            longitude: [''],
-            urlImg: [''],
-            dao: [''],
-            status: 'A'
+            dao: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+            mcn: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+            mp: ['', Validators.compose([Validators.maxLength(13), Validators.pattern(/^((?!\s{2,}).)*$/)])]
         });
     }
     get Form() {
@@ -81,13 +75,15 @@ export class CreateComponent implements OnInit {
             return;
         }
         this.ncbService
-            .createBranch(this.dataForm.value)
+            .createCompany(this.dataForm.value)
             .then(result => {
                 if (result.json().code === '00') {
                     this.toastr.success('Thêm mới chi nhánh', 'Thành công!');
                     setTimeout(() => {
                         this.router.navigateByUrl('/branch');
                     }, 500);
+                } else if (result.json().code === '907') {
+                    this.toastr.error('Dự liệu đã tồn tại', 'Thất bại!');
                 } else {
                     this.toastr.error('Thêm mới chi nhánh thất bại', 'Thất bại!');
                 }
@@ -96,54 +92,5 @@ export class CreateComponent implements OnInit {
     }
     resetForm() {
         this.router.navigateByUrl('/branch');
-    }
-
-    openModal(content) {
-        this.modalOp = this.modalService.open(content);
-    }
-
-    onUploadFile(event) {
-        const fileList: FileList = event.files;
-        if (fileList.length > 0) {
-            this.fileExcel.file = fileList[0];
-            this.fileExcel.name = fileList[0].name;
-            this.fileExcel.size = fileList[0].size;
-        }
-    }
-    onUploadServer() {
-        console.log('up to server');
-        // let data = this.list_couriers.filter(v => v['CourierId'] == this.courierId);
-        // let courierName = data[0].Name
-
-        // if (this.fileExcel.file) {
-        //     this.temp.loading = true
-        //     let file: File = this.fileExcel.file;
-        //     this.journeyService.upFileExcel(file, {
-        //         'courierId': this.courierId,
-        //         'courierName': courierName,
-        //         'email_upload': this.user_email
-        //     }).then((result) => {
-        //         let rep = result.json()
-        //         if (rep.error == true) {
-        //             this.appComponent.toasterTranslate('error', 'TICM_uploadfileloihaythulai');
-        //         } else {
-        //             let dataReponse = {
-        //                 'FileUpload': result.json().data,
-        //                 'CourierId': this.courierId,
-        //                 'courierName': courierName,
-        //                 'email_upload': this.user_email,
-        //                 'Action': 'uploadFile'
-        //             }
-        //             this.change.emit(dataReponse);
-        //             this.appComponent.toastr.success(result.json().messages, 'Oops!');
-        //         }
-        //         this.temp.loading = false
-        //         this.emitCloseModal.emit(true);
-        //     })
-        //         .catch((err) => {
-        //             this.temp.loading = false
-        //             this.appComponent.toastr.warning(this.appComponent.instantTranslate('Toaster_PleaseTryAgain'), 'Oops!');
-        //         });
-        // }
     }
 }

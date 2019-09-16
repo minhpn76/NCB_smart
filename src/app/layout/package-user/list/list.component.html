@@ -123,8 +123,8 @@
               <td>{{data?.function?.promotion}}</td>
               <td>{{data?.function?.prdName}}</td>
               <td>
-                  <span *ngIf="data?.usrstatus =='A'" class="badge badge-success">ACTIVE</span>
-                  <span *ngIf="data?.usrstatus =='D'" class="badge badge-success">Deactive</span>
+                  <span *ngIf="data?.usrstatus =='A'" class="badge badge-success">Active</span>
+                  <span *ngIf="data?.usrstatus =='C'" class="badge badge-danger">Deactive</span>
 
               </td>
           </tr>
@@ -135,11 +135,7 @@
   </div>  
   <div class="row mt-3">
       <div class="col-md-12">
-        <ngb-pagination *ngIf="totalSearch > 0 && totalSearch > re_search.size && isSearch === false"
-            [collectionSize]="totalSearch" [pageSize]="re_search.size" [(page)]="re_search.page"
-            [boundaryLinks]="true"
-            [maxSize]="10" (pageChange)="loadPage($event)"></ngb-pagination>
-        <ngb-pagination *ngIf="totalSearch > 0 && totalSearch > re_search.size && isSearch === true"
+        <ngb-pagination *ngIf="totalSearch > 0 && totalSearch > re_search.size"
             [collectionSize]="totalSearch" [pageSize]="re_search.size" [(page)]="re_search.page"
             [boundaryLinks]="true"
             [maxSize]="10" (pageChange)="loadPage($event)"></ngb-pagination>

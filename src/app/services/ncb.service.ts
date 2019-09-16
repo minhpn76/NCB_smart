@@ -728,4 +728,25 @@ export class NCBService {
     const url = `${API_URL}/img/deleteFile`;
     return this.auth.authRequest({ url: url, param: payload, method: 'DELETE' });
   }
+  // danh muc chi nhanh
+  searchCompany(params): Promise<any> {
+    const url = `${API_URL}/company/search`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+  }
+  detailCompany(params): Promise<any> {
+    const url = `${API_URL}/company/detail`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+  }
+  updateCompany(data): Promise<any> {
+    const url = `${API_URL}/company/update`;
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true});
+  }
+  deleteCompany(params): Promise<any> {
+    const url = `${API_URL}/company/delete`;
+    return this.auth.authRequest({ url: url, params: params, method: 'DELETE'});
+  }
+  createCompany(body): Promise<any> {
+    const url = `${API_URL}/company/create`;
+    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true});
+  }
 }

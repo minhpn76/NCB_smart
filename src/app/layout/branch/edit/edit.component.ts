@@ -38,18 +38,12 @@ export class EditComponent implements OnInit {
       this.departCode = params.itemId;
     });
     this.dataForm = this.formBuilder.group({
-      brnCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      branchName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      departCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      departName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      compCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      compName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       address: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      phone: ['', Validators.compose([Validators.maxLength(13), Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      fax: [''],
-      latitude: [''],
-      longitude: [''],
-      urlImg: [''],
-      dao: [''],
-      status: ''
+      dao: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      mcn: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      mp: ['', Validators.compose([Validators.maxLength(13), Validators.pattern(/^((?!\s{2,}).)*$/)])]
     });
     this.getItem(this.departCode);
   }
@@ -62,7 +56,7 @@ export class EditComponent implements OnInit {
     if (this.dataForm.invalid) {
         return;
     }
-    this.ncbService.updateBranch(this.dataForm.value).then(result => {
+    this.ncbService.updateCompany(this.dataForm.value).then(result => {
       if (result.json().code === '00') {
         this.toastr.success('Sửa thành công', 'Thành công!');
         setTimeout(() => {
@@ -76,20 +70,15 @@ export class EditComponent implements OnInit {
     });
   }
   getItem(params) {
-    this.ncbService.detailBranch({departCode: params}).then((result) => {
+    this.ncbService.detailCompany({compCode: params}).then((result) => {
       const body = result.json().body;
       this.dataForm.patchValue({
-        brnCode: body.brnCode,
-        branchName: body.branchName,
-        departCode: body.departCode,
-        departName: body.departName,
+        compCode: body.compCode,
+        compName: body.compName,
         address: body.address,
-        phone: body.phone,
-        longitude: body.longitude,
-        latitude: body.latitude,
+        mcn: body.mcn,
         dao: body.dao,
-        urlImg: body.urlImg,
-        status: body.status
+        mp: body.mp
       });
     }).catch(err => {
       this.toastr.error(err.json().decription, 'Thất bại!');

@@ -109,18 +109,11 @@ export class ListComponent implements OnInit {
 
   loadPage(page: any) {
     const page_number = page - 1;
-    if (this.isSearch === false) {
-      if (page_number !== this.re_search.previous_page) {
-        this.re_search.page = page_number;
-        this.re_search.previous_page = page_number;
-        this.getListData(this.re_search);
-      }
-    } else {
-      if (page_number !== this.re_search.previous_page) {
-        this.re_search.page = page_number;
-        this.re_search.previous_page = page_number;
-        this.onSearch(this.re_search);
-      }
+    if (page_number !== this.re_search.previous_page) {
+      this.re_search.page = page_number;
+      this.re_search.previous_page = page_number;
+      this.getListData(this.re_search);
+      this.re_search.page = page;
     }
   }
   changeSize(size: number) {
@@ -130,25 +123,10 @@ export class ListComponent implements OnInit {
 
   onSearch(params) {
     // date
-    if (params.brncode !== '' || params.usrfname !== '' || params.officecode !== '' || params.cifname !== '' || params.usrstatus !== '' || params.status !== '') {
-      params.page = 0;
-    }
-    this.listData = [];
-    this.isSearch = true;
-    this.isProcessLoad = 1;
-    this.ncbService.searchPackageUser(params).then((result) => {
-      setTimeout(() => {
-        this.isProcessLoad = 0;
-        const body = result.json().body;
-        this.listData = body.content;
-        this.totalSearch = body.totalElements;
-      }, 500);
-    }).catch((err) => {
-      this.isProcessLoad = 0;
-      this.listData = [];
-      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
-
-    });
+    // if (params.brncode !== '' || params.usrfname !== '' || params.officecode !== '' || params.cifname !== '' || params.usrstatus !== '' || params.status !== '') {
+    params.page = 0;
+    // }
+    this.getListData(params);
   }
   exportExcel() {
 
@@ -204,10 +182,5 @@ export class ListComponent implements OnInit {
       this.re_search.filter = this.search_keyword;
       this.getListData(this.re_search);
     }
-  }
-  changePageSize() {
-    this.re_search.page = 0;
-    this.isSearch = false;
-    this.getListData(this.re_search);
   }
 }
