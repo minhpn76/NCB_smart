@@ -77,7 +77,7 @@ export class CreateComponent implements OnInit {
     });
   }
   resetForm() {
-    this.router.navigateByUrl('/province');
+    this.router.navigateByUrl('/bank-tranfer');
   }
   openModal(content) {
 

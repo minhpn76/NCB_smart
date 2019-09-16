@@ -1,10 +1,12 @@
 <div>
-    <app-page-header [heading]="'Danh sách nhà cung cấp thanh toán hoá đơn'" [url_heading]="'/bill-service'"> </app-page-header>
+    <app-page-header [heading]="'Danh sách nhà cung cấp thanh toán hoá đơn'"
+        [url_heading]="'/bill-service'"> </app-page-header>
     <!-- {{'Admin_function.DS_province' | translate}} -->
     <div class="row">
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Tên nhà cung cấp TTHD:</label>
+                <label for="search" class="col-sm-4 col-form-label">Tên nhà cung
+                    cấp TTHD:</label>
                 <div class="col-sm-6">
                     <input
                         [(ngModel)]="re_search.providerName"
@@ -13,21 +15,24 @@
                         type="text"
                         id="search"
                         placeholder="Tên nhà cung cấp TTHD"
-                    />
+                        />
                 </div>
             </div>
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.status">
-                        <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
+                        <option *ngFor="let status of listStatus"
+                            [value]="status.code" selected="selected">{{
+                            status.name }}</option>
                     </select>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Mã nhà cung cấp TTHD:</label>
+                <label for="search" class="col-sm-4 col-form-label">Mã nhà cung
+                    cấp TTHD:</label>
                 <div class="col-sm-6">
                     <input
                         class="form-control col-lg-12"
@@ -36,24 +41,28 @@
                         id="search"
                         [(ngModel)]="re_search.providerCode"
                         placeholder="Mã nhà cung cấp TTHD"
-                    />
+                        />
                 </div>
             </div>
         </div>
         <div class="col-md-12 text-center">
-            <button class="btn btn-primary mr-3" (click)="onSearch(re_search)"><i class="fa fa-search"></i>&nbsp;Tìm kiếm</button>
-            <a class="btn btn-warning" [routerLink]="['/bill-service/create']"> <i class="fa fa-plus"></i>&nbsp;Thêm mới </a>
+            <button class="btn btn-primary mr-3" (click)="onSearch(re_search)"><i
+                    class="fa fa-search"></i>&nbsp;Tìm kiếm</button>
+            <a class="btn btn-warning" [routerLink]="['/bill-service/create']">
+                <i class="fa fa-plus"></i>&nbsp;Thêm mới </a>
         </div>
     </div>
     <div class="row mt-50">
         <div class="col-md-8">
             <div class="form-group row">
                 <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
-                <select class="form-control col-sm-1" [(ngModel)]="re_search.size" (change)="changePageSize()">
-                    <option *ngFor="let page_size of listPageSize" [value]="page_size">{{ page_size }}</option>
+                <select class="form-control col-sm-1"
+                    [(ngModel)]="re_search.size" (change)="changePageSize()">
+                    <option *ngFor="let page_size of listPageSize"
+                        [value]="page_size">{{ page_size }}</option>
                 </select>
                 &nbsp;
-                <label for="search" class=" col-form-label">Bản ghi</label>
+                <label for="search" class="col-form-label">Bản ghi</label>
             </div>
         </div>
     </div>
@@ -66,44 +75,43 @@
                         <th scope="col">Mã nhà cung cấp TTHD</th>
                         <th scope="col">Tên nhà cung cấp TTHD</th>
                         <th scope="col">Mã dịch vụ</th>
-                        <!-- <th scope="col">Loại dịch vụ</th> -->
-                        <th scope="col">Mã nhà cung cấp NCB</th>
+                        <th scope="col">Loại dịch vụ</th>
                         <th scope="col">Trạng thái</th>
                         <th scope="col">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngIf="isProcessLoad == 1" class="text-center">
-                        <td colspan="7"><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        <td colspan="7"><i class="fa fa-spin fa-spinner
+                                font-30"></i></td>
                     </tr>
-                    <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
+                    <tr *ngIf="totalSearch == 0 && isProcessLoad == 0"
+                        class="text-center">
                         <td colspan="7">Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor="let service of listData; let i = index">
+                    <tr *ngFor="let data of listData; let i= index">
                         <th scope="row">
                             {{ i + 1 }}
                         </th>
-                        <td>{{ service.providerCode }}</td>
-                        <td>{{ service.providerName }}</td>
-                        <td>{{ service.serviceCode }}</td>
+                        <td>{{ data.providerCode }}</td>
+                        <td>{{ data.providerName }}</td>
+                        <td>{{ data.serviceCode }}</td>
                         <!-- <td>""</td> -->
-                        <td>{{ service.providerPartner }}</td>
+                        <td>{{ data.partner }}</td>
                         <td>
-                            <span class="badge badge-success" *ngIf="service.providerStatus === 'A'">Active</span>
-                            <span class="badge badge-success" *ngIf="service.providerStatus === 'D'">Deactive</span>
+                            <span class="badge badge-success"
+                                *ngIf="data.status === 'A'">Active</span>
+                            <span class="badge badge-danger"
+                                *ngIf="data.status === 'D'">Deactive</span>
                         </td>
                         <td>
-                            <a class="mr-2 cursor-pointer text-blue" routerLink="/bill-service/edit/{{ i }}">
+                            <a class="mr-2 cursor-pointer text-blue"
+                                routerLink="/bill-service/edit/{{ data.id }}">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <span class="mr-2 cursor-pointer text-blue">
-                                <i class="fa fa-lock"></i>
-                            </span>
-                            <!-- <span class="mr-2 cursor-pointer text-danger">
-                                <i class="fa fa-unlock-alt"></i>
-                            </span> -->
                             <span class="mr-2 cursor-pointer text-danger">
-                                <i class="fa fa-trash" (click)="deleteService(1, i)"></i>
+                                <i class="fa fa-trash" (click)="deleteService(1,
+                                    i, data.id)"></i>
                             </span>
                         </td>
                     </tr>
@@ -115,14 +123,14 @@
     <div class="row mt-3">
         <div class="col-md-12">
             <ngb-pagination
-                *ngIf="totalSearch > 0 && totalSearch > re_search.size"
+                *ngIf="totalSearch> 0 && totalSearch > re_search.size"
                 [collectionSize]="totalSearch"
                 [pageSize]="re_search.size"
                 [(page)]="re_search.page"
                 [boundaryLinks]="true"
                 [maxSize]="10"
                 (pageChange)="loadPage($event)"
-            ></ngb-pagination>
+                ></ngb-pagination>
         </div>
     </div>
     <!-- /.row -->

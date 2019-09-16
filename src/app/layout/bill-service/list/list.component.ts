@@ -48,6 +48,7 @@ export class ListComponent implements OnInit {
 
   getListData(params) {
     this.isProcessLoad = 1;
+    this.listData = [];
     // xu ly
     this.ncbService.searchProvider(params).then((result) => {
       setTimeout(() => {
@@ -70,7 +71,7 @@ export class ListComponent implements OnInit {
       // this.getListData(this.re_search);
     }
   }
-  deleteService(event, index) {
+  deleteService(event, index, code) {
     Swal.fire({
       title: 'Bạn có chắc chắn xoá?',
       text: 'Dữ liệu đã xoá không thể khôi phục lại',
@@ -80,12 +81,14 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.listData.splice(index, 1);
-        Swal.fire(
-          'Đã xoá!',
-          'Dữ liệu đã xoá hoàn toàn.',
-          'success'
-        );
+        this.ncbService.deleteProvider({id: code}).then(() => {
+          Swal.fire(
+            'Đã xoá!',
+            'Dữ liệu đã xoá hoàn toàn.',
+            'success'
+          );
+          this.onSearch(this.re_search);
+        });
       // For more information about handling dismissals please visit
       // https://sweetalert2.github.io/#handling-dismissals
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -106,14 +109,12 @@ export class ListComponent implements OnInit {
     if (page_number !== this.re_search.previous_page) {
       this.re_search.page = page_number;
       this.re_search.previous_page = page_number;
-      this.onSearch(this.re_search);
+      this.getListData(this.re_search);
       this.re_search.page = page;
     }
   }
   onSearch(payload) {
-    if (payload.providerCode !== '') {
-      payload.search = 0;
-    }
+    payload.page = 0;
     this.getListData(payload);
   }
   changePageSize() {

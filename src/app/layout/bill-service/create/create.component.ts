@@ -1,44 +1,60 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { NCBService } from '../../../services/ncb.service';
 
 @Component({
   selector: 'billservice-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  styleUrls: ['./create.component.css'],
+  providers: [NCBService]
 })
 export class CreateComponent implements OnInit {
-  billServiceForm: FormGroup;
+  dataForm: FormGroup;
   submitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private ncbService: NCBService,
+    public router: Router
   ) { }
 
   ngOnInit() {
-    this.billServiceForm = this.formBuilder.group({
-      serviceTTHDCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      servicepPartnerTTHDCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      PartnerNCBCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      namePartnerTTHDVN: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      optionServiceTTHD: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])]
+    this.dataForm = this.formBuilder.group({
+      providerCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      providerName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      serviceCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      partner: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])]
     });
   }
-  get Form() { return this.billServiceForm.controls; }
+  get Form() { return this.dataForm.controls; }
 
   onSubmit() {
     this.submitted = true;
-
     // stop here if form is invalid
-    if (this.billServiceForm.invalid) {
+    if (this.dataForm.invalid) {
         return;
     }
-    this.toastr.success('Thêm mới thành công', 'Thành công!');
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.billServiceForm.value));
+    this.ncbService
+        .createProvider(this.dataForm.value)
+        .then(result => {
+            if (result.json().code === '00') {
+                this.toastr.success('Thêm mới thành công', 'Thành công!');
+                setTimeout(() => {
+                    this.router.navigateByUrl('/bill-service');
+                }, 500);
+            } else if (result.json().code === '906') {
+              this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
+            } else {
+                this.toastr.error('Thêm mới thất bại', 'Thất bại!');
+            }
+        })
+        .catch(err => {});
   }
   resetForm() {
-    this.billServiceForm.reset();
+      this.router.navigateByUrl('/bill-service');
   }
 }
 

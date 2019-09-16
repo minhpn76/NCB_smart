@@ -101,14 +101,15 @@ export class ListComponent implements OnInit {
     if (page_number !== this.re_search.previous_page) {
       this.re_search.page = page_number;
       this.re_search.previous_page = page_number;
-      this.onSearch(this.re_search);
+      this.getListData(this.re_search);
       this.re_search.page = page;
     }
   }
   onSearch(payload) {
-    if (payload.provisionName !== '' || payload.status !== '') {
-      payload.page = 0;
-    }
+    payload.page = 0;
+    // if (payload.provisionName !== '' || payload.status !== '') {
+    //   payload.page = 0;
+    // }
     this.getListData(payload);
   }
   // keyDownFunction(event) {

@@ -95,7 +95,7 @@ export class CreateComponent implements OnInit {
             .catch(err => {});
     }
     resetForm() {
-        this.dataForm.reset();
+        this.router.navigateByUrl('/branch');
     }
 
     openModal(content) {

@@ -121,9 +121,10 @@ export class ListComponent implements OnInit {
     }
   }
   onSearch(payload) {
-    if (payload.bankCode !== '' || payload.status !== '') {
-      payload.page = 0;
-    }
+    payload.page = 0;
+    // if (payload.bankCode !== '' || payload.status !== '') {
+    //   payload.page = 0;
+    // }
     this.getListData(payload);
   }
   keyDownFunction(event) {

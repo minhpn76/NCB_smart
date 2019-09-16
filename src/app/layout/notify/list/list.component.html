@@ -107,14 +107,14 @@
     <div class="row mt-3">
         <div class="col-md-12">
             <ngb-pagination
-                *ngIf="totalSearch> 0 && totalSearch > re_search.size"
+                *ngIf="totalSearch > 0 && totalSearch > re_search.size"
                 [collectionSize]="totalSearch"
                 [pageSize]="re_search.size"
                 [(page)]="re_search.page"
                 [boundaryLinks]="true"
                 [maxSize]="10"
                 (pageChange)="loadPage($event)"
-                ></ngb-pagination>
+            ></ngb-pagination>
         </div>
     </div>
     <!-- /.row -->

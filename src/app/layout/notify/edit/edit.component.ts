@@ -6,6 +6,7 @@ import { NCBService } from '../../../services/ncb.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Helper } from '../../../helper';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'notify-edit',
@@ -55,7 +56,7 @@ export class EditComponent implements OnInit {
       msg_Code_1: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       mes_Vn: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       mes_En: [''],
-      user_Id: [this.userInfo.userId],
+      user_Id: [JSON.stringify(this.userInfo.userId)],
       // status: ['']
     });
   }

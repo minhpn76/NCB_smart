@@ -92,7 +92,7 @@ export class NCBService {
     return this.auth.authRequest({ url: url, params: params, method: 'GET'});
   }
   searchProvider(params): Promise<any> {
-    const url = `${API_URL}/provider/searchProvider`;
+    const url = `${API_URL}/provider/search`;
     return this.auth.authRequest({ url: url, params: params, method: 'GET'});
   }
   /**
@@ -116,8 +116,20 @@ export class NCBService {
    *
    */
   createProvider(body): Promise<any> {
-    const url = `${API_URL}/provider/createProvider`;
-    return this.auth.authRequest({ url: url, data: body, method: 'POST'});
+    const url = `${API_URL}/provider/create`;
+    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true});
+  }
+  detailProvider(params): Promise<any> {
+    const url = `${API_URL}/provider/detail`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+  }
+  updateProvider(data): Promise<any> {
+    const url = `${API_URL}/provider/update`;
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true});
+  }
+  deleteProvider(params): Promise<any> {
+    const url = `${API_URL}/provider/delete`;
+    return this.auth.authRequest({ url: url, params: params, method: 'DELETE'});
   }
   searchBranch(params): Promise<any> {
     const url = `${API_URL}/ncb-branch/search`;
@@ -660,11 +672,11 @@ export class NCBService {
   // provider, type, error, msg_Code, msg_Code_1, mes_Vn, mes_En
   createNotify(data): Promise<any> {
     const url =  `${API_URL}/notify/create`;
-    return this.auth.authRequest({ url: url, data: data, method: 'POST'});
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true});
   }
   detailNotify(data): Promise<any> {
     const url = `${API_URL}/notify/detail`;
-    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'POST'});
   }
   // provider, type, error, msg_Code
   updateNotify(data): Promise<any> {
@@ -673,7 +685,7 @@ export class NCBService {
   }
   deleteNotify(data): Promise<any> {
     const url = `${API_URL}/notify/delete`;
-    return this.auth.authRequest({ url: url, params: data, method: 'DELETE', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'POST', application: true});
   }
   // roles
   searchRoles(data): Promise<any> {
