@@ -38,15 +38,18 @@
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Kiểu loại khách hàng(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select
-                            class="form-control"
+                        <input
                             formControlName="customerType"
+                            class="form-control col-lg-12"
+                            placeholder="Kiểu loại khách hàng"
                             [ngClass]="{ 'is-invalid': submitted && Form.customerType.errors }"
-                        >
-                            <option *ngFor="let data of listCustomer" selected [value]="data.code">{{ data.name }}</option>
-                        </select>
+                        />
                         <div *ngIf="submitted && Form.customerType.errors" class="invalid-feedback">
-                            <div *ngIf="Form.customerType.required">Kiểu loại khách hàng là bắt buộc</div>
+                            <div *ngIf="Form.customerType.errors.required">Kiểu loại khách hàng là bắt buộc</div>
+                            <div *ngIf="Form.customerType.errors.pattern">Kiểu loại khách hàng không hợp lệ</div>
+                            <div *ngIf="Form.customerType.errors.maxlength">Kiểu loại khách hàng qúa dài</div>
+                            <div *ngIf="Form.customerType.errors.minlength">Kiểu loại khách hàng qúa ngắn</div>
+
                         </div>
                     </div>
                 </div>
