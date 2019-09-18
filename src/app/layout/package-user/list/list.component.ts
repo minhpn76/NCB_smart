@@ -123,9 +123,9 @@ export class ListComponent implements OnInit {
 
   onSearch(params) {
     // date
-    // if (params.brncode !== '' || params.usrfname !== '' || params.officecode !== '' || params.cifname !== '' || params.usrstatus !== '' || params.status !== '') {
-    params.page = 0;
-    // }
+    if (params.brncode !== '' || params.usrfname !== '' || params.officecode !== '' || params.cifname !== '' || params.usrstatus !== '' || params.status !== '') {
+      params.page = 0;
+    }
     this.getListData(params);
   }
   exportExcel() {

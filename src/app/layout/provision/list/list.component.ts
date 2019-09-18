@@ -106,10 +106,10 @@ export class ListComponent implements OnInit {
     }
   }
   onSearch(payload) {
-    payload.page = 0;
-    // if (payload.provisionName !== '' || payload.status !== '') {
-    //   payload.page = 0;
-    // }
+    // payload.page = 0;
+    if (payload.provisionName !== '' || payload.status !== '') {
+      payload.page = 0;
+    }
     this.getListData(payload);
   }
   // keyDownFunction(event) {

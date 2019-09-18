@@ -107,10 +107,10 @@ export class ListComponent implements OnInit {
     }
   }
   onSearch(payload) {
-    payload.page = 0;
-    // if (payload.provider !== '' || payload.type !== '') {
-    //   payload.page = 0;
-    // }
+    // payload.page = 0;
+    if (payload.provider !== '' || payload.type !== '') {
+      payload.page = 0;
+    }
     this.getListData(payload);
   }
   // keyDownFunction(event) {

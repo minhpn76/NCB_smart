@@ -94,7 +94,9 @@ export class UserProfileComponent implements OnInit {
 
   onSearch(params) {
     // date
-    params.page = 0;
+    if (params.cifgrp !== '' || params.usrid !== '' || params.idno !== '') {
+      params.page = 0;
+    }
     this.getListData(params);
 
   }

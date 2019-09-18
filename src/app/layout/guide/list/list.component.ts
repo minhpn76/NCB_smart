@@ -105,10 +105,10 @@ export class ListComponent implements OnInit {
     }
   }
   onSearch(payload) {
-    // if (payload.serviceId !== '') {
-    //   payload.page = 0;
-    // }
-    payload.page = 0;
+    if (payload.serviceId !== '' || payload.status !== '') {
+      payload.page = 0;
+    }
+    // payload.page = 0;
     this.getListData(payload);
   }
   changePageSize() {

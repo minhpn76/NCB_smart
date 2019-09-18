@@ -98,10 +98,10 @@ export class ListComponent implements OnInit {
         }
     }
     onSearch(payload) {
-        payload.page = 0;
-        // if (payload.brnCode !== '' || payload.branchName !== '' || payload.departCode !== '' || payload.departName !== '' || payload.status !== '') {
-        //     payload.page = 0;
-        // }
+        // payload.page = 0;
+        if (payload.brnCode !== '' || payload.branchName !== '' || payload.departCode !== '' || payload.departName !== '' || payload.status !== '') {
+            payload.page = 0;
+        }
         this.getListData(payload);
     }
     keyDownFunction(event) {
