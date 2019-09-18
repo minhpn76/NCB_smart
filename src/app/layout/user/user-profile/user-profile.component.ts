@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
@@ -19,6 +19,7 @@ export class UserProfileComponent implements OnInit {
   totalSearch: any = 0;
   isProcessLoad: any = 0;
   search_keyword: any = '';
+  passData: any = {};
   re_search: any = {
     cifgrp: '',
     usrid: '',
@@ -44,9 +45,14 @@ export class UserProfileComponent implements OnInit {
       code: 'D',
     }
   ];
+  protected modalOp: NgbModalRef;
+
+  @ViewChild('modalUser')
+  public modalUserElementRef: ElementRef;
   constructor(
     private ncbService: NCBService,
     public toastr: ToastrService,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -72,51 +78,13 @@ export class UserProfileComponent implements OnInit {
 
   }
 
-  deleteItem(event, index) {
-    Swal.fire({
-      title: 'Bạn có chắc chắn xoá?',
-      text: 'Dữ liệu đã xoá không thể khôi phục lại',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Đồng ý',
-      cancelButtonText: 'Không, trở lại'
-    }).then((result) => {
-      if (result.value) {
-        this.listData.splice(index, 1);
-        Swal.fire(
-          'Đã xoá!',
-          'Dữ liệu đã xoá hoàn toàn.',
-          'success'
-        );
-
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Huỷ bỏ',
-          'Dữ liệu được bảo toàn :)',
-          'error'
-        );
-      }
-    });
-  }
-  cancelAction(event) {
-    console.log('huy bo thanh con');
-
-  }
-
   loadPage(page: any) {
     const page_number = page - 1;
-    if (this.isSearch === false) {
-      if (page_number !== this.re_search.previous_page) {
-        this.re_search.page = page_number;
-        this.re_search.previous_page = page_number;
-        this.getListData(this.re_search);
-      }
-    } else {
-      if (page_number !== this.re_search.previous_page) {
-        this.re_search.page = page_number;
-        this.re_search.previous_page = page_number;
-        this.onSearch(this.re_search);
-      }
+    if (page_number !== this.re_search.previous_page) {
+      this.re_search.page = page_number;
+      this.re_search.previous_page = page_number;
+      this.getListData(this.re_search);
+      this.re_search.page = page;
     }
   }
   changeSize(size: number) {
@@ -126,25 +94,24 @@ export class UserProfileComponent implements OnInit {
 
   onSearch(params) {
     // date
-    this.isSearch = true;
-    this.isProcessLoad = 1;
-    this.ncbService.searchProfileUser(params).then((result) => {
-      this.listData = [];
-      setTimeout(() => {
-        this.isProcessLoad = 0;
-        const body = result.json().body;
-        this.listData = body.content;
-        this.totalSearch = body.totalElements;
-      }, 500);
-    }).catch((err) => {
-      this.isProcessLoad = 0;
-      this.listData = [];
-      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+    params.page = 0;
+    this.getListData(params);
 
+  }
+  openModal(content, classLayout = '', type = '') {
+    if (type === 'static') {
+      this.modalOp = this.modalService.open(content, { keyboard: false, backdrop: 'static', windowClass: classLayout, size: 'lg' });
+    } else {
+        this.modalOp = this.modalService.open(content, { windowClass: classLayout, size: 'lg' });
+    }
+    this.modalOp.result.then((result) => {
+    }, (reason) => {
     });
   }
-  exportExcel() {
-
+  async openModalUser(data) {
+    this.passData = data;
+    // await this.getItem(id);
+    this.openModal(this.modalUserElementRef, 'modal-package', 'static');
   }
   keyDownFunction(event) {
     if (event.keyCode === 13) {
@@ -158,26 +125,4 @@ export class UserProfileComponent implements OnInit {
     this.isSearch = false;
     this.getListData(this.re_search);
   }
-
-  getListRole() {
-    this.listRole = [];
-    this.ncbService.searchRoles({
-      status: 'A',
-      roleName: '',
-      page: 1,
-      size: 1000
-    }).then((result) => {
-      this.listRole.push({ code: '', name: 'Tất cả' });
-      result.json().body.content.forEach(element => {
-        this.listRole.push({
-          code: element.roleId,
-          name: element.roleName,
-        });
-      });
-    }).catch((err) => {
-
-    });
-  }
-
-
 }

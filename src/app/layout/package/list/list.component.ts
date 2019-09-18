@@ -16,7 +16,7 @@ export class ListComponent implements OnInit {
   isProcessLoad: any = 0;
   totalSearch: any = 0;
   re_search = {
-    serviceId: '',
+    prdName: '',
     status: '',
     size: 10,
     page: 0,
@@ -73,7 +73,7 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getListData({});
+    this.getListData(this.re_search);
   }
 
   getListData(params) {

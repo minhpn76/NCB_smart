@@ -31,6 +31,9 @@ export class Helper {
     urlEncodeParams(data) {
         return Object.entries(data).map(e => e.join('=')).join('&');
     }
+    tranferDate(params) {
+    return params.year + '/' + params.month + '/' + params.day;
+    }
 
     // Process String
     bodauTiengViet(str) {
@@ -54,6 +57,21 @@ export class Helper {
         // str = str.replace(/-/g, "");
 
         return str;
+    }
+    formatDate(date) {
+        let d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) {
+            month = '0' + month;
+        }
+        if (day.length < 2) {
+            day = '0' + day;
+        }
+
+        return [year, month, day].join('/');
     }
     toFormData<T>( formValue: T ) {
         const formData = new FormData();

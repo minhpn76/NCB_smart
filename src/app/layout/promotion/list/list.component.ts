@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'package-list',
+  selector: 'promotion-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
   providers: [NCBService]
@@ -16,7 +16,7 @@ export class ListComponent implements OnInit {
   isProcessLoad: any = 0;
   totalSearch: any = 0;
   re_search = {
-    serviceId: '',
+    promotionName: '',
     status: '',
     size: 10,
     page: 0,
@@ -25,47 +25,7 @@ export class ListComponent implements OnInit {
   passData: any = {};
 
   selectProvine: any;
-  listData: any = [
-    {
-      'id': 1,
-      'name': 'Service 1',
-      'description': 'This is description1',
-      'typeCustomer': 'Khach hang VIP1',
-      'feeQLTK': '10000',
-      'feeURT': '2000',
-      'feeISL': '3000',
-      'feeIBT': '25000',
-      'value': '12000',
-      'packagePromotion': 'B',
-      'status': 'A'
-    },
-    {
-      'id': 2,
-      'name': 'Service 2',
-      'description': 'This is description2',
-      'typeCustomer': 'Khach hang VIP2',
-      'feeQLTK': '10000',
-      'feeURT': '2000',
-      'feeISL': '3000',
-      'feeIBT': '25000',
-      'value': '12000',
-      'packagePromotion': 'A',
-      'status': 'A'
-    },
-    {
-      'id': 3,
-      'name': 'Service 3',
-      'description': 'This is description3',
-      'typeCustomer': 'Khach hang VIP3',
-      'feeQLTK': '10000',
-      'feeURT': '2000',
-      'feeISL': '3000',
-      'feeIBT': '25000',
-      'value': '12000',
-      'packagePromotion': 'C',
-      'status': 'A'
-    }
-  ];
+  listData: any = [];
   listProvinceName: any = [];
   listPageSize: any = [10, 20, 30, 40, 50];
   listStatus: any = [
@@ -95,17 +55,18 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.getListData(this.re_search);
+    this.getListData(this.re_search);
   }
 
   getListData(params) {
     this.listData = [];
     this.isProcessLoad = 1;
     // xu ly
-    this.ncbService.searchNcbGuide(params).then((result) => {
+    this.ncbService.searchPromotion(params).then((result) => {
       setTimeout(() => {
         const body = result.json().body;
         this.listData = body.content;
+        console.log('-==', this.listData);
         this.totalSearch = body.totalElements;
         this.isProcessLoad = 0;
       }, 300);
@@ -123,13 +84,17 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.ncbService.deleteNcbGuide({ id: id }).then(() => {
-          this.listData.splice(index, 1);
-          Swal.fire(
-            'Đã xoá!',
-            'Dữ liệu đã xoá hoàn toàn.',
-            'success'
-          );
+        this.ncbService.deletePromotion({ id: id }).then((res) => {
+          if (res.json().code === '00') {
+            Swal.fire(
+              'Đã xoá!',
+              'Dữ liệu đã xoá hoàn toàn.',
+              'success'
+            );
+          } else {
+            this.toastr.error('Xoá dự liệu thất bại!', 'Thất bại');
+          }
+
         });
       // For more information about handling dismissals please visit
       // https://sweetalert2.github.io/#handling-dismissals
@@ -163,47 +128,19 @@ export class ListComponent implements OnInit {
   }
   loadPage(page: number) {
     const page_number = page - 1;
-    if (this.isSearch === false) {
-      if (page_number !== this.re_search.previous_page) {
-        this.re_search.page = page_number;
-        this.re_search.previous_page = page_number;
-        this.getListData(this.re_search);
-      }
-    } else {
-      if (page_number !== this.re_search.previous_page) {
-        this.re_search.page = page_number;
-        this.re_search.previous_page = page_number;
-        this.onSearch(this.re_search);
-      }
+    if (page_number !== this.re_search.previous_page) {
+      this.re_search.page = page_number;
+      this.re_search.previous_page = page_number;
+      this.getListData(this.re_search);
+      this.re_search.page = page;
     }
   }
   onSearch(payload) {
-    this.isSearch = true;
-    this.listData = [];
-    this.isProcessLoad = 1;
-    this.ncbService.searchNcbGuide(payload).then(result => {
-      setTimeout(() => {
-        const body = result.json().body;
-        this.listData = body.content;
-        this.totalSearch = body.totalElements;
-        this.isProcessLoad = 0;
-      }, 300);
-    }).catch(err => {
-      this.isProcessLoad = 0;
-      this.listData = [];
-      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
-    });
+    payload.page = 0;
+    this.getListData(payload);
   }
-  // keyDownFunction(event) {
-  //   if (event.keyCode === 13) {
-  //     this.isSearch = false;
-  //     this.re_search.cityCode = this.re_search_keyword;
-  //     this.getListData(this.re_search);
-  //   }
-  // }
   changePageSize() {
     this.re_search.page = 0;
-    this.isSearch = false;
     this.getListData(this.re_search);
   }
 

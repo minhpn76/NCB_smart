@@ -1,53 +1,160 @@
 <div>
-    <app-page-header 
-        [heading]="'Hướng dẫn sử dụng'" 
-        [heading_second]="'Sửa hướng dẫn'" 
-        [url_heading]="'/guide'">
+    <app-page-header [heading]="'Khuyễn mãi/ ưu đãi'" [heading_second]="'Sửa khuyến mãi ưu đãi'" [url_heading]="'/promotion'">
     </app-page-header>
     <div class="row">
         <div class="col-md-8">
-            <form>
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã hướng dẫn(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-8">
-                        <input 
-                            [(ngModel)]="obj.serviceId"
-                            name="serviceId"
+                    <label for="search" class="col-sm-4 col-form-label">Tên chương trình(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="promotionName"
                             class="form-control col-lg-12"
-                            placeholder="TêMã hướng dẫn"
-                        >
+                            placeholder="Tên chương trình"
+                            [ngClass]="{ 'is-invalid': submitted && Form.promotionName.errors }"
+                        />
+                        <div *ngIf="submitted && Form.promotionName.errors" class="invalid-feedback">
+                            <div *ngIf="Form.promotionName.errors.required">Tên chương trình là bắt buộc</div>
+                            <div *ngIf="Form.promotionName.errors.required">Tên chương trình không hợp lệ</div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Nội dung(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-8">
-                        <ckeditor [editor]="Editor"
-                            [(ngModel)]="obj.content"
-                            name="content"
-                        ></ckeditor>
+                    <div class="col-sm-7">
+                        <textarea
+                            formControlName="promotion"
+                            class="form-control col-lg-12"
+                            placeholder="Nội dung"
+                            [ngClass]="{ 'is-invalid': submitted && Form.promotion.errors }"
+                        ></textarea>
+
+                        <div *ngIf="submitted && Form.promotion.errors" class="invalid-feedback">
+                            <div *ngIf="Form.promotion.errors.required">Nội dung là bắt buộc</div>
+                            <div *ngIf="Form.promotion.errors.required">Nội dung chương trình không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Kiểu loại khách hàng(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select
+                            class="form-control"
+                            formControlName="customerType"
+                            [ngClass]="{ 'is-invalid': submitted && Form.customerType.errors }"
+                        >
+                            <option *ngFor="let data of listCustomer" selected [value]="data.code">{{ data.name }}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.customerType.errors" class="invalid-feedback">
+                            <div *ngIf="Form.customerType.required">Kiểu loại khách hàng là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Phí(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select
+                            class="form-control"
+                            formControlName="percentage"
+                            [ngClass]="{ 'is-invalid': submitted && Form.percentage.errors }"
+                        >
+                            <option *ngFor="let data of listSelect" selected [value]="data.code">{{ data.name }}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.percentage.errors" class="invalid-feedback">
+                            <div *ngIf="Form.percentage.required">Phí</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Từ ngày:</label>
+                    <div class="col-sm-7 input-group">
+                        <input
+                            readonly
+                            class="form-control"
+                            placeholder="Từ ngày"
+                            name="dFS_1"
+                            ngbDatepicker
+                            #dFS_1="ngbDatepicker"
+                            formControlName="fromDate"
+                        />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="dFS_1.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Đến ngày:</label>
+                    <div class="col-sm-7 input-group">
+                        <input
+                            readonly
+                            class="form-control"
+                            placeholder="Đến ngày"
+                            name="dTS_1"
+                            ngbDatepicker
+                            #dTS_1="ngbDatepicker"
+                            formControlName="toDate"
+                        />
+
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="dTS_1.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Gói sp áp dụng(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <div class="checkbox">
+                            <label class="checkbox-inline" style="margin-right: 10px"
+                                ><input type="checkbox" (change)="changePackage($event)" formControlName="package_ALL" name="ALL" />&nbsp;
+                                All</label
+                            >
+                            <label class="checkbox-inline" style="margin-right: 10px"
+                                ><input type="checkbox" (change)="changePackage($event)" formControlName="package_NCB" name="NCB" />&nbsp;
+                                NCB</label
+                            >
+                            <label class="checkbox-inline" style="margin-right: 10px"
+                                ><input type="checkbox" formControlName="package_IZI" (change)="changePackage($event)" name="IZI" />&nbsp;
+                                IZI</label
+                            >
+                        </div>
+                        <div class="checkbox">
+                            <label class="checkbox-inline" style="margin-right: 10px"
+                                ><input type="checkbox" formControlName="package_VIP2" (change)="changePackage($event)" name="VIP2" />&nbsp;
+                                VIP2</label
+                            >
+                            <label class="checkbox-inline" style="margin-right: 10px"
+                                ><input type="checkbox" formControlName="package_GAMI" (change)="changePackage($event)" name="GAMI" />&nbsp;
+                                GAMI</label
+                            >
+                            <label class="checkbox-inline" style="margin-right: 10px"
+                                ><input type="checkbox" formControlName="package_VIP3" (change)="changePackage($event)" name="VIP3" />&nbsp;
+                                VIP3</label
+                            >
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select class="form-control " [(ngModel)]="obj.status" name="status">
-                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
+                        <select class="form-control" formControlName="status" name="status">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-7">
-                        <button class="btn btn-success mr-3" (click)="onSubmit()">
-                            <i class="fa fa-save"></i>&nbsp;Lưu lại
-                        </button>
-                        <button class="btn btn-light" (click)="resetForm()">
-                            <i class="fa fa-close"></i>&nbsp;Huỷ
-                        </button>
+                        <button class="btn btn-success mr-3"><i class="fa fa-save"></i>&nbsp;Lưu lại</button>
+                        <button class="btn btn-light" (click)="resetForm()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
                     </div>
                 </div>
             </form>
-
         </div>
     </div>
 </div>

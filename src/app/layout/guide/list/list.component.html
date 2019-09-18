@@ -118,7 +118,7 @@
         <div class="col-md-12">
 
             <ngb-pagination
-                *ngIf="totalSearch> 0 && totalSearch > re_search"
+                *ngIf="totalSearch> 0 && totalSearch > re_search.page"
                 [collectionSize]="totalSearch"
                 [pageSize]="re_search.size"
                 [(page)]="re_search.page" [maxSize]="10" [rotate]="true"

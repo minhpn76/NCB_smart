@@ -1,143 +1,317 @@
 <div>
-        <app-page-header 
-            [heading]="'Khuyễn mãi/ ưu đãi'" 
-            [heading_second]="'Thêm mới khuyến mãi ưu đãi'" 
-            [url_heading]="'/promotion'">
-        </app-page-header>
-        <div class="row">
-            <div class="col-md-8">
-                <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
-                    <div class="form-group row">
-                        <label for="search" class="col-sm-4 col-form-label">Tên chương trình(<span class="text-danger">*</span>):</label>
-                        <div class="col-sm-7">
-                            <input 
-                                formControlName="name"
-                                class="form-control col-lg-12"
-                                placeholder="Tên chương trình"
-                                [ngClass]="{ 'is-invalid': submitted && Form.name.errors }"
-                            >
-                            <div *ngIf="submitted && Form.name.errors" class="invalid-feedback">
-                                <div *ngIf="Form.name.errors.required">Tên chương trình là bắt buộc</div>
-                            </div>
+    <app-page-header
+        [heading]="'Khuyễn mãi/ ưu đãi'"
+        [heading_second]="'Thêm mới khuyến mãi ưu đãi'"
+        [url_heading]="'/promotion'">
+    </app-page-header>
+    <div class="row">
+        <div class="col-md-8">
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên
+                        chương trình(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="promotionName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên chương trình"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.promotionName.errors }">
+                        <div *ngIf="submitted && Form.promotionName.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.promotionName.errors.required">Tên
+                                chương
+                                trình là bắt buộc</div>
+                            <div *ngIf="Form.promotionName.errors.required">Tên
+                                chương
+                                trình không hợp lệ</div>
                         </div>
-    
                     </div>
-                    <div class="form-group row">
-                        <label for="search" class="col-sm-4 col-form-label">Nội dung(<span class="text-danger">*</span>):</label>
-                        <div class="col-sm-7">
-                            <textarea 
-                                formControlName="description"
-                                class="form-control col-lg-12"
-                                placeholder="Nội dung"
-                                [ngClass]="{ 'is-invalid': submitted && Form.content.errors }"
-                            ></textarea>
-                            
-                            <div *ngIf="submitted && Form.description.errors" class="invalid-feedback">
-                                <div *ngIf="Form.description.errors.required">Nội dung là bắt buộc</div>
-                            </div>
-                        </div>
-    
-    
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Phí thường niên(<span class="text-danger">*</span>):</label>
-                        <div class="col-sm-7">
-                            <select 
-                                class="form-control" 
-                                formControlName="phithuongnien"
-                                [ngClass]="{ 'is-invalid': submitted && Form.phithuongnien.errors}"
-    
-                            >
-                                <option *ngFor="let data of listSelect" selected [value]="data.code">{{data.name}}</option>
-    
-                            </select>
-                            <div *ngIf="submitted && Form.phithuongnien.errors" class="invalid-feedback">
-                                <div *ngIf="Form.phithuongnien.required">Phí thường niên là bắt buộc</div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Nội
+                        dung(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <textarea
+                            formControlName="promotion"
+                            class="form-control col-lg-12"
+                            placeholder="Nội dung"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.promotion.errors }"></textarea>
+
+                        <div *ngIf="submitted && Form.promotion.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.promotion.errors.required">Nội
+                                dung là bắt buộc</div>
+                            <div *ngIf="Form.promotion.errors.required">Nội
+                                dung chương
+                                trình không hợp lệ
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Phí chuyển khoản liên ngân hàng(<span class="text-danger">*</span>):</label>
-                        <div class="col-sm-7">
-                            <select 
-                                class="form-control" 
-                                formControlName="philienNH"
-                                [ngClass]="{ 'is-invalid': submitted && Form.philienNH.errors}"
-    
-                            >
-                                <option *ngFor="let data of listSelect" selected [value]="data.code">{{data.name}}</option>
-    
-                            </select>
-                            <div *ngIf="submitted && Form.philienNH.errors" class="invalid-feedback">
-                                <div *ngIf="Form.philienNH.required">Phí chuyển khoản liên ngân hàng là bắt buộc</div>
-                            </div>
+
+
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Kiểu loại khách hàng(<span
+                            class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select
+                            class="form-control"
+                            formControlName="customerType"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.customerType.errors}">
+                            <option *ngFor="let data of listCustomer" selected
+                                [value]="data.code">{{data.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.customerType.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.customerType.required">Kiểu loại
+                                khách hàng là bắt buộc</div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Phí chuyển khoản nội bộ(<span class="text-danger">*</span>):</label>
-                        <div class="col-sm-7">
-                            <select 
-                                class="form-control" 
-                                formControlName="phinoibo"
-                                [ngClass]="{ 'is-invalid': submitted && Form.phinoibo.errors}"
-    
-                            >
-                                <option *ngFor="let data of listSelect" selected [value]="data.code">{{data.name}}</option>
-    
-                            </select>
-                            <div *ngIf="submitted && Form.phinoibo.errors" class="invalid-feedback">
-                                <div *ngIf="Form.phinoibo.required">Phí chuyển khoản nội bộ là bắt buộc</div>
-                            </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Phí thường niên(<span
+                            class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select
+                            class="form-control"
+                            formControlName="percentage1"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.percentage1.errors}">
+                            <option *ngFor="let data of listSelect" selected
+                                [value]="data.code">{{data.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.percentage1.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.percentage1.required">Phí thường
+                                niên là bắt buộc</div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Phí chuyển khoản 247(<span class="text-danger">*</span>):</label>
-                        <div class="col-sm-7">
-                            <select 
-                                class="form-control" 
-                                formControlName="phi247"
-                                [ngClass]="{ 'is-invalid': submitted && Form.phi247.errors}"
-    
-                            >
-                                <option *ngFor="let data of listSelect" selected [value]="data.code">{{data.name}}</option>
-    
-                            </select>
-                            <div *ngIf="submitted && Form.phi247.errors" class="invalid-feedback">
-                                <div *ngIf="Form.phi247.required">Phí chuyển 247 là bắt buộc</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Gói sp áp dụng(<span class="text-danger">*</span>):</label>
-                        <div class="col-sm-7">
-                            <select 
-                                class="form-control" 
-                                formControlName="goisp"
-                                [ngClass]="{ 'is-invalid': submitted && Form.goisp.errors}"
-    
-                            >
-                                <option *ngFor="let data of listPromotion" selected [value]="data.code">{{data.name}}</option>
-    
-                            </select>
-                            <div *ngIf="submitted && Form.goisp.errors" class="invalid-feedback">
-                                <div *ngIf="Form.goisp.required">Gói sp áp dụng là bắt buộc</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-7">
-                            <button class="btn btn-success mr-3">
-                                <i class="fa fa-save"></i>&nbsp;Lưu lại
-                            </button>
-                            <button class="btn btn-light" (click)="resetForm()">
-                                <i class="fa fa-close"></i>&nbsp;Huỷ
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Từ ngày:</label>
+                    <div class="col-sm-7 input-group">
+                        <input readonly class="form-control" placeholder="Từ
+                            ngày"
+                            name="dFS_1" ngbDatepicker #dFS_1="ngbDatepicker"
+                            formControlName="fromDate1">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary"
+                                (click)="dFS_1.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
                             </button>
                         </div>
                     </div>
-                </form>
-    
-            </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Đến
+                        ngày:</label>
+                    <div class="col-sm-7 input-group">
+                        <input readonly class="form-control" placeholder="Đến
+                            ngày"
+                            name="dTS_1" ngbDatepicker #dTS_1="ngbDatepicker"
+                            formControlName="toDate1">
+
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary"
+                                (click)="dTS_1.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Phí chuyển khoản liên
+                        ngân hàng(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select
+                            class="form-control"
+                            formControlName="percentage2"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.percentage2.errors}">
+                            <option *ngFor="let data of listSelect" selected
+                                [value]="data.code">{{data.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.percentage2.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.percentage2.required">Phí chuyển
+                                khoản liên ngân hàng là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Từ ngày:</label>
+                    <div class="col-sm-7 input-group">
+                        <input readonly class="form-control" placeholder="Từ
+                            ngày"
+                            name="dFS_2" ngbDatepicker #dFS_2="ngbDatepicker"
+                            formControlName="fromDate2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary"
+                                (click)="dFS_2.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Đến
+                        ngày:</label>
+                    <div class="col-sm-7 input-group">
+                        <input readonly class="form-control" placeholder="Đến
+                            ngày"
+                            name="dTS_2" ngbDatepicker #dTS_2="ngbDatepicker"
+                            formControlName="toDate2">
+
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary"
+                                (click)="dTS_2.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Phí chuyển khoản nội
+                        bộ(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select
+                            class="form-control"
+                            formControlName="percentage3"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.percentage3.errors}">
+                            <option *ngFor="let data of listSelect" selected
+                                [value]="data.code">{{data.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.percentage3.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.percentage3.required">Phí chuyển
+                                khoản
+                                nội bộ là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Từ ngày:</label>
+                    <div class="col-sm-7 input-group">
+                        <input readonly class="form-control" placeholder="Từ
+                            ngày"
+                            name="dFS_3" ngbDatepicker #dFS_3="ngbDatepicker"
+                            formControlName="fromDate3">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary"
+                                (click)="dFS_3.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Đến
+                        ngày:</label>
+                    <div class="col-sm-7 input-group">
+                        <input readonly class="form-control" placeholder="Đến
+                            ngày"
+                            name="dTS_3" ngbDatepicker #dTS_3="ngbDatepicker"
+                            formControlName="toDate3">
+
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary"
+                                (click)="dTS_3.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Phí chuyển khoản 247(<span
+                            class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select
+                            class="form-control"
+                            formControlName="percentage4"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.percentage4.errors}">
+                            <option *ngFor="let data of listSelect" selected
+                                [value]="data.code">{{data.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.percentage4.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.percentage4.required">Phí chuyển
+                                247 là
+                                bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Từ ngày:</label>
+                    <div class="col-sm-7 input-group">
+                        <input readonly class="form-control" placeholder="Từ
+                            ngày"
+                            name="dFS_4" ngbDatepicker #dFS_4="ngbDatepicker"
+                            formControlName="fromDate4">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary"
+                                (click)="dFS_4.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Đến
+                        ngày:</label>
+                    <div class="col-sm-7 input-group">
+                        <input readonly class="form-control" placeholder="Đến
+                            ngày"
+                            name="dTS_4" ngbDatepicker #dTS_4="ngbDatepicker"
+                            formControlName="toDate4">
+
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary"
+                                (click)="dTS_4.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Gói sp áp dụng(<span
+                            class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <div class="checkbox">
+                            <label class="checkbox-inline" style="margin-right: 10px"><input type="checkbox" (change)="changePackage($event)" formControlName="package_ALL" name="ALL">&nbsp; All</label>
+                            <label class="checkbox-inline" style="margin-right: 10px"><input type="checkbox" (change)="changePackage($event)"  formControlName="package_NCB" name="NCB">&nbsp; NCB</label>
+                            <label class="checkbox-inline" style="margin-right: 10px"><input type="checkbox"  formControlName="package_IZI" (change)="changePackage($event)" name="IZI">&nbsp; IZI</label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="checkbox-inline" style="margin-right: 10px"><input type="checkbox"  formControlName="package_VIP2" (change)="changePackage($event)" name="VIP2">&nbsp; VIP2</label>
+                            <label class="checkbox-inline" style="margin-right: 10px"><input type="checkbox"   formControlName="package_GAMI"  (change)="changePackage($event)" name="GAMI">&nbsp; GAMI</label>
+                            <label class="checkbox-inline" style="margin-right: 10px"><input type="checkbox"  formControlName="package_VIP3" (change)="changePackage($event)" name="VIP3">&nbsp; VIP3</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3">
+                            <i class="fa fa-save"></i>&nbsp;Lưu lại
+                        </button>
+                        <button class="btn btn-light" (click)="resetForm()">
+                            <i class="fa fa-close"></i>&nbsp;Huỷ
+                        </button>
+                    </div>
+                </div>
+            </form>
+
         </div>
     </div>
-    
+</div>

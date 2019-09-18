@@ -1,60 +1,317 @@
 <div>
-        <app-page-header 
-            [heading]="'Hướng dẫn sử dụng'" 
-            [heading_second]="'Thêm mới hướng dẫn'" 
-            [url_heading]="'/guide'">
-        </app-page-header>
-        <div class="row">
-            <div class="col-md-8">
-                <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
-                    <div class="form-group row">
-                        <label for="search" class="col-sm-4 col-form-label">Mã hướng dẫn(<span class="text-danger">*</span>):</label>
-                        <div class="col-sm-8">
-                            <input 
-                                formControlName="serviceId"
-                                class="form-control col-lg-12"
-                                placeholder="Mã hướng dẫn"
-                                [ngClass]="{ 'is-invalid': submitted && Form.serviceId.errors }"
-                            >
-                            <div *ngIf="submitted && Form.serviceId.errors" class="invalid-feedback">
-                                <div *ngIf="Form.serviceId.errors.required">Mã hướng dẫn là bắt buộc</div>
-                            </div>
+    <app-page-header
+        [heading]="'Gói sản phẩm'"
+        [heading_second]="'Thêm mới gói sản phẩm'"
+        [url_heading]="'/package'">
+    </app-page-header>
+    <div class="row">
+        <div class="col-md-8">
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã gói sản phẩm(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="prd"
+                            class="form-control col-lg-12"
+                            placeholder="Mã gói sản phẩm"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.prd.errors }">
+                        <div *ngIf="submitted && Form.prd.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.prd.errors.required">Mã gói sản phẩm là bắt buộc</div>
+                            <div *ngIf="Form.prd.errors.pattern">Mã gói sản phẩm không hợp lệ</div>
                         </div>
-    
                     </div>
-                    <div class="form-group row">
-                        <label for="search" class="col-sm-4 col-form-label">Nội dung(<span class="text-danger">*</span>):</label>
-                        <div class="col-sm-8">
-                            <ckeditor [editor]="Editor"
-                                formControlName = "content"
-                                ></ckeditor>
-                            <!-- <input 
-                                formControlName="content"
-                                class="form-control col-lg-12"
-                                placeholder="Nội dung"
-                                [ngClass]="{ 'is-invalid': submitted && Form.content.errors }"
-                            >
-                            <div *ngIf="submitted && Form.content.errors" class="invalid-feedback">
-                                <div *ngIf="Form.content.errors.required">Nội dung là bắt buộc</div>
-                            </div> -->
+
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên gói sản phẩm(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="prdName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên gói sản phẩm"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.prdName.errors }">
+                        <div *ngIf="submitted && Form.prdName.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.prdName.errors.required">Tên gói sản phẩm là bắt buộc</div>
+                            <div *ngIf="Form.prdName.errors.pattern">Tên gói sản phẩm không hợp lệ</div>
                         </div>
-    
-    
                     </div>
-                    <div class="form-group row">
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-7">
-                            <button class="btn btn-success mr-3">
-                                <i class="fa fa-save"></i>&nbsp;Lưu lại
+
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Loại chuyển phí(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" formControlName="tranType" name="tranType">
+                            <option *ngFor="let data of listTranType" [value]="data.code" selected="selected">{{data.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.tranType.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.tranType.errors.required">Loại chuyển phí là bắt buộc</div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Kiểu loại(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" formControlName="typeId" name="typeId">
+                            <option *ngFor="let data of listTypeId" [value]="data.code" selected="selected">{{data.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.typeId.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.typeId.errors.required">Kiểu loại là bắt buộc</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" formControlName="status" name="status">
+                            <option *ngFor="let data of listStatus" [value]="data.code" selected="selected">{{data.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.status.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.status.errors.required">Trạng thái là bắt buộc</div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Số lần giao dịch(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="quantity"
+                            class="form-control col-lg-12"
+                            placeholder="Số lần giao dịch"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.quantity.errors }">
+                        <div *ngIf="submitted && Form.quantity.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.quantity.errors.required">Số lần giao dịch là bắt buộc</div>
+                            <div *ngIf="Form.quantity.errors.pattern">Số lần giao dịch không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Loại khách hàng(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" formControlName="customerType" name="status">
+                            <option *ngFor="let data of listCustomer" [value]="data.code" selected="selected">{{data.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.customerType.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.customerType.errors.required">Loại khách hàng là bắt buộc</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Loại tiền tệ(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="ccy"
+                            class="form-control col-lg-12"
+                            placeholder="Loại tiền tệ"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.ccy.errors }">
+                        <div *ngIf="submitted && Form.ccy.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.ccy.errors.required">Loại tiền tệ là bắt buộc</div>
+                            <div *ngIf="Form.ccy.errors.pattern">Loại tiền tệ không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Số tiền hạn chế trong ngày(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="limitDaily"
+                            class="form-control col-lg-12"
+                            placeholder="Số tiền hạn chế trong ngày"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.ccy.errors }">
+                        <div *ngIf="submitted && Form.limitDaily.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.limitDaily.errors.required">Số tiền hạn chế trong ngày là bắt buộc</div>
+                            <div *ngIf="Form.limitDaily.errors.pattern">Số tiền hạn chế trong ngày không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Số tiền tối thiếu / giao dịch(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="min"
+                            class="form-control col-lg-12"
+                            placeholder="Số tiền tối thiếu / giao dịch"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.ccy.errors }">
+                        <div *ngIf="submitted && Form.min.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.min.errors.required">Số tiền tối thiếu / giao dịch là bắt buộc</div>
+                            <div *ngIf="Form.min.errors.pattern">Số tiền tối thiếu / giao dịch không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Số tiền tối đa / giao dịch(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="max"
+                            class="form-control col-lg-12"
+                            placeholder="Số tiền tối đa / giao dịch"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.max.errors }">
+                        <div *ngIf="submitted && Form.max.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.max.errors.required">Số tiền tối đa / giao dịch là bắt buộc</div>
+                            <div *ngIf="Form.max.errors.pattern">Số tiền tối đa / giao dịch không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Số tiền tối đa / giao dịch vân tay(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="limitFinger"
+                            class="form-control col-lg-12"
+                            placeholder="Số tiền tối đa / giao dịch vân tay"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.limitFinger.errors }">
+                        <div *ngIf="submitted && Form.limitFinger.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.limitFinger.errors.required">Số tiền tối đa / giao dịch vân tay là bắt buộc</div>
+                            <div *ngIf="Form.limitFinger.errors.pattern">Số tiền tối đa / giao dịch vân tay không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Số tiền tối đa / giao dịch faceid(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="limitFaceid"
+                            class="form-control col-lg-12"
+                            placeholder="Số tiền tối đa / giao dịch faceid"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.limitFaceid.errors }">
+                        <div *ngIf="submitted && Form.limitFaceid.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.limitFaceid.errors.required">Số tiền tối đa / giao dịch faceid là bắt buộc</div>
+                            <div *ngIf="Form.limitFaceid.errors.pattern">Số tiền tối đa / giao dịch faceid không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Thông tin gói KM(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="promotion"
+                            class="form-control col-lg-12"
+                            placeholder="Thông tin gói KM"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.promotion.errors }">
+                        <div *ngIf="submitted && Form.promotion.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.promotion.errors.required">Thông tin gói KM là bắt buộc</div>
+                            <div *ngIf="Form.promotion.errors.pattern">Thông tin gói KM không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Nội dung gói KM(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="promotionName"
+                            class="form-control col-lg-12"
+                            placeholder="Nội dung gói KM"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.promotionName.errors }">
+                        <div *ngIf="submitted && Form.promotionName.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.promotionName.errors.required">Nội dung gói KM là bắt buộc</div>
+                            <div *ngIf="Form.promotionName.errors.pattern">Nội dung gói KM không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Giá trị giảm dần(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="percentage"
+                            class="form-control col-lg-12"
+                            placeholder="Giá trị giảm dần % (0 - 100)"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.percentage.errors }">
+                        <div *ngIf="submitted && Form.percentage.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.percentage.errors.required">Giá trị giảm dần là bắt buộc</div>
+                            <div *ngIf="Form.percentage.errors.pattern">Giá trị giảm dần không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Từ ngày:</label>
+                    <div class="col-sm-8 input-group">
+                        <input readonly class="form-control" placeholder="Từ ngày"
+                            name="dFS" ngbDatepicker #dFS="ngbDatepicker"
+                            formControlName="fromDate"
+                            > 
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="dFS.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
                             </button>
-                            <button class="btn btn-light" (click)="resetForm()">
-                                <i class="fa fa-close"></i>&nbsp;Huỷ
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Đến ngày:</label>
+                    <div class="col-sm-8 input-group">
+                        <input readonly class="form-control" placeholder="Đến ngày"
+                            name="dTS" ngbDatepicker #dTS="ngbDatepicker"
+                            formControlName="toDate"
+                            > 
+                        
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="dTS.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
                             </button>
                         </div>
                     </div>
-                </form>
-    
-            </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3">
+                            <i class="fa fa-save"></i>&nbsp;Lưu lại
+                        </button>
+                        <button class="btn btn-light" (click)="resetForm()">
+                            <i class="fa fa-close"></i>&nbsp;Huỷ
+                        </button>
+                    </div>
+                </div>
+            </form>
+
         </div>
     </div>
-    
+</div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppSettings} from '../app.settings';
+import { AppSettings } from '../app.settings';
 import { AuthService } from '../services/auth.service';
 import 'rxjs/add/operator/toPromise';
 import { environment } from '../../environments/environment.prod';
@@ -10,36 +10,36 @@ const API_URL = environment.apiUrl;
 export class NCBService {
 
   constructor(
-      private auth: AuthService
+    private auth: AuthService
   ) { }
 
   getListBranch(params): Promise<any> {
-    const url =  `${API_URL}/branch/getAll`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    const url = `${API_URL}/branch/getAll`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   getListTransaction(params): Promise<any> {
-    const url =  `${API_URL}/transaction/getAll`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    const url = `${API_URL}/transaction/getAll`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   getListRole(): Promise<any> {
-    const url =  `${API_URL}/role/get-roles`;
-    return this.auth.authRequest({ url: url, method: 'GET'});
+    const url = `${API_URL}/role/get-roles`;
+    return this.auth.authRequest({ url: url, method: 'GET' });
   }
   searchUser(params): Promise<any> {
-    const url =  `${API_URL}/user/searchUser`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    const url = `${API_URL}/user/searchUser`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   getListUser(params): Promise<any> {
-    const url =  `${API_URL}/user/get-listUser`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    const url = `${API_URL}/user/get-listUser`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   createUser(data): Promise<any> {
-    const url =  `${API_URL}/user/createUser`;
-    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true});
+    const url = `${API_URL}/user/createUser`;
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
   }
   getListProvince(params): Promise<any> {
     const url = `${API_URL}/city/getAll`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   /**
    * search city
@@ -50,7 +50,7 @@ export class NCBService {
    */
   searchProvince(params): Promise<any> {
     const url = `${API_URL}/city/searchCity`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   /**
    *
@@ -62,38 +62,50 @@ export class NCBService {
    */
   createProvince(body): Promise<any> {
     const url = `${API_URL}/city/createCity`;
-    return this.auth.authRequest({ url: url, data: body, method: 'POST'});
+    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
+  }
+  updateProvince(body): Promise<any> {
+    const url = `${API_URL}/city/update`;
+    return this.auth.authRequest({ url: url, data: body, method: 'PUT', application: true });
+  }
+  detailProvince(body): Promise<any> {
+    const url = `${API_URL}/city/detail`;
+    return this.auth.authRequest({ url: url, params: body, method: 'GET' });
+  }
+  deleteProvince(body): Promise<any> {
+    const url = `${API_URL}/city/delete`;
+    return this.auth.authRequest({ url: url, params: body, method: 'DELETE' });
   }
   /**
    * search bank tranfer
   */
   searchBankTranfer(params): Promise<any> {
     const url = `${API_URL}/bank-transfer/search`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   createBankTranfer(body): Promise<any> {
     const url = `${API_URL}/bank-transfer/create`;
-    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true});
+    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
   }
   detailBankTranfer(params): Promise<any> {
     const url = `${API_URL}/bank-transfer/detail`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   updateBankTranfer(data): Promise<any> {
     const url = `${API_URL}/bank-transfer/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
   }
   deleteBankTranfer(params): Promise<any> {
     const url = `${API_URL}/bank-transfer/delete`;
-    return this.auth.authRequest({ url: url, params: params, method: 'DELETE'});
+    return this.auth.authRequest({ url: url, params: params, method: 'DELETE' });
   }
   getListProvider(params): Promise<any> {
     const url = `${API_URL}/provider/getAll`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   searchProvider(params): Promise<any> {
     const url = `${API_URL}/provider/search`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   /**
    *
@@ -105,7 +117,7 @@ export class NCBService {
    */
   createBranch(body): Promise<any> {
     const url = `${API_URL}/ncb-branch/create`;
-    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true});
+    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
   }
   /**
    *
@@ -117,67 +129,67 @@ export class NCBService {
    */
   createProvider(body): Promise<any> {
     const url = `${API_URL}/provider/create`;
-    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true});
+    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
   }
   detailProvider(params): Promise<any> {
     const url = `${API_URL}/provider/detail`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   updateProvider(data): Promise<any> {
     const url = `${API_URL}/provider/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
   }
   deleteProvider(params): Promise<any> {
     const url = `${API_URL}/provider/delete`;
-    return this.auth.authRequest({ url: url, params: params, method: 'DELETE'});
+    return this.auth.authRequest({ url: url, params: params, method: 'DELETE' });
   }
   searchBranch(params): Promise<any> {
     const url = `${API_URL}/ncb-branch/search`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   detailBranch(params): Promise<any> {
     const url = `${API_URL}/ncb-branch/detail`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   updateBranch(data): Promise<any> {
     const url = `${API_URL}/ncb-branch/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
   }
   deleteBranch(params): Promise<any> {
     const url = `${API_URL}/ncb-branch/delete`;
-    return this.auth.authRequest({ url: url, params: params, method: 'DELETE'});
+    return this.auth.authRequest({ url: url, params: params, method: 'DELETE' });
   }
   // quan ly anh the
   searchPayCard(params): Promise<any> {
     const url = `${API_URL}/par-card/search`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   createPayCard(body): Promise<any> {
     const url = `${API_URL}/par-card/create`;
-    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true});
+    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
   }
   editPayCard(body): Promise<any> {
     const url = `${API_URL}/par-card/update`;
-    return this.auth.authRequest({ url: url, data: body, method: 'PUT', application: true});
+    return this.auth.authRequest({ url: url, data: body, method: 'PUT', application: true });
   }
   deletePayCard(body): Promise<any> {
     const url = `${API_URL}/par-card/delete`;
-    return this.auth.authRequest({ url: url, param: body, method: 'DELETE'});
+    return this.auth.authRequest({ url: url, param: body, method: 'DELETE' });
   }
   // @param prdcode
   detailPayCard(body): Promise<any> {
     const url = `${API_URL}/par-card/detail`;
-    return this.auth.authRequest({ url: url, params: body, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: body, method: 'GET' });
   }
   // goi san pham khach hang su dung
   searchPackageUser(params): Promise<any> {
     const url = `${API_URL}/user-profile/searchUser`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET', application: true });
   }
   // quan ly thong tin khach hang
   searchProfileUser(params): Promise<any> {
     const url = `${API_URL}/user-profile/searchConsumer`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   // tham so tong dai
   /**
@@ -190,7 +202,7 @@ export class NCBService {
    */
   searchParamCallCenter(params): Promise<any> {
     const url = `${API_URL}/param-manager/search`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET', application: true });
   }
   /**
    *
@@ -201,7 +213,7 @@ export class NCBService {
    */
   deleteParamCallCenter(params): Promise<any> {
     const url = `${API_URL}/param-manager/delete`;
-    return this.auth.authRequest({ url: url, params: params, method: 'DELETE', application: true});
+    return this.auth.authRequest({ url: url, params: params, method: 'DELETE', application: true });
   }
   /**
    *
@@ -212,7 +224,7 @@ export class NCBService {
    */
   updateParamCallCenter(data): Promise<any> {
     const url = `${API_URL}/param-manager/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
   }
   /**
    *
@@ -223,7 +235,7 @@ export class NCBService {
    */
   detailParamCallCenter(params): Promise<any> {
     const url = `${API_URL}/param-manager/detail`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET', application: true });
   }
   /**
    *
@@ -234,7 +246,7 @@ export class NCBService {
    */
   createParamCallCenter(data): Promise<any> {
     const url = `${API_URL}/param-manager/create`;
-    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
   }
   /**
    *
@@ -247,7 +259,7 @@ export class NCBService {
    */
   searchMBProvision(data): Promise<any> {
     const url = `${API_URL}/mb-provision/search`;
-    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
   }
   /**
    *
@@ -258,7 +270,7 @@ export class NCBService {
    */
   createMBProvision(data): Promise<any> {
     const url = `${API_URL}/mb-provision/create`;
-    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
   }
   /**
    *
@@ -269,7 +281,7 @@ export class NCBService {
    */
   updateMBProvision(data): Promise<any> {
     const url = `${API_URL}/mb-provision/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
   }
   /**
    *
@@ -280,7 +292,7 @@ export class NCBService {
    */
   detailMBProvision(params): Promise<any> {
     const url = `${API_URL}/mb-provision/detail`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
 
   /**
@@ -292,7 +304,7 @@ export class NCBService {
    */
   deleteMBProvision(params): Promise<any> {
     const url = `${API_URL}/mb-provision/delete`;
-    return this.auth.authRequest({ url: url, params: params, method: 'DELETE'});
+    return this.auth.authRequest({ url: url, params: params, method: 'DELETE' });
   }
   /**
    *
@@ -305,7 +317,7 @@ export class NCBService {
    */
   searchNcbBranch(data): Promise<any> {
     const url = `${API_URL}/ncb-branch/search`;
-    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
   }
   /**
    *
@@ -316,7 +328,7 @@ export class NCBService {
    */
   createNcbBranch(data): Promise<any> {
     const url = `${API_URL}/ncb-branch/create`;
-    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
   }
   /**
    *
@@ -327,7 +339,7 @@ export class NCBService {
    */
   updateNcbBranch(data): Promise<any> {
     const url = `${API_URL}/ncb-branch/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
   }
   /**
    *
@@ -338,7 +350,7 @@ export class NCBService {
    */
   detailNcbBranch(params): Promise<any> {
     const url = `${API_URL}/ncb-branch/detail`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
 
   /**
@@ -350,7 +362,7 @@ export class NCBService {
    */
   deleteNcbBranch(params): Promise<any> {
     const url = `${API_URL}/ncb-branch/delete`;
-    return this.auth.authRequest({ url: url, params: params, method: 'DELETE'});
+    return this.auth.authRequest({ url: url, params: params, method: 'DELETE' });
   }
   /**
    *
@@ -363,7 +375,7 @@ export class NCBService {
    */
   searchNcbGuide(data): Promise<any> {
     const url = `${API_URL}/ncb-guideline/search`;
-    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
   }
   /**
    *
@@ -377,7 +389,7 @@ export class NCBService {
   detailNcbGuide(data): Promise<any> {
     console.log('XASDAS');
     const url = `${API_URL}/ncb-guideline/detail`;
-    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
   }
   /**
    *
@@ -389,7 +401,7 @@ export class NCBService {
    */
   createNcbGuide(data): Promise<any> {
     const url = `${API_URL}/ncb-guideline/create`;
-    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
   }
   /**
    *
@@ -401,7 +413,7 @@ export class NCBService {
    */
   updateNcbGuide(data): Promise<any> {
     const url = `${API_URL}/ncb-guideline/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
   }
   /**
    *
@@ -413,7 +425,7 @@ export class NCBService {
    */
   deleteNcbGuide(data): Promise<any> {
     const url = `${API_URL}/ncb-guideline/delete`;
-    return this.auth.authRequest({ url: url, params: data, method: 'DELETE', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'DELETE', application: true });
   }
   /**
    *
@@ -425,7 +437,7 @@ export class NCBService {
    */
   searchNcbQA(data): Promise<any> {
     const url = `${API_URL}/ncb-qa/search`;
-    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
   }
   /**
    *
@@ -437,7 +449,7 @@ export class NCBService {
    */
   detailNcbQA(data): Promise<any> {
     const url = `${API_URL}/ncb-qa/detail`;
-    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
   }
   /**
    *
@@ -449,7 +461,7 @@ export class NCBService {
    */
   createNcbQA(data): Promise<any> {
     const url = `${API_URL}/ncb-qa/create`;
-    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
   }
   /**
    *
@@ -461,7 +473,7 @@ export class NCBService {
    */
   updateNcbQA(data): Promise<any> {
     const url = `${API_URL}/ncb-qa/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
   }
   /**
    *
@@ -473,7 +485,7 @@ export class NCBService {
    */
   deleteNcbQA(data): Promise<any> {
     const url = `${API_URL}/ncb-qa/delete`;
-    return this.auth.authRequest({ url: url, params: data, method: 'DELETE', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'DELETE', application: true });
   }
   /**
    *
@@ -485,7 +497,7 @@ export class NCBService {
    */
   searchNcbFeedBack(data): Promise<any> {
     const url = `${API_URL}/ncb-feedback/search`;
-    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
   }
   /**
    *
@@ -497,7 +509,7 @@ export class NCBService {
    */
   detailNcbFeedBack(data): Promise<any> {
     const url = `${API_URL}/ncb-feedback/detail`;
-    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
   }
   /**
    *
@@ -509,7 +521,7 @@ export class NCBService {
    */
   createNcbFeedBack(data): Promise<any> {
     const url = `${API_URL}/ncb-feedback/create`;
-    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
   }
   /**
    *
@@ -521,7 +533,7 @@ export class NCBService {
    */
   updateNcbFeedBack(data): Promise<any> {
     const url = `${API_URL}/ncb-feedback/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
   }
   /**
    *
@@ -533,7 +545,7 @@ export class NCBService {
    */
   deleteNcbFeedBack(data): Promise<any> {
     const url = `${API_URL}/ncb-feedback/delete`;
-    return this.auth.authRequest({ url: url, params: data, method: 'DELETE', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'DELETE', application: true });
   }
   /**
    *
@@ -546,7 +558,7 @@ export class NCBService {
    */
   searchRegisterService(data): Promise<any> {
     const url = `${API_URL}/service-register/search`;
-    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
   }
   /**
    *
@@ -559,7 +571,7 @@ export class NCBService {
    */
   detailRegisterService(id): Promise<any> {
     const url = `${API_URL}/service-register/${id}/detail`;
-    return this.auth.authRequest({ url: url, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, method: 'GET', application: true });
   }
   /**
    *
@@ -572,7 +584,7 @@ export class NCBService {
    */
   updateRegisterService(service_id, data): Promise<any> {
     const url = `${API_URL}/service-register/${service_id}/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PATCH', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'PATCH', application: true });
   }
   /**
    *
@@ -584,7 +596,7 @@ export class NCBService {
    */
   searchNcbBanner(data): Promise<any> {
     const url = `${API_URL}/ncb-banner/search`;
-    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
   }
   /**
    *
@@ -596,7 +608,7 @@ export class NCBService {
    */
   detailNcbBannner(data): Promise<any> {
     const url = `${API_URL}/ncb-banner/detail`;
-    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
   }
   /**
    *
@@ -608,7 +620,7 @@ export class NCBService {
    */
   createNcbBanner(data): Promise<any> {
     const url = `${API_URL}/ncb-banner/create`;
-    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
   }
   /**
    *
@@ -620,7 +632,7 @@ export class NCBService {
    */
   updateNcbBanner(data): Promise<any> {
     const url = `${API_URL}/ncb-banner/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
   }
   /**
    *
@@ -632,89 +644,101 @@ export class NCBService {
    */
   deleteNcbBanner(data): Promise<any> {
     const url = `${API_URL}/ncb-banner/delete`;
-    return this.auth.authRequest({ url: url, params: data, method: 'DELETE', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'DELETE', application: true });
   }
   detailUser(data): Promise<any> {
-    const url =  `${API_URL}/user/${data}/detail`;
-    return this.auth.authRequest({ url: url, method: 'GET', application: true});
+    const url = `${API_URL}/user/${data}/detail`;
+    return this.auth.authRequest({ url: url, method: 'GET', application: true });
   }
   updateUser(data): Promise<any> {
-    const url =  `${API_URL}/user/update-user`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PATCH', application: true});
+    const url = `${API_URL}/user/update-user`;
+    return this.auth.authRequest({ url: url, data: data, method: 'PATCH', application: true });
   }
   updateStatusUser(data): Promise<any> {
-    const url =  `${API_URL}/user/update-user-status`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PATCH', application: true});
+    const url = `${API_URL}/user/update-user-status`;
+    return this.auth.authRequest({ url: url, data: data, method: 'PATCH', application: true });
   }
   deleteUser(id): Promise<any> {
-    const url =  `${API_URL}/user/${id}/delete`;
-    return this.auth.authRequest({ url: url, method: 'DELETE', application: true});
+    const url = `${API_URL}/user/${id}/delete`;
+    return this.auth.authRequest({ url: url, method: 'DELETE', application: true });
   }
   updatePassword(data): Promise<any> {
-    const url =  `${API_URL}/user/change-password`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PATCH', application: true});
+    const url = `${API_URL}/user/change-password`;
+    return this.auth.authRequest({ url: url, data: data, method: 'PATCH', application: true });
   }
   getBranchs(): Promise<any> {
     const link = '/ncb-branch/branch/activated-list';
-    const url =  `${API_URL}${link}`;
-    return this.auth.authRequest({ url: url, method: 'GET', application: true});
+    const url = `${API_URL}${link}`;
+    return this.auth.authRequest({ url: url, method: 'GET', application: true });
   }
   getPGD(data): Promise<any> {
     const link = '/ncb-branch/search';
-    const url =  `${API_URL}${link}`;
-    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true});
+    const url = `${API_URL}${link}`;
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
   }
   // notify
   searchNotify(data): Promise<any> {
     const url = `${API_URL}/notify/search`;
-    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
   }
   // provider, type, error, msg_Code, msg_Code_1, mes_Vn, mes_En
   createNotify(data): Promise<any> {
-    const url =  `${API_URL}/notify/create`;
-    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true});
+    const url = `${API_URL}/notify/create`;
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
   }
   detailNotify(data): Promise<any> {
     const url = `${API_URL}/notify/detail`;
-    return this.auth.authRequest({ url: url, params: data, method: 'POST'});
+    return this.auth.authRequest({ url: url, params: data, method: 'POST' });
   }
   // provider, type, error, msg_Code
   updateNotify(data): Promise<any> {
-    const url =  `${API_URL}/notify/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true});
+    const url = `${API_URL}/notify/update`;
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
   }
   deleteNotify(data): Promise<any> {
     const url = `${API_URL}/notify/delete`;
-    return this.auth.authRequest({ url: url, params: data, method: 'POST', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'POST', application: true });
   }
   // roles
   searchRoles(data): Promise<any> {
     const url = `${API_URL}/role/search`;
-    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
   }
   // provider, type, error, msg_Code, msg_Code_1, mes_Vn, mes_En
   createRoles(data): Promise<any> {
-    const url =  `${API_URL}/role/create`;
-    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true});
+    const url = `${API_URL}/role/create`;
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
   }
   // provider, type, error, msg_Code
   updateRoles(data): Promise<any> {
-    const url =  `${API_URL}/role/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PATCH', application: true});
+    const url = `${API_URL}/role/update`;
+    return this.auth.authRequest({ url: url, data: data, method: 'PATCH', application: true });
   }
   detailRoles(value): Promise<any> {
     const url = `${API_URL}/role/` + value + `/detail`;
-    return this.auth.authRequest({ url: url, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, method: 'GET', application: true });
   }
   // get all PGD
   getListPGD(): Promise<any> {
     const url = `${API_URL}/ncb-branch/depart/activated-list`;
-    return this.auth.authRequest({ url: url, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, method: 'GET', application: true });
   }
   // goi sp
   searchPackage(params): Promise<any> {
     const url = `${API_URL}/function/search`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET', application: true});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET', application: true });
+  }
+  createPackage(data): Promise<any> {
+    const url = `${API_URL}/function/create`;
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
+  }
+  updatePackage(data): Promise<any> {
+    const url = `${API_URL}/function/update`;
+    return this.auth.authRequest({ url: url, data: data, method: 'PATCH', application: true });
+  }
+  detailPackage(value): Promise<any> {
+    const url = `${API_URL}/function/detail`;
+    return this.auth.authRequest({ url: url, method: 'GET', application: true });
   }
   // up file parcard
   uploadFilePayCard(file): Promise<any> {
@@ -731,22 +755,45 @@ export class NCBService {
   // danh muc chi nhanh
   searchCompany(params): Promise<any> {
     const url = `${API_URL}/company/search`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   detailCompany(params): Promise<any> {
     const url = `${API_URL}/company/detail`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET'});
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   updateCompany(data): Promise<any> {
     const url = `${API_URL}/company/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true});
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
   }
   deleteCompany(params): Promise<any> {
     const url = `${API_URL}/company/delete`;
-    return this.auth.authRequest({ url: url, params: params, method: 'DELETE'});
+    return this.auth.authRequest({ url: url, params: params, method: 'DELETE' });
   }
   createCompany(body): Promise<any> {
     const url = `${API_URL}/company/create`;
-    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true});
+    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
+  }
+  // khuyen mai uu dai
+
+  createPromotion(body): Promise<any> {
+    const url = `${API_URL}/promotions/create`;
+    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
+  }
+  // promotionName
+  searchPromotion(body): Promise<any> {
+    const url = `${API_URL}/promotions/search`;
+    return this.auth.authRequest({ url: url, params: body, method: 'GET', application: true });
+  }
+  detailPromotion(body): Promise<any> {
+    const url = `${API_URL}/promotions/detail`;
+    return this.auth.authRequest({ url: url, params: body, method: 'GET', application: true });
+  }
+  updatePromotion(body): Promise<any> {
+    const url = `${API_URL}/promotions/update`;
+    return this.auth.authRequest({ url: url, data: body, method: 'PUT', application: true });
+  }
+  deletePromotion(body): Promise<any> {
+    const url = `${API_URL}/promotions/delete`;
+    return this.auth.authRequest({ url: url, params: body, method: 'DELETE', application: true });
   }
 }

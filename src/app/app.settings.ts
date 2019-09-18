@@ -124,6 +124,16 @@ export class AppSettings {
             menu: 'KHACH_HANG'
         },
         {
+            code: 'TT_KH',
+            name: 'Thông tin khách hàng',
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            menu: 'KHACH_HANG'
+        },
+        {
             code: 'SO_TONG_DAI',
             name: 'Số tổng đài',
             isAll: false,
