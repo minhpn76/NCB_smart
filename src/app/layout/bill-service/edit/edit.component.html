@@ -2,11 +2,40 @@
     <app-page-header
         [heading]="'Danh sách nhà cung cấp thanh toán hoá đơn'"
         [heading_second]="'Sửa nhà cung cấp thanh toán hoá đơn'"
-        [url_heading]="'/bill-service'">
+        [url_heading]="'/bill-service'"
+    >
     </app-page-header>
     <div class="row">
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Đối tác(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="partner"
+                            class="form-control col-lg-12"
+                            placeholder="Đối tác"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.partner.errors }">
+                        <!-- <select 
+                            class="form-control" 
+                            formControlName="optionServiceTTHD"
+                            [ngClass]="{ 'is-invalid': submitted && Form.optionServiceTTHD.errors }"
+                        >
+                            <option>Tất cả</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select> -->
+                        <div *ngIf="submitted && Form.partner.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.partner.errors.required">Loại
+                                dịch vụ TTHD là bắt buộc</div>
+                            <div *ngIf="Form.partner.errors.pattern">Loại
+                                dịch vụ TTHD không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Mã dịch
                         vụ TTHD(<span class="text-danger">*</span>):</label>
@@ -47,35 +76,6 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Loại
-                        dịch vụ TTHD(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <input
-                            formControlName="partner"
-                            class="form-control col-lg-12"
-                            placeholder="Loại dịch vụ TTHD"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.partner.errors }">
-                        <!-- <select 
-                            class="form-control" 
-                            formControlName="optionServiceTTHD"
-                            [ngClass]="{ 'is-invalid': submitted && Form.optionServiceTTHD.errors }"
-                        >
-                            <option>Tất cả</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select> -->
-                        <div *ngIf="submitted && Form.partner.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.partner.errors.required">Loại
-                                dịch vụ TTHD là bắt buộc</div>
-                            <div *ngIf="Form.partner.errors.pattern">Loại
-                                dịch vụ TTHD không hợp lệ</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Mã nhà
                         cung cấp TTHD(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
@@ -101,23 +101,18 @@
                     <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <select class="form-control" formControlName="status" name="status">
-                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-7">
-                        <button class="btn btn-success mr-3">
-                            <i class="fa fa-save"></i>&nbsp;Lưu lại
-                        </button>
-                        <button class="btn btn-light" (click)="resetForm()">
-                            <i class="fa fa-close"></i>&nbsp;Huỷ
-                        </button>
+                        <button class="btn btn-success mr-3"><i class="fa fa-save"></i>&nbsp;Lưu lại</button>
+                        <button class="btn btn-light" (click)="resetForm()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
                     </div>
                 </div>
             </form>
-
         </div>
     </div>
 </div>

@@ -174,7 +174,7 @@ export class NCBService {
   }
   deletePayCard(body): Promise<any> {
     const url = `${API_URL}/par-card/delete`;
-    return this.auth.authRequest({ url: url, param: body, method: 'DELETE' });
+    return this.auth.authRequest({ url: url, params: body, method: 'DELETE' });
   }
   // @param prdcode
   detailPayCard(body): Promise<any> {
@@ -738,7 +738,11 @@ export class NCBService {
   }
   detailPackage(value): Promise<any> {
     const url = `${API_URL}/function/detail`;
-    return this.auth.authRequest({ url: url, method: 'GET', application: true });
+    return this.auth.authRequest({ url: url, params: value, method: 'POST', application: true });
+  }
+  deletePackage(value): Promise<any> {
+    const url = `${API_URL}/function/delete`;
+    return this.auth.authRequest({ url: url, params: value, method: 'DELETE', application: true });
   }
   // up file parcard
   uploadFilePayCard(file): Promise<any> {
@@ -750,7 +754,7 @@ export class NCBService {
   // delete file
   deleteFilePayCard(payload) {
     const url = `${API_URL}/img/deleteFile`;
-    return this.auth.authRequest({ url: url, param: payload, method: 'DELETE' });
+    return this.auth.authRequest({ url: url, params: payload, method: 'DELETE' });
   }
   // danh muc chi nhanh
   searchCompany(params): Promise<any> {
@@ -796,4 +800,16 @@ export class NCBService {
     const url = `${API_URL}/promotions/delete`;
     return this.auth.authRequest({ url: url, params: body, method: 'DELETE', application: true });
   }
+  // banner
+  uploadFileBanner(file): Promise<any> {
+    const formData: FormData = new FormData();
+    formData.append('img', file, file.name);
+    const url = `${API_URL}/img/banner/uploadFile`;
+    return this.auth.authRequestFile({ url: url, data: formData, method: 'POST' });
+  }
+  deleteFileBanner(payload) {
+    const url = `${API_URL}/img/banner/deleteFile`;
+    return this.auth.authRequest({ url: url, params: payload, method: 'DELETE' });
+  }
+
 }

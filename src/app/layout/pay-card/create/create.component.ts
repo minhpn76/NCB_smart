@@ -70,12 +70,11 @@ export class CreateComponent implements OnInit {
     if (this.dataForm.invalid) {
       return;
     }
-    console.log('-asdas', this.dataForm.value);
+
     const payload = {
       ...this.dataForm.value,
       ...this.objFile
     };
-    console.log('payload===', payload);
 
     this.ncbService.createPayCard(payload).then((result) => {
       if (result.status === 200) {

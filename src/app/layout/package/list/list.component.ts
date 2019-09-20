@@ -81,7 +81,6 @@ export class ListComponent implements OnInit {
     this.isProcessLoad = 1;
     // xu ly
     this.ncbService.searchPackage(params).then((result) => {
-      console.log('XX===', result.json());
       setTimeout(() => {
         const body = result.json().body;
         this.listData = body.content;
@@ -92,7 +91,7 @@ export class ListComponent implements OnInit {
     });
   }
 
-  deleteItem(event, index, id) {
+  deleteItem(event, index, code) {
     Swal.fire({
       title: 'Bạn có chắc chắn xoá?',
       text: 'Dữ liệu đã xoá không thể khôi phục lại',
@@ -102,7 +101,7 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.ncbService.deleteNcbGuide({ id: id }).then(() => {
+        this.ncbService.deletePackage({ prdName: code }).then(() => {
           this.listData.splice(index, 1);
           Swal.fire(
             'Đã xoá!',

@@ -42,7 +42,10 @@ export class ListComponent implements OnInit {
         }
     ];
 
-    constructor(private ncbService: NCBService, public toastr: ToastrService) {}
+    constructor(
+        private ncbService: NCBService,
+        public toastr: ToastrService
+    ) { }
 
     ngOnInit() {
         this.getListData(this.re_search);
@@ -77,9 +80,14 @@ export class ListComponent implements OnInit {
             cancelButtonText: 'Không, trở lại'
         }).then(result => {
             if (result.value) {
-                this.ncbService.deleteNcbBanner({ id: id }).then(() => {
-                    this.listData.splice(index, 1);
-                    Swal.fire('Đã xoá!', 'Dữ liệu đã xoá hoàn toàn.', 'success');
+                this.ncbService.deleteNcbBanner({ id: id }).then((res) => {
+                    // this.listData.splice(index, 1);
+                    if (res.json().code === '00') {
+                        Swal.fire('Đã xoá!', 'Dữ liệu đã xoá hoàn toàn.', 'success');
+                        this.getListData(this.re_search);
+                    } else {
+                        this.toastr.error('Không thể xoá dự liệu', 'Thất bại');
+                    }
                 });
                 // For more information about handling dismissals please visit
                 // https://sweetalert2.github.io/#handling-dismissals
@@ -101,7 +109,7 @@ export class ListComponent implements OnInit {
       }
     }
     onSearch(payload) {
-        if (payload.bannerCode !== '' || payload.bannerName !== '') {
+        if (payload.bannerCode !== '' || payload.bannerName !== '' || payload.status !== '') {
             payload.page = 0;
         }
         this.getListData(payload);
@@ -115,7 +123,6 @@ export class ListComponent implements OnInit {
     // }
     changePageSize() {
         this.re_search.page = 0;
-        this.isSearch = false;
         this.getListData(this.re_search);
     }
 }

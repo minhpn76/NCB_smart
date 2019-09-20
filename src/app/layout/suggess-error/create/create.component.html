@@ -1,75 +1,59 @@
 <div>
-    <app-page-header
-        [heading]="'Góp ý - lỗi'"
-        [heading_second]="'Thêm mới góp ý - lỗi'"
-        [url_heading]="'/suggesstions-error'">
+    <app-page-header [heading]="'Góp ý - lỗi'" [heading_second]="'Thêm mới góp ý - lỗi'" [url_heading]="'/suggesstions-error'">
     </app-page-header>
     <div class="row">
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã góp ý
-                        - lỗi(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <input
-                            formControlName="productCode"
-                            class="form-control col-lg-12"
-                            placeholder="Mã góp ý - lỗi"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.productCode.errors }">
-                        <div *ngIf="submitted && Form.productCode.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.productCode.errors.required">Mã góp
-                                ý - lỗi là bắt buộc</div>
-                            <div *ngIf="Form.productCode.errors.pattern">Mã góp
-                                ý - lỗi không hợp lệ</div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên góp
-                        ý - lỗi(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <input
-                            formControlName="productName"
-                            class="form-control col-lg-12"
-                            placeholder="Tên góp ý - lỗi"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.productName.errors }">
-                        <div *ngIf="submitted && Form.productName.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.productName.errors.required">Tên
-                                góp ý - lỗi là bắt buộc</div>
-                            <div *ngIf="Form.productName.errors.pattern">Tên góp
-                                ý - lỗi không hợp lệ</div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Loại(<span
-                            class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Loại(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="type"
                             class="form-control col-lg-12"
                             placeholder="Loại"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.type.errors }">
-                        <div *ngIf="submitted && Form.type.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.type.errors.required">Loại là bắt
-                                buộc</div>
-                            <div *ngIf="Form.type.errors.pattern">Loại không hợp
-                                lệ</div>
+                            [ngClass]="{ 'is-invalid': submitted && Form.type.errors }"
+                        />
+                        <div *ngIf="submitted && Form.type.errors" class="invalid-feedback">
+                            <div *ngIf="Form.type.errors.required">Loại là bắt buộc</div>
+                            <div *ngIf="Form.type.errors.pattern">Loại không hợp lệ</div>
+                            <div *ngIf="Form.type.errors.maxlength">Loại góp ý - lỗi quá dài</div>
+                            <div *ngIf="Form.type.errors.minlength">Loại góp ý - lỗi quá ngắn</div>
+
                         </div>
                     </div>
-
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Số điện
-                        thoại:</label>
+                    <label for="search" class="col-sm-4 col-form-label">Mã góp ý - lỗi(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="productCode"
+                            class="form-control col-lg-12"
+                            placeholder="Mã góp ý - lỗi"
+                            [ngClass]="{ 'is-invalid': submitted && Form.productCode.errors }"
+                        />
+                        <div *ngIf="submitted && Form.productCode.errors" class="invalid-feedback">
+                            <div *ngIf="Form.productCode.errors.required">Mã góp ý - lỗi là bắt buộc</div>
+                            <div *ngIf="Form.productCode.errors.pattern">Mã góp ý - lỗi không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên góp ý - lỗi(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="productName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên góp ý - lỗi"
+                            [ngClass]="{ 'is-invalid': submitted && Form.productName.errors }"
+                        />
+                        <div *ngIf="submitted && Form.productName.errors" class="invalid-feedback">
+                            <div *ngIf="Form.productName.errors.required">Tên góp ý - lỗi là bắt buộc</div>
+                            <div *ngIf="Form.productName.errors.pattern">Tên góp ý - lỗi không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Số điện thoại:</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="phone"
@@ -77,21 +61,16 @@
                             placeholder="Số điện thoại"
                             maxlength="13"
                             pattern="^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$"
-                            [ngClass]="{ 'is-invalid': Form.phone.errors}">
-                        <div *ngIf="submitted && Form.phone.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.phone.errors.pattern">Số điện thoại
-                                không đúng định dạng</div>
-                            <div *ngIf="Form.phone.errors.maxlength">Số điện
-                                thoại quá dài</div>
-
-
+                            [ngClass]="{ 'is-invalid': Form.phone.errors }"
+                        />
+                        <div *ngIf="submitted && Form.phone.errors" class="invalid-feedback">
+                            <div *ngIf="Form.phone.errors.pattern">Số điện thoại không đúng định dạng</div>
+                            <div *ngIf="Form.phone.errors.maxlength">Số điện thoại quá dài</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Email(<span
-                            class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Email(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="email"
@@ -100,90 +79,67 @@
                             required
                             pattern='^(([^\.@]+([\._][^\._@]+)*)|(" .+"
                             ))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.email.errors}">
+                            [ngClass]="{ 'is-invalid': submitted && Form.email.errors }"
+                        />
                         <div *ngIf="Form.email.errors" class="invalid-feedback">
-                            <div *ngIf="Form.email.errors.required &&
-                                submitted">Email
-                                là bắt buộc</div>
-                            <div *ngIf="Form.email.errors.pattern">Email không
-                                đúng định dạng</div>
-
+                            <div *ngIf="Form.email.errors.required && submitted">Email là bắt buộc</div>
+                            <div *ngIf="Form.email.errors.pattern">Email không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên(<span
-                            class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Tên(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="name"
                             class="form-control col-lg-12"
                             placeholder="Tên"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.name.errors }">
-                        <div *ngIf="submitted && Form.name.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.name.errors.required">Tên là bắt
-                                buộc</div>
-                            <div *ngIf="Form.name.errors.pattern">Mã góp
-                                ý - lỗi không hợp lệ</div>
+                            [ngClass]="{ 'is-invalid': submitted && Form.name.errors }"
+                        />
+                        <div *ngIf="submitted && Form.name.errors" class="invalid-feedback">
+                            <div *ngIf="Form.name.errors.required">Tên là bắt buộc</div>
+                            <div *ngIf="Form.name.errors.pattern">Mã góp ý - lỗi không hợp lệ</div>
                         </div>
                     </div>
-
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Địa chỉ(<span
-                            class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Địa chỉ(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="address"
                             class="form-control col-lg-12"
                             placeholder="Địa chỉ"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.address.errors }">
-                        <div *ngIf="submitted && Form.address.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.address.errors.required">Địa chỉ là
-                                bắt buộc</div>
-                            <div *ngIf="Form.address.errors.pattern">Mã góp
-                                ý - lỗi không hợp lệ</div>
+                            [ngClass]="{ 'is-invalid': submitted && Form.address.errors }"
+                        />
+                        <div *ngIf="submitted && Form.address.errors" class="invalid-feedback">
+                            <div *ngIf="Form.address.errors.required">Địa chỉ là bắt buộc</div>
+                            <div *ngIf="Form.address.errors.pattern">Mã góp ý - lỗi không hợp lệ</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mô tả(<span
-                            class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Mô tả(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="description"
                             class="form-control col-lg-12"
                             placeholder="Mô tả"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.description.errors }">
-                        <div *ngIf="submitted && Form.description.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.description.errors.required">Mô tả
-                                là bắt buộc</div>
-                            <div *ngIf="Form.description.errors.pattern">Mã góp
-                                ý - lỗi không hợp lệ</div>
+                            [ngClass]="{ 'is-invalid': submitted && Form.description.errors }"
+                        />
+                        <div *ngIf="submitted && Form.description.errors" class="invalid-feedback">
+                            <div *ngIf="Form.description.errors.required">Mô tả là bắt buộc</div>
+                            <div *ngIf="Form.description.errors.pattern">Mã góp ý - lỗi không hợp lệ</div>
                         </div>
                     </div>
-
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-7">
-                        <button class="btn btn-success mr-3">
-                            <i class="fa fa-save"></i>&nbsp;Lưu lại
-                        </button>
-                        <button class="btn btn-light" (click)="resetForm()">
-                            <i class="fa fa-close"></i>&nbsp;Huỷ
-                        </button>
+                        <button class="btn btn-success mr-3"><i class="fa fa-save"></i>&nbsp;Lưu lại</button>
+                        <button class="btn btn-light" (click)="resetForm()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
                     </div>
                 </div>
             </form>
-
         </div>
     </div>
 </div>

@@ -44,11 +44,11 @@ export class EditComponent implements OnInit {
       departName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       address: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       phone: ['', Validators.compose([Validators.maxLength(13), Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      fax: [''],
-      latitude: [''],
-      longitude: [''],
-      urlImg: [''],
-      dao: [''],
+      fax: ['', Validators.compose([Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      latitude: ['', Validators.compose([Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      longitude: ['', Validators.compose([Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      urlImg: ['', Validators.compose([Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      dao: ['', Validators.compose([Validators.pattern(/^((?!\s{2,}).)*$/)])],
       status: ''
     });
     this.getItem(this.departCode);
@@ -89,7 +89,8 @@ export class EditComponent implements OnInit {
         latitude: body.latitude,
         dao: body.dao,
         urlImg: body.urlImg,
-        status: body.status
+        status: body.status,
+        fax: body.fax
       });
     }).catch(err => {
       this.toastr.error(err.json().message, 'Thất bại!');

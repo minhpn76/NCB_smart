@@ -7,11 +7,12 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Mã gói sản phẩm:</label>
+                <label for="search" class="col-sm-4 col-form-label">Tên gói sản phẩm:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
                     itrim type="text" id="search"
-                    placeholder="Mã gói sản phẩm">
+                    [(ngModel)]="re_search.prdName"
+                    placeholder="Tên gói sản phẩm">
                 </div>
             </div>
         </div>
@@ -59,46 +60,54 @@
 
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 table-responsive">
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
                     <th scope="col">STT</th>
-                    <th scope="col">Mã gói sản phẩm</th>
+                    <th scope="col">Tên gói sản phẩm</th>
                     <th scope="col">Nội dung</th>
+                    <th scope="col">Hạn mức / ngày</th>
+                    <th scope="col">Hạn mức / faceid</th>
+                    <th scope="col">Hạn mức / finger</th>
+                    <th scope="col">Loại gói</th>
+                    <th scope="col">Tỉ lệ (%)</th>
+                    <th scope="col">Loại khách hàng</th>
+                    <th scope="col">Tiền tệ</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Thao tác</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- <tr *ngIf="isProcessLoad == 1" class="text-center">
-                        <td colspan=6><i class="fa fa-spin fa-spinner font-30"></i></td>
+                    <tr *ngIf="isProcessLoad == 1" class="text-center">
+                        <td colspan=12><i class="fa fa-spin fa-spinner font-30"></i></td>
                     </tr>
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
-                        <td colspan=6>Không tìm thấy kết quả</td>
-                    </tr> -->
+                        <td colspan=12>Không tìm thấy kết quả</td>
+                    </tr>
                     <tr *ngFor ="let data of listData; let i = index" (click)="openModalPackage()" style="cursor: pointer;">
                         
                         <th scope="row">
                             {{ i+1 }}
                         </th>
-                        <td>{{data?.serviceId}}</td>
-                        <td>{{data?.description}}</td>
+                        <td>{{data?.promotionName}}</td>
+                        <td>{{data?.promotion}}</td>
+                        <td>{{data?.limitDaily}}</td>
+                        <td>{{data?.limitFaceid}}</td>
+                        <td>{{data?.limitFinger}}</td>
+                        <td>{{data?.prdName}}</td>
+                        <td>{{data?.percentage}}</td>
+                        <td>{{data?.customerType}}</td>
+                        <td>{{data?.ccy}}</td>
                         <td>
                             <span *ngIf="data?.status === 'A'" class="badge badge-success">Active</span>
                             <span *ngIf="data?.status === 'D'" class="badge badge-danger">Deactive</span>
                         </td>
                         <td>
-                            <a class="mr-2 cursor-pointer text-blue" routerLink="/package/edit/{{data.id}}">
+                            <a class="mr-2 cursor-pointer text-blue" routerLink="/package/edit/{{data.promotionName}}">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <span class="mr-2 cursor-pointer text-blue" (click)="openModalPackage()">
-                                <i class="fa fa-lock"></i>
-                            </span>
-                            <!-- <span class="mr-2 cursor-pointer text-danger">
-                                <i class="fa fa-unlock-alt"></i>
-                            </span> -->
                             <span class="mr-2 cursor-pointer text-danger">
                                 <i class="fa fa-trash" (click)="deleteItem(1, i, data.id)"></i>
                             </span>

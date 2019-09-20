@@ -88,12 +88,16 @@ export class ListComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.ncbService.deletePayCard({ prdCode: code }).then((res) => {
-          this.listData.splice(index, 1);
-          Swal.fire(
-            'Đã xoá!',
-            'Dữ liệu đã xoá hoàn toàn.',
-            'success'
-          );
+          if (res.json().code === '00') {
+            Swal.fire(
+              'Đã xoá!',
+              'Dữ liệu đã xoá hoàn toàn.',
+              'success'
+            );
+            this.getListData(this.re_search);
+          } else {
+            this.toastr.error('Không thể xoá được dữ liệu', 'Thất bại');
+          }
         }).catch((err) => { });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(

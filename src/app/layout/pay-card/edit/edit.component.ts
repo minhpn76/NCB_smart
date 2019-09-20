@@ -54,12 +54,13 @@ export class EditComponent implements OnInit {
     public router: Router,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute
-  ) { }
+  ) {
+    this.route.params.subscribe(params => {
+      this.itemId = params.itemId;
+    });
+   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.itemId = parseInt(params.itemId);
-    });
     this.getItem(this.itemId);
     this.dataForm = this.formBuilder.group({
       prdcode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
@@ -77,7 +78,9 @@ export class EditComponent implements OnInit {
       f05: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       issueFee: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       reissueFee: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      repinFee: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])]
+      repinFee: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      fileName: [''],
+      linkUrl: ['']
     });
   }
   get Form() { return this.dataForm.controls; }
@@ -89,18 +92,38 @@ export class EditComponent implements OnInit {
     if (this.dataForm.invalid) {
       return;
     }
-    if (this.isEdit === true) {
-      this.editData = {
-        ...this.dataForm.value,
-        ...this.objItemFile
-      };
-    } else {
-      this.editData = {
-        ...this.dataForm.value,
-        ...this.objFile
-      };
-    }
-    this.ncbService.editPayCard(this.editData).then((result) => {
+    const payload = {
+      prdcode: this.dataForm.value.prdcode,
+      product: this.dataForm.value.product,
+      status: this.dataForm.value.status,
+      activeFee: this.dataForm.value.activeFee,
+      cardtype: this.dataForm.value.cardtype,
+      changesttFee: this.dataForm.value.changesttFee,
+      class_: this.dataForm.value.class_,
+      directddFee: this.dataForm.value.directddFee,
+      f01: this.dataForm.value.f01,
+      f02: this.dataForm.value.f02,
+      f03: this.dataForm.value.f03,
+      f04: this.dataForm.value.f04,
+      f05: this.dataForm.value.f05,
+      issueFee: this.dataForm.value.issueFee,
+      reissueFee: this.dataForm.value.reissueFee,
+      repinFee: this.dataForm.value.repinFee,
+      fileName: this.dataForm.value.fileName,
+      linkUrl: this.dataForm.value.linkUrl
+    };
+    // if (this.isEdit === true) {
+    //   this.editData = {
+    //     ...this.dataForm.value,
+    //     ...this.objItemFile
+    //   };
+    // } else {
+    //   this.editData = {
+    //     ...this.dataForm.value,
+    //     ...this.objFile
+    //   };
+    // }
+    this.ncbService.editPayCard(payload).then((result) => {
       if (result.status === 200) {
         if (result.json().code !== '00') {
           this.toastr.error('Lỗi hệ thống', 'Thất bại!');
@@ -145,10 +168,10 @@ export class EditComponent implements OnInit {
   getItem(params) {
     this.ncbService.detailPayCard({ prdcode: params }).then((result) => {
       const body = result.json().body;
-      this.objItemFile = {
-        fileName: body.fileName,
-        linkUrl: body.linkUrl
-      };
+      // this.objItemFile = {
+      //   fileName: body.fileName,
+      //   linkUrl: body.linkUrl
+      // };
       this.dataForm.patchValue({
         prdcode: body.prdcode,
         product: body.product,
@@ -165,7 +188,9 @@ export class EditComponent implements OnInit {
         issueFee: body.issueFee,
         reissueFee: body.reissueFee,
         repinFee: body.repinFee,
-        status: body.status
+        status: body.status,
+        fileName: body.fileName,
+        linkUrl: body.linkUrl
       });
     }).catch(err => {
       this.toastr.error('Không lấy được dữ liệu item', 'Thất bại!');
@@ -200,7 +225,11 @@ export class EditComponent implements OnInit {
           this.isLockSave = true;
           this.toastr.error('Upload ảnh thất bại', 'Thất bại!');
         } else {
-          this.objFile = result.json().body;
+          const body = result.json().body;
+          this.dataForm.patchValue({
+            fileName: body.fileName,
+            linkUrl: body.linkUrl,
+          });
           this.isLockSave = false;
           this.toastr.success('Upload ảnh thành công', 'Thành công!');
         }

@@ -15,6 +15,10 @@ import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChange
 export class EditComponent implements OnInit {
   public Editor = ClassicEditor;
   dataForm: FormGroup;
+  mRatesDateS: NgbDateStruct;
+  mRatesDateS_7: NgbDateStruct;
+  my: any = new Date();
+  my_7: any = new Date();
   submitted = false;
   itemId: any;
   obj: any = {
@@ -32,6 +36,86 @@ export class EditComponent implements OnInit {
       code: 'D',
     }
   ];
+  userInfo: any;
+  listCustomer: any = [
+    {
+      code: '',
+      name: 'Tất cả'
+    },
+    {
+      code: 'CN',
+      name: 'Cá nhân'
+    },
+    {
+      code: 'DN',
+      name: 'Doanh nghiệp'
+    }
+  ];
+  listTypeId: any = [
+    {
+      code: '',
+      name: 'Tất cả'
+    },
+    {
+      code: 'IBT',
+      name: 'Chuyển khoản LNH'
+    },
+    {
+      code: 'URT',
+      name: 'Chuyển khoản nội bộ'
+    },
+    {
+      code: 'ISL',
+      name: 'CK 247'
+    },
+    {
+      code: 'OW6',
+      name: 'Chuyển tiền vãng lai'
+    },
+    {
+      code: 'BILL',
+      name: 'Thanh toán hóa đơn'
+    },
+    {
+      code: 'TOP',
+      name: 'Nạp tiền điện thoại'
+    },
+    {
+      code: 'EWL',
+      name: 'Nạp ví điện tử'
+    },
+    {
+      code: 'IZI',
+      name: 'Nạp tiền vào TK IZI'
+    }
+  ];
+  listTranType: any = [
+    {
+      code: '',
+      name: 'Tất cả'
+    },
+    {
+      code: 'CK',
+      name: 'Chuyển khoản'
+    },
+    {
+      code: 'TK',
+      name: 'Tiết kiệm'
+    },
+    {
+      code: 'TT',
+      name: 'Thanh toán'
+    },
+    {
+      code: 'TOPUP',
+      name: 'Nạp tiền'
+    },
+    {
+      code: 'QLTK',
+      name: 'Phí thường niên',
+
+    }
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,13 +124,42 @@ export class EditComponent implements OnInit {
     private route: ActivatedRoute,
     private ncbService: NCBService
   ) {
+      this.userInfo = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : '';
       this.route.params.subscribe(params => {
-        this.itemId = parseInt(params.itemId);
-    });
+        this.itemId = params.itemId;
+      });
+
    }
 
   ngOnInit() {
-    this.getItem({id: this.itemId});
+    this.getItem(this.itemId);
+    this.dataForm = this.formBuilder.group({
+      prdName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      tranType: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      typeId: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      quantity: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      customerType: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      ccy: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      limitDaily: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      min: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      max: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      limitFaceid: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      limitFinger: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      promotion: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      promotionName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      percentage: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      fromDate: ['', this.mRatesDateS],
+      toDate: ['', this.mRatesDateS_7],
+      prd: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      createBy: [JSON.stringify(this.userInfo.userId)],
+      status : ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+    });
+  }
+  get Form() { return this.dataForm.controls; }
+  public loadDate(): void {
+    this.my_7.setDate(this.my_7.getDate() - 7);
+    this.mRatesDateS = { year: this.my_7.getFullYear(), month: this.my_7.getMonth() + 1, day: this.my_7.getDate() };
+    this.mRatesDateS_7 = { year: this.my.getFullYear(), month: this.my.getMonth() + 1, day: this.my.getDate() };
   }
   onSubmit() {
     this.submitted = true;
@@ -83,11 +196,12 @@ export class EditComponent implements OnInit {
     this.router.navigateByUrl('/provision');
   }
   getItem(params) {
-    this.ncbService.detailNcbGuide(params).then((result) => {
+    this.ncbService.detailPackage({prdName: params}).then((result) => {
       const body = result.json().body;
-      this.obj.status = body.status;
-      this.obj.serviceId = body.serviceId;
-      this.obj.content = body.content;
+      console.log('!@#!@', body);
+      this.dataForm.patchValue({
+        prdName: body.prdName
+      });
     }).catch(err => {
 
     });

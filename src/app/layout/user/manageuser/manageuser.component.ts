@@ -75,6 +75,9 @@ export class ManageUserComponent implements OnInit {
             });
     }
     async onChangePGD(value) {
+        this.dataForm.patchValue({
+            transactionCode: ''
+        });
         if (value === '') {
             await this.getAllPGD();
         } else {

@@ -1,5 +1,10 @@
 <div>
-    <app-page-header [heading]="'Mạng lưới chi nhánh'" [heading_second]="'Thêm mới mạng lưới chi nhánh'" [url_heading]="'/transaction-room'"> </app-page-header>
+    <app-page-header
+        [heading]="'Mạng lưới chi nhánh'"
+        [heading_second]="'Thêm mới mạng lưới chi nhánh'"
+        [url_heading]="'/transaction-room'"
+    >
+    </app-page-header>
     <div class="row">
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
@@ -79,7 +84,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Số điện thoại(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Số điện thoại:</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="phone"
@@ -99,13 +104,29 @@
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Fax:</label>
                     <div class="col-sm-7">
-                        <input formControlName="fax" class="form-control col-lg-12" placeholder="Fax" />
+                        <input
+                            formControlName="fax"
+                            [ngClass]="{ 'is-invalid': submitted && Form.fax.errors }"
+                            class="form-control col-lg-12"
+                            placeholder="Fax"
+                        />
+                        <div *ngIf="submitted && Form.fax.errors" class="invalid-feedback">
+                            <div *ngIf="Form.fax.errors.pattern">Fax không đúng định dạng</div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Vĩ độ:</label>
                     <div class="col-sm-7">
-                        <input formControlName="latitude" class="form-control col-lg-12" placeholder="Vĩ độ" />
+                        <input
+                            formControlName="latitude"
+                            [ngClass]="{ 'is-invalid': submitted && Form.latitude.errors }"
+                            class="form-control col-lg-12"
+                            placeholder="Vĩ độ"
+                        />
+                        <div *ngIf="submitted && Form.latitude.errors" class="invalid-feedback">
+                            <div *ngIf="Form.latitude.errors.pattern">Vĩ độ không đúng định dạng</div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -115,19 +136,42 @@
                             formControlName="longitude"
                             class="form-control col-lg-12"
                             placeholder="Kinh độ"
+                            [ngClass]="{ 'is-invalid': submitted && Form.longitude.errors }"
                         />
+
+                        <div *ngIf="submitted && Form.longitude.errors" class="invalid-feedback">
+                            <div *ngIf="Form.longitude.errors.pattern">Kinh độ không đúng định dạng</div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Đường đãn hình ảnh:</label>
                     <div class="col-sm-7">
-                        <input formControlName="urlImg" class="form-control col-lg-12" placeholder="Đường dẫn hình ảnh" />
+                        <input
+                            formControlName="urlImg"
+                            [ngClass]="{ 'is-invalid': submitted && Form.urlImg.errors }"
+                            class="form-control col-lg-12"
+                            placeholder="Đường dẫn hình ảnh"
+                        />
+
+                        <div *ngIf="submitted && Form.urlImg.errors" class="invalid-feedback">
+                            <div *ngIf="Form.urlImg.errors.pattern">Đường đãn hình ảnh không đúng định dạng</div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Dao:</label>
                     <div class="col-sm-7">
-                        <input formControlName="dao" class="form-control col-lg-12" placeholder="dao" />
+                        <input
+                            formControlName="dao"
+                            [ngClass]="{ 'is-invalid': submitted && Form.dao.errors }"
+                            class="form-control col-lg-12"
+                            placeholder="Dao"
+                        />
+
+                        <div *ngIf="submitted && Form.dao.errors" class="invalid-feedback">
+                            <div *ngIf="Form.dao.errors.pattern">Dao không đúng định dạng</div>
+                        </div>
                     </div>
                 </div>
 

@@ -28,7 +28,6 @@ export class ListComponent implements OnInit {
     page: 0,
     size: 10,
     previous_page: 0,
-    filter: ''
   };
   listData: any = [];
   listPageSize: any = [10, 20, 30, 40, 50];
@@ -175,12 +174,5 @@ export class ListComponent implements OnInit {
     }).catch((err) => {
       this.toastr.error('Không lấy được dữ liệu phòng giao dịch', 'Thất bại');
     });
-  }
-  keyDownFunction(event) {
-    if (event.keyCode === 13) {
-      this.isSearch = false;
-      this.re_search.filter = this.search_keyword;
-      this.getListData(this.re_search);
-    }
   }
 }
