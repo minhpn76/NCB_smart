@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
@@ -12,54 +13,111 @@ import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConf
 })
 export class ListComponent implements OnInit {
   search_keyword: any = '';
+  userInfo: any = [];
+  mRatesDateS: NgbDateStruct;
+  mRatesDateS_7: NgbDateStruct;
+  my: any = new Date();
+  my_7: any = new Date();
+  dataForm: FormGroup;
+  submitted = false;
   isSearch: any = false;
   isProcessLoad: any = 0;
   totalSearch: any = 0;
   re_search = {
-    prdName: '',
+    prd: '',
+    tranType: '',
+    typeId: '',
     status: '',
     size: 10,
     page: 0,
     previous_page: 0
   };
 
-  selectProvine: any;
-  listData: any = [
+  listTranType: any = [
     {
-      'id': 1,
-      'serviceId': 'Service 1',
-      'description': 'This is description1',
-      'status': 'A'
+      code: '',
+      name: 'Tất cả'
     },
     {
-      'id': 2,
-      'serviceId': 'Service 2',
-      'description': 'This is description2',
-      'status': 'A'
+      code: 'CK',
+      name: 'Chuyển khoản'
     },
     {
-      'id': 3,
-      'serviceId': 'Service 3',
-      'description': 'This is description3',
-      'status': 'A'
+      code: 'TK',
+      name: 'Tiết kiệm'
+    },
+    {
+      code: 'TT',
+      name: 'Thanh toán'
+    },
+    {
+      code: 'TOPUP',
+      name: 'Nạp tiền'
+    },
+    {
+      code: 'QLTK',
+      name: 'Phí thường niên',
+
     }
   ];
-  listProvinceName: any = [];
-  listPageSize: any = [10, 20, 30, 40, 50];
+
+  listTypeId: any = [
+    {
+      code: '',
+      name: 'Tất cả'
+    },
+    {
+      code: 'IBT',
+      name: 'Chuyển khoản LNH'
+    },
+    {
+      code: 'URT',
+      name: 'Chuyển khoản nội bộ'
+    },
+    {
+      code: 'ISL',
+      name: 'CK 247'
+    },
+    {
+      code: 'OW6',
+      name: 'Chuyển tiền vãng lai'
+    },
+    {
+      code: 'BILL',
+      name: 'Thanh toán hóa đơn'
+    },
+    {
+      code: 'TOP',
+      name: 'Nạp tiền điện thoại'
+    },
+    {
+      code: 'EWL',
+      name: 'Nạp ví điện tử'
+    },
+    {
+      code: 'IZI',
+      name: 'Nạp tiền vào TK IZI'
+    }
+  ];
   listStatus: any = [
     {
-      name: 'Tất cả',
       code: '',
+      name: 'Tất cả'
     },
     {
-      name: 'Active',
-      code: 'A',
+      code: 'S',
+      name: 'Trạng thái mềm'
     },
     {
-      name: 'Deactive',
-      code: 'D',
+      code: 'H',
+      name: 'Trạng thái cứng'
     }
   ];
+  selectProvine: any;
+  listData: any = [];
+  listProvinceName: any = [];
+  listPageSize: any = [10, 20, 30, 40, 50];
+
   protected modalOp: NgbModalRef;
 
   @ViewChild('modalPackage')
@@ -68,12 +126,46 @@ export class ListComponent implements OnInit {
   constructor(
     private ncbService: NCBService,
     public toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private formBuilder: FormBuilder,
   ) {
+    this.userInfo = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : '';
   }
 
   ngOnInit() {
     this.getListData(this.re_search);
+    this.dataForm = this.formBuilder.group({
+      prdName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      tranType: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      typeId: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      quantity: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      customerType: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      ccy: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      limitDaily: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      min: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      max: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      limitFaceid: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      limitFinger: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      promotion: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      promotionName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      percentage: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      fromDate: ['', this.mRatesDateS],
+      toDate: ['', this.mRatesDateS_7],
+      prd: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      createBy: [JSON.stringify(this.userInfo.userId)],
+      status : ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+    });
+  }
+  get Form() { return this.dataForm.controls; }
+
+  tranferDate(params) {
+    return params.year + '/' + params.month + '/' + params.day;
+  }
+
+  public loadDate(): void {
+    this.my_7.setDate(this.my_7.getDate() - 7);
+    this.mRatesDateS = { year: this.my_7.getFullYear(), month: this.my_7.getMonth() + 1, day: this.my_7.getDate() };
+    this.mRatesDateS_7 = { year: this.my.getFullYear(), month: this.my.getMonth() + 1, day: this.my.getDate() };
   }
 
   getListData(params) {
@@ -88,6 +180,9 @@ export class ListComponent implements OnInit {
         this.isProcessLoad = 0;
       }, 300);
     }).catch(err => {
+      this.listData = [];
+      this.totalSearch = 0;
+      this.isProcessLoad = 0;
     });
   }
 
@@ -101,7 +196,7 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.ncbService.deletePackage({ prdName: code }).then(() => {
+        this.ncbService.deletePackage({ prd: code }).then(() => {
           this.listData.splice(index, 1);
           Swal.fire(
             'Đã xoá!',
@@ -130,14 +225,17 @@ export class ListComponent implements OnInit {
     }, (reason) => {
     });
   }
-  async openModalPackage() {
-    // await this.getItem(id);
-    this.openModal(this.modalPackageElementRef, 'modal-package', 'static');
+  async openModalPackage(data) {
+    // await this.getPassData(data);
+    // this.openModal(this.modalPackageElementRef, 'modal-package', 'static');
   }
-  cancelAction(event) {
-    console.log('huy bo thanh con');
+  getPassData(data) {
+    this.dataForm.patchValue({
+      prd: data.prd,
+      prdName: data.prdName
+    });
+  }
 
-  }
   loadPage(page: number) {
     const page_number = page - 1;
     if (this.isSearch === false) {
@@ -155,21 +253,10 @@ export class ListComponent implements OnInit {
     }
   }
   onSearch(payload) {
-    this.isSearch = true;
-    this.listData = [];
-    this.isProcessLoad = 1;
-    this.ncbService.searchNcbGuide(payload).then(result => {
-      setTimeout(() => {
-        const body = result.json().body;
-        this.listData = body.content;
-        this.totalSearch = body.totalElements;
-        this.isProcessLoad = 0;
-      }, 300);
-    }).catch(err => {
-      this.isProcessLoad = 0;
-      this.listData = [];
-      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
-    });
+    if (payload.prd !== '' || payload.tranType !== '' || payload.typeId !== '' || payload.status !== '' ) {
+      payload.page = 0;
+    }
+    this.getListData(payload);
   }
   // keyDownFunction(event) {
   //   if (event.keyCode === 13) {

@@ -1,7 +1,7 @@
 <div>
     <app-page-header 
-        [heading]="'Gói sản phẩm'"
-        [url_heading]="'/package'">
+        [heading]="'Khuyến mãi/ ưu đãi'"
+        [url_heading]="'/promotion'">
     </app-page-header>
     <!-- {{'Admin_function.DS_province' | translate}} -->
     <div class="row">
@@ -87,8 +87,8 @@
                         <th scope="row">
                             {{ i+1 }}
                         </th>
-                        <td>{{data?.promotionName}}</td>
                         <td>{{data?.promotion}}</td>
+                        <td>{{data?.promotionName}}</td>
                         <td>{{data?.customerType}}</td>
                         <td>{{data?.percentage}}</td>
                         <td>{{data?.prdName}}</td>

@@ -4,13 +4,14 @@ import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { NCBService } from '../../../services/ncb.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Helper } from '../../../helper';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'provision-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, Helper]
 })
 export class EditComponent implements OnInit {
   public Editor = ClassicEditor;
@@ -28,12 +29,12 @@ export class EditComponent implements OnInit {
   };
   listStatus: any = [
     {
-      name: 'Active',
-      code: 'A',
+      code: 'S',
+      name: 'Trạng thái mềm'
     },
     {
-      name: 'Deactive',
-      code: 'D',
+      code: 'H',
+      name: 'Trạng thái cứng'
     }
   ];
   userInfo: any;
@@ -122,7 +123,8 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     public router: Router,
     private route: ActivatedRoute,
-    private ncbService: NCBService
+    private ncbService: NCBService,
+    private helper: Helper
   ) {
       this.userInfo = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : '';
       this.route.params.subscribe(params => {
@@ -134,6 +136,7 @@ export class EditComponent implements OnInit {
   ngOnInit() {
     this.getItem(this.itemId);
     this.dataForm = this.formBuilder.group({
+      id: [''],
       prdName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       tranType: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       typeId: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
@@ -151,7 +154,7 @@ export class EditComponent implements OnInit {
       fromDate: ['', this.mRatesDateS],
       toDate: ['', this.mRatesDateS_7],
       prd: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      createBy: [JSON.stringify(this.userInfo.userId)],
+      createBy: [JSON.stringify(this.userInfo.userName)],
       status : ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
     });
   }
@@ -161,46 +164,85 @@ export class EditComponent implements OnInit {
     this.mRatesDateS = { year: this.my_7.getFullYear(), month: this.my_7.getMonth() + 1, day: this.my_7.getDate() };
     this.mRatesDateS_7 = { year: this.my.getFullYear(), month: this.my.getMonth() + 1, day: this.my.getDate() };
   }
+
+  tranferDate(params) {
+    return params.year + '/' + params.month + '/' + params.day;
+  }
   onSubmit() {
     this.submitted = true;
-    if (this.obj.content === '' || this.obj.serviceId === '') {
-      this.toastr.error('Không được để trống các trường', 'Lỗi!');
+    if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
+      this.dataForm.value.toDate = this.tranferDate(this.mRatesDateS_7);
+      this.dataForm.value.fromDate = this.tranferDate(this.mRatesDateS);
+    }
+    if (this.dataForm.invalid) {
       return;
     }
-    const id = {
-      id: this.itemId
+    const payload = {
+      id: this.dataForm.value.id,
+      prdName: this.dataForm.value.prdName,
+      tranType: this.dataForm.value.tranType,
+      typeId: this.dataForm.value.typeId,
+      status: this.dataForm.value.status,
+      quantity: parseInt(this.dataForm.value.quantity),
+      customerType: this.dataForm.value.customerType,
+      ccy: this.dataForm.value.ccy,
+      limitDaily: parseInt(this.dataForm.value.limitDaily),
+      min: parseInt(this.dataForm.value.min),
+      max: parseInt(this.dataForm.value.max),
+      limitFaceid: parseInt(this.dataForm.value.limitFaceid),
+      limitFinger: parseInt(this.dataForm.value.limitFinger),
+      promotion: this.dataForm.value.promotion,
+      promotionName: this.dataForm.value.promotionName,
+      percentage: parseInt(this.dataForm.value.percentage),
+      fromDate: this.helper.tranferDate(this.dataForm.value.fromDate),
+      toDate: this.helper.tranferDate(this.dataForm.value.toDate),
+      prd: this.dataForm.value.prd,
+      createBy: parseInt(this.dataForm.value.createBy)
     };
-    const data = {
-      ...this.obj,
-      ...id
-    };
-    this.ncbService.updateNcbGuide(data).then((result) => {
+    this.ncbService.updatePackage(payload).then((result) => {
       if (result.status === 200) {
         if (result.json().code !== '00') {
           this.toastr.error(result.json().message, 'Thất bại!');
         } else {
           this.toastr.success('Sửa thành công', 'Thành công!');
           setTimeout(() => {
-            this.router.navigateByUrl('/provision');
+            this.router.navigateByUrl('/package');
           }, 500);
         }
       } else {
         this.toastr.error(result.message, 'Thất bại!');
       }
     }).catch((err) => {
-      this.toastr.error(err.message, 'Thất bại!');
-
+      this.toastr.error(err.json().message, 'Thất bại!');
     });
   }
   resetForm() {
-    this.router.navigateByUrl('/provision');
+    this.router.navigateByUrl('/package');
   }
   getItem(params) {
-    this.ncbService.detailPackage({prdName: params}).then((result) => {
+    this.ncbService.detailPackage({prd: params}).then((result) => {
       const body = result.json().body;
-      console.log('!@#!@', body);
       this.dataForm.patchValue({
-        prdName: body.prdName
+        id: body.id,
+        prdName: body.prdName,
+        tranType: body.tranType,
+        typeId: body.typeId,
+        quantity: body.quantity,
+        customerType: body.customerType,
+        ccy: body.ccy,
+        limitDaily: body.limitDaily,
+        min: body.min,
+        max: body.max,
+        limitFaceid: body.limitFaceid,
+        limitFinger: body.limitFinger,
+        promotion: body.promotion,
+        promotionName: body.promotionName,
+        percentage: body.percentage,
+        fromDate: body.fromDate,
+        toDate: body.toDate,
+        prd: body.prd,
+        createBy: body.createBy,
+        status: body.status
       });
     }).catch(err => {
 

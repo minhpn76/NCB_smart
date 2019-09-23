@@ -8,18 +8,18 @@
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên gói sản phẩm(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Mã gói sản phẩm(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <input
                             formControlName="prd"
                             class="form-control col-lg-12"
-                            placeholder="Tên gói sản phẩm"
+                            placeholder="Mã gói sản phẩm"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.prd.errors }">
                         <div *ngIf="submitted && Form.prd.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.prd.errors.required">Tên gói sản phẩm là bắt buộc</div>
-                            <div *ngIf="Form.prd.errors.pattern">Tên gói sản phẩm không hợp lệ</div>
+                            <div *ngIf="Form.prd.errors.required">Mã sản phẩm là bắt buộc</div>
+                            <div *ngIf="Form.prd.errors.pattern">Mã sản phẩm không hợp lệ</div>
                         </div>
                     </div>
 
@@ -35,8 +35,8 @@
                             Form.prdName.errors }">
                         <div *ngIf="submitted && Form.prdName.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.prdName.errors.required">Tên gói sản phẩm là bắt buộc</div>
-                            <div *ngIf="Form.prdName.errors.pattern">Tên gói sản phẩm không hợp lệ</div>
+                            <div *ngIf="Form.prdName.errors.required">Tên sản phẩm là bắt buộc</div>
+                            <div *ngIf="Form.prdName.errors.pattern">Tên sản phẩm không hợp lệ</div>
                         </div>
                     </div>
 

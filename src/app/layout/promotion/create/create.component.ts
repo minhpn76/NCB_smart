@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NCBService } from '../../../services/ncb.service';
 import { Router } from '@angular/router';
@@ -44,6 +44,8 @@ export class CreateComponent implements OnInit {
   temp_mRatesDateS_4: any;
   tempArrPackage: any = [];
 
+  listPrdName: any;
+
   package: any = {
     ALL: false,
     NCB: false,
@@ -53,6 +55,7 @@ export class CreateComponent implements OnInit {
     GAMI: false
   };
   dataForm: FormGroup;
+  eventFrom: FormGroup;
   submitted = false;
   listSelect: any = [
     {
@@ -146,11 +149,12 @@ export class CreateComponent implements OnInit {
     private toastr: ToastrService,
     private ncbService: NCBService,
     public router: Router
-  ) {}
+  ) {
+    this.getPrdName();
+  }
 
   ngOnInit() {
     this.loadDate();
-
     this.dataForm = this.formBuilder.group({
       customerType: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(2), Validators.pattern(/^((?!\s{1,}).)*$/)])],
       promotionName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
@@ -167,18 +171,10 @@ export class CreateComponent implements OnInit {
       percentage4: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       fromDate4: [this.mRatesDateS_4],
       toDate4: [this.mRatesDateS_7_4],
-      prdName: [''],
-      status: 'A',
-      package_ALL: [false],
-      package_NCB: [false],
-      package_IZI: [false],
-      package_VIP2: [false],
-      package_VIP3: [false],
-      package_GAMI: [false]
+      prdName: ['']
     });
   }
   get Form() { return this.dataForm.controls; }
-
   tranferDate(params) {
     return params.year + '/' + params.month + '/' + params.day;
   }
@@ -200,7 +196,6 @@ export class CreateComponent implements OnInit {
     this.mRatesDateS_4 = { year: this.my_7_4.getFullYear(), month: this.my_7_4.getMonth() + 1, day: this.my_7_4.getDate() };
     this.mRatesDateS_7_4 = { year: this.my_4.getFullYear(), month: this.my_4.getMonth() + 1, day: this.my_4.getDate() };
   }
-
   onSubmit() {
     this.submitted = true;
     if (this.mRatesDateS_7_1 !== undefined && this.mRatesDateS_1 !== undefined) {
@@ -240,7 +235,7 @@ export class CreateComponent implements OnInit {
       percentage4: this.dataForm.value.percentage4,
       fromDate4: this.dataForm.value.fromDate4,
       toDate4: this.dataForm.value.toDate4,
-      prdName: JSON.stringify(this.tempArrPackage),
+      prdName: this.tempArrPackage.join(','),
     };
 
     this.ncbService.createPromotion(payload).then((result) => {
@@ -263,150 +258,38 @@ export class CreateComponent implements OnInit {
   resetForm() {
     this.router.navigateByUrl('/promotion');
   }
-  changePackage(event) {
-    if (event.target.name === 'ALL') {
-      if (event.target.checked === true) {
-        this.tempArrPackage = ['NCB', 'IZI', 'VIP2', 'VIP3', 'GAMI'];
-        this.dataForm.patchValue({
-          package_ALL: true,
-          package_NCB: true,
-          package_IZI: true,
-          package_VIP2: true,
-          package_VIP3: true,
-          package_GAMI: true
-        });
-      } else {
-        this.tempArrPackage = [];
-        this.dataForm.patchValue({
-          package_ALL: false,
-          package_NCB: false,
-          package_IZI: false,
-          package_VIP2: false,
-          package_VIP3: false,
-          package_GAMI: false
-        });
-      }
-    } else if (event.target.name === 'NCB') {
-      if (event.target.checked === true) {
-        if (this.tempArrPackage.includes('NCB') === false) {
-          this.tempArrPackage.push('NCB');
-          this.dataForm.patchValue({
-            package_NCB: true
-          });
+  getPrdName() {
+    this.listPrdName = [];
+    // xu ly
+    this.ncbService.getListPrdName().then((result) => {
+      setTimeout(() => {
+        const body = result.json().body;
+        this.listPrdName = body;
+      }, 300);
+    }).catch(err => {
+      this.toastr.error('Không thể lấy được dự liệu gói sản phẩm', 'Thất bại!');
+    });
+  }
+  changePackage(event, code) {
+    const parseName = event.target.id.toString();
+    if (this.tempArrPackage.length === 0) {
+      this.tempArrPackage.push(parseName);
+    } else {
+      this.tempArrPackage.forEach(element => {
+        if (element !== parseName) {
+          if (this.tempArrPackage.includes(parseName) === true) {
+            return;
+          } else {
+            this.tempArrPackage.push(parseName);
+          }
         } else {
-          this.dataForm.patchValue({
-            package_NCB: false
-          });
+          if (this.tempArrPackage.includes(parseName) === true) {
+            this.tempArrPackage = this.tempArrPackage.filter(e => e !== element.toString());
+          } else {
+            return;
+          }
         }
-      } else {
-        if (this.tempArrPackage.includes('NCB') === true) {
-          this.tempArrPackage = this.tempArrPackage.filter(e => e !== 'NCB');
-          this.dataForm.patchValue({
-            package_NCB: false
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_NCB: true
-          });
-        }
-      }
-    } else if (event.target.name === 'IZI') {
-      if (event.target.checked === true) {
-        if (this.tempArrPackage.includes('IZI') === false) {
-          this.tempArrPackage.push('IZI');
-          this.dataForm.patchValue({
-            package_IZI: true
-          });
-        } else {
-
-          this.dataForm.patchValue({
-            package_IZI: false
-          });
-        }
-      } else {
-        if (this.tempArrPackage.includes('IZI') === true) {
-          this.tempArrPackage = this.tempArrPackage.filter(e => e !== 'IZI');
-          this.dataForm.patchValue({
-            package_IZI: false
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_IZI: true
-          });
-        }
-      }
-    } else if (event.target.name === 'VIP2') {
-      if (event.target.checked === true) {
-        if (this.tempArrPackage.includes('VIP2') === false) {
-          this.tempArrPackage.push('VIP2');
-          this.dataForm.patchValue({
-            package_VIP2: true
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_VIP2: false
-          });
-        }
-      } else {
-        if (this.tempArrPackage.includes('VIP2') === true) {
-          this.tempArrPackage = this.tempArrPackage.filter(e => e !== 'VIP2');
-          this.dataForm.patchValue({
-            package_VIP2: false
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_VIP2: false
-          });
-        }
-      }
-    } else if (event.target.name === 'VIP3') {
-      if (event.target.checked === true) {
-        if (this.tempArrPackage.includes('VIP3') === false) {
-          this.tempArrPackage.push('VIP3');
-          this.dataForm.patchValue({
-            package_VIP3: true
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_VIP3: false
-          });
-        }
-      } else {
-        if (this.tempArrPackage.includes('VIP3') === true) {
-          this.tempArrPackage = this.tempArrPackage.filter(e => e !== 'VIP3');
-          this.dataForm.patchValue({
-            package_VIP3: false
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_VIP3: true
-          });
-        }
-      }
-    } else if (event.target.name === 'GAMI') {
-      if (event.target.checked === true) {
-        if (this.tempArrPackage.includes('GAMI') === false) {
-          this.tempArrPackage.push('GAMI');
-          this.dataForm.patchValue({
-            package_GAMI: true
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_GAMI: false
-          });
-        }
-      } else {
-        if (this.tempArrPackage.includes('GAMI') === true) {
-          this.tempArrPackage = this.tempArrPackage.filter(e => e !== 'GAMI');
-          this.dataForm.patchValue({
-            package_GAMI: false
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_GAMI: true
-          });
-        }
-      }
+      });
     }
   }
 }

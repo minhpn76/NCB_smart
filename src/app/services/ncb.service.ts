@@ -50,7 +50,7 @@ export class NCBService {
    */
   searchProvince(params): Promise<any> {
     const url = `${API_URL}/city/searchCity`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET',application: true });
+    return this.auth.authRequest({ url: url, params: params, method: 'GET', application: true });
   }
   /**
    *
@@ -734,11 +734,11 @@ export class NCBService {
   }
   updatePackage(data): Promise<any> {
     const url = `${API_URL}/function/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PATCH', application: true });
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
   }
   detailPackage(value): Promise<any> {
     const url = `${API_URL}/function/detail`;
-    return this.auth.authRequest({ url: url, params: value, method: 'POST', application: true });
+    return this.auth.authRequest({ url: url, params: value, method: 'GET', application: true });
   }
   deletePackage(value): Promise<any> {
     const url = `${API_URL}/function/delete`;
@@ -810,6 +810,10 @@ export class NCBService {
   deleteFileBanner(payload) {
     const url = `${API_URL}/img/banner/deleteFile`;
     return this.auth.authRequest({ url: url, params: payload, method: 'DELETE' });
+  }
+  getListPrdName() {
+    const url = `${API_URL}/function/getAllPrdName`;
+    return this.auth.authRequest({ url: url, method: 'GET' });
   }
 
 }

@@ -24,6 +24,7 @@ export class EditComponent implements OnInit {
   my_7_1: any = new Date();
   temp_mRatesDateS_7_1: any;
   temp_mRatesDateS_1: any;
+  tempPrdName: any = [];
 
   mRatesDateS_2: NgbDateStruct;
   mRatesDateS_7_2: NgbDateStruct;
@@ -151,6 +152,7 @@ export class EditComponent implements OnInit {
   ];
   tempArrPackage: any = [];
   userInfo: any;
+  listPrdName: any = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -161,10 +163,11 @@ export class EditComponent implements OnInit {
     private dataPipe: DatePipe,
     private helper: Helper
   ) {
-      this.route.params.subscribe(params => {
-        this.itemId = params.itemId;
-      });
-      this.userInfo = localStorage.getItem('profile') ? JSON.parse(localStorage.getItem('profile')) : '';
+    this.route.params.subscribe(params => {
+      this.itemId = params.itemId;
+    });
+    this.getPrdName();
+    this.userInfo = localStorage.getItem('profile') ? JSON.parse(localStorage.getItem('profile')) : '';
 
    }
 
@@ -182,12 +185,6 @@ export class EditComponent implements OnInit {
       prdName: [''],
       tranType: [''],
       typeId: [''],
-      package_ALL: [false],
-      package_NCB: [false],
-      package_IZI: [false],
-      package_VIP2: [false],
-      package_VIP3: [false],
-      package_GAMI: [false],
       createdBy: [JSON.stringify(this.userInfo.userName)]
     });
   }
@@ -202,7 +199,6 @@ export class EditComponent implements OnInit {
     this.submitted = true;
 
     // stop here if form is invalid
-    console.log('!@#!@', this.dataForm.value);
     if (this.dataForm.invalid) {
       return;
     }
@@ -217,9 +213,9 @@ export class EditComponent implements OnInit {
       tranType: this.dataForm.value.tranType,
       typeId: this.dataForm.value.typeId,
       createdDate: this.helper.formatDate(new Date()),
-      prdName: JSON.stringify(this.tempArrPackage),
+      prdName: this.tempArrPackage.join(','),
     };
-    console.log('12passDatapassData=', passData);
+
     const payload = {
       id: this.itemId,
       ...passData
@@ -238,150 +234,43 @@ export class EditComponent implements OnInit {
       this.toastr.error(err.json().desciption, 'Thất bại!');
     });
   }
-  changePackage(event) {
-    if (event.target.name === 'ALL') {
-      if (event.target.checked === true) {
-        this.tempArrPackage = ['NCB', 'IZI', 'VIP2', 'VIP3', 'GAMI'];
-        this.dataForm.patchValue({
-          package_ALL: true,
-          package_NCB: true,
-          package_IZI: true,
-          package_VIP2: true,
-          package_VIP3: true,
-          package_GAMI: true
-        });
-      } else {
-        this.tempArrPackage = [];
-        this.dataForm.patchValue({
-          package_ALL: false,
-          package_NCB: false,
-          package_IZI: false,
-          package_VIP2: false,
-          package_VIP3: false,
-          package_GAMI: false
-        });
-      }
-    } else if (event.target.name === 'NCB') {
-      if (event.target.checked === true) {
-        if (this.tempArrPackage.includes('NCB') === false) {
-          this.tempArrPackage.push('NCB');
-          this.dataForm.patchValue({
-            package_NCB: true
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_NCB: false
-          });
-        }
-      } else {
-        if (this.tempArrPackage.includes('NCB') === true) {
-          this.tempArrPackage = this.tempArrPackage.filter(e => e !== 'NCB');
-          this.dataForm.patchValue({
-            package_NCB: false
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_NCB: true
-          });
-        }
-      }
-    } else if (event.target.name === 'IZI') {
-      if (event.target.checked === true) {
-        if (this.tempArrPackage.includes('IZI') === false) {
-          this.tempArrPackage.push('IZI');
-          this.dataForm.patchValue({
-            package_IZI: true
-          });
-        } else {
+  getPrdName() {
+    this.listPrdName = [];
+    // xu ly
+    this.ncbService.getListPrdName().then((result) => {
+      const body = result.json().body;
+      this.tempPrdName = body;
 
-          this.dataForm.patchValue({
-            package_IZI: false
-          });
-        }
-      } else {
-        if (this.tempArrPackage.includes('IZI') === true) {
-          this.tempArrPackage = this.tempArrPackage.filter(e => e !== 'IZI');
-          this.dataForm.patchValue({
-            package_IZI: false
-          });
+      body.forEach(element => {
+        this.listPrdName.push({
+          name: element,
+          code: false
+        });
+      });
+    }).catch(err => {
+      this.toastr.error('Không thể lấy được dự liệu gói sản phẩm', 'Thất bại!');
+    });
+  }
+  changePackage(event, code) {
+    const parseName = event.target.id.toString();
+    if (this.tempArrPackage.length === 0) {
+      this.tempArrPackage.push(parseName);
+    } else {
+      this.tempArrPackage.forEach(element => {
+        if (element !== parseName) {
+          if (this.tempArrPackage.includes(parseName) === true) {
+            return;
+          } else {
+            this.tempArrPackage.push(parseName);
+          }
         } else {
-          this.dataForm.patchValue({
-            package_IZI: true
-          });
+          if (this.tempArrPackage.includes(parseName) === true) {
+            this.tempArrPackage = this.tempArrPackage.filter(e => e !== element.toString());
+          } else {
+            return;
+          }
         }
-      }
-    } else if (event.target.name === 'VIP2') {
-      if (event.target.checked === true) {
-        if (this.tempArrPackage.includes('VIP2') === false) {
-          this.tempArrPackage.push('VIP2');
-          this.dataForm.patchValue({
-            package_VIP2: true
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_VIP2: false
-          });
-        }
-      } else {
-        if (this.tempArrPackage.includes('VIP2') === true) {
-          this.tempArrPackage = this.tempArrPackage.filter(e => e !== 'VIP2');
-          this.dataForm.patchValue({
-            package_VIP2: false
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_VIP2: false
-          });
-        }
-      }
-    } else if (event.target.name === 'VIP3') {
-      if (event.target.checked === true) {
-        if (this.tempArrPackage.includes('VIP3') === false) {
-          this.tempArrPackage.push('VIP3');
-          this.dataForm.patchValue({
-            package_VIP3: true
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_VIP3: false
-          });
-        }
-      } else {
-        if (this.tempArrPackage.includes('VIP3') === true) {
-          this.tempArrPackage = this.tempArrPackage.filter(e => e !== 'VIP3');
-          this.dataForm.patchValue({
-            package_VIP3: false
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_VIP3: true
-          });
-        }
-      }
-    } else if (event.target.name === 'GAMI') {
-      if (event.target.checked === true) {
-        if (this.tempArrPackage.includes('GAMI') === false) {
-          this.tempArrPackage.push('GAMI');
-          this.dataForm.patchValue({
-            package_GAMI: true
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_GAMI: false
-          });
-        }
-      } else {
-        if (this.tempArrPackage.includes('GAMI') === true) {
-          this.tempArrPackage = this.tempArrPackage.filter(e => e !== 'GAMI');
-          this.dataForm.patchValue({
-            package_GAMI: false
-          });
-        } else {
-          this.dataForm.patchValue({
-            package_GAMI: true
-          });
-        }
-      }
+      });
     }
   }
   async getItem(params) {
@@ -402,37 +291,20 @@ export class EditComponent implements OnInit {
       };
 
       // change
-      this.tempArrPackage = JSON.parse(body.prdName) ? JSON.parse(body.prdName) : '[]';
-      if (this.tempArrPackage.includes('NCB')) {
-        this.dataForm.patchValue({
-          package_NCB: true
-        });
-      }
-      if (this.tempArrPackage.includes('IZI')) {
-        this.dataForm.patchValue({
-          package_IZI: true
-        });
-      }
-      if (this.tempArrPackage.includes('VIP2')) {
-        this.dataForm.patchValue({
-          package_VIP2: true
-        });
-      }
-      if (this.tempArrPackage.includes('VIP3')) {
-        this.dataForm.patchValue({
-          package_VIP3: true
-        });
-      }
-      if (this.tempArrPackage.includes('GAMI')) {
-        this.dataForm.patchValue({
-          package_GAMI: true
-        });
-      }
-      if (this.tempArrPackage.includes('GAMI') && this.tempArrPackage.includes('IZI') && this.tempArrPackage.includes('VIP2') && this.tempArrPackage.includes('VIP3') && this.tempArrPackage.includes('GAMI')) {
-        this.dataForm.patchValue({
-          package_ALL: true
-        });
-      }
+      const tempPackage = body.prdName.split(',');
+      tempPackage.forEach(element => {
+        if (this.tempPrdName.includes(element) === true) {
+          this.listPrdName = this.listPrdName.filter(e => e.name !== element.toString());
+          this.listPrdName.push({
+            name: element,
+            code: true
+          });
+        }
+      });
+      const tempListPrdName = this.listPrdName.filter(e => e.code === true);
+      tempListPrdName.forEach(element => {
+        this.tempArrPackage.push(element.name);
+      });
       // end
 
       this.dataForm.patchValue({
@@ -443,7 +315,7 @@ export class EditComponent implements OnInit {
         // tslint:disable-next-line:no-bitwise
         fromDate: temp_fromDate,
         toDate: temp_toDate,
-        prdName: this.tempArrPackage,
+        prdName: tempPackage,
         status: body.status,
         tranType: body.tranType,
         typeId: body.typeId

@@ -23,6 +23,7 @@ export class ListComponent implements OnInit {
     previous_page: 0
   };
   passData: any = {};
+  listPrdName: any = [];
 
   selectProvine: any;
   listData: any = [];
@@ -66,7 +67,6 @@ export class ListComponent implements OnInit {
       setTimeout(() => {
         const body = result.json().body;
         this.listData = body.content;
-        console.log('-==', this.listData);
         this.totalSearch = body.totalElements;
         this.isProcessLoad = 0;
       }, 300);
@@ -145,5 +145,4 @@ export class ListComponent implements OnInit {
     this.re_search.page = 0;
     this.getListData(this.re_search);
   }
-
 }

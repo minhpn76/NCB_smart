@@ -7,7 +7,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'provision-create',
+  selector: 'guide-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css'],
   providers: [NCBService]

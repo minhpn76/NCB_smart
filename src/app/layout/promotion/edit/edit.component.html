@@ -8,14 +8,14 @@
                     <label for="search" class="col-sm-4 col-form-label">Tên chương trình(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
-                            formControlName="promotionName"
+                            formControlName="promotion"
                             class="form-control col-lg-12"
                             placeholder="Tên chương trình"
-                            [ngClass]="{ 'is-invalid': submitted && Form.promotionName.errors }"
+                            [ngClass]="{ 'is-invalid': submitted && Form.promotion.errors }"
                         />
-                        <div *ngIf="submitted && Form.promotionName.errors" class="invalid-feedback">
-                            <div *ngIf="Form.promotionName.errors.required">Tên chương trình là bắt buộc</div>
-                            <div *ngIf="Form.promotionName.errors.required">Tên chương trình không hợp lệ</div>
+                        <div *ngIf="submitted && Form.promotion.errors" class="invalid-feedback">
+                            <div *ngIf="Form.promotion.errors.required">Tên chương trình là bắt buộc</div>
+                            <div *ngIf="Form.promotion.errors.required">Tên chương trình không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -23,15 +23,15 @@
                     <label for="search" class="col-sm-4 col-form-label">Nội dung(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <textarea
-                            formControlName="promotion"
+                            formControlName="promotionName"
                             class="form-control col-lg-12"
                             placeholder="Nội dung"
-                            [ngClass]="{ 'is-invalid': submitted && Form.promotion.errors }"
+                            [ngClass]="{ 'is-invalid': submitted && Form.promotionName.errors }"
                         ></textarea>
 
-                        <div *ngIf="submitted && Form.promotion.errors" class="invalid-feedback">
-                            <div *ngIf="Form.promotion.errors.required">Nội dung là bắt buộc</div>
-                            <div *ngIf="Form.promotion.errors.required">Nội dung chương trình không hợp lệ</div>
+                        <div *ngIf="submitted && Form.promotionName.errors" class="invalid-feedback">
+                            <div *ngIf="Form.promotionName.errors.required">Nội dung là bắt buộc</div>
+                            <div *ngIf="Form.promotionName.errors.required">Nội dung chương trình không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -113,43 +113,32 @@
                     <label class="col-sm-4 col-form-label">Gói sp áp dụng(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <div class="checkbox">
-                            <label class="checkbox-inline" style="margin-right: 10px"
-                                ><input type="checkbox" (change)="changePackage($event)" formControlName="package_ALL" name="ALL" />&nbsp;
-                                All</label
+                            <label 
+                                formArrayName="prdName" 
+                                class="checkbox-inline" 
+                                style="margin-right: 10px"
+                                *ngFor="let item of listPrdName"
                             >
-                            <label class="checkbox-inline" style="margin-right: 10px"
-                                ><input type="checkbox" (change)="changePackage($event)" formControlName="package_NCB" name="NCB" />&nbsp;
-                                NCB</label
-                            >
-                            <label class="checkbox-inline" style="margin-right: 10px"
-                                ><input type="checkbox" formControlName="package_IZI" (change)="changePackage($event)" name="IZI" />&nbsp;
-                                IZI</label
-                            >
-                        </div>
-                        <div class="checkbox">
-                            <label class="checkbox-inline" style="margin-right: 10px"
-                                ><input type="checkbox" formControlName="package_VIP2" (change)="changePackage($event)" name="VIP2" />&nbsp;
-                                VIP2</label
-                            >
-                            <label class="checkbox-inline" style="margin-right: 10px"
-                                ><input type="checkbox" formControlName="package_GAMI" (change)="changePackage($event)" name="GAMI" />&nbsp;
-                                GAMI</label
-                            >
-                            <label class="checkbox-inline" style="margin-right: 10px"
-                                ><input type="checkbox" formControlName="package_VIP3" (change)="changePackage($event)" name="VIP3" />&nbsp;
-                                VIP3</label
-                            >
+                                <input 
+                                    type="checkbox"
+                                    [name]="item.name"
+                                    [checked]="item.code"
+                                    [id]="item.name" 
+                                    (change)="changePackage($event, item)" 
+                                />&nbsp; {{item.name}}
+                            </label>
+                            
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <select class="form-control" formControlName="status" name="status">
                             <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
                         </select>
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-7">

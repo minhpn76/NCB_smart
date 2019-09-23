@@ -7,16 +7,36 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Tên gói sản phẩm:</label>
+                <label for="search" class="col-sm-4 col-form-label">Mã gói sản phẩm:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
                     itrim type="text" id="search"
-                    [(ngModel)]="re_search.prdName"
-                    placeholder="Tên gói sản phẩm">
+                    [(ngModel)]="re_search.prd"
+                    placeholder="Mã gói sản phẩm">
                 </div>
+            </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Loại chuyển phí:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="re_search.tranType">
+                        <option *ngFor="let status of listTranType" [value]="status.code" selected="selected">{{status.name}}</option>
+
+                    </select>
+                </div>
+                
             </div>
         </div>
         <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Kiểu loại:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="re_search.typeId">
+                        <option *ngFor="let status of listTypeId" [value]="status.code" selected="selected">{{status.name}}</option>
+
+                    </select>
+                </div>
+                
+            </div>
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
                 <div class="col-sm-6">
@@ -86,7 +106,7 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan=12>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor ="let data of listData; let i = index" (click)="openModalPackage()" style="cursor: pointer;">
+                    <tr *ngFor ="let data of listData; let i = index" (click)="openModalPackage(data)" style="cursor: pointer;">
                         
                         <th scope="row">
                             {{ i+1 }}
@@ -105,11 +125,11 @@
                             <span *ngIf="data?.status === 'D'" class="badge badge-danger">Deactive</span>
                         </td>
                         <td>
-                            <a class="mr-2 cursor-pointer text-blue" routerLink="/package/edit/{{data.promotionName}}">
+                            <a class="mr-2 cursor-pointer text-blue" routerLink="/package/edit/{{data.prd}}">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <span class="mr-2 cursor-pointer text-danger">
-                                <i class="fa fa-trash" (click)="deleteItem(1, i, data.id)"></i>
+                                <i class="fa fa-trash" (click)="deleteItem(1, i, data.prd)"></i>
                             </span>
                             
                         </td>
@@ -145,164 +165,106 @@
     </div>
     <div class="modal-body p-t-0">
         <div class="col-md-12">
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Tên nhóm:</label>
-                <div class="col-sm-6">
-                    <input class="form-control col-lg-12"
-                    itrim type="text" id="search"
-                    placeholder="Tên nhóm">
+            <form [formGroup]="dataForm">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã gói:</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="prd"
+                            class="form-control col-lg-12"
+                            placeholder="Mã gói sản phẩm"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.prd.errors }">
+                        <div *ngIf="submitted && Form.prd.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.prd.errors.required">Mã sản phẩm là bắt buộc</div>
+                            <div *ngIf="Form.prd.errors.pattern">Mã sản phẩm không hợp lệ</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Mô tả nhóm:</label>
-                <div class="col-sm-6">
-                    <input class="form-control col-lg-12"
-                    itrim type="text" id="search"
-                    placeholder="Mô tả nhóm">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên gói sản phẩm:</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="prdName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên gói sản phẩm"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.prdName.errors }">
+                        <div *ngIf="submitted && Form.prdName.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.prdName.errors.required">Tên gói sản phẩm là bắt buộc</div>
+                            <div *ngIf="Form.prdName.errors.pattern">Tên gói sản phẩm không hợp lệ</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <ngb-tabset>
-                <ngb-tab>
-                    <ng-template ngbTabTitle>Quản lý tính năng</ng-template>
-                    <ng-template ngbTabContent>
-                        <div class="row" style="padding-top: 30px;">
-                            <div class="col-md-6">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Chuyển khoản</label>
+                
+                <ngb-tabset>
+                    <ngb-tab>
+                        <ng-template ngbTabTitle>Quản lý tính năng</ng-template>
+                        <ng-template ngbTabContent>
+                            <div class="row" style="padding-top: 30px;">
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Chuyển khoản</label>
+                                    </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Chuyển khoản liên ngân hàng</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Chuyển tiền nhanh 24/7</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Chuyển khoản</label>
+                                    </div>
+                                </div>            
                             </div>
-                            <div class="col-md-6">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Chuyển khoản liên ngân hàng</label>
+                            <div class="row" style="padding-top: 10px;">
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Tiết kiệm</label>
+                                    </div>
                                 </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Chuyển tiền nhanh 24/7</label>
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Gửi tiết kiệm</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Tất toán tiết kiệm</label>
+                                    </div>
                                 </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Chuyển khoản</label>
-                                </div>
-                            </div>            
-                        </div>
-                        <div class="row" style="padding-top: 10px;">
-                            <div class="col-md-6">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Tiết kiệm</label>
-                                </div>
+                
                             </div>
-                            <div class="col-md-6">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Gửi tiết kiệm</label>
+                            <div class="row" style="padding-top: 10px;">
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Thanh toán hoá đơn</label>
+                                    </div>
                                 </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Tất toán tiết kiệm</label>
-                                </div>
+                            
                             </div>
-            
-                        </div>
-                        <div class="row" style="padding-top: 10px;">
-                            <div class="col-md-6">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Thanh toán hoá đơn</label>
+                            <div class="row" style="padding-top: 10px;">
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Nạp tiền</label>
+                                    </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Nạp tiền điện thoại</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Ví điện tử Airpay</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Nạp thẻ IZI</label>
+                                    </div>
+                                </div>
+                
                             </div>
-                        
-                        </div>
-                        <div class="row" style="padding-top: 10px;">
-                            <div class="col-md-6">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Nạp tiền</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Nạp tiền điện thoại</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Ví điện tử Airpay</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Nạp thẻ IZI</label>
-                                </div>
-                            </div>
-            
-                        </div>
-                        <div class="form-group row">
-                            <label for="search" class="col-sm-4 col-form-label"></label>
-                            <div class="col-sm-6">
-                                <button class="btn btn-primary">Lưu</button>
-                                &nbsp;
-                                <button class="btn btn-default">Bỏ qua</button>
-                            </div>
-                        </div>
-                    </ng-template>
-                </ngb-tab>
-                <ngb-tab>
-                    <ng-template ngbTabTitle>Quản lý hạn mức</ng-template>
-                    <ng-template ngbTabContent>
-                        <div class="row" style="padding-top: 30px;">
-                            <div class="col-md-6">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Chuyển khoản nội bộ</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="comment">Hạn mức tối thiếu/giao dịch:</label>
-                                    <input type="password" class="form-control" valule="50000" id="pwd">
-                                    <p>Năm mươi nghìn đồng</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="comment">Hạn mức tối đa/giao dịch:</label>
-                                    <input type="password" class="form-control" valule="10000000" id="pwd">
-                                    <p>Một tỷ đồng</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="comment">Hạn mức tối đa/ngày:</label>
-                                    <input type="password" class="form-control" valule="50000" id="pwd">
-                                    <p>Năm mươi tỷ đồng</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="comment">Hạn mức giao dịch vân tay/FaceID:</label>
-                                    <input type="password" class="form-control" valule="50000" id="pwd">
-                                    <p>Năm mươi nghìn đồng</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="comment">Số lần giao dịch:</label>
-                                    <input type="password" class="form-control" valule="20 lần" id="pwd">
-
-                                </div>
-                            </div>
-            
-                        </div>
-                        <div class="row" style="padding-top: 10px;">
-                            <div class="col-md-12">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Chuyển tiền liên ngân hàng</label>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Thanh toán hoá đơn</label>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Nạp tiền</label>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Gửi/tất tiết kiệm</label>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Thanh toán QRPay</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
+                            <div class="form-group row">
                                 <label for="search" class="col-sm-4 col-form-label"></label>
                                 <div class="col-sm-6">
                                     <button class="btn btn-primary">Lưu</button>
@@ -310,89 +272,163 @@
                                     <button class="btn btn-default">Bỏ qua</button>
                                 </div>
                             </div>
-                    </ng-template>
-                </ngb-tab>
-                <ngb-tab >
-                    <ng-template ngbTabTitle>Quản lý phí dịch vụ</ng-template>
-                    <ng-template ngbTabContent>
-                        <div class="row" style="padding-top: 30px;">
-                            <div class="col-md-6">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Phí thường niên</label>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab>
+                        <ng-template ngbTabTitle>Quản lý hạn mức</ng-template>
+                        <ng-template ngbTabContent>
+                            <div class="row" style="padding-top: 30px;">
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Chuyển khoản nội bộ</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="password" class="form-control" valule="0" id="pwd">
-                                    <p>Trên tháng</p>
-                                </div>
-                            </div>
-            
-                        </div>
-                        <div class="row" style="padding-top: 10px;">
-                            <div class="col-md-6">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Phí chuyển tiền nội bộ</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="password" class="form-control" valule="0" id="pwd">
-                                    <p>Trên giao dịch</p>
-                                </div>
-                            </div>
-            
-                        </div>
-                        <div class="row" style="padding-top: 10px;">
-                            <div class="col-md-6">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Phí chuyển tiền liên ngân hàng</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="password" class="form-control" valule="0" id="pwd">
-                                    <p>Trên giá trị giao dịch</p>
-                                </div>
-                                <br/>
-                                <div class="form-group">
-                                    <p>Tối thiếu</p>
-                                    <input type="password" class="form-control" valule="50000" id="pwd">
-                                </div>
-                                <div class="form-group">
-                                    <p>Tối đa</p>
-                                    <input type="password" class="form-control" valule="50000" id="pwd">
-                                </div>
-                            </div>
-            
-                        </div>
-                        <div class="row" style="padding-top: 10px;">
-                            <div class="col-md-6">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="">&nbsp;Phí chuyển tiền 24/7</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="password" class="form-control" valule="0" id="pwd">
-                                    <p>Trên giao dịch</p>
-                                </div>
-                            </div>
-            
-                        </div>
-                        <div class="form-group row">
-                            <label for="search" class="col-sm-4 col-form-label"></label>
-                            <div class="col-sm-6">
-                                <button class="btn btn-primary">Lưu</button>
-                                &nbsp;
-                                <button class="btn btn-default">Bỏ qua</button>
-                            </div>
-                        </div>
-                    </ng-template>
-                </ngb-tab>
-            </ngb-tabset>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="comment">Hạn mức tối thiếu/giao dịch:</label>
+                                        <input type="password" class="form-control" valule="50000" id="pwd">
+                                        <p>Năm mươi nghìn đồng</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="comment">Hạn mức tối đa/giao dịch:</label>
+                                        <input type="password" class="form-control" valule="10000000" id="pwd">
+                                        <p>Một tỷ đồng</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="comment">Hạn mức tối đa/ngày:</label>
+                                        <input type="password" class="form-control" valule="50000" id="pwd">
+                                        <p>Năm mươi tỷ đồng</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="comment">Hạn mức giao dịch vân tay/FaceID:</label>
+                                        <input type="password" class="form-control" valule="50000" id="pwd">
+                                        <p>Năm mươi nghìn đồng</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="comment">Số lần giao dịch:</label>
+                                        <input type="password" class="form-control" valule="20 lần" id="pwd">
 
-
+                                    </div>
+                                </div>
+                
+                            </div>
+                            <div class="row" style="padding-top: 10px;">
+                                <div class="col-md-12">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Chuyển tiền liên ngân hàng</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Thanh toán hoá đơn</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Nạp tiền</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Gửi/tất tiết kiệm</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Thanh toán QRPay</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label for="search" class="col-sm-4 col-form-label"></label>
+                                    <div class="col-sm-6">
+                                        <button class="btn btn-primary">Lưu</button>
+                                        &nbsp;
+                                        <button class="btn btn-default">Bỏ qua</button>
+                                    </div>
+                                </div>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab >
+                        <ng-template ngbTabTitle>Quản lý phí dịch vụ</ng-template>
+                        <ng-template ngbTabContent>
+                            <div class="row" style="padding-top: 30px;">
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Phí thường niên</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" valule="0" id="pwd">
+                                        <p>Trên tháng</p>
+                                    </div>
+                                </div>
+                
+                            </div>
+                            <div class="row" style="padding-top: 10px;">
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Phí chuyển tiền nội bộ</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" valule="0" id="pwd">
+                                        <p>Trên giao dịch</p>
+                                    </div>
+                                </div>
+                
+                            </div>
+                            <div class="row" style="padding-top: 10px;">
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Phí chuyển tiền liên ngân hàng</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" valule="0" id="pwd">
+                                        <p>Trên giá trị giao dịch</p>
+                                    </div>
+                                    <br/>
+                                    <div class="form-group">
+                                        <p>Tối thiếu</p>
+                                        <input type="password" class="form-control" valule="50000" id="pwd">
+                                    </div>
+                                    <div class="form-group">
+                                        <p>Tối đa</p>
+                                        <input type="password" class="form-control" valule="50000" id="pwd">
+                                    </div>
+                                </div>
+                
+                            </div>
+                            <div class="row" style="padding-top: 10px;">
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="">&nbsp;Phí chuyển tiền 24/7</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" valule="0" id="pwd">
+                                        <p>Trên giao dịch</p>
+                                    </div>
+                                </div>
+                
+                            </div>
+                            <div class="form-group row">
+                                <label for="search" class="col-sm-4 col-form-label"></label>
+                                <div class="col-sm-6">
+                                    <button class="btn btn-primary">Lưu</button>
+                                    &nbsp;
+                                    <button class="btn btn-default" (click)="d('Cross click')">Bỏ qua</button>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </form>
         </div>
     </div>
 </ng-template>

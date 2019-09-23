@@ -7,7 +7,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'provision-create',
+  selector: 'package-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css'],
   providers: [NCBService]
@@ -172,11 +172,31 @@ export class CreateComponent implements OnInit {
       this.dataForm.value.toDate = this.tranferDate(this.mRatesDateS_7);
       this.dataForm.value.fromDate = this.tranferDate(this.mRatesDateS);
     }
-    // stop here if form is invalid
     if (this.dataForm.invalid) {
       return;
     }
-    this.ncbService.createPackage(this.dataForm.value).then((result) => {
+    const payload = {
+      prdName: this.dataForm.value.prdName,
+      tranType: this.dataForm.value.tranType,
+      typeId: this.dataForm.value.typeId,
+      status: this.dataForm.value.status,
+      quantity: parseInt(this.dataForm.value.quantity),
+      customerType: this.dataForm.value.customerType,
+      ccy: this.dataForm.value.ccy,
+      limitDaily: parseInt(this.dataForm.value.limitDaily),
+      min: parseInt(this.dataForm.value.min),
+      max: parseInt(this.dataForm.value.max),
+      limitFaceid: parseInt(this.dataForm.value.limitFaceid),
+      limitFinger: parseInt(this.dataForm.value.limitFinger),
+      promotion: this.dataForm.value.promotion,
+      promotionName: this.dataForm.value.promotionName,
+      percentage: parseInt(this.dataForm.value.percentage),
+      fromDate: this.dataForm.value.fromDate,
+      toDate: this.dataForm.value.toDate,
+      prd: this.dataForm.value.prd,
+      createBy: parseInt(this.dataForm.value.createBy)
+    };
+    this.ncbService.createPackage(payload).then((result) => {
       if (result.status === 200) {
         if (result.json().code !== '00') {
           this.toastr.error(result.json().message, 'Thất bại!');
