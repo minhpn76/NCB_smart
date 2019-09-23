@@ -26,8 +26,8 @@ export class EditComponent implements OnInit {
 
   ngOnInit() {
     this.productForm = this.formBuilder.group({
-      nameProductVN: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      nameProductEN: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])]
+      nameProductVN: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      nameProductEN: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])]
     });
   }
   get Form() { return this.productForm.controls; }

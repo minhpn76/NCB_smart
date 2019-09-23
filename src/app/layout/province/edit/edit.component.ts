@@ -38,8 +38,8 @@ export class EditComponent implements OnInit {
       this.departCode = params.itemId;
     });
     this.dataForm = this.formBuilder.group({
-      cityName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      cityCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      cityName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      cityCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       status: ['']
     });
     this.getItem(this.departCode);

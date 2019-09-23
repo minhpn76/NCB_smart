@@ -32,8 +32,8 @@ export class LoginComponent implements OnInit {
         this.return_url    = this.helper.getParameterByName('return_url');
         this.page_back    = this.helper.getParameterByName('call-back');
         this.loginForm = this.formBuilder.group({
-            userName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            password: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])]
+            userName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+            password: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])]
           });
     }
     get Form() { return this.loginForm.controls; }

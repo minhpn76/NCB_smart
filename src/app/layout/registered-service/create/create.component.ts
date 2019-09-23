@@ -18,8 +18,8 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.currencyForm = this.formBuilder.group({
-      code_currency: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      name_currency: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])]
+      code_currency: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      name_currency: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])]
 
     });
   }

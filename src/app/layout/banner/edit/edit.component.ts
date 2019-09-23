@@ -58,13 +58,13 @@ export class EditComponent implements OnInit {
   ngOnInit() {
     this.getItem(this.itemId);
     this.dataForm = this.formBuilder.group({
-      bannerCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      bannerName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      bannerCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      bannerName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       linkImg: [''],
       linkUrlVn: [''],
       linkUrlEn: [''],
       fileName: [''],
-      actionScreen: [''],
+      actionScreen: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       status: 'A'
     });
   }

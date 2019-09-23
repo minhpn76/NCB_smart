@@ -7,6 +7,7 @@
                     <label for="search" class="col-sm-4 col-form-label">Mã nhà mạng(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
+                            [attr.disabled]="true"
                             formControlName="paramNo"
                             class="form-control col-lg-12"
                             placeholder="Mã nhà mạng"

@@ -37,8 +37,8 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
-      cityName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      cityCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      cityName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      cityCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       status: ['A']
     });
   }
@@ -52,13 +52,17 @@ export class CreateComponent implements OnInit {
       return;
     }
     this.ncbService.createProvince(this.dataForm.value).then((result) => {
-      if (result.json().code === '00') {
-        this.toastr.success('Thêm mới thành công', 'Thành công!');
-        setTimeout(() => {
-          this.router.navigateByUrl('/province');
-        }, 500);
-      } else {
-        this.toastr.error('Thêm mới thất bại', 'Thất bại!');
+      if (result.status === 200) {
+        if (result.json().code === '00') {
+          this.toastr.success('Thêm mới thành công', 'Thành công!');
+          setTimeout(() => {
+            this.router.navigateByUrl('/province');
+          }, 500);
+        } else if (result.json().code === '909') {
+          this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
+        } else {
+          this.toastr.error('Thêm mới thất bại', 'Thất bại!');
+        }
       }
     }).catch((err) => {
       this.toastr.error(err.json().description, 'Thất bại!');

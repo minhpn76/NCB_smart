@@ -24,14 +24,14 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
-      productCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      productName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      type: ['', Validators.compose([Validators.required, Validators.maxLength(2), Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      email: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      productCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      productName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      type: ['', Validators.compose([Validators.required, Validators.maxLength(2), Validators.minLength(2), Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       phone: [''],
-      name: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      address: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      description: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])]
+      name: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      address: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      description: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])]
     });
   }
   get Form() { return this.dataForm.controls; }
@@ -45,16 +45,16 @@ export class CreateComponent implements OnInit {
     }
     this.ncbService.createNcbFeedBack(this.dataForm.value).then((result) => {
       if (result.status === 200) {
-        if (result.json().code !== '00') {
-          this.toastr.error(result.json().message, 'Thất bại!');
-        } else {
-          this.toastr.success('Thêm thành công', 'Thành công!');
+        if (result.json().code === '00') {
+          this.toastr.success('Thêm mới thành công', 'Thành công!');
           setTimeout(() => {
             this.router.navigateByUrl('/suggesstions-error');
           }, 500);
+        } else if (result.json().code === '908') {
+          this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
+        } else {
+          this.toastr.error('Thêm mới thất bại', 'Thất bại!');
         }
-      } else {
-        this.toastr.error(result.message, 'Thất bại!');
       }
     }).catch((err) => {
       this.toastr.error(err.json().message, 'Thất bại!');

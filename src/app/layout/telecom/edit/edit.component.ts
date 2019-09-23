@@ -23,10 +23,6 @@ export class EditComponent implements OnInit {
   };
   listStatus: any = [
     {
-      name: 'Tất cả',
-      code: '',
-    },
-    {
       name: 'Active',
       code: 'A',
     },
@@ -47,10 +43,10 @@ export class EditComponent implements OnInit {
       this.telecomId = params.itemId;
     });
     this.telecomForm = this.formBuilder.group({
-      paramNo: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      paramName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      paramValue: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      note: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      paramNo: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      paramName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      paramValue: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      note: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       status: 'A'
     });
   }

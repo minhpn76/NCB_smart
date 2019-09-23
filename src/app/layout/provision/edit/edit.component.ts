@@ -44,8 +44,8 @@ export class EditComponent implements OnInit {
         this.itemId = parseInt(params.itemId);
     });
     this.dataForm = this.formBuilder.group({
-      provisionName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      provisionLink: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      provisionName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      provisionLink: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       status: 'A'
     });
   }

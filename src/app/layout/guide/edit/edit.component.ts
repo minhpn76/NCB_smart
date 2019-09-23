@@ -39,8 +39,8 @@ export class EditComponent implements OnInit {
       this.itemId = parseInt(params.itemId);
     });
     this.dataForm = this.formBuilder.group({
-      serviceId: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      content: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      serviceId: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      content: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       status: ''
     });
   }

@@ -37,14 +37,14 @@ export class EditComponent implements OnInit {
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
-      branchCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      transactionCode: [this.listPGD, Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      status: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      username: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      branchCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      transactionCode: [this.listPGD, Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      status: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      username: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       // tslint:disable-next-line:max-line-length
-      fullName: ['', Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      email: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      phone: ['', Validators.compose([Validators.maxLength(13), Validators.pattern(/^((?!\s{2,}).)*$/)])]
+      fullName: ['', Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      phone: ['', Validators.compose([Validators.maxLength(13), Validators.pattern(/^((?!\s{1,}).)*$/)])]
     });
     this.getBranchs();
     this.getListRole();

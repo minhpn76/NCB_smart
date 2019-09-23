@@ -50,7 +50,7 @@ export class NCBService {
    */
   searchProvince(params): Promise<any> {
     const url = `${API_URL}/city/searchCity`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
+    return this.auth.authRequest({ url: url, params: params, method: 'GET',application: true });
   }
   /**
    *

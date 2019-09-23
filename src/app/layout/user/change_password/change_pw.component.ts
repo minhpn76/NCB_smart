@@ -37,9 +37,9 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit() {
     this.userForm = this.formBuilder.group({
       username: [this.userInfo.userName],
-      oldPassword: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      newPassword: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      re_newPassword: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      oldPassword: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      newPassword: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      re_newPassword: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
     }, {
       validator: this.helper.MustMatch('newPassword', 're_newPassword')
     });

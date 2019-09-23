@@ -56,17 +56,17 @@ export class CreateComponent implements OnInit {
 
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
-            brnCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            branchName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            departCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            departName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            address: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            phone: ['', Validators.compose([Validators.maxLength(13), Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            fax: ['', Validators.compose([Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            latitude: ['', Validators.compose([Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            longitude: ['', Validators.compose([Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            urlImg: ['', Validators.compose([Validators.pattern(/^((?!\s{2,}).)*$/)])],
-            dao: ['', Validators.compose([Validators.pattern(/^((?!\s{2,}).)*$/)])],
+            brnCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+            branchName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+            departCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+            departName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+            address: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+            phone: ['', Validators.compose([Validators.maxLength(13), Validators.pattern(/^((?!\s{1,}).)*$/)])],
+            fax: ['', Validators.compose([Validators.pattern(/^((?!\s{1,}).)*$/)])],
+            latitude: ['', Validators.compose([Validators.pattern(/^((?!\s{1,}).)*$/)])],
+            longitude: ['', Validators.compose([Validators.pattern(/^((?!\s{1,}).)*$/)])],
+            urlImg: ['', Validators.compose([Validators.pattern(/^((?!\s{1,}).)*$/)])],
+            dao: ['', Validators.compose([Validators.pattern(/^((?!\s{1,}).)*$/)])],
             status: 'A'
         });
     }

@@ -65,6 +65,9 @@ export class ListComponent implements OnInit {
         this.isProcessLoad = 0;
       }, 300);
     }).catch(err => {
+      this.listData = [];
+      this.isProcessLoad = 0;
+      this.totalSearch = 0
     });
   }
 
@@ -92,7 +95,7 @@ export class ListComponent implements OnInit {
       if (result.value) {
         this.ncbService.deleteProvince({ cityId: code }).then(res => {
           if (res.json().code === '00') {
-            this.listData.splice(index, 1);
+            // this.listData.splice(index, 1);
             Swal.fire(
               'Đã xoá!',
               'Dữ liệu đã xoá hoàn toàn.',
