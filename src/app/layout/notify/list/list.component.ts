@@ -63,6 +63,10 @@ export class ListComponent implements OnInit {
         this.isProcessLoad = 0;
       }, 300);
     }).catch(err => {
+      this.listData = [];
+      this.totalSearch = 0;
+      this.isProcessLoad = 0;
+      this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
     });
   }
 
@@ -109,6 +113,8 @@ export class ListComponent implements OnInit {
   onSearch(payload) {
     // payload.page = 0;
     if (payload.provider !== '' || payload.type !== '') {
+      payload.page = 0;
+    } else {
       payload.page = 0;
     }
     this.getListData(payload);

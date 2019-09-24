@@ -63,6 +63,9 @@ export class ListComponent implements OnInit {
         this.isProcessLoad = 0;
       }, 300);
     }).catch(err => {
+      this.listData = [];
+      this.totalSearch = 0;
+      this.isProcessLoad = 1;
     });
   }
 
@@ -107,8 +110,9 @@ export class ListComponent implements OnInit {
   onSearch(payload) {
     if (payload.serviceId !== '' || payload.status !== '') {
       payload.page = 0;
+    } else {
+      payload.page = 0;
     }
-    // payload.page = 0;
     this.getListData(payload);
   }
   changePageSize() {
