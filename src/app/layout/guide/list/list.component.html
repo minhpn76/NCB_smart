@@ -1,7 +1,7 @@
 <div>
     <app-page-header
         [heading]="'Hướng dẫn sử dụng'"
-        [url_heading]="'/province'">
+        [url_heading]="'/guide'">
     </app-page-header>
     <div class="row">
         <div class="col-md-6">
@@ -78,11 +78,7 @@
                         </th>
                         <td>{{data?.serviceId}}</td>
                         <td>
-                            <div
-                                style='width:100%; min-height:300px; z-index:4;
-                                visibility: visible; overflow: auto;'
-                                [innerHTML]="data?.content">
-                            </div>
+                           {{data?.content}}
                         </td>
                         <td>
                             <span *ngIf="data?.status === 'A'" class="badge

@@ -64,7 +64,7 @@ export class EditComponent implements OnInit {
       linkUrlVn: [''],
       linkUrlEn: [''],
       fileName: [''],
-      actionScreen: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      actionScreen: ['', Validators.compose([Validators.required, Validators.maxLength(10), Validators.pattern(/^((?!\s{1,}).)*$/)])],
       status: 'A'
     });
   }

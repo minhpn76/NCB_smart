@@ -29,20 +29,16 @@ export class EditComponent implements OnInit {
   };
   listStatus: any = [
     {
-      code: 'S',
-      name: 'Trạng thái mềm'
+      code: 'A',
+      name: 'Active'
     },
     {
-      code: 'H',
-      name: 'Trạng thái cứng'
+      code: 'D',
+      name: 'Deactive'
     }
   ];
   userInfo: any;
   listCustomer: any = [
-    {
-      code: '',
-      name: 'Tất cả'
-    },
     {
       code: 'CN',
       name: 'Cá nhân'
@@ -53,10 +49,6 @@ export class EditComponent implements OnInit {
     }
   ];
   listTypeId: any = [
-    {
-      code: '',
-      name: 'Tất cả'
-    },
     {
       code: 'IBT',
       name: 'Chuyển khoản LNH'
@@ -91,10 +83,6 @@ export class EditComponent implements OnInit {
     }
   ];
   listTranType: any = [
-    {
-      code: '',
-      name: 'Tất cả'
-    },
     {
       code: 'CK',
       name: 'Chuyển khoản'
@@ -222,6 +210,19 @@ export class EditComponent implements OnInit {
   getItem(params) {
     this.ncbService.detailPackage({prd: params}).then((result) => {
       const body = result.json().body;
+      const temp_fromDate_slipt = body.fromDate.split('-');
+      const temp_fromDate = {
+        year: parseInt(temp_fromDate_slipt[0]),
+        month: parseInt(temp_fromDate_slipt[1]),
+        day: parseInt(temp_fromDate_slipt[2])
+      };
+
+      const temp_toDate_slipt = body.toDate.split('-');
+      const temp_toDate = {
+        year: parseInt(temp_toDate_slipt[0]),
+        month: parseInt(temp_toDate_slipt[1]),
+        day: parseInt(temp_toDate_slipt[2])
+      };
       this.dataForm.patchValue({
         id: body.id,
         prdName: body.prdName,
@@ -238,8 +239,8 @@ export class EditComponent implements OnInit {
         promotion: body.promotion,
         promotionName: body.promotionName,
         percentage: body.percentage,
-        fromDate: body.fromDate,
-        toDate: body.toDate,
+        fromDate: temp_fromDate,
+        toDate: temp_toDate,
         prd: body.prd,
         createBy: body.createBy,
         status: body.status

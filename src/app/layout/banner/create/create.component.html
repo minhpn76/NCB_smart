@@ -51,6 +51,7 @@
                             <div *ngIf="submitted && Form.actionScreen.errors" class="invalid-feedback">
                                 <div *ngIf="Form.actionScreen.errors.required">Màn hình chuyển tiếp là bắt buộc</div>
                                 <div *ngIf="Form.actionScreen.errors.pattern">Màn hình chuyển tiếp khộng hợp lệ</div>
+                                <div *ngIf="Form.actionScreen.errors.maxlength">Màn hình chuyển tiếp quá dài</div>
                             </div>
                         </div>
     

@@ -21,27 +21,27 @@ export class ListComponent implements OnInit {
   my_7: any = new Date();
   isSearchItem = 0;
   re_search = {
-    comp_code: '',
-    id_card: '',
+    compCode: '',
+    idCard: '',
     type: '0',
     service: '',
     status: '',
     size: 10,
     page: 1,
     previous_page: 0,
-    from_date: '',
-    to_date: ''
+    fromDate: '',
+    toDate: ''
   };
   comment: any = '';
   requestCode: '';
   obj_request: any = {};
   passData: any = {};
   req_search = {
-    comp_code: '',
-    comp_name: '',
+    compCode: '',
+    compName: '',
     status: '',
     comment: '',
-    user_id: ''
+    userId: ''
   };
   listType: any = [
     {
@@ -53,24 +53,7 @@ export class ListComponent implements OnInit {
       name: 'ACCOUNT'
     }
   ];
-  listService: any = [
-    {
-      code: 1,
-      name: 'CARD'
-    },
-    {
-      code: 2,
-      name: 'LOAN'
-    },
-    {
-      code: 3,
-      name: 'ACCOUNT'
-    },
-    {
-      code: 4,
-      name: 'SMS'
-    }
-  ];
+  listService: any = [];
   listLog: any = [];
 
   selectProvine: any;
@@ -118,6 +101,7 @@ export class ListComponent implements OnInit {
     this.loadDate();
     this.getListData(this.re_search);
     this.getBranchs();
+    this.getListService();
   }
   openModal(content, classLayout = '', type = '') {
       if (type === 'static') {
@@ -133,8 +117,8 @@ export class ListComponent implements OnInit {
     this.listData = [];
     this.isProcessLoad = 1;
     if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
-      params.to_date = this.tranferDate(this.mRatesDateS_7);
-      params.from_date = this.tranferDate(this.mRatesDateS);
+      params.toDate = this.tranferDate(this.mRatesDateS_7);
+      params.fromDate = this.tranferDate(this.mRatesDateS);
     }
     // xu ly
 
@@ -147,6 +131,8 @@ export class ListComponent implements OnInit {
       }, 300);
     }).catch(err => {
       this.isProcessLoad = 0;
+      this.listData = [];
+      this.totalSearch = 0;
     });
   }
   public loadDate(): void {
@@ -266,10 +252,10 @@ export class ListComponent implements OnInit {
       this.toastr.error('Không được để trống comment', 'Thất bại');
       return;
     }
-    const comp_name = this.listBranch.filter(item => item.code === this.passData.comp_code);
+    const compName = this.listBranch.filter(item => item.code === this.passData.compCode);
     const payload = {
-      compCode: this.passData.comp_code,
-      compName: comp_name[0].name,
+      compCode: this.passData.compCode,
+      compName: compName[0].name,
       status: this.passData.status,
       comment: this.comment,
       userId: this.infoUser.userName
@@ -286,6 +272,17 @@ export class ListComponent implements OnInit {
       }, 500);
     }).catch((err) => {
       this.toastr.error('Vui lòng thử lại', 'Thất bại');
+    });
+  }
+  getListService() {
+    this.listService = [];
+    this.ncbService.getListServiceRegister().then((result) => {
+      setTimeout(() => {
+        const body = result.json().body;
+        this.listService = body;
+      }, 300);
+    }).catch(err => {
+      this.toastr.error('Không lấy được dữ liệu dịch vụ', 'Thất bại!');
     });
   }
 

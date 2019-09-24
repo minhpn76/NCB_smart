@@ -23,10 +23,6 @@ export class CreateComponent implements OnInit {
   userInfo: any = [];
   listTranType: any = [
     {
-      code: '',
-      name: 'Tất cả'
-    },
-    {
       code: 'CK',
       name: 'Chuyển khoản'
     },
@@ -50,10 +46,6 @@ export class CreateComponent implements OnInit {
   ];
 
   listTypeId: any = [
-    {
-      code: '',
-      name: 'Tất cả'
-    },
     {
       code: 'IBT',
       name: 'Chuyển khoản LNH'
@@ -89,23 +81,15 @@ export class CreateComponent implements OnInit {
   ];
   listStatus: any = [
     {
-      code: '',
-      name: 'Tất cả'
+      code: 'A',
+      name: 'Active'
     },
     {
-      code: 'S',
-      name: 'Trạng thái mềm'
-    },
-    {
-      code: 'H',
-      name: 'Trạng thái cứng'
+      code: 'D',
+      name: 'Deactive'
     }
   ];
   listCustomer: any = [
-    {
-      code: '',
-      name: 'Tất cả'
-    },
     {
       code: 'CN',
       name: 'Cá nhân'

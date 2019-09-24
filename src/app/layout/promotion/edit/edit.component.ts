@@ -49,11 +49,6 @@ export class EditComponent implements OnInit {
 
   submitted = false;
   itemId: any;
-  obj: any = {
-    status: '',
-    serviceId: '',
-    content: ''
-  };
   listStatus: any = [
     {
       name: 'Active',
@@ -181,7 +176,7 @@ export class EditComponent implements OnInit {
       percentage: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       fromDate: [''],
       toDate: [''],
-      status: '',
+      status: [''],
       prdName: [''],
       tranType: [''],
       typeId: [''],
@@ -214,6 +209,7 @@ export class EditComponent implements OnInit {
       typeId: this.dataForm.value.typeId,
       createdDate: this.helper.formatDate(new Date()),
       prdName: this.tempArrPackage.join(','),
+      status: this.dataForm.value.status
     };
 
     const payload = {

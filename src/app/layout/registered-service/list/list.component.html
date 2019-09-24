@@ -9,7 +9,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Mã chi nhánh/ phòng giao dịch:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
-                    itrim type="text" id="search" [(ngModel)]="re_search.comp_code"
+                    itrim type="text" id="search" [(ngModel)]="re_search.compCode"
                     placeholder="Mã chi nhánh/ phòng giao dịch">
                 </div>
             </div>
@@ -17,7 +17,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Hộ chiếu:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
-                    itrim type="text" id="search" [(ngModel)]="re_search.id_card"
+                    itrim type="text" id="search" [(ngModel)]="re_search.idCard"
                     placeholder="Hộ chiếu">
                 </div>
             </div>
@@ -53,7 +53,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Dịch vụ:</label>
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.service">
-                        <option *ngFor="let status of listService" [value]="status.code" selected="selected">{{status.name}}</option>
+                        <option *ngFor="let status of listService" [value]="status" selected="selected">{{status}}</option>
 
                     </select>
                 </div>
@@ -145,11 +145,11 @@
                         <th scope="row">
                             {{i+1}}
                         </th>
-                        <td>{{data?.comp_code}} 
+                        <td>{{data?.compCode}} 
                         </td>
-                        <td>{{data?.comp_name}}</td>
+                        <td>{{data?.compName}}</td>
                         <td>{{data?.customer_name}}</td>
-                        <td>{{data?.id_card}}</td>
+                        <td>{{data?.idCard}}</td>
                         <td>{{data?.phone}}</td>
                         <td>{{data?.service}}</td>
                         <td>{{data?.card_no}}</td>
@@ -205,10 +205,10 @@
                         <td> CARD {{data?.id}} 
                         </td>
                         <td>{{data?.customer_name}}</td>
-                        <td>{{data?.id_card}}</td>
+                        <td>{{data?.idCard}}</td>
                         <td>{{data?.phone}}</td>
                         <td>{{data?.service}}</td>
-                        <td>{{data?.comp_name}}</td>
+                        <td>{{data?.compName}}</td>
                         <td>
                             <span class="badge badge-success" *ngIf="data?.status === '1'">NEW</span>
                             <span class="badge badge-warning"  *ngIf="data?.status === '2'">PROCESSING</span>
@@ -293,7 +293,7 @@
                     <div class="col-sm-6">
                         <input class="form-control col-lg-12"
                             itrim type="text" id="search"
-                            [(ngModel)]="passData.id_card"
+                            [(ngModel)]="passData.idCard"
                             placeholder="CMND/HC"
                         >
                     </div>
@@ -310,7 +310,7 @@
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Chi nhánh:</label>
                     <div class="col-sm-6">
-                        <select class="form-control" [(ngModel)]="passData.comp_code">
+                        <select class="form-control" [(ngModel)]="passData.compCode">
                             <option *ngFor="let item of listBranch" [value]="item.code">{{item.name}}</option>
                         </select>
                     </div>
@@ -328,7 +328,7 @@
                     <div class="col-sm-6">
                         <div *ngIf="listLog.length > 0">
                             <ul *ngFor="let item of listLog">
-                                <li>{{ item.datetime | date:'yyyy-MM-dd HH:mm'}} - {{item.user_id}} - {{item.new_value}}</li>
+                                <li>{{ item.datetime | date:'yyyy-MM-dd HH:mm'}} - {{item.userId}} - {{item.new_value}}</li>
                             </ul>
                         </div>
                         <div *ngIf="listLog.length === 0">

@@ -46,7 +46,7 @@ export class EditComponent implements OnInit {
     this.dataForm = this.formBuilder.group({
       provisionName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       provisionLink: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      status: 'A'
+      status: ['']
     });
   }
   get Form() { return this.dataForm.controls; }

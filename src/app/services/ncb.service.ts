@@ -815,5 +815,9 @@ export class NCBService {
     const url = `${API_URL}/function/getAllPrdName`;
     return this.auth.authRequest({ url: url, method: 'GET' });
   }
+  getListServiceRegister() {
+    const url = `${API_URL}/service-register/get-all-service`;
+    return this.auth.authRequest({ url: url, method: 'GET' });
+  }
 
 }

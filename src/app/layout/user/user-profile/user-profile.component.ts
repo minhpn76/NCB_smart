@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
+import { ExcelService } from '../../../services/excel.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
@@ -9,7 +10,7 @@ import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConf
   selector: 'user-profile-list',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, ExcelService]
 })
 export class UserProfileComponent implements OnInit {
   listPGD: any = [];
@@ -19,6 +20,7 @@ export class UserProfileComponent implements OnInit {
   totalSearch: any = 0;
   isProcessLoad: any = 0;
   search_keyword: any = '';
+  isProcessLoadExcel: any = 0;
   passData: any = {};
   re_search: any = {
     cifgrp: '',
@@ -26,10 +28,10 @@ export class UserProfileComponent implements OnInit {
     idno: '',
     page: 0,
     size: 10,
-    previous_page: 0,
-    filter: ''
+    previous_page: 0
   };
   listData: any = [];
+  arrExport: any = [];
   listPageSize: any = [10, 20, 30, 40, 50];
   listStatus: any = [
     {
@@ -52,7 +54,8 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private ncbService: NCBService,
     public toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private excelService: ExcelService
   ) { }
 
   ngOnInit() {
@@ -115,16 +118,47 @@ export class UserProfileComponent implements OnInit {
     // await this.getItem(id);
     this.openModal(this.modalUserElementRef, 'modal-package', 'static');
   }
-  keyDownFunction(event) {
-    if (event.keyCode === 13) {
-      this.isSearch = false;
-      this.re_search.filter = this.search_keyword;
-      this.getListData(this.re_search);
-    }
-  }
   changePageSize() {
     this.re_search.page = 0;
     this.isSearch = false;
     this.getListData(this.re_search);
+  }
+  // excel
+  getDataExcel(search): Promise<any> {
+    const promise = new Promise((resolve, reject) => {
+      this.ncbService.searchProfileUser(search)
+        .then((result) => {
+            this.arrExport = this.arrExport.concat(result.json().body.content);
+            resolve();
+          })
+          .catch((err) => {
+              resolve();
+          });
+    });
+    return promise;
+  }
+  async exportExcel() {
+    this.arrExport = [];
+    this.isProcessLoadExcel = 1;
+    const search = Object.assign({}, this.re_search);
+    search.size = 1000;
+    const page = Math.ceil(this.totalSearch / search.size);
+    search.page = 0;
+    await this.getDataExcel(search);
+    const data = [];
+    this.arrExport.forEach((element) => {
+      data.push({
+        'CIF': element.cifgrp,
+        'Tên đăng nhập': element.usrid,
+        'Họ và tên': element.usrfname,
+        'CMND/HC': element.datCfmast.idno,
+        'Nhóm khách hàng': element.crtusrid,
+        'Gói sản phẩm': element.promotion,
+        'CT ưu đã': element.promotionName
+      });
+    });
+    this.excelService.exportAsExcelFile(data, 'list_user');
+    this.isProcessLoadExcel = 0;
+    return;
   }
 }

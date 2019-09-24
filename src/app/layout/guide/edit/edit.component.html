@@ -31,8 +31,17 @@
                     <label for="search" class="col-sm-4 col-form-label">Nội
                         dung(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
-                        <ckeditor [editor]="Editor"
-                            formControlName="content"></ckeditor>
+                        <textarea
+                            formControlName="content"
+                            class="form-control col-lg-12"
+                            placeholder="Nội dung"
+                            [ngClass]="{ 'is-invalid': submitted && Form.content.errors }"
+                        ></textarea>
+
+                        <div *ngIf="submitted && Form.content.errors" class="invalid-feedback">
+                            <div *ngIf="Form.content.errors.required">Nội dung là bắt buộc</div>
+                            <div *ngIf="Form.content.errors.required">Nội dung không hợp lệ</div>
+                        </div>
                     </div>
 
 

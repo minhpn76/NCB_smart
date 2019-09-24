@@ -20,10 +20,10 @@ export class EditComponent implements OnInit {
   itemId: any;
   obj: any = {
     status: '',
-    comp_code: '',
-    comp_name: '',
+    compCode: '',
+    compName: '',
     comment: '',
-    user_id: ''
+    userId: ''
   };
   listStatus: any = [
     {
@@ -53,11 +53,11 @@ export class EditComponent implements OnInit {
   }
   onSubmit() {
     this.submitted = true;
-    if (this.obj.user_id === ''
+    if (this.obj.userId === ''
       || this.obj.comment === ''
       || this.obj.status === ''
-      || this.obj.comp_name === ''
-      || this.obj.comp_code === ''
+      || this.obj.compName === ''
+      || this.obj.compCode === ''
     ) {
       this.toastr.error('Không được để trống các trường', 'Lỗi!');
       return;
@@ -94,13 +94,13 @@ export class EditComponent implements OnInit {
     this.ncbService.detailRegisterService(params).then((result) => {
       const body = result.json().body.content;
       this.obj.customer_name = body.customer_name;
-      this.obj.id_card = body.id_card;
+      this.obj.idCard = body.idCard;
       this.obj.phone = body.phone;
       this.obj.service = body.service;
-      this.obj.comp_name = body.comp_name;
+      this.obj.compName = body.compName;
       this.obj.status = body.status;
       this.obj.datetime = body.datetime;
-      this.obj.user_id = body.user_id;
+      this.obj.userId = body.userId;
       this.obj.new_value = body.new_value;
     }).catch(err => {
 

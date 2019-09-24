@@ -3,17 +3,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
+import { ExcelService } from '../../../services/excel.service';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'package-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, ExcelService]
 })
 export class ListComponent implements OnInit {
   search_keyword: any = '';
   userInfo: any = [];
+  arrExport: any = [];
   mRatesDateS: NgbDateStruct;
   mRatesDateS_7: NgbDateStruct;
   my: any = new Date();
@@ -105,14 +107,15 @@ export class ListComponent implements OnInit {
       name: 'Tất cả'
     },
     {
-      code: 'S',
-      name: 'Trạng thái mềm'
+      code: 'A',
+      name: 'Active'
     },
     {
-      code: 'H',
-      name: 'Trạng thái cứng'
+      code: 'D',
+      name: 'Deactive'
     }
   ];
+  isProcessLoadExcel: any = 0;
   selectProvine: any;
   listData: any = [];
   listProvinceName: any = [];
@@ -128,6 +131,7 @@ export class ListComponent implements OnInit {
     public toastr: ToastrService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
+    private excelService: ExcelService
   ) {
     this.userInfo = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : '';
   }
@@ -238,18 +242,12 @@ export class ListComponent implements OnInit {
 
   loadPage(page: number) {
     const page_number = page - 1;
-    if (this.isSearch === false) {
-      if (page_number !== this.re_search.previous_page) {
-        this.re_search.page = page_number;
-        this.re_search.previous_page = page_number;
-        this.getListData(this.re_search);
-      }
-    } else {
-      if (page_number !== this.re_search.previous_page) {
-        this.re_search.page = page_number;
-        this.re_search.previous_page = page_number;
-        this.onSearch(this.re_search);
-      }
+
+    if (page_number !== this.re_search.previous_page) {
+      this.re_search.page = page_number;
+      this.re_search.previous_page = page_number;
+      this.getListData(this.re_search);
+      this.re_search.page = page;
     }
   }
   onSearch(payload) {
@@ -269,6 +267,52 @@ export class ListComponent implements OnInit {
     this.re_search.page = 0;
     this.isSearch = false;
     this.getListData(this.re_search);
+  }
+
+  // excel
+  getDataExcel(search): Promise<any> {
+    const promise = new Promise((resolve, reject) => {
+      this.ncbService.searchPackage(search)
+          .then((result) => {
+              this.arrExport = this.arrExport.concat(result.json().body.content);
+              resolve();
+          })
+          .catch((err) => {
+              resolve();
+          });
+    });
+    return promise;
+  }
+  async exportExcel() {
+    this.arrExport = [];
+    this.isProcessLoadExcel = 1;
+    const search = Object.assign({}, this.re_search);
+    search.size = 1000;
+    const page = Math.ceil(this.totalSearch / search.size);
+    // for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {
+    //     search.page = i;
+    //     await this.getDataExcel(search);
+    // }
+    search.page = 0;
+    await this.getDataExcel(search);
+    const data = [];
+    this.arrExport.forEach((element) => {
+      data.push({
+        'Tên đăng nhập': element.userName,
+        'Mã nhân viên': element.userCode,
+        'Họ và tên': element.fullName,
+        'Email': element.email,
+        'Số điện thoại': element.phone,
+        'Chi nhánh': element.branchCode,
+        'Phòng giao dịch': element.transactionCode,
+        'Người tạo': element.updatedBy,
+        'Phân quyền': element.role.roleName
+      });
+    });
+
+    this.excelService.exportAsExcelFile(data, 'list_package');
+    this.isProcessLoadExcel = 0;
+    return;
   }
 
 }

@@ -38,6 +38,11 @@
             <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
                 <i class="fa fa-search"></i>&nbsp;Tìm kiếm
             </button>
+            <button class="btn btn-success" (click)="exportExcel()">
+                <i *ngIf="isProcessLoadExcel === 1"
+                    class="fa fa-spinner font-20"></i>
+                <i  *ngIf="isProcessLoadExcel === 0" class="fa fa-file"></i>&nbsp;Xuất excel
+            </button>
         </div>
     </div>
     <div class="row mt-50">
@@ -89,8 +94,8 @@
                         <td>{{data?.usrfname}}</td>
                         <td>{{data?.datCfmast?.idno}}</td>
                         <td>{{data?.crtusrid}}</td>
-                        <td>{{data?.function?.promotion}}</td> 
-                        <td>{{data?.function?.prdName}}</td>                    
+                        <td>{{data?.function?.prdName}}</td> 
+                        <td>{{data?.function?.promotionName}}</td>                    
                     </tr>
                     
                 </tbody>
@@ -155,7 +160,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Gói sản phẩm:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.function.promotion"
+                    [(ngModel)]="passData.function.prdName"
                     itrim type="text" id="search"
                     placeholder="Gói sản phẩm">
                 </div>
@@ -164,7 +169,7 @@
                 <label for="search" class="col-sm-4 col-form-label">CT ưu đãi:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.function.prdName"
+                    [(ngModel)]="passData.function.promotionName"
                     itrim type="text" id="search"
                     placeholder="CT ưu đãi">
                 </div>
