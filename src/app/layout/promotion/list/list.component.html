@@ -10,7 +10,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Tên chương trình:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
-                        [(ngModel)]="re_search.promotionName"
+                        [(ngModel)]="re_search.promotion"
                         itrim type="text" id="search"
                         placeholder="Tên chương trình">
                 </div>
@@ -90,7 +90,7 @@
                         <td>{{data?.promotion}}</td>
                         <td>{{data?.promotionName}}</td>
                         <td>{{data?.customerType}}</td>
-                        <td>{{data?.percentage}}</td>
+                        <td>{{data?.percentage}} %</td>
                         <td>{{data?.prdName}}</td>
                         <td>{{data?.tranType}} - {{data?.typeId}}</td>
 

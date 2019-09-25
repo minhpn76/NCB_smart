@@ -197,6 +197,10 @@ export class EditComponent implements OnInit {
     if (this.dataForm.invalid) {
       return;
     }
+    if (this.dataForm.value.prdName === '') {
+      this.toastr.error('Gói sp áp dụng không được bỏ trống', 'Thất bại!');
+      return;
+    }
     const passData = {
       customerType: this.dataForm.value.customerType,
       promotionName: this.dataForm.value.promotionName,
@@ -287,7 +291,7 @@ export class EditComponent implements OnInit {
       };
 
       // change
-      const tempPackage = body.prdName.split(',');
+      const tempPackage = (body.prdName !== null) ? body.prdName.split(',') : [];
       tempPackage.forEach(element => {
         if (this.tempPrdName.includes(element) === true) {
           this.listPrdName = this.listPrdName.filter(e => e.name !== element.toString());
@@ -317,6 +321,7 @@ export class EditComponent implements OnInit {
         typeId: body.typeId
       });
     }).catch(err => {
+      console.log('===', err);
       this.toastr.error(err.json().decription, 'Thất bại!');
     });
   }

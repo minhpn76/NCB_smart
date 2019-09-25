@@ -16,7 +16,7 @@ export class ListComponent implements OnInit {
   isProcessLoad: any = 0;
   totalSearch: any = 0;
   re_search = {
-    promotionName: '',
+    promotion: '',
     status: '',
     size: 10,
     page: 0,

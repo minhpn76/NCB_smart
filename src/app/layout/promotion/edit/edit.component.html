@@ -56,15 +56,15 @@
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Phí(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select
-                            class="form-control"
+                        <input
                             formControlName="percentage"
+                            class="form-control col-lg-12"
+                            placeholder="Phí"
                             [ngClass]="{ 'is-invalid': submitted && Form.percentage.errors }"
-                        >
-                            <option *ngFor="let data of listSelect" selected [value]="data.code">{{ data.name }}</option>
-                        </select>
+                        />
                         <div *ngIf="submitted && Form.percentage.errors" class="invalid-feedback">
-                            <div *ngIf="Form.percentage.required">Phí</div>
+                            <div *ngIf="Form.percentage.errors.required">Phí là bắt buộc</div>
+                            <div *ngIf="Form.percentage.errors.pattern">Phí không hợp lệ</div>
                         </div>
                     </div>
                 </div>

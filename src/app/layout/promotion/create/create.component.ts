@@ -219,6 +219,10 @@ export class CreateComponent implements OnInit {
     if (this.dataForm.invalid) {
       return;
     }
+    if (this.dataForm.value.prdName === '') {
+      this.toastr.error('Gói sp áp dụng không được bỏ trống', 'Thất bại!');
+      return;
+    }
     const payload = {
       customerType: this.dataForm.value.customerType,
       promotionName: this.dataForm.value.promotionName,
@@ -242,6 +246,8 @@ export class CreateComponent implements OnInit {
       if (result.status === 200) {
         if (result.json().code !== '00') {
           this.toastr.error(result.json().message, 'Thất bại!');
+        }  else if (result.json().code === '911') {
+          this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
         } else {
           this.toastr.success('Thêm thành công', 'Thành công!');
           setTimeout(() => {

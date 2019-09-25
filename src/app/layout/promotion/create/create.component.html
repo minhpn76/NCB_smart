@@ -55,15 +55,15 @@
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Phí thường niên(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select
-                            class="form-control"
+                        <input
                             formControlName="percentage1"
+                            class="form-control col-lg-12"
+                            placeholder="Phí thường niên"
                             [ngClass]="{ 'is-invalid': submitted && Form.percentage1.errors }"
-                        >
-                            <option *ngFor="let data of listSelect" selected [value]="data.code">{{ data.name }}</option>
-                        </select>
+                        />
                         <div *ngIf="submitted && Form.percentage1.errors" class="invalid-feedback">
-                            <div *ngIf="Form.percentage1.required">Phí thường niên là bắt buộc</div>
+                            <div *ngIf="Form.percentage1.errors.required">Phí thường niên là bắt buộc</div>
+                            <div *ngIf="Form.percentage1.errors.pattern">Phí thường niên không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -113,15 +113,15 @@
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Phí chuyển khoản liên ngân hàng(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select
-                            class="form-control"
+                        <input
                             formControlName="percentage2"
+                            class="form-control col-lg-12"
+                            placeholder="Phí chuyển khoản liên ngân hàng"
                             [ngClass]="{ 'is-invalid': submitted && Form.percentage2.errors }"
-                        >
-                            <option *ngFor="let data of listSelect" selected [value]="data.code">{{ data.name }}</option>
-                        </select>
+                        />
                         <div *ngIf="submitted && Form.percentage2.errors" class="invalid-feedback">
-                            <div *ngIf="Form.percentage2.required">Phí chuyển khoản liên ngân hàng là bắt buộc</div>
+                            <div *ngIf="Form.percentage2.errors.required">Phí chuyển khoản liên ngân hàng là bắt buộc</div>
+                            <div *ngIf="Form.percentage2.errors.pattern">Phí chuyển khoản liên ngân hàng không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -170,15 +170,15 @@
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Phí chuyển khoản nội bộ(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select
-                            class="form-control"
+                        <input
                             formControlName="percentage3"
+                            class="form-control col-lg-12"
+                            placeholder="Phí chuyển khoản nội bộ"
                             [ngClass]="{ 'is-invalid': submitted && Form.percentage3.errors }"
-                        >
-                            <option *ngFor="let data of listSelect" selected [value]="data.code">{{ data.name }}</option>
-                        </select>
+                        />
                         <div *ngIf="submitted && Form.percentage3.errors" class="invalid-feedback">
-                            <div *ngIf="Form.percentage3.required">Phí chuyển khoản nội bộ là bắt buộc</div>
+                            <div *ngIf="Form.percentage3.errors.required">Phí chuyển khoản nội bộ là bắt buộc</div>
+                            <div *ngIf="Form.percentage3.errors.pattern">Phí chuyển khoản nội bộ không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -225,17 +225,17 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Phí chuyển khoản 247(<span class="text-danger">*</span>):</label>
+                    <label class="col-sm-4 col-form-label">Phí chuyển 247(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select
-                            class="form-control"
+                        <input
                             formControlName="percentage4"
-                            [ngClass]="{ 'is-invalid': submitted && Form.percentage4.errors }"
-                        >
-                            <option *ngFor="let data of listSelect" selected [value]="data.code">{{ data.name }}</option>
-                        </select>
+                            class="form-control col-lg-12"
+                            placeholder="Phí chuyển 247"
+                            [ngClass]="{ 'is-invalid': submitted && Form.percentage3.errors }"
+                        />
                         <div *ngIf="submitted && Form.percentage4.errors" class="invalid-feedback">
-                            <div *ngIf="Form.percentage4.required">Phí chuyển 247 là bắt buộc</div>
+                            <div *ngIf="Form.percentage4.errors.required">Phí chuyển 247 là bắt buộc</div>
+                            <div *ngIf="Form.percentage4.errors.pattern">Phí chuyển 247 không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -285,20 +285,15 @@
                     <label class="col-sm-4 col-form-label">Gói sp áp dụng(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <div class="checkbox">
-                            <label 
-                                formArrayName="prdName" 
-                                class="checkbox-inline" 
+                            <label
+                                formArrayName="prdName"
+                                class="checkbox-inline"
                                 style="margin-right: 10px"
                                 *ngFor="let item of listPrdName"
                             >
-                                <input 
-                                    type="checkbox"
-                                    name="{{item}}"
-                                    id="{{item}}" 
-                                    (change)="changePackage($event, item)" 
-                                />&nbsp; {{item}}
+                                <input type="checkbox" name="{{ item }}" id="{{ item }}" (change)="changePackage($event, item)" />&nbsp;
+                                {{ item }}
                             </label>
-                            
                         </div>
                     </div>
                 </div>
