@@ -80,7 +80,7 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.ncbService.deleteNotify({type: code}).then(() => {
+        this.ncbService.deleteNotify({msgCode: code}).then(() => {
           this.listData.splice(index, 1);
           Swal.fire(
             'Đã xoá!',

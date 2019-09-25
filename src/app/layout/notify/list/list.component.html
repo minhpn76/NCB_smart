@@ -81,19 +81,20 @@
                         </th>
                         <td>{{data?.provider}}</td>
                         <td>{{data?.type}}</td>
-                        <td>{{data?.msg_Code}}</td>
+                        <td>{{data?.msgCode}}</td>
                         <td>{{data?.msg_Code_1}}</td>
                         <td>{{data?.mes_Vn}}</td>
                         <td>{{data?.mes_En}}</td>
                         <td>{{data?.error}}</td>
                         <td>
+                            {{data.msgCode}}
                             <a class="mr-2 cursor-pointer text-blue"
-                                routerLink="/notify/edit/{{ data.type }}">
+                                routerLink="/notify/edit/{{ data.msgCode }}">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <span class="mr-2 cursor-pointer text-danger">
                                 <i class="fa fa-trash" (click)="deleteItem(1, i,
-                                    data.type)"></i>
+                                    data.msgCode)"></i>
                             </span>
 
                         </td>

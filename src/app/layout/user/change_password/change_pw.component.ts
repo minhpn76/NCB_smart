@@ -64,7 +64,7 @@ export class ChangePasswordComponent implements OnInit {
           this.router.navigateByUrl('/');
         }, 500);
       } else if (result.json().code === '405') {
-        this.toastr.error('Mật khẩu cũ không hợp lệ', 'Thất bại!');
+        this.toastr.error('Mật khẩu cũ không chính xác', 'Thất bại!');
       } else {
         this.toastr.error('Thay đổi mật khẩu thất bại', 'Thất bại!');
       }

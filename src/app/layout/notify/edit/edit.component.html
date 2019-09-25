@@ -74,16 +74,16 @@
                         nhắn(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <input
-                            formControlName="msg_Code"
+                            formControlName="msgCode"
                             class="form-control col-lg-12"
                             placeholder="Mã tin nhắn"
                             [ngClass]="{ 'is-invalid': submitted &&
-                            Form.msg_Code.errors }">
-                        <div *ngIf="submitted && Form.msg_Code.errors"
+                            Form.msgCode.errors }">
+                        <div *ngIf="submitted && Form.msgCode.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.msg_Code.errors.required">Mã tin
+                            <div *ngIf="Form.msgCode.errors.required">Mã tin
                                 nhắn là bắt buộc</div>
-                            <div *ngIf="Form.msg_Code.errors.pattern">Mã tin
+                            <div *ngIf="Form.msgCode.errors.pattern">Mã tin
                                 nhắn không đúng định dạng</div>
                         </div>
                     </div>

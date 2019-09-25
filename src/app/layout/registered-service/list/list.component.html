@@ -8,13 +8,17 @@
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Mã chi nhánh/ phòng giao dịch:</label>
                 <div class="col-sm-6">
-                    <input class="form-control col-lg-12"
+                    <select class="form-control" [(ngModel)]="re_search.compCode">
+                        <option *ngFor="let status of listPGD" [value]="status.code" selected="selected">{{status.name}}</option>
+
+                    </select>
+                    <!-- <input class="form-control col-lg-12"
                     itrim type="text" id="search" [(ngModel)]="re_search.compCode"
-                    placeholder="Mã chi nhánh/ phòng giao dịch">
+                    placeholder="Mã chi nhánh/ phòng giao dịch"> -->
                 </div>
             </div>
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Hộ chiếu:</label>
+                <label for="search" class="col-sm-4 col-form-label">CMND/HC:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
                     itrim type="text" id="search" [(ngModel)]="re_search.idCard"
@@ -24,7 +28,7 @@
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Phân hệ:</label>
                 <div class="col-sm-6">
-                    <select class="form-control" [(ngModel)]="re_search.type" (change)="onSearch(re_search)">
+                    <select class="form-control" [(ngModel)]="re_search.type">
                         <option *ngFor="let status of listPHe" [value]="status.code" selected="selected">{{status.name}}</option>
 
                     </select>
@@ -53,7 +57,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Dịch vụ:</label>
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.service">
-                        <option *ngFor="let status of listService" [value]="status" selected="selected">{{status}}</option>
+                        <option *ngFor="let status of listService" [value]="status.code" selected="selected">{{status.name}}</option>
 
                     </select>
                 </div>
@@ -90,6 +94,11 @@
         <div class="col-md-12 text-center">
             <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
                 <i class="fa fa-search"></i>&nbsp;Tìm kiếm
+            </button>
+            <button class="btn btn-success" (click)="exportExcel()">
+                <i *ngIf="isProcessLoadExcel === 1"
+                    class="fa fa-spinner font-20"></i>
+                <i  *ngIf="isProcessLoadExcel === 0" class="fa fa-file"></i>&nbsp;Xuất excel
             </button>
         </div>
     </div>
@@ -210,11 +219,11 @@
                         <td>{{data?.service}}</td>
                         <td>{{data?.compName}}</td>
                         <td>
-                            <span class="badge badge-success" *ngIf="data?.status === '1'">NEW</span>
-                            <span class="badge badge-warning"  *ngIf="data?.status === '2'">PROCESSING</span>
-                            <span class="badge badge-danger" *ngIf="data?.status === '3'" >CLOSED</span>
+                            <span class="badge badge-success" *ngIf="data?.status === 'NEW'">NEW</span>
+                            <span class="badge badge-warning"  *ngIf="data?.status === 'PROCESSING'">PROCESSING</span>
+                            <span class="badge badge-danger" *ngIf="data?.status === 'CLOSED'" >CLOSED</span>
                         </td>
-                        <td>{{data?.request_date}}</td>
+                        <td>{{data?.requestDate}}</td>
                         <!-- <td>
                             <a class="mr-2 cursor-pointer text-blue" routerLink="/registered-service/edit/{{data.id}}">
                                 <i class="fa fa-edit"></i>
@@ -303,7 +312,7 @@
                     <div class="col-sm-6">
                         <input class="form-control col-lg-12"
                         itrim type="text" id="search" 
-                        [(ngModel)]="passData.request_date"
+                        [(ngModel)]="passData.requestDate"
                         placeholder="Ngày yêu cầu">
                     </div>
                 </div>
@@ -328,7 +337,7 @@
                     <div class="col-sm-6">
                         <div *ngIf="listLog.length > 0">
                             <ul *ngFor="let item of listLog">
-                                <li>{{ item.datetime | date:'yyyy-MM-dd HH:mm'}} - {{item.userId}} - {{item.new_value}}</li>
+                                <li>{{ item.datetime | date:'yyyy-MM-dd HH:mm'}} - {{item.userId}} - {{item.newValue}}</li>
                             </ul>
                         </div>
                         <div *ngIf="listLog.length === 0">

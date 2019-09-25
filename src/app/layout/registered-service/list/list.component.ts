@@ -2,12 +2,14 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
+import { ExcelService } from '../../../services/excel.service';
+
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'register-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, ExcelService]
 })
 export class ListComponent implements OnInit {
   keyword: any = '';
@@ -32,6 +34,7 @@ export class ListComponent implements OnInit {
     fromDate: '',
     toDate: ''
   };
+  listPGD: any = [];
   comment: any = '';
   requestCode: '';
   obj_request: any = {};
@@ -62,27 +65,38 @@ export class ListComponent implements OnInit {
   listPageSize: any = [10, 20, 30, 40, 50];
   listPHe: any = [
     {
-      name: 'All',
+      name: 'Tất cả',
       code: 0
-    }, {
-      name: 'Card',
+    },
+    {
+      name: 'Account',
       code: 2
+    },
+    {
+      name: 'Card',
+      code: 1
     }
   ];
   listStatus: any = [
     {
+      name: 'Tất cả',
+      code: '',
+    },
+    {
       name: 'NEW',
-      code: 1,
+      code: 'NEW',
     },
     {
       name: 'PROCESSING',
-      code: 2,
+      code: 'PROCESSING',
     },
     {
       name: 'CLOSED',
-      code: 3,
+      code: 'CLOSED',
     }
   ];
+  isProcessLoadExcel: any = 0;
+  arrExport: any = [];
   infoUser: any = {};
   protected modalOp: NgbModalRef;
 
@@ -92,7 +106,8 @@ export class ListComponent implements OnInit {
   constructor(
     private ncbService: NCBService,
     public toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private excelService: ExcelService
   ) {
   }
 
@@ -102,6 +117,7 @@ export class ListComponent implements OnInit {
     this.getListData(this.re_search);
     this.getBranchs();
     this.getListService();
+    this.getAllPGD();
   }
   openModal(content, classLayout = '', type = '') {
       if (type === 'static') {
@@ -183,7 +199,9 @@ export class ListComponent implements OnInit {
     }
   }
   tranferDate(params) {
-    return params.year + '/' + params.month + '/' + params.day;
+    const tempMonth = (params.month < 10 ? '0' : '') + params.month;
+    const tempDay = (params.day < 10 ? '0' : '') + params.day;
+    return params.year + '/' + tempMonth + '/' + tempDay;
   }
   onSearch(payload) {
     this.getListData(payload);
@@ -237,7 +255,7 @@ export class ListComponent implements OnInit {
             return;
           }
           this.obj_request = body;
-          this.listLog = body.log;
+          this.listLog = body.serviceRegisterLogResDtoList;
           this.isSearchItem = 0;
           resolve();
         }, 1000);
@@ -279,11 +297,87 @@ export class ListComponent implements OnInit {
     this.ncbService.getListServiceRegister().then((result) => {
       setTimeout(() => {
         const body = result.json().body;
-        this.listService = body;
+        this.listService.push({
+          name: 'Tất cả',
+          code: ''
+        });
+        body.forEach(element => {
+          this.listService.push({
+            name: element,
+            code: element,
+          });
+        });
       }, 300);
     }).catch(err => {
       this.toastr.error('Không lấy được dữ liệu dịch vụ', 'Thất bại!');
     });
+  }
+
+  getAllPGD() {
+    this.listPGD = [];
+    this.ncbService.getListPGD().then((result) => {
+      this.listPGD.push({ code: '', name: 'Tất cả' });
+      result.json().body.forEach(element => {
+        this.listPGD.push({
+          code: element.departCode,
+          name: element.departName,
+        });
+      });
+    }).catch((err) => {
+      this.toastr.error('Không lấy được dữ liệu phòng giao dịch', 'Thất bại');
+    });
+  }
+
+  // excel
+  getDataExcel(search): Promise<any> {
+    const promise = new Promise((resolve, reject) => {
+      this.ncbService.searchRegisterService(search)
+          .then((result) => {
+              this.arrExport = this.arrExport.concat(result.json().body.content);
+              resolve();
+          })
+          .catch((err) => {
+              resolve();
+          });
+    });
+    return promise;
+  }
+  async exportExcel() {
+    this.arrExport = [];
+    this.isProcessLoadExcel = 1;
+    const search = Object.assign({}, this.re_search);
+    search.size = 1000;
+    // if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
+    //   search.toDate = this.tranferDate(this.mRatesDateS_7);
+    //   search.fromDate = this.tranferDate(this.mRatesDateS);
+    //   console.log('###', search.toDate);
+    // }
+    search.toDate = this.tranferDate(this.mRatesDateS_7);
+    search.fromDate = this.tranferDate(this.mRatesDateS);
+
+    const page = Math.ceil(this.totalSearch / search.size);
+    for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {
+        search.page = i;
+        await this.getDataExcel(search);
+    }
+
+    const data = [];
+    this.arrExport.forEach((element) => {
+      data.push({
+        'Mã yêu cầu': 'CARD' + element.id,
+        'Khách hàng': element.customerName,
+        'Chi nhánh(PGD)': element.compName,
+        'Số điện thoại': element.phone,
+        'CNMD/HC': element.idCard,
+        'Sản phẩm dịch vụ': element.service,
+        'Trạng thái': element.status,
+        'Ngày yêu cầu': element.requestDate
+      });
+    });
+
+    this.excelService.exportAsExcelFile(data, 'list_registered_service');
+    this.isProcessLoadExcel = 0;
+    return;
   }
 
 }

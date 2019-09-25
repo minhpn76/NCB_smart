@@ -52,7 +52,7 @@ export class EditComponent implements OnInit {
       provider: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       type: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       error: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      msg_Code: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      msgCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       msg_Code_1: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       mes_Vn: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       mes_En: [''],
@@ -91,14 +91,14 @@ export class EditComponent implements OnInit {
   }
   getItem(params) {
     this.ncbService.detailNotify({
-      type: params
+      msgCode: params
     }).then((result) => {
       const body = result.json().body;
       this.dataForm.patchValue({
         provider: body.provider,
         type: body.provider,
         error: body.error,
-        msg_Code: body.msg_Code,
+        msgCode: body.msgCode,
         msg_Code_1: body.msg_Code_1,
         mes_Vn: body.mes_Vn,
         mes_En: body.mes_En,

@@ -219,7 +219,8 @@ export class CreateComponent implements OnInit {
     if (this.dataForm.invalid) {
       return;
     }
-    if (this.dataForm.value.prdName === '') {
+
+    if (this.tempArrPackage.length === 0) {
       this.toastr.error('Gói sp áp dụng không được bỏ trống', 'Thất bại!');
       return;
     }
