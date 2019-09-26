@@ -3,12 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { NCBService } from '../../../services/ncb.service';
+import { Helper } from '../../../helper';
 
 @Component({
   selector: 'billservice-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, Helper]
 })
 export class CreateComponent implements OnInit {
   dataForm: FormGroup;
@@ -18,13 +19,15 @@ export class CreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private ncbService: NCBService,
-    public router: Router
+    public router: Router,
+    private helper: Helper,
   ) { }
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
       providerCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      providerName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      // tslint:disable-next-line:max-line-length
+      providerName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/), this.helper.noWhitespaceValidator])],
       serviceCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
       partner: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])]
     });

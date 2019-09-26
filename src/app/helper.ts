@@ -116,6 +116,13 @@ export class Helper {
             }
         };
     }
+    noWhitespaceValidator(control: FormControl) {
+        if (control.value.length !== 0) {
+            const isWhitespace = (control.value || '').trim().length === 0;
+            const isValid = !isWhitespace;
+            return isValid ? null : { 'whitespace': true };
+        }
+    }
     matchRoles(listRole) {
         const roles = {
             quanTri: [],

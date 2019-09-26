@@ -55,7 +55,7 @@
                         <div *ngIf="submitted && Form.userCode.errors" class="invalid-feedback">
                             <div *ngIf="Form.userCode.errors.required">Mã nhân viên là bắt buộc</div>
                             <div *ngIf="Form.userCode.errors.pattern">Mã nhân viên không đúng định dạng</div>
-                            <div *ngIf="Form.userCode.errors.minlength">Mã nhân viên không đúng định dạng</div>
+                            <div *ngIf="Form.userCode.hasError('whitespace')">Mã nhân viên không đúng định dạng</div>
                         </div>
                     </div>
 
@@ -72,8 +72,7 @@
                         >
                         <div *ngIf="submitted && Form.userName.errors" class="invalid-feedback">
                             <div *ngIf="Form.userName.errors.required">Tên đăng nhập là bắt buộc</div>
-                            <div *ngIf="Form.userName.errors.pattern">Tên đăng nhập không đúng định dạng</div>
-                            <div *ngIf="Form.userName.errors.minlength">Tên đăng nhập không đúng định dạng</div>
+                            <div *ngIf="Form.userName.hasError('whitespace')">Tên đăng nhập không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -90,7 +89,7 @@
                         <div *ngIf="submitted && Form.fullName.errors" class="invalid-feedback">
                             <div *ngIf="Form.fullName.errors.required">Họ và tên là bắt buộc</div>
                             <div *ngIf="Form.fullName.errors.maxlength">Họ và tên quá dài</div>
-                            <div *ngIf="Form.fullName.errors.pattern">Họ và tên không đúng định dạng</div>
+                            <div *ngIf="Form.fullName.hasError('whitespace')">Họ và tên không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -148,10 +147,9 @@
                             
                         >
                         <div *ngIf="submitted && Form.phone.errors" class="invalid-feedback">
-                            <div *ngIf="Form.phone.errors.pattern">Số điện thoại không đúng định dạng</div>
+                            <div *ngIf="Form.phone.hasError('whitespace')">Số điện thoại không đúng định dạng</div>
                             <div *ngIf="Form.phone.errors.minlength">Số điện thoại không đúng định dạng</div>
                             <div *ngIf="Form.phone.errors.maxlength">Số điện thoại quá dài</div>
-                            <div *ngIf="Form.phone.errors.minlength">Số điện thoại quá ngắn</div>
                         </div>
                     </div>
                 </div>

@@ -91,7 +91,7 @@
                             class="invalid-feedback">
                             <div *ngIf="Form.providerName.errors.required">Tên
                                 nhà cung cấp TTHD là bắt buộc</div>
-                            <div *ngIf="Form.providerName.errors.pattern">Tên
+                            <div *ngIf="Form.providerName.hasError('whitespace')">Tên
                                 nhà cung cấp TTHD không hợp lệ</div>
                         </div>
                     </div>
