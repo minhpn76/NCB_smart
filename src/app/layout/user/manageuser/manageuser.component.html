@@ -55,6 +55,7 @@
                         <div *ngIf="submitted && Form.userCode.errors" class="invalid-feedback">
                             <div *ngIf="Form.userCode.errors.required">Mã nhân viên là bắt buộc</div>
                             <div *ngIf="Form.userCode.errors.pattern">Mã nhân viên không đúng định dạng</div>
+                            <div *ngIf="Form.userCode.errors.minlength">Mã nhân viên không đúng định dạng</div>
                         </div>
                     </div>
 
@@ -72,6 +73,7 @@
                         <div *ngIf="submitted && Form.userName.errors" class="invalid-feedback">
                             <div *ngIf="Form.userName.errors.required">Tên đăng nhập là bắt buộc</div>
                             <div *ngIf="Form.userName.errors.pattern">Tên đăng nhập không đúng định dạng</div>
+                            <div *ngIf="Form.userName.errors.minlength">Tên đăng nhập không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -147,6 +149,7 @@
                         >
                         <div *ngIf="submitted && Form.phone.errors" class="invalid-feedback">
                             <div *ngIf="Form.phone.errors.pattern">Số điện thoại không đúng định dạng</div>
+                            <div *ngIf="Form.phone.errors.minlength">Số điện thoại không đúng định dạng</div>
                             <div *ngIf="Form.phone.errors.maxlength">Số điện thoại quá dài</div>
                             <div *ngIf="Form.phone.errors.minlength">Số điện thoại quá ngắn</div>
                         </div>
@@ -167,7 +170,6 @@
                         <div *ngIf="Form.email.errors" class="invalid-feedback">
                             <div *ngIf="Form.email.errors.required && submitted ">Email là bắt buộc</div>
                             <div *ngIf="Form.email.errors.pattern">Email không đúng định dạng</div>
-
                         </div>
                     </div>
                 </div>

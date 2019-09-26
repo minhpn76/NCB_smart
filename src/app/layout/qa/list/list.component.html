@@ -7,19 +7,21 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Mã QA:</label>
+                <label for="search" class="col-sm-4 col-form-label">Mã nhóm sản phẩm:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
+                    (keydown)="keyDownFunction($event)"
                     itrim type="text" id="search" [(ngModel)]="re_search.productCode"
-                    placeholder="Mã QA">
+                    placeholder="Mã nhóm sản phẩm">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Tên QA:</label>
+                <label for="search" class="col-sm-4 col-form-label">Tên nhóm sản phẩm:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
+                    (keydown)="keyDownFunction($event)"
                     itrim type="text" id="search" [(ngModel)]="re_search.productName"
-                    placeholder="Tên QA">
+                    placeholder="Tên nhóm sản phẩm">
                 </div>
             </div>
         </div>
@@ -72,10 +74,11 @@
                 <thead>
                     <tr>
                     <th scope="col">STT</th>
-                    <th scope="col">Mã QA</th>
-                    <th scope="col">Tên QA</th>
+                    <th scope="col">Mã nhóm sản phẩm</th>
+                    <th scope="col">Tên nhóm sản phẩm</th>
                     <th scope="col">Câu hỏi</th>
                     <th scope="col">Câu trả lời</th>
+                    <th scope="col">Ngày tạo</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Thao tác</th>
 
@@ -96,17 +99,14 @@
                         <td>{{data?.productCode}}</td>
                         <td>{{data?.productName}}</td>
                         <td>
-                            <div 
-                                style='width:100%; min-height:100px; z-index:4; visibility: visible; overflow: auto;'
-                                [innerHTML]="data?.question">
-                            </div>
+                            {{data?.question}}
                         </td>
                         <td>
-                            <div 
-                                style='width:100%; min-height:100px; z-index:4; visibility: visible; overflow: auto;'
-                                [innerHTML]="data?.answer">
-                            </div>
+                           {{data?.answer}}
                         </td>
+                        <td>
+                            {{data?.createdDate}}
+                         </td>
                         <td>
                             <span *ngIf="data?.status === 'A'" class="badge badge-success">Active</span>
                             <span *ngIf="data?.status === 'D'" class="badge badge-danger">Deactive</span>
@@ -137,9 +137,9 @@
         <div class="col-md-12">
 
             <ngb-pagination 
-                *ngIf="totalSearch > 0 && totalSearch > re_search"
+                *ngIf="totalSearch > 0 && totalSearch > re_search.size"
                 [collectionSize]="totalSearch" 
-                [(page)]="re_search" [maxSize]="10" [rotate]="true" 
+                [(page)]="re_search.page" [maxSize]="10" [rotate]="true" 
                 [boundaryLinks]="true"
                 (pageChange)="loadPage($event)"
             >

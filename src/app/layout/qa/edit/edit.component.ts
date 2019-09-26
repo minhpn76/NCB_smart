@@ -37,13 +37,13 @@ export class EditComponent implements OnInit {
     private ncbService: NCBService
   ) {
     this.route.params.subscribe(params => {
-      this.itemId = parseInt(params.itemId);
+      this.itemId = params.itemId;
     });
     this.dataForm = this.formBuilder.group({
-      productCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      productName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      question: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      answer: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      productCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      productName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      question: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      answer: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       status: ['']
     });
 
@@ -99,7 +99,7 @@ export class EditComponent implements OnInit {
         answer: body.answer
       });
     }).catch(err => {
-
+      this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
     });
   }
 }

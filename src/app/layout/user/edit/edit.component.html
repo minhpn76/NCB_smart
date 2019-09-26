@@ -21,6 +21,7 @@
                         <div *ngIf="submitted && Form.username.errors" class="invalid-feedback">
                             <div *ngIf="Form.username.errors.required">Tên đăng nhập là bắt buộc</div>
                             <div *ngIf="Form.username.errors.pattern">Tên đăng nhập không đúng định dạng</div>
+                            <div *ngIf="Form.username.errors.minlength">Tên đăng nhập không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -38,6 +39,8 @@
                             <div *ngIf="Form.fullName.errors.required">Họ và tên là bắt buộc</div>
                             <div *ngIf="Form.fullName.errors.maxlength">Họ và tên quá dài</div>
                             <div *ngIf="Form.fullName.errors.pattern">Họ và tên không đúng định dạng</div>
+                            <div *ngIf="Form.fullName.errors.minlength">Họ và tên không đúng định dạng</div>
+
                         </div>
                     </div>
                 </div>

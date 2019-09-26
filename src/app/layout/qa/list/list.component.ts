@@ -64,6 +64,8 @@ export class ListComponent implements OnInit {
         this.isProcessLoad = 0;
       }, 300);
     }).catch(err => {
+      this.listData = [];
+      this.totalSearch = 0;
       this.isProcessLoad = 0;
     });
   }
@@ -78,13 +80,18 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.ncbService.deleteNcbQA({ id: id }).then(() => {
-          this.listData.splice(index, 1);
-          Swal.fire(
-            'Đã xoá!',
-            'Dữ liệu đã xoá hoàn toàn.',
-            'success'
-          );
+        this.ncbService.deleteNcbQA({ id: id }).then((res) => {
+          if (res.json().code === '00') {
+            Swal.fire(
+              'Đã xoá!',
+              'Dữ liệu đã xoá hoàn toàn.',
+              'success'
+            );
+            this.getListData(this.re_search);
+          } else {
+            this.toastr.error('Không thể xoá dự liệu', 'Thất bại!');
+          }
+
         });
         // For more information about handling dismissals please visit
         // https://sweetalert2.github.io/#handling-dismissals
@@ -110,16 +117,16 @@ export class ListComponent implements OnInit {
     // payload.page = 0;
     if (payload.productCode !== '' || payload.productName !== '' || payload.status !== '') {
       payload.page = 0;
+    } else {
+      payload.page = 0;
     }
     this.getListData(payload);
   }
-  // keyDownFunction(event) {
-  //   if (event.keyCode === 13) {
-  //     this.isSearch = false;
-  //     this.re_search.cityCode = this.re_search_keyword;
-  //     this.getListData(this.re_search);
-  //   }
-  // }
+  keyDownFunction(event) {
+    if (event.keyCode === 13) {
+      this.onSearch(this.re_search);
+    }
+  }
   changePageSize() {
     this.re_search.page = 0;
     this.isSearch = false;

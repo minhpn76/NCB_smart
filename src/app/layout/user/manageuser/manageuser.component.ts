@@ -32,16 +32,17 @@ export class ManageUserComponent implements OnInit {
     ngOnInit() {
         this.dataForm = this.formBuilder.group(
             {
-                branchCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-                transactionCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-                userCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-                userName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-                fullName: ['', Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern(/^((?!\s{1,}).)*$/)])],
-                password: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-                re_password: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-                email: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-                roleId: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-                phone: ['', Validators.compose([Validators.maxLength(13), Validators.pattern(/^((?!\s{1,}).)*$/)])]
+                // tslint:disable-next-line:max-line-length
+                branchCode: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])],
+                transactionCode: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])],
+                userCode: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])],
+                userName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])],
+                fullName: ['', Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern(/^((?!\s{2,}).)*$/)])],
+                password: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])],
+                re_password: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])],
+                email: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])],
+                roleId: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])],
+                phone: ['', Validators.compose([Validators.maxLength(13), Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])]
             },
             {
                 validator: this.helper.MustMatch('password', 're_password')

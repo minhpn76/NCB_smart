@@ -45,6 +45,8 @@ export class CreateComponent implements OnInit {
       if (result.status === 200) {
         if (result.json().code !== '00') {
           this.toastr.error(result.json().message, 'Thất bại!');
+        } else if (result.json().code === '912') {
+          this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
         } else {
           this.toastr.success('Thêm thành công', 'Thành công!');
           setTimeout(() => {

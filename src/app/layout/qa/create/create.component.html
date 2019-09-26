@@ -4,32 +4,32 @@
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã QA(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Mã nhóm sản phẩm(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <input
                             formControlName="productCode"
                             class="form-control col-lg-12"
-                            placeholder="Mã QA"
+                            placeholder="Mã nhóm sản phẩm"
                             [ngClass]="{ 'is-invalid': submitted && Form.productCode.errors }"
                         />
                         <div *ngIf="submitted && Form.productCode.errors" class="invalid-feedback">
-                            <div *ngIf="Form.productCode.errors.required">Mã QA là bắt buộc</div>
-                            <div *ngIf="Form.productCode.errors.pattern">Mã QA không đúng định dạng</div>
+                            <div *ngIf="Form.productCode.errors.required">Mã nhóm sản phẩm là bắt buộc</div>
+                            <div *ngIf="Form.productCode.errors.pattern">Mã nhóm sản phẩm không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên QA(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Tên nhóm sản phẩm(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <input
                             formControlName="productName"
                             class="form-control col-lg-12"
-                            placeholder="Tên QA"
+                            placeholder="Tên nhóm sản phẩm"
                             [ngClass]="{ 'is-invalid': submitted && Form.productName.errors }"
                         />
                         <div *ngIf="submitted && Form.productName.errors" class="invalid-feedback">
-                            <div *ngIf="Form.productName.errors.required">Tên QA là bắt buộc</div>
-                            <div *ngIf="Form.productName.errors.pattern">Tên QA không đúng định dạng</div>
+                            <div *ngIf="Form.productName.errors.required">Tên nhóm sản phẩm là bắt buộc</div>
+                            <div *ngIf="Form.productName.errors.pattern">Tên nhóm sản phẩm không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                         <input
                             formControlName="answer"
                             class="form-control col-lg-12"
-                            placeholder="Câu hỏi"
+                            placeholder="Câu trả lời"
                             [ngClass]="{ 'is-invalid': submitted && Form.answer.errors }"
                         />
                         <div *ngIf="submitted && Form.answer.errors" class="invalid-feedback">
