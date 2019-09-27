@@ -19,7 +19,7 @@
                         <div *ngIf="submitted && Form.prd.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.prd.errors.required">Mã sản phẩm là bắt buộc</div>
-                            <div *ngIf="Form.prd.errors.pattern">Mã sản phẩm không hợp lệ</div>
+                            <div *ngIf="Form.prd.hasError('whitespace')">Mã sản phẩm không hợp lệ</div>
                         </div>
                     </div>
 
@@ -36,7 +36,7 @@
                         <div *ngIf="submitted && Form.prdName.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.prdName.errors.required">Tên sản phẩm là bắt buộc</div>
-                            <div *ngIf="Form.prdName.errors.pattern">Tên sản phẩm không hợp lệ</div>
+                            <div *ngIf="Form.prdName.hasError('whitespace')">Tên sản phẩm không hợp lệ</div>
                         </div>
                     </div>
 
@@ -96,7 +96,7 @@
                         <div *ngIf="submitted && Form.quantity.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.quantity.errors.required">Số lần giao dịch là bắt buộc</div>
-                            <div *ngIf="Form.quantity.errors.pattern">Số lần giao dịch không hợp lệ</div>
+                            <div *ngIf="Form.quantity.hasError('whitespace')">Số lần giao dịch không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -127,7 +127,7 @@
                         <div *ngIf="submitted && Form.ccy.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.ccy.errors.required">Loại tiền tệ là bắt buộc</div>
-                            <div *ngIf="Form.ccy.errors.pattern">Loại tiền tệ không hợp lệ</div>
+                            <div *ngIf="Form.ccy.hasError('whitespace')">Loại tiền tệ không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
                         <div *ngIf="submitted && Form.limitDaily.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.limitDaily.errors.required">Số tiền hạn chế trong ngày là bắt buộc</div>
-                            <div *ngIf="Form.limitDaily.errors.pattern">Số tiền hạn chế trong ngày không hợp lệ</div>
+                            <div *ngIf="Form.limitDaily.hasError('whitespace')">Số tiền hạn chế trong ngày không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
                         <div *ngIf="submitted && Form.min.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.min.errors.required">Số tiền tối thiếu / giao dịch là bắt buộc</div>
-                            <div *ngIf="Form.min.errors.pattern">Số tiền tối thiếu / giao dịch không hợp lệ</div>
+                            <div *ngIf="Form.min.hasError('whitespace')">Số tiền tối thiếu / giao dịch không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -178,7 +178,7 @@
                         <div *ngIf="submitted && Form.max.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.max.errors.required">Số tiền tối đa / giao dịch là bắt buộc</div>
-                            <div *ngIf="Form.max.errors.pattern">Số tiền tối đa / giao dịch không hợp lệ</div>
+                            <div *ngIf="Form.max.hasError('whitespace')">Số tiền tối đa / giao dịch không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -195,7 +195,7 @@
                         <div *ngIf="submitted && Form.limitFinger.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.limitFinger.errors.required">Số tiền tối đa / giao dịch vân tay là bắt buộc</div>
-                            <div *ngIf="Form.limitFinger.errors.pattern">Số tiền tối đa / giao dịch vân tay không hợp lệ</div>
+                            <div *ngIf="Form.limitFinger.hasError('whitespace')">Số tiền tối đa / giao dịch vân tay không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -212,7 +212,7 @@
                         <div *ngIf="submitted && Form.limitFaceid.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.limitFaceid.errors.required">Số tiền tối đa / giao dịch faceid là bắt buộc</div>
-                            <div *ngIf="Form.limitFaceid.errors.pattern">Số tiền tối đa / giao dịch faceid không hợp lệ</div>
+                            <div *ngIf="Form.limitFaceid.hasError('whitespace')">Số tiền tối đa / giao dịch faceid không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -229,7 +229,7 @@
                         <div *ngIf="submitted && Form.promotion.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.promotion.errors.required">Thông tin gói KM là bắt buộc</div>
-                            <div *ngIf="Form.promotion.errors.pattern">Thông tin gói KM không hợp lệ</div>
+                            <div *ngIf="Form.promotion.hasError('whitespace')">Thông tin gói KM không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -246,7 +246,7 @@
                         <div *ngIf="submitted && Form.promotionName.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.promotionName.errors.required">Nội dung gói KM là bắt buộc</div>
-                            <div *ngIf="Form.promotionName.errors.pattern">Nội dung gói KM không hợp lệ</div>
+                            <div *ngIf="Form.promotionName.hasError('whitespace')">Nội dung gói KM không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -263,7 +263,7 @@
                         <div *ngIf="submitted && Form.percentage.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.percentage.errors.required">Giá trị giảm dần là bắt buộc</div>
-                            <div *ngIf="Form.percentage.errors.pattern">Giá trị giảm dần không hợp lệ</div>
+                            <div *ngIf="Form.percentage.hasError('whitespace')">Giá trị giảm dần không hợp lệ</div>
                         </div>
                     </div>
                 </div>

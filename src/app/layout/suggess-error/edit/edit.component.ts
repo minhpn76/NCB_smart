@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Helper } from '../../../helper';
 import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { NCBService } from '../../../services/ncb.service';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
@@ -9,7 +10,7 @@ import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChange
   selector: 'suggesstions-error-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
-  providers: [NCBService]
+  providers: [NCBService,  Helper ]
 })
 export class EditComponent implements OnInit {
   dataForm: FormGroup;
@@ -31,20 +32,21 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     public router: Router,
     private route: ActivatedRoute,
-    private ncbService: NCBService
+    private ncbService: NCBService,
+    private helper:  Helper
   ) {
       this.route.params.subscribe(params => {
         this.itemId = parseInt(params.itemId);
       });
       this.dataForm = this.formBuilder.group({
-        productCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-        productName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-        type: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-        email: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+        productCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+        productName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+        type: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+        email: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
         phone: [''],
-        name: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-        address: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-        description: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+        name: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+        address: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+        description: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
         status: ['']
       });
   }

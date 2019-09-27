@@ -2,13 +2,14 @@ import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Helper } from '../../../helper';
 import { NCBService } from '../../../services/ncb.service';
 
 @Component({
   selector: 'province-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, Helper]
 })
 export class EditComponent implements OnInit {
   dataForm: FormGroup;
@@ -30,7 +31,8 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     public router: Router,
     private route: ActivatedRoute,
-    public ncbService: NCBService
+    public ncbService: NCBService,
+    private helper: Helper
   ) { }
 
   ngOnInit() {
@@ -38,8 +40,8 @@ export class EditComponent implements OnInit {
       this.departCode = params.itemId;
     });
     this.dataForm = this.formBuilder.group({
-      cityName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      cityCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      cityName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      cityCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: ['']
     });
     this.getItem(this.departCode);

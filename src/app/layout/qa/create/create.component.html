@@ -14,7 +14,7 @@
                         />
                         <div *ngIf="submitted && Form.productCode.errors" class="invalid-feedback">
                             <div *ngIf="Form.productCode.errors.required">Mã nhóm sản phẩm là bắt buộc</div>
-                            <div *ngIf="Form.productCode.errors.pattern">Mã nhóm sản phẩm không đúng định dạng</div>
+                            <div *ngIf="Form.productCode.hasError('whitespace')">Mã nhóm sản phẩm không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                         />
                         <div *ngIf="submitted && Form.productName.errors" class="invalid-feedback">
                             <div *ngIf="Form.productName.errors.required">Tên nhóm sản phẩm là bắt buộc</div>
-                            <div *ngIf="Form.productName.errors.pattern">Tên nhóm sản phẩm không đúng định dạng</div>
+                            <div *ngIf="Form.productName.hasError('whitespace')">Tên nhóm sản phẩm không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                         />
                         <div *ngIf="submitted && Form.question.errors" class="invalid-feedback">
                             <div *ngIf="Form.question.errors.required">Câu hỏi là bắt buộc</div>
-                            <div *ngIf="Form.question.errors.pattern">Câu hỏi không đúng định dạng</div>
+                            <div *ngIf="Form.question.hasError('whitespace')">Câu hỏi không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                         />
                         <div *ngIf="submitted && Form.answer.errors" class="invalid-feedback">
                             <div *ngIf="Form.answer.errors.required">Câu trả lời bắt buộc</div>
-                            <div *ngIf="Form.answer.errors.pattern">Câu trả lời không đúng định dạng</div>
+                            <div *ngIf="Form.answer.hasError('whitespace')">Câu trả lời không đúng định dạng</div>
                         </div>
                     </div>
                 </div>

@@ -37,8 +37,8 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.provinceForm = this.formBuilder.group({
-      bankCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      bankName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      bankCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      bankName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       shtname: [''],
       bin: [''],
       citad_gt: [''],

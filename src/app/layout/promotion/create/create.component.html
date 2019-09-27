@@ -15,7 +15,7 @@
                         />
                         <div *ngIf="submitted && Form.promotion.errors" class="invalid-feedback">
                             <div *ngIf="Form.promotion.errors.required">Tên chương trình là bắt buộc</div>
-                            <div *ngIf="Form.promotion.errors.pattern">Tên chương trình không hợp lệ</div>
+                            <div *ngIf="Form.promotion.hasError('whitespace')">Tên chương trình không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
 
                         <div *ngIf="submitted && Form.promotionName.errors" class="invalid-feedback">
                             <div *ngIf="Form.promotionName.errors.required">Nội dung là bắt buộc</div>
-                            <div *ngIf="Form.promotionName.errors.pattern">Nội dung chương trình không hợp lệ</div>
+                            <div *ngIf="Form.promotionName.hasError('whitespace')">Nội dung chương trình không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                         />
                         <div *ngIf="submitted && Form.customerType.errors" class="invalid-feedback">
                             <div *ngIf="Form.customerType.errors.required">Kiểu loại khách hàng là bắt buộc</div>
-                            <div *ngIf="Form.customerType.errors.pattern">Kiểu loại khách hàng không hợp lệ</div>
+                            <div *ngIf="Form.customerType.hasError('whitespace')">Kiểu loại khách hàng không hợp lệ</div>
                             <div *ngIf="Form.customerType.errors.maxlength">Kiểu loại khách hàng qúa dài</div>
                             <div *ngIf="Form.customerType.errors.minlength">Kiểu loại khách hàng qúa ngắn</div>
                         </div>
@@ -63,7 +63,7 @@
                         />
                         <div *ngIf="submitted && Form.percentage1.errors" class="invalid-feedback">
                             <div *ngIf="Form.percentage1.errors.required">Phí thường niên là bắt buộc</div>
-                            <div *ngIf="Form.percentage1.errors.pattern">Phí thường niên không hợp lệ</div>
+                            <div *ngIf="Form.percentage1.hasError('whitespace')">Phí thường niên không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                         />
                         <div *ngIf="submitted && Form.percentage2.errors" class="invalid-feedback">
                             <div *ngIf="Form.percentage2.errors.required">Phí chuyển khoản liên ngân hàng là bắt buộc</div>
-                            <div *ngIf="Form.percentage2.errors.pattern">Phí chuyển khoản liên ngân hàng không hợp lệ</div>
+                            <div *ngIf="Form.percentage2.hasError('whitespace')">Phí chuyển khoản liên ngân hàng không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -178,7 +178,7 @@
                         />
                         <div *ngIf="submitted && Form.percentage3.errors" class="invalid-feedback">
                             <div *ngIf="Form.percentage3.errors.required">Phí chuyển khoản nội bộ là bắt buộc</div>
-                            <div *ngIf="Form.percentage3.errors.pattern">Phí chuyển khoản nội bộ không hợp lệ</div>
+                            <div *ngIf="Form.percentage3.hasError('whitespace')">Phí chuyển khoản nội bộ không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -235,7 +235,7 @@
                         />
                         <div *ngIf="submitted && Form.percentage4.errors" class="invalid-feedback">
                             <div *ngIf="Form.percentage4.errors.required">Phí chuyển 247 là bắt buộc</div>
-                            <div *ngIf="Form.percentage4.errors.pattern">Phí chuyển 247 không hợp lệ</div>
+                            <div *ngIf="Form.percentage4.hasError('whitespace')">Phí chuyển 247 không hợp lệ</div>
                         </div>
                     </div>
                 </div>

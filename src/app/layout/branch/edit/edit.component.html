@@ -1,5 +1,7 @@
 <div>
-    <app-page-header [heading]="'Danh sách chi nhánh'" [heading_second]="'Sửa chi nhánh'" [url_heading]="'/branch'"> </app-page-header>
+    <app-page-header [heading]="'Danh sách chi nhánh'" [heading_second]="'Sửa
+        chi nhánh'" [url_heading]="'/branch'">
+    </app-page-header>
     <div class="row">
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
@@ -14,7 +16,7 @@
                         />
                         <div *ngIf="submitted && Form.compCode.errors" class="invalid-feedback">
                             <div *ngIf="Form.compCode.errors.required">Mã chi nhánh là bắt buộc</div>
-                            <div *ngIf="Form.compCode.errors.pattern">Mã chi nhánh không hợp lệ</div>
+                            <div *ngIf="Form.compCode.hasError('whitespace')">Mã chi nhánh không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -29,7 +31,7 @@
                         />
                         <div *ngIf="submitted && Form.compName.errors" class="invalid-feedback">
                             <div *ngIf="Form.compName.errors.required">Tên chi nhánh là bắt buộc</div>
-                            <div *ngIf="Form.compName.errors.pattern">Tên chi nhánh không hợp lệ</div>
+                            <div *ngIf="Form.compName.hasError('whitespace')">Tên chi nhánh không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -44,33 +46,54 @@
                         />
                         <div *ngIf="submitted && Form.address.errors" class="invalid-feedback">
                             <div *ngIf="Form.address.errors.required">Địa chỉ là bắt buộc</div>
-                            <div *ngIf="Form.address.errors.pattern">Địa chỉ không hợp lệ</div>
+                            <div *ngIf="Form.address.hasError('whitespace')">Địa chỉ không hợp lệ</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Dao:</label>
                     <div class="col-sm-7">
-                        <input formControlName="dao" class="form-control col-lg-12" placeholder="Dao" />
+                        <input
+                            formControlName="dao"
+                            class="form-control
+                            col-lg-12"
+                            placeholder="Dao"
+                        />
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Mcn:</label>
                     <div class="col-sm-7">
-                        <input formControlName="mcn" class="form-control col-lg-12" placeholder="Mcn" />
+                        <input
+                            formControlName="mcn"
+                            class="form-control
+                            col-lg-12"
+                            placeholder="Mcn"
+                        />
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Mp:</label>
                     <div class="col-sm-7">
-                        <input formControlName="mp" class="form-control col-lg-12" placeholder="Mp" />
+                        <input
+                            formControlName="mp"
+                            class="form-control
+                            col-lg-12"
+                            placeholder="Mp"
+                        />
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-7">
-                        <button class="btn btn-success mr-3"><i class="fa fa-save"></i>&nbsp;Lưu lại</button>
+                        <button class="btn btn-success mr-3">
+                            <i
+                                class="fa
+                                fa-save"
+                            ></i
+                            >&nbsp;Lưu lại
+                        </button>
                         <button class="btn btn-light" (click)="resetForm()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
                     </div>
                 </div>

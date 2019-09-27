@@ -15,7 +15,7 @@
                         />
                         <div *ngIf="submitted && Form.promotion.errors" class="invalid-feedback">
                             <div *ngIf="Form.promotion.errors.required">Tên chương trình là bắt buộc</div>
-                            <div *ngIf="Form.promotion.errors.required">Tên chương trình không hợp lệ</div>
+                            <div *ngIf="Form.promotion.hasError('whitespace')">Tên chương trình không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
 
                         <div *ngIf="submitted && Form.promotionName.errors" class="invalid-feedback">
                             <div *ngIf="Form.promotionName.errors.required">Nội dung là bắt buộc</div>
-                            <div *ngIf="Form.promotionName.errors.required">Nội dung chương trình không hợp lệ</div>
+                            <div *ngIf="Form.promotionName.hasError('whitespace')">Nội dung chương trình không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                         />
                         <div *ngIf="submitted && Form.customerType.errors" class="invalid-feedback">
                             <div *ngIf="Form.customerType.errors.required">Kiểu loại khách hàng là bắt buộc</div>
-                            <div *ngIf="Form.customerType.errors.pattern">Kiểu loại khách hàng không hợp lệ</div>
+                            <div *ngIf="Form.customerType.hasError('whitespace')">Kiểu loại khách hàng không hợp lệ</div>
                             <div *ngIf="Form.customerType.errors.maxlength">Kiểu loại khách hàng qúa dài</div>
                             <div *ngIf="Form.customerType.errors.minlength">Kiểu loại khách hàng qúa ngắn</div>
 
@@ -64,7 +64,7 @@
                         />
                         <div *ngIf="submitted && Form.percentage.errors" class="invalid-feedback">
                             <div *ngIf="Form.percentage.errors.required">Phí là bắt buộc</div>
-                            <div *ngIf="Form.percentage.errors.pattern">Phí không hợp lệ</div>
+                            <div *ngIf="Form.percentage.hasError('whitespace')">Phí không hợp lệ</div>
                         </div>
                     </div>
                 </div>

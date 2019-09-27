@@ -14,7 +14,7 @@
                         />
                         <div *ngIf="submitted && Form.bannerCode.errors" class="invalid-feedback">
                             <div *ngIf="Form.bannerCode.errors.required">Mã banner là bắt buộc</div>
-                            <div *ngIf="Form.bannerCode.errors.pattern">Mã banner khộng hợp lệ</div>
+                            <div *ngIf="Form.bannerCode.hasError('whitespace')">Mã banner khộng hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                         />
                         <div *ngIf="submitted && Form.bannerName.errors" class="invalid-feedback">
                             <div *ngIf="Form.bannerName.errors.required">Tên banner là bắt buộc</div>
-                            <div *ngIf="Form.bannerName.errors.pattern">Tên banner khộng hợp lệ</div>
+                            <div *ngIf="Form.bannerName.hasError('whitespace')">Tên banner khộng hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                         />
                         <div *ngIf="submitted && Form.actionScreen.errors" class="invalid-feedback">
                             <div *ngIf="Form.actionScreen.errors.required">Màn hình chuyển tiếp là bắt buộc</div>
-                            <div *ngIf="Form.actionScreen.errors.pattern">Màn hình chuyển tiếp khộng hợp lệ</div>
+                            <div *ngIf="Form.actionScreen.hasError('whitespace')">Màn hình chuyển tiếp khộng hợp lệ</div>
                             <div *ngIf="Form.actionScreen.errors.maxlength">Màn hình chuyển tiếp quá dài</div>
                         </div>
                     </div>

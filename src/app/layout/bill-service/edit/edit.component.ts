@@ -3,12 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NCBService } from '../../../services/ncb.service';
+import { Helper } from '../../../helper';
 
 @Component({
   selector: 'bill-services-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, Helper]
 })
 export class EditComponent implements OnInit {
   dataForm: FormGroup;
@@ -30,7 +31,8 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     public router: Router,
     private route: ActivatedRoute,
-    public ncbService: NCBService
+    public ncbService: NCBService,
+    private helper: Helper
   ) { }
 
   ngOnInit() {
@@ -38,10 +40,10 @@ export class EditComponent implements OnInit {
       this.departCode = params.itemId;
     });
     this.dataForm = this.formBuilder.group({
-      providerCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      providerName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      serviceCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      partner: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      providerCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      providerName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      serviceCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      partner: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: ['']
     });
     this.getItem(this.departCode);

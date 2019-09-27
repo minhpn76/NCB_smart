@@ -15,10 +15,9 @@
                         />
                         <div *ngIf="submitted && Form.type.errors" class="invalid-feedback">
                             <div *ngIf="Form.type.errors.required">Loại là bắt buộc</div>
-                            <div *ngIf="Form.type.errors.pattern">Loại không hợp lệ</div>
+                            <div *ngIf="Form.type.hasError('whitespace')">Loại không hợp lệ</div>
                             <div *ngIf="Form.type.errors.maxlength">Loại góp ý - lỗi quá dài</div>
                             <div *ngIf="Form.type.errors.minlength">Loại góp ý - lỗi quá ngắn</div>
-
                         </div>
                     </div>
                 </div>
@@ -33,7 +32,7 @@
                         />
                         <div *ngIf="submitted && Form.productCode.errors" class="invalid-feedback">
                             <div *ngIf="Form.productCode.errors.required">Mã góp ý - lỗi là bắt buộc</div>
-                            <div *ngIf="Form.productCode.errors.pattern">Mã góp ý - lỗi không hợp lệ</div>
+                            <div *ngIf="Form.productCode.hasError('whitespace')">Mã góp ý - lỗi không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -48,7 +47,7 @@
                         />
                         <div *ngIf="submitted && Form.productName.errors" class="invalid-feedback">
                             <div *ngIf="Form.productName.errors.required">Tên góp ý - lỗi là bắt buộc</div>
-                            <div *ngIf="Form.productName.errors.pattern">Tên góp ý - lỗi không hợp lệ</div>
+                            <div *ngIf="Form.productName.hasError('whitespace')">Tên góp ý - lỗi không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -98,7 +97,7 @@
                         />
                         <div *ngIf="submitted && Form.name.errors" class="invalid-feedback">
                             <div *ngIf="Form.name.errors.required">Tên là bắt buộc</div>
-                            <div *ngIf="Form.name.errors.pattern">Mã góp ý - lỗi không hợp lệ</div>
+                            <div *ngIf="Form.name.hasError('whitespace')">Mã góp ý - lỗi không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -113,7 +112,7 @@
                         />
                         <div *ngIf="submitted && Form.address.errors" class="invalid-feedback">
                             <div *ngIf="Form.address.errors.required">Địa chỉ là bắt buộc</div>
-                            <div *ngIf="Form.address.errors.pattern">Mã góp ý - lỗi không hợp lệ</div>
+                            <div *ngIf="Form.address.hasError('whitespace')">Mã góp ý - lỗi không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -128,7 +127,7 @@
                         />
                         <div *ngIf="submitted && Form.description.errors" class="invalid-feedback">
                             <div *ngIf="Form.description.errors.required">Mô tả là bắt buộc</div>
-                            <div *ngIf="Form.description.errors.pattern">Mã góp ý - lỗi không hợp lệ</div>
+                            <div *ngIf="Form.bankName.hasError('whitespace')">Mã góp ý - lỗi không hợp lệ</div>
                         </div>
                     </div>
                 </div>

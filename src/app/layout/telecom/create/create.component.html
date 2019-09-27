@@ -14,7 +14,7 @@
                         />
                         <div *ngIf="submitted && Form.paramNo.errors" class="invalid-feedback">
                             <div *ngIf="Form.paramNo.errors.required">Mã nhà mạng là bắt buộc</div>
-                            <div *ngIf="Form.paramNo.errors.pattern">Mã nhà mạng không hợp lệ</div>
+                            <div *ngIf="Form.paramNo.hasError('whitespace')">Mã nhà mạng không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                         />
                         <div *ngIf="submitted && Form.paramName.errors" class="invalid-feedback">
                             <div *ngIf="Form.paramName.errors.required">Tên nhà mạng là bắt buộc</div>
-                            <div *ngIf="Form.paramName.errors.pattern">Tên nhà mạng không hợp lệ</div>
+                            <div *ngIf="Form.paramName.hasError('whitespace')">Tên nhà mạng không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                         />
                         <div *ngIf="submitted && Form.paramValue.errors" class="invalid-feedback">
                             <div *ngIf="Form.paramValue.errors.required">Giá trị là bắt buộc</div>
-                            <div *ngIf="Form.paramValue.errors.pattern">Giá trị không hợp lệ</div>
+                            <div *ngIf="Form.paramValue.hasError('whitespace')">Giá trị không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                             [ngClass]="{ 'is-invalid': submitted && Form.note.errors }"
                         />
                         <div *ngIf="submitted && Form.note.errors" class="invalid-feedback">
-                            <div *ngIf="Form.note.errors.pattern">Mô tả không hợp lệ</div>
+                            <div *ngIf="Form.note.hasError('whitespace')">Mô tả không hợp lệ</div>
                             <div *ngIf="Form.note.errors.required">Mô tả là bắt buộc</div>
                         </div>
                     </div>

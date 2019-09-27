@@ -688,16 +688,16 @@ export class NCBService {
   }
   detailNotify(data): Promise<any> {
     const url = `${API_URL}/notify/detail`;
-    return this.auth.authRequest({ url: url, params: data, method: 'POST' });
+    return this.auth.authRequest({ url: url, params: data, method: 'GET' });
   }
   // provider, type, error, msg_Code
   updateNotify(data): Promise<any> {
     const url = `${API_URL}/notify/update`;
-    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
   }
   deleteNotify(data): Promise<any> {
     const url = `${API_URL}/notify/delete`;
-    return this.auth.authRequest({ url: url, params: data, method: 'POST', application: true });
+    return this.auth.authRequest({ url: url, params: data, method: 'DELETE', application: true });
   }
   // roles
   searchRoles(data): Promise<any> {

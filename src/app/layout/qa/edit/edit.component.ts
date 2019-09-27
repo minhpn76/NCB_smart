@@ -4,13 +4,14 @@ import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { NCBService } from '../../../services/ncb.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Helper } from '../../../helper';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'qas-info-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, Helper]
 })
 export class EditComponent implements OnInit {
   public Editor = ClassicEditor;
@@ -34,16 +35,17 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     public router: Router,
     private route: ActivatedRoute,
-    private ncbService: NCBService
+    private ncbService: NCBService,
+    private helper: Helper
   ) {
     this.route.params.subscribe(params => {
       this.itemId = params.itemId;
     });
     this.dataForm = this.formBuilder.group({
-      productCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      productName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      question: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      answer: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      productCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      productName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      question: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      answer: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: ['']
     });
 

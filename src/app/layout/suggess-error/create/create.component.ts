@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NCBService } from '../../../services/ncb.service';
 import { Router } from '@angular/router';
+import { Helper } from '../../../helper';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'suggess-error-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, Helper]
 })
 export class CreateComponent implements OnInit {
   dataForm: FormGroup;
@@ -19,19 +20,20 @@ export class CreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private ncbService: NCBService,
-    public router: Router
+    public router: Router,
+    private helper: Helper
   ) { }
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
-      productCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      productName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      type: ['', Validators.compose([Validators.required, Validators.maxLength(2), Validators.minLength(2), Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      email: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      productCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      productName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      type: ['', Validators.compose([Validators.required, Validators.maxLength(2), Validators.minLength(2), this.helper.noWhitespaceValidator])],
+      email: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       phone: [''],
-      name: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      address: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      description: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])]
+      name: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      address: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      description: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])]
     });
   }
   get Form() { return this.dataForm.controls; }

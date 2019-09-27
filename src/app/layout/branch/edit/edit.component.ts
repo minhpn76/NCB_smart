@@ -3,12 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NCBService } from '../../../services/ncb.service';
+import { Helper } from '../../../helper';
 
 @Component({
   selector: 'branch-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, Helper]
 })
 export class EditComponent implements OnInit {
   dataForm: FormGroup;
@@ -30,7 +31,8 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     public router: Router,
     private route: ActivatedRoute,
-    public ncbService: NCBService
+    public ncbService: NCBService,
+    private helper: Helper
   ) { }
 
   ngOnInit() {
@@ -38,12 +40,12 @@ export class EditComponent implements OnInit {
       this.departCode = params.itemId;
     });
     this.dataForm = this.formBuilder.group({
-      compCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      compName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      address: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      dao: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      mcn: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      mp: ['', Validators.compose([Validators.maxLength(13), Validators.pattern(/^((?!\s{1,}).)*$/)])]
+      compCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      compName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      address: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      dao: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      mcn: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      mp: ['', Validators.compose([Validators.maxLength(13), this.helper.noWhitespaceValidator])]
     });
     this.getItem(this.departCode);
   }

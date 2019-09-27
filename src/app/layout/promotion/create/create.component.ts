@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@ang
 import { ToastrService } from 'ngx-toastr';
 import { NCBService } from '../../../services/ncb.service';
 import { Router } from '@angular/router';
+import { Helper } from '../../../helper';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
@@ -10,7 +11,7 @@ import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChange
   selector: 'provision-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, Helper]
 })
 export class CreateComponent implements OnInit {
   public Editor = ClassicEditor;
@@ -148,7 +149,8 @@ export class CreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private ncbService: NCBService,
-    public router: Router
+    public router: Router,
+    private helper: Helper
   ) {
     this.getPrdName();
   }
@@ -156,19 +158,19 @@ export class CreateComponent implements OnInit {
   ngOnInit() {
     this.loadDate();
     this.dataForm = this.formBuilder.group({
-      customerType: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(2), Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      promotionName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      promotion: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      percentage1: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      customerType: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(2), this.helper.noWhitespaceValidator])],
+      promotionName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      promotion: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      percentage1: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       fromDate1: [this.mRatesDateS_1],
       toDate1: [this.mRatesDateS_7_1],
-      percentage2: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      percentage2: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       fromDate2: [this.mRatesDateS_2],
       toDate2: [this.mRatesDateS_7_2],
-      percentage3: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      percentage3: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       fromDate3: [this.mRatesDateS_3],
       toDate3: [this.mRatesDateS_7_3],
-      percentage4: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      percentage4: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       fromDate4: [this.mRatesDateS_4],
       toDate4: [this.mRatesDateS_7_4],
       prdName: ['']

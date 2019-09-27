@@ -22,7 +22,7 @@
                             class="invalid-feedback">
                             <div *ngIf="Form.bankCode.errors.required">Mã ngân
                                 hàng chuyển khoản là bắt buộc</div>
-                            <div *ngIf="Form.bankCode.errors.pattern">Mã ngân
+                            <div  *ngIf="Form.bankCode.hasError('whitespace')">Mã ngân
                                 hàng chuyển khoản là không hợp lệ</div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                             class="invalid-feedback">
                             <div *ngIf="Form.bankName.errors.required">Tên ngân
                                 hàng chuyển khoản là bắt buộc</div>
-                            <div *ngIf="Form.bankName.errors.pattern">Tên ngân
+                            <div *ngIf="Form.bankName.hasError('whitespace')">Tên ngân
                                 hàng chuyển khoản là không hợp lệ</div>
                         </div>
                     </div>

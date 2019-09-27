@@ -2,11 +2,13 @@ import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Helper } from '../../../helper';
 
 @Component({
   selector: 'feature-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+  styleUrls: ['./edit.component.css'],
+  providers: [Helper]
 })
 export class EditComponent implements OnInit {
   branchForm: FormGroup;
@@ -34,6 +36,7 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     public router: Router,
     private route: ActivatedRoute,
+    private helper: Helper
   ) { }
 
   ngOnInit() {
@@ -41,11 +44,11 @@ export class EditComponent implements OnInit {
       this.branchId = parseInt(params.branchId);
     });
     this.branchForm = this.formBuilder.group({
-      branchCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      branchName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      optionProvince: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      optionDistrict: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      addressName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      branchCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      branchName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      optionProvince: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      optionDistrict: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      addressName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
 
     });
   }

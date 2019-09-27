@@ -3,12 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NCBService } from '../../../services/ncb.service';
+import { Helper } from '../../../helper';
 
 @Component({
   selector: 'pos-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, Helper]
 })
 export class EditComponent implements OnInit {
   dataForm: FormGroup;
@@ -30,7 +31,8 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     public router: Router,
     private route: ActivatedRoute,
-    public ncbService: NCBService
+    public ncbService: NCBService,
+    private helper: Helper
   ) { }
 
   ngOnInit() {
@@ -38,17 +40,17 @@ export class EditComponent implements OnInit {
       this.departCode = params.itemId;
     });
     this.dataForm = this.formBuilder.group({
-      brnCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      branchName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      departCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      departName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      address: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      phone: ['', Validators.compose([Validators.maxLength(13), Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      fax: ['', Validators.compose([Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      latitude: ['', Validators.compose([Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      longitude: ['', Validators.compose([Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      urlImg: ['', Validators.compose([Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      dao: ['', Validators.compose([Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      brnCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      branchName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      departCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      departName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      address: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      phone: ['', Validators.compose([Validators.maxLength(13), this.helper.noWhitespaceValidator])],
+      fax: ['', Validators.compose([this.helper.noWhitespaceValidator])],
+      latitude: ['', Validators.compose([this.helper.noWhitespaceValidator])],
+      longitude: ['', Validators.compose([this.helper.noWhitespaceValidator])],
+      urlImg: ['', Validators.compose([this.helper.noWhitespaceValidator])],
+      dao: ['', Validators.compose([this.helper.noWhitespaceValidator])],
       status: ''
     });
     this.getItem(this.departCode);

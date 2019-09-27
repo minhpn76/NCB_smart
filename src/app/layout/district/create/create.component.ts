@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Helper } from '../../../helper';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'district-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  styleUrls: ['./create.component.css'],
+  providers: [Helper]
 })
 export class CreateComponent implements OnInit {
   districtForm: FormGroup;
@@ -24,14 +26,15 @@ export class CreateComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private helper: Helper
   ) { }
 
   ngOnInit() {
     this.districtForm = this.formBuilder.group({
-      districtCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      districtName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      optionProvince: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])]
+      districtCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      districtName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      optionProvince: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])]
     });
   }
   get Form() { return this.districtForm.controls; }

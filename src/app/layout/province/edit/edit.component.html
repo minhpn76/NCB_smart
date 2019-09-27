@@ -19,7 +19,7 @@
                         <div *ngIf="submitted && Form.cityCode.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.cityCode.errors.required">Mã tỉnh/ thành phố là bắt buộc</div>
-                            <div *ngIf="Form.cityCode.errors.pattern">Mã tỉnh/ thành phố không hợp lệ</div>
+                            <div *ngIf="Form.cityCode.hasError('whitespace')">Mã tỉnh/ thành phố không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                         <div *ngIf="submitted && Form.cityName.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.cityName.errors.required">Tên tỉnh/ thành phố là bắt buộc</div>
-                            <div *ngIf="Form.cityName.errors.pattern">Tên tỉnh/ thành phố không hợp lệ</div>
+                            <div *ngIf="Form.cityName.hasError('whitespace')">Tên tỉnh/ thành phố không hợp lệ</div>
                         </div>
                     </div>
                 </div>

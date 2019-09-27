@@ -56,12 +56,12 @@ export class CreateComponent implements OnInit {
 
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
-            compCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-            compName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-            address: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-            dao: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-            mcn: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-            mp: ['', Validators.compose([Validators.maxLength(13), Validators.pattern(/^((?!\s{1,}).)*$/)])]
+            compCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            compName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            address: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            dao: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            mcn: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            mp: ['', Validators.compose([Validators.maxLength(13), this.helper.noWhitespaceValidator])]
         });
     }
     get Form() {

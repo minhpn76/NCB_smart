@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NCBService } from '../../../services/ncb.service';
 import { Router } from '@angular/router';
+import { Helper } from '../../../helper';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
@@ -10,7 +11,7 @@ import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChange
   selector: 'package-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, Helper]
 })
 export class CreateComponent implements OnInit {
   public Editor = ClassicEditor;
@@ -108,7 +109,8 @@ export class CreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private ncbService: NCBService,
-    public router: Router
+    public router: Router,
+    private helper: Helper
   ) {
     this.userInfo = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : '';
   }
@@ -117,25 +119,25 @@ export class CreateComponent implements OnInit {
   ngOnInit() {
     this.loadDate();
     this.dataForm = this.formBuilder.group({
-      prdName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      tranType: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      typeId: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      quantity: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      customerType: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      ccy: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      limitDaily: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      min: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      max: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      limitFaceid: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      limitFinger: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      promotion: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      promotionName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      percentage: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      prdName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      tranType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      typeId: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      quantity: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      customerType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      ccy: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      limitDaily: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      min: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      max: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      limitFaceid: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      limitFinger: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      promotion: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      promotionName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      percentage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       fromDate: [this.mRatesDateS],
       toDate: [this.mRatesDateS_7],
-      prd: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      prd: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       createBy: [JSON.stringify(this.userInfo.userId)],
-      status : ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      status : ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
     });
   }
   get Form() { return this.dataForm.controls; }

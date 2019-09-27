@@ -1,35 +1,25 @@
 <div>
-    <app-page-header
-        [heading]="'Danh sách điều khoản'"
-        [heading_second]="'Sửa điều khoản'"
-        [url_heading]="'/provision'">
-    </app-page-header>
+    <app-page-header [heading]="'Danh sách điều khoản'" [heading_second]="'Sửa điều khoản'" [url_heading]="'/provision'"> </app-page-header>
     <div class="row">
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên điều
-                        khoản(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Tên điều khoản(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <input
                             formControlName="provisionName"
                             class="form-control col-lg-12"
                             placeholder="Tên điều khoản"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.provisionName.errors }">
-                        <div *ngIf="submitted && Form.provisionName.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.provisionName.errors.required">Tên
-                                điều khoản là bắt buộc</div>
-                            <div *ngIf="Form.provisionName.errors.pattern">Tên
-                                điều khoản không đúng định dạng</div>
+                            [ngClass]="{ 'is-invalid': submitted && Form.provisionName.errors }"
+                        />
+                        <div *ngIf="submitted && Form.provisionName.errors" class="invalid-feedback">
+                            <div *ngIf="Form.provisionName.errors.required">Tên điều khoản là bắt buộc</div>
+                            <div *ngIf="Form.provisionName.hasError('whitespace')">Tên điều khoản không đúng định dạng</div>
                         </div>
                     </div>
-
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Nội
-                        dung(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Nội dung(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <textarea
                             formControlName="provisionLink"
@@ -40,33 +30,26 @@
 
                         <div *ngIf="submitted && Form.provisionLink.errors" class="invalid-feedback">
                             <div *ngIf="Form.provisionLink.errors.required">Nội dung là bắt buộc</div>
-                            <div *ngIf="Form.provisionLink.errors.pattern">Nội dung không hợp lệ</div>
+                            <div *ngIf="Form.provisionLink.hasError('whitespace')">Nội dung không hợp lệ</div>
                         </div>
                     </div>
-
-
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <select class="form-control" formControlName="status" name="status">
-                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-7">
-                        <button class="btn btn-success mr-3">
-                            <i class="fa fa-save"></i>&nbsp;Lưu lại
-                        </button>
-                        <button class="btn btn-light" (click)="resetForm()">
-                            <i class="fa fa-close"></i>&nbsp;Huỷ
-                        </button>
+                        <button class="btn btn-success mr-3"><i class="fa fa-save"></i>&nbsp;Lưu lại</button>
+                        <button class="btn btn-light" (click)="resetForm()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
                     </div>
                 </div>
             </form>
-
         </div>
     </div>
 </div>

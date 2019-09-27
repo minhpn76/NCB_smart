@@ -43,22 +43,22 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
-      prdcode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      product: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      prdcode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      product: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: 'A',
-      activeFee: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      cardtype: ['', Validators.compose([Validators.required, Validators.maxLength(2), Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      changesttFee: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      class_: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      directddFee: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      f01: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      f02: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      f03: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      f04: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      f05: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      issueFee: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      reissueFee: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      repinFee: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])]
+      activeFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      cardtype: ['', Validators.compose([Validators.required, Validators.maxLength(2), this.helper.noWhitespaceValidator])],
+      changesttFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      class_: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      directddFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      f01: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      f02: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      f03: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      f04: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      f05: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      issueFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      reissueFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      repinFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])]
     });
   }
   get Form() { return this.dataForm.controls; }

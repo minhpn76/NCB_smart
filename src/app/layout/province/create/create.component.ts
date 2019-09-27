@@ -37,8 +37,8 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
-      cityName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      cityCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      cityName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      cityCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: ['A']
     });
   }

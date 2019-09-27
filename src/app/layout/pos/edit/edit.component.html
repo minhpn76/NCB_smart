@@ -1,8 +1,7 @@
 <div>
     <app-page-header
         [heading]="'Mạng lưới chi nhánh'"
-        [heading_second]="'Sửa
-        mạng lưới chi nhánh'"
+        [heading_second]="'Sửa mạng lưới chi nhánh'"
         [url_heading]="'/transaction-room'"
     >
     </app-page-header>
@@ -20,7 +19,7 @@
                         />
                         <div *ngIf="submitted && Form.brnCode.errors" class="invalid-feedback">
                             <div *ngIf="Form.brnCode.errors.required">Mã chi nhánh là bắt buộc</div>
-                            <div *ngIf="Form.brnCode.errors.pattern">Mã chi nhánh không hợp lê</div>
+                            <div *ngIf="Form.brnCode.hasError('whitespace')">Mã chi nhánh không hợp lê</div>
                         </div>
                     </div>
                 </div>
@@ -35,7 +34,7 @@
                         />
                         <div *ngIf="submitted && Form.branchName.errors" class="invalid-feedback">
                             <div *ngIf="Form.branchName.errors.required">Tên chi nhánh là bắt buộc</div>
-                            <div *ngIf="Form.branchName.errors.pattern">Tên chi nhánh không hợp lê</div>
+                            <div *ngIf="Form.branchName.hasError('whitespace')">Tên chi nhánh không hợp lê</div>
                         </div>
                     </div>
                 </div>
@@ -50,7 +49,7 @@
                         />
                         <div *ngIf="submitted && Form.departCode.errors" class="invalid-feedback">
                             <div *ngIf="Form.departCode.errors.required">Mã phòng giao dịch là bắt buộc</div>
-                            <div *ngIf="Form.departCode.errors.pattern">Mã phòng giao dịch không hợp lê</div>
+                            <div *ngIf="Form.departCode.hasError('whitespace')">Mã phòng giao dịch không hợp lê</div>
                         </div>
                     </div>
                 </div>
@@ -65,7 +64,7 @@
                         />
                         <div *ngIf="submitted && Form.departName.errors" class="invalid-feedback">
                             <div *ngIf="Form.departName.errors.required">Tên phòng giao dịch là bắt buộc</div>
-                            <div *ngIf="Form.departName.errors.pattern">Tên phòng giao dịch không hợp lê</div>
+                            <div *ngIf="Form.departName.hasError('whitespace')">Tên phòng giao dịch không hợp lê</div>
                         </div>
                     </div>
                 </div>
@@ -80,7 +79,7 @@
                         />
                         <div *ngIf="submitted && Form.address.errors" class="invalid-feedback">
                             <div *ngIf="Form.address.errors.required">Địa chỉ là bắt buộc</div>
-                            <div *ngIf="Form.address.errors.pattern">Địa chỉ không hợp lê</div>
+                            <div *ngIf="Form.address.hasError('whitespace')">Địa chỉ không hợp lê</div>
                         </div>
                     </div>
                 </div>
@@ -112,7 +111,7 @@
                             placeholder="Fax"
                         />
                         <div *ngIf="submitted && Form.fax.errors" class="invalid-feedback">
-                            <div *ngIf="Form.fax.errors.pattern">Fax không đúng định dạng</div>
+                            <div *ngIf="Form.fax.hasError('whitespace')">Fax không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -126,7 +125,7 @@
                             placeholder="Vĩ độ"
                         />
                         <div *ngIf="submitted && Form.latitude.errors" class="invalid-feedback">
-                            <div *ngIf="Form.latitude.errors.pattern">Vĩ độ không đúng định dạng</div>
+                            <div *ngIf="Form.latitude.hasError('whitespace')">Vĩ độ không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -141,7 +140,7 @@
                         />
 
                         <div *ngIf="submitted && Form.longitude.errors" class="invalid-feedback">
-                            <div *ngIf="Form.longitude.errors.pattern">Kinh độ không đúng định dạng</div>
+                            <div *ngIf="Form.longitude.hasError('whitespace')">Kinh độ không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -156,7 +155,7 @@
                         />
 
                         <div *ngIf="submitted && Form.urlImg.errors" class="invalid-feedback">
-                            <div *ngIf="Form.urlImg.errors.pattern">Đường đãn hình ảnh không đúng định dạng</div>
+                            <div *ngIf="Form.urlImg.hasError('whitespace')">Đường đãn hình ảnh không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -171,29 +170,22 @@
                         />
 
                         <div *ngIf="submitted && Form.dao.errors" class="invalid-feedback">
-                            <div *ngIf="Form.dao.errors.pattern">Dao không đúng định dạng</div>
+                            <div *ngIf="Form.dao.hasError('whitespace')">Dao không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <select class="form-control" formControlName="status" name="status">
                             <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
                         </select>
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-7">
-                        <button class="btn btn-success mr-3">
-                            <i
-                                class="fa
-                                fa-save"
-                            ></i
-                            >&nbsp;Lưu lại
-                        </button>
+                        <button class="btn btn-success mr-3"><i class="fa fa-save"></i>&nbsp;Lưu lại</button>
                         <button class="btn btn-light" (click)="resetForm()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
                     </div>
                 </div>

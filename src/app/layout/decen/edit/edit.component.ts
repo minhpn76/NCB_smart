@@ -4,13 +4,14 @@ import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { NCBService } from '../../../services/ncb.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Helper } from '../../../helper';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'roles-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, Helper]
 })
 export class EditComponent implements OnInit {
   public Editor = ClassicEditor;
@@ -38,7 +39,8 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     public router: Router,
     private route: ActivatedRoute,
-    private ncbService: NCBService
+    private ncbService: NCBService,
+    private helper: Helper
   ) {
       this.route.params.subscribe(params => {
         this.itemId = params.itemId;
@@ -46,12 +48,17 @@ export class EditComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.dataForm = this.formBuilder.group({
+      roleName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      description: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      status: ''
+    });
     this.getItem({id: this.itemId});
   }
   onSubmit() {
     this.submitted = true;
-    if (this.obj.roleName === '' || this.obj.status === '' || this.obj.description === '') {
-      this.toastr.error('Không được để trống các trường', 'Lỗi!');
+    // stop here if form is invalid
+    if (this.dataForm.invalid) {
       return;
     }
     this.ncbService.updateRoles(this.obj).then((result) => {
@@ -78,9 +85,11 @@ export class EditComponent implements OnInit {
   getItem(params) {
     this.ncbService.detailRoles(params.id).then((result) => {
       const body = result.json().body;
-      this.obj.status = body.status;
-      this.obj.roleName = body.roleName;
-      this.obj.description = body.description;
+      this.dataForm.patchValue({
+        status: body.status,
+        roleName: body.roleName,
+        description: body.description
+      });
     }).catch(err => {
 
     });

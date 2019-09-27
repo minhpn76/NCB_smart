@@ -4,13 +4,14 @@ import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { NCBService } from '../../../services/ncb.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Helper } from '../../../helper';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'guide-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, Helper]
 })
 export class EditComponent implements OnInit {
   public Editor = ClassicEditor;
@@ -33,14 +34,15 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     public router: Router,
     private route: ActivatedRoute,
-    private ncbService: NCBService
+    private ncbService: NCBService,
+    private helper: Helper
   ) {
     this.route.params.subscribe(params => {
       this.itemId = parseInt(params.itemId);
     });
     this.dataForm = this.formBuilder.group({
-      serviceId: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      content: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      serviceId: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      content: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: ''
     });
   }

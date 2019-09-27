@@ -34,12 +34,12 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
-      bannerCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      bannerName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      bannerCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      bannerName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       linkImg: [''],
       linkUrlVn: [''],
       linkUrlEn: [''],
-      actionScreen: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      actionScreen: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: 'A'
     });
   }

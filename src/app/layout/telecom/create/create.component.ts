@@ -3,12 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NCBService } from '../../../services/ncb.service';
 import { Router } from '@angular/router';
+import { Helper } from '../../../helper';
 
 @Component({
   selector: 'telecom-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css'],
-  providers: [NCBService]
+  providers: [NCBService,  Helper ]
 })
 export class CreateComponent implements OnInit {
   telecomForm: FormGroup;
@@ -19,14 +20,15 @@ export class CreateComponent implements OnInit {
     private toastr: ToastrService,
     private ncbService: NCBService,
     public router: Router,
+    private helper:  Helper
   ) { }
 
   ngOnInit() {
     this.telecomForm = this.formBuilder.group({
-      paramNo: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      paramName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      paramValue: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      note: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      paramNo: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      paramName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      paramValue: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      note: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: 'A'
     });
   }

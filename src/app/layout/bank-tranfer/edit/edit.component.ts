@@ -3,12 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NCBService } from '../../../services/ncb.service';
+import { Helper } from '../../../helper';
 
 @Component({
   selector: 'bank-tranfer-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, Helper]
 })
 export class EditComponent implements OnInit {
   dataForm: FormGroup;
@@ -30,7 +31,8 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     public router: Router,
     private route: ActivatedRoute,
-    public ncbService: NCBService
+    public ncbService: NCBService,
+    private helper: Helper
   ) { }
 
   ngOnInit() {
@@ -38,8 +40,8 @@ export class EditComponent implements OnInit {
       this.code = params.itemId;
     });
     this.dataForm = this.formBuilder.group({
-      bankCode: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      bankName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      bankCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      bankName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       shtname: [''],
       bin: [''],
       citad_gt: [''],

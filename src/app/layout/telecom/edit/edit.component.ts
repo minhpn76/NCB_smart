@@ -3,12 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NCBService } from '../../../services/ncb.service';
+import { Helper } from '../../../helper';
 
 @Component({
   selector: 'telecom-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
-  providers: [NCBService]
+  providers: [NCBService,  Helper ]
 })
 export class EditComponent implements OnInit {
   telecomForm: FormGroup;
@@ -37,16 +38,17 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     public router: Router,
     private route: ActivatedRoute,
-    private ncbService: NCBService
+    private ncbService: NCBService,
+    private helper:  Helper
   ) {
     this.route.params.subscribe(params => {
       this.telecomId = params.itemId;
     });
     this.telecomForm = this.formBuilder.group({
-      paramNo: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      paramName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      paramValue: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      note: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      paramNo: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      paramName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      paramValue: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      note: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: 'A'
     });
   }

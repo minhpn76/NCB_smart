@@ -170,10 +170,10 @@ export class EditComponent implements OnInit {
     this.getItem(this.itemId);
     this.loadDate();
     this.dataForm = this.formBuilder.group({
-      customerType: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(2), Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      promotionName: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      promotion: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      percentage: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      customerType: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(2), this.helper.noWhitespaceValidator])],
+      promotionName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      promotion: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      percentage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       fromDate: [''],
       toDate: [''],
       status: [''],
