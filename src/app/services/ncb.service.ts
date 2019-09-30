@@ -820,4 +820,72 @@ export class NCBService {
     return this.auth.authRequest({ url: url, method: 'GET' });
   }
 
+  // so luong the kh dc mo
+  getCreditCardNumber() {
+    const url = `${API_URL}/par-config/get-credit-card-number`;
+    return this.auth.authRequest({ url: url, method: 'GET' });
+  }
+  createCreditNumber(data) {
+    const url = `${API_URL}/par-config/create-credit-card-number`;
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
+  }
+  checkDuplicateCreditNumber(data) {
+    const url = `${API_URL}/par-config/check-duplicate-credit-card-number`;
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
+  }
+  editInlineCreditCard(data) {
+    const url = `${API_URL}/par-config/update-credit-card-number`;
+    return this.auth.authRequest({ url: url, params: data, method: 'PATCH', application: true });
+  }
+  deleteCreditCard(body): Promise<any> {
+    const url = `${API_URL}/par-config/delete-credit-card-number`;
+    return this.auth.authRequest({ url: url, params: body, method: 'DELETE', application: true });
+  }
+
+  getReissueCardReason() {
+    const url = `${API_URL}/par-config/get-reissue-card-reason`;
+    return this.auth.authRequest({ url: url, method: 'GET' });
+  }
+  createReissueCardReason(data) {
+    const url = `${API_URL}/par-config/modify-reissue-card-reason`;
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
+  }
+  checkDuplicateReissueCardReason(data) {
+    const url = `${API_URL}/par-config/check-duplicate-reissue-card-reason`;
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
+  }
+  // editReissueCardReason(data) {
+  //   const url = `${API_URL}/par-config/update-credit-card-number`;
+  //   return this.auth.authRequest({ url: url, params: data, method: 'PATCH', application: true });
+  // }
+  deleteReissueCardReason(body): Promise<any> {
+    // code=12
+    const url = `${API_URL}/par-config/delete-reissue-card-reason`;
+    return this.auth.authRequest({ url: url, params: body, method: 'DELETE', application: true });
+  }
+
+  getOtherConfig() {
+    const url = `${API_URL}/par-config/get-other-param-config`;
+    return this.auth.authRequest({ url: url, method: 'GET' });
+  }
+  createOtherConfigCard(data) {
+    const url = `${API_URL}/par-config/modify-other-param-config`;
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
+  }
+  checkDuplicateOtherConfigCard(data) {
+    // param, code
+    const url = `${API_URL}/par-config/check-duplicate-other-param-config`;
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true });
+  }
+  // editReissueCardReason(data) {
+  //   const url = `${API_URL}/par-config/update-credit-card-number`;
+  //   return this.auth.authRequest({ url: url, params: data, method: 'PATCH', application: true });
+  // }
+  deleteOtherConfigCard(body): Promise<any> {
+    // code=12
+    const url = `${API_URL}/par-config/delete-other-param-config`;
+    return this.auth.authRequest({ url: url, params: body, method: 'DELETE', application: true });
+  }
+
+
 }

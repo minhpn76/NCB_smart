@@ -17,7 +17,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 
-
 @NgModule({
     imports: [
         CommonModule,

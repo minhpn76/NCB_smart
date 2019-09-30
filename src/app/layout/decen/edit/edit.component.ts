@@ -55,6 +55,7 @@ export class EditComponent implements OnInit {
     });
     this.getItem({id: this.itemId});
   }
+  get Form() { return this.dataForm.controls; }
   onSubmit() {
     this.submitted = true;
     // stop here if form is invalid

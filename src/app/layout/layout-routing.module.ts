@@ -24,7 +24,6 @@ const routes: Routes = [
             { path: 'qas-info', loadChildren: './qa/qa.module#QaModule' },
             { path: 'banner', loadChildren: './banner/banner.module#BannerModule' },
             { path: 'product', loadChildren: './product/product.module#ProductModule' },
-            { path: 'support', loadChildren: './support/support.module#SupportModule' },
             { path: 'feature-app', loadChildren: './feature/feature.module#FeatureAppModule' },
             { path: 'bank-tranfer', loadChildren: './bank-tranfer/bank-tranfer.module#BankTranferModule' },
             { path: 'suggesstions-error', loadChildren: './suggess-error/suggess-error.module#SuggessErrorModule' },
