@@ -223,28 +223,33 @@ export class EditComponent implements OnInit {
         month: parseInt(temp_toDate_slipt[1]),
         day: parseInt(temp_toDate_slipt[2])
       };
-      this.dataForm.patchValue({
-        id: body.id,
-        prdName: body.prdName,
-        tranType: body.tranType,
-        typeId: body.typeId,
-        quantity: body.quantity,
-        customerType: body.customerType,
-        ccy: body.ccy,
-        limitDaily: body.limitDaily,
-        min: body.min,
-        max: body.max,
-        limitFaceid: body.limitFaceid,
-        limitFinger: body.limitFinger,
-        promotion: body.promotion,
-        promotionName: body.promotionName,
-        percentage: body.percentage,
-        fromDate: temp_fromDate,
-        toDate: temp_toDate,
-        prd: body.prd,
-        createBy: body.createBy,
-        status: body.status
-      });
+      // con
+      try {
+        this.dataForm.patchValue({
+          id: body.id !== null ? body.id : '',
+          prdName: body.prdName !== null ? body.prdName : '',
+          tranType: body.tranType !== null ? body.tranType : '',
+          typeId: body.typeId !== null ? body.typeId : '',
+          quantity: body.quantity !== null ? body.quantity : '',
+          customerType: body.customerType !== null ? body.customerType : '',
+          ccy: body.ccy !== null ? body.ccy : '',
+          limitDaily: body.limitDaily !== null ? body.limitDaily : '',
+          min: body.min !== null ? body.min : '',
+          max: body.max !== null ? body.max : '',
+          limitFaceid: body.limitFaceid !== null ? body.limitFaceid : '',
+          limitFinger: body.limitFinger !== null ? body.limitFinger : '',
+          promotion: body.promotion !== null ? body.promotion : '',
+          promotionName: body.promotionName !== null ? body.promotionName : '',
+          percentage: body.percentage !== null ? body.percentage : '',
+          fromDate: temp_fromDate !== null ? temp_fromDate : '',
+          toDate: temp_toDate !== null ? temp_toDate : '',
+          prd: body.prd !== null ? body.prd : '',
+          createBy: body.createBy !== null ? body.createBy : '',
+          status: body.status !== null ? body.status : ''
+        });
+      } catch (e) {
+        console.log('e', e);
+      }
     }).catch(err => {
 
     });

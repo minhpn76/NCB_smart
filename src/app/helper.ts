@@ -117,8 +117,11 @@ export class Helper {
         };
     }
     noWhitespaceValidator(control: FormControl) {
+        if (control.value === null) {
+            return { 'whitespace': true };
+        }
         if (control.value.length !== 0) {
-            const isWhitespace = (control.value || '').trim().length === 0;
+            const isWhitespace = JSON.stringify(control.value).trim().length === 0;
             const isValid = !isWhitespace;
             return isValid ? null : { 'whitespace': true };
         }
