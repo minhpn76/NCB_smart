@@ -225,7 +225,7 @@ export class ListComponent implements OnInit {
     this.arrExport.forEach((element) => {
       data.push({
         'Nhà cung cấp': element.provider,
-        'Kiểu loại': element.type,
+        'Loại giao dịch': element.type,
         'Mã tin nhắn': element.msgCode,
         'Mã tin nhắn 1': element.msg_Code_1,
         'Tin nhắn Tiếng Việt': element.mes_Vn,

@@ -9,6 +9,7 @@
                     <div class="col-sm-7">
                         <input
                             formControlName="prdcode"
+                            [attr.disabled]="true"
                             class="form-control col-lg-12"
                             placeholder="Sản phẩm thẻ trên HT"
                             [ngClass]="{ 'is-invalid': submitted && Form.prdcode.errors }"
@@ -50,18 +51,18 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Loại thẻ(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Loại sản phẩm(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="cardtype"
                             class="form-control col-lg-12"
-                            placeholder="Loại thẻ"
+                            placeholder="Loại sản phẩm"
                             [ngClass]="{ 'is-invalid': submitted && Form.cardtype.errors }"
                         />
                         <div *ngIf="submitted && Form.cardtype.errors" class="invalid-feedback">
-                            <div *ngIf="Form.cardtype.errors.required">Loại thẻ là bắt buộc</div>
-                            <div *ngIf="Form.cardtype.errors.maxlength">Loại thẻ quá dài</div>
-                            <div *ngIf="Form.cardtype.hasError('whitespace')">Loại thẻ không đúng định dạng</div>
+                            <div *ngIf="Form.cardtype.errors.required">Loại sản phẩm là bắt buộc</div>
+                            <div *ngIf="Form.cardtype.errors.maxlength">Loại sản phẩm quá dài</div>
+                            <div *ngIf="Form.cardtype.hasError('whitespace')">Loại sản phẩm không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -181,17 +182,17 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Phí phát mới(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Phí phát hành mới(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="issueFee"
                             class="form-control col-lg-12"
-                            placeholder="Phí phát mới"
+                            placeholder="Phí phát hành mới"
                             [ngClass]="{ 'is-invalid': submitted && Form.issueFee.errors }"
                         />
                         <div *ngIf="submitted && Form.issueFee.errors" class="invalid-feedback">
-                            <div *ngIf="Form.issueFee.errors.required">Phí phát mới là bắt buộc</div>
-                            <div *ngIf="Form.issueFee.hasError('whitespace')">Phí phát mới không đúng định dạng</div>
+                            <div *ngIf="Form.issueFee.errors.required">Phí phát hành mới là bắt buộc</div>
+                            <div *ngIf="Form.issueFee.hasError('whitespace')">Phí phát hành mới không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -223,6 +224,14 @@
                             <div *ngIf="Form.repinFee.errors.required">Phí in lại PIN là bắt buộc</div>
                             <div *ngIf="Form.repinFee.hasError('whitespace')">Phí in lại PIN không đúng định dạng</div>
                         </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" formControlName="status" name="status">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">

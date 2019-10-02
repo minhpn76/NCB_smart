@@ -187,7 +187,7 @@ export class ListComponent implements OnInit {
     if (page_number !== this.re_search.previous_page) {
       this.re_search.page = page_number;
       this.re_search.previous_page = page_number;
-      this.onSearch(this.re_search);
+      this.getListData(this.re_search);
       this.re_search.page = page;
     }
   }
@@ -273,6 +273,15 @@ export class ListComponent implements OnInit {
   handledDataCredit(event) {
     this.objEditCredit.newValue = event;
   }
+  numericOnly(event): boolean {
+    const patt = /^([0-9])$/;
+    const result = patt.test(event.key);
+    if (result === false) {
+      this.toastr.error('Giá trị phải là số', 'Thất bại!');
+      return result;
+    }
+  }
+
   saveCreditForm(value) {
     this.objEditCredit.newValue = value;
     this.ncbService.editInlineCreditCard(this.objEditCredit).then((result) => {
