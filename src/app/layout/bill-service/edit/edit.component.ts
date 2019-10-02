@@ -67,6 +67,8 @@ export class EditComponent implements OnInit {
         setTimeout(() => {
           this.resetForm();
         }, 500);
+      } else if (result.json().code === '906') {
+        this.toastr.error('Dữ liệu đã tồn tài', 'Thất bại!');
       } else {
         this.toastr.error('Sửa thất bại', 'Thất bại!');
       }

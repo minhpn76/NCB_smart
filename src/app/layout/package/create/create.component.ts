@@ -82,12 +82,12 @@ export class CreateComponent implements OnInit {
   ];
   listStatus: any = [
     {
-      code: 'A',
-      name: 'Active'
+      code: 'S',
+      name: 'Trạng thái mềm'
     },
     {
-      code: 'D',
-      name: 'Deactive'
+      code: 'H',
+      name: 'Trạng thái cứng'
     }
   ];
   listCustomer: any = [
@@ -120,11 +120,11 @@ export class CreateComponent implements OnInit {
     this.loadDate();
     this.dataForm = this.formBuilder.group({
       prdName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      tranType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      typeId: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      tranType: ['CK', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      typeId: ['IBT', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       quantity: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      customerType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      ccy: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      customerType: ['CN', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      ccy: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(3), this.helper.noWhitespaceValidator])],
       limitDaily: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       min: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       max: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
@@ -137,7 +137,7 @@ export class CreateComponent implements OnInit {
       toDate: [this.mRatesDateS_7],
       prd: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       createBy: [JSON.stringify(this.userInfo.userId)],
-      status : ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      status : ['S', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
     });
   }
   get Form() { return this.dataForm.controls; }

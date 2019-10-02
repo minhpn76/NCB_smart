@@ -127,6 +127,8 @@
                         <div *ngIf="submitted && Form.ccy.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.ccy.errors.required">Loại tiền tệ là bắt buộc</div>
+                            <div *ngIf="Form.ccy.errors.maxlength">Loại tiền tệ quá dài</div>
+                            <div *ngIf="Form.ccy.errors.minlength">Loại tiền tệ quá ngắn</div>
                             <div *ngIf="Form.ccy.hasError('whitespace')">Loại tiền tệ không hợp lệ</div>
                         </div>
                     </div>

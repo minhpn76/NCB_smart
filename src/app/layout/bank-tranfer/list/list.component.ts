@@ -123,20 +123,19 @@ export class ListComponent implements OnInit {
   onSearch(payload) {
     if (payload.bankCode !== '' || payload.status !== '') {
       payload.page = 0;
+    } else {
+      payload.page = 0;
     }
     this.getListData(payload);
   }
   keyDownFunction(event) {
     if (event.keyCode === 13) {
-      this.isSearch = false;
-      this.re_search.bankCode = this.search_keyword;
       this.getListData(this.re_search);
     }
   }
   changePageSize() {
-    this.search.page = 0;
-    this.isSearch = false;
-    this.getListData(this.search);
+    this.re_search.page = 0;
+    this.getListData(this.re_search);
   }
 
 }

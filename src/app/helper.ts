@@ -121,9 +121,10 @@ export class Helper {
             return { 'whitespace': true };
         }
         if (control.value.length !== 0) {
-            const isWhitespace = JSON.stringify(control.value).trim().length === 0;
+            const isWhitespace = (control.value.toString() || '').trim().length === 0;
             const isValid = !isWhitespace;
             return isValid ? null : { 'whitespace': true };
+
         }
     }
     matchRoles(listRole) {

@@ -12,7 +12,7 @@
                     <input class="form-control col-lg-12"
                         itrim type="text" id="search"
                         [(ngModel)]="re_search.productCode"
-                        placeholder="Mã góp ý - lỗi">
+                        placeholder="Mã nhóm sản phẩm">
                 </div>
             </div>
             <div class="form-group row">
@@ -22,7 +22,7 @@
                     <input class="form-control col-lg-12"
                         itrim type="text" id="search"
                         [(ngModel)]="re_search.productName"
-                        placeholder="Tên góp ý - lỗi">
+                        placeholder="Tên nhóm sản phẩm">
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
         <div class="col-md-8">
             <div class="form-group row">
                 <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
-                <select class="form-control col-sm-1"
+                <select class="form-control col-sm-2"
                     [(ngModel)]="re_search.size" (change)="changePageSize()">
                     <option *ngFor="let page_size of listPageSize"
                         [value]="page_size">{{page_size}}</option>
@@ -67,8 +67,8 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Mã góp ý - lỗi</th>
-                        <th scope="col">Tên góp ý - lỗi</th>
+                        <th scope="col">Mã nhóm sản phẩm</th>
+                        <th scope="col">Tên nhóm sản phẩm</th>
                         <th scope="col">Loại</th>
                         <th scope="col">Số điện thoại</th>
                         <th scope="col">Email</th>

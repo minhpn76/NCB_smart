@@ -5,49 +5,42 @@
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã góp ý - lỗi(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Mã nhóm sản phẩm(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             [attr.disabled]="true"
                             formControlName="productCode"
                             class="form-control col-lg-12"
-                            placeholder="Mã góp ý - lỗi"
+                            placeholder="Mã nhóm sản phẩm"
                             [ngClass]="{ 'is-invalid': submitted && Form.productCode.errors }"
                         />
                         <div *ngIf="submitted && Form.productCode.errors" class="invalid-feedback">
-                            <div *ngIf="Form.productCode.errors.required">Mã góp ý - lỗi là bắt buộc</div>
-                            <div *ngIf="Form.productCode.hasError('whitespace')">Mã góp ý - lỗi không hợp lệ</div>
+                            <div *ngIf="Form.productCode.errors.required">Mã nhóm sản phẩm là bắt buộc</div>
+                            <div *ngIf="Form.productCode.hasError('whitespace')">Mã nhóm sản phẩm không hợp lệ</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên góp ý - lỗi(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Tên nhóm sản phẩm(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="productName"
                             class="form-control col-lg-12"
-                            placeholder="Tên góp ý - lỗi"
+                            placeholder="Tên nhóm sản phẩm"
                             [ngClass]="{ 'is-invalid': submitted && Form.productName.errors }"
                         />
                         <div *ngIf="submitted && Form.productName.errors" class="invalid-feedback">
-                            <div *ngIf="Form.productName.errors.required">Tên góp ý - lỗi là bắt buộc</div>
-                            <div *ngIf="Form.productName.hasError('whitespace')">Tên góp ý - lỗi không hợp lệ</div>
+                            <div *ngIf="Form.productName.errors.required">Tên nhóm sản phẩm là bắt buộc</div>
+                            <div *ngIf="Form.productName.hasError('whitespace')">Tên nhóm sản phẩm không hợp lệ</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Loại(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <input
-                            formControlName="type"
-                            class="form-control col-lg-12"
-                            placeholder="Loại"
-                            [ngClass]="{ 'is-invalid': submitted && Form.type.errors }"
-                        />
-                        <div *ngIf="submitted && Form.type.errors" class="invalid-feedback">
-                            <div *ngIf="Form.type.errors.required">Loại là bắt buộc</div>
-                            <div *ngIf="Form.type.hasError('whitespace')">Loại không hợp lệ</div>
-                        </div>
+                        <select class="form-control" formControlName="type" name="type">
+                            <option *ngFor="let type of listType" [value]="type.code" selected="selected">{{ type.name }}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -96,7 +89,7 @@
                         />
                         <div *ngIf="submitted && Form.name.errors" class="invalid-feedback">
                             <div *ngIf="Form.name.errors.required">Tên là bắt buộc</div>
-                            <div *ngIf="Form.name.hasError('whitespace')">Mã góp ý - lỗi không hợp lệ</div>
+                            <div *ngIf="Form.name.hasError('whitespace')">Mã nhóm sản phẩm không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -111,7 +104,7 @@
                         />
                         <div *ngIf="submitted && Form.address.errors" class="invalid-feedback">
                             <div *ngIf="Form.address.errors.required">Địa chỉ là bắt buộc</div>
-                            <div *ngIf="Form.address.hasError('whitespace')">Mã góp ý - lỗi không hợp lệ</div>
+                            <div *ngIf="Form.address.hasError('whitespace')">Mã nhóm sản phẩm không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -126,7 +119,7 @@
                         />
                         <div *ngIf="submitted && Form.description.errors" class="invalid-feedback">
                             <div *ngIf="Form.description.errors.required">Mô tả là bắt buộc</div>
-                            <div *ngIf="Form.description.hasError('whitespace')">Mã góp ý - lỗi không hợp lệ</div>
+                            <div *ngIf="Form.description.hasError('whitespace')">Mã nhóm sản phẩm không hợp lệ</div>
                         </div>
                     </div>
                 </div>

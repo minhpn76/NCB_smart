@@ -8,6 +8,7 @@
                     <input
                         class="form-control col-lg-12"
                         itrim
+                        (keydown)="keyDownFunction($event)"
                         type="text"
                         id="search"
                         [(ngModel)]="re_search.compCode"
@@ -23,6 +24,7 @@
                     <input
                         class="form-control col-lg-12"
                         itrim
+                        (keydown)="keyDownFunction($event)"
                         type="text"
                         id="branch_name"
                         [(ngModel)]="re_search.compName"
@@ -40,7 +42,7 @@
         <div class="col-md-8">
             <div class="form-group row">
                 <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
-                <select class="form-control col-sm-1" [(ngModel)]="re_search.size" (change)="changePageSize()">
+                <select class="form-control col-sm-2" [(ngModel)]="re_search.size" (change)="changePageSize()">
                     <option *ngFor="let page_size of listPageSize" [value]="page_size">{{ page_size }}</option>
                 </select>
                 &nbsp;
@@ -56,7 +58,7 @@
                         <th scope="col">STT</th>
                         <th scope="col">Mã chi nhánh</th>
                         <th scope="col">Tên chi nhánh</th>
-                        <th scope="col">Địa chỉ</th>
+                        <th scope="col">DAO</th>
                         <th scope="col">Thao tác</th>
                     </tr>
                 </thead>
@@ -73,7 +75,7 @@
                         </th>
                         <td>{{ branch.compCode }}</td>
                         <td>{{ branch.compName }}</td>
-                        <td>{{ branch.address }}</td>
+                        <td>{{ branch.dao }}</td>
                         <td>
                             <a class="mr-2 cursor-pointer text-blue" routerLink="/branch/edit/{{ branch.compCode }}">
                                 <i class="fa fa-edit"></i>

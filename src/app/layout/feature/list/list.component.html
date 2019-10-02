@@ -51,7 +51,7 @@
         <div class="col-md-8">
             <div class="form-group row">
                 <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
-                    <select class="form-control col-sm-1" [(ngModel)]="search.page_size">
+                    <select class="form-control col-sm-2" [(ngModel)]="search.page_size">
                         <option *ngFor="let page_size of listPageSize" [value]="page_size">{{page_size}}</option>
                     </select> &nbsp;
                     <label for="search" class=" col-form-label">Bản ghi</label>  

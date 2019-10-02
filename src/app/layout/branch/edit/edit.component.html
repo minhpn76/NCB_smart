@@ -9,6 +9,7 @@
                     <label for="search" class="col-sm-4 col-form-label">Mã chi nhánh(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
+                            [attr.disabled]="true"
                             formControlName="compCode"
                             class="form-control col-lg-12"
                             placeholder="Mã chi nhánh"

@@ -15,6 +15,16 @@ import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChange
 export class CreateComponent implements OnInit {
   dataForm: FormGroup;
   submitted = false;
+  listType: any = [
+    {
+      name : 'Báo lỗi',
+      code : '01',
+    },
+    {
+      name: 'Góp ý',
+      code : '02'
+    }
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,7 +38,7 @@ export class CreateComponent implements OnInit {
     this.dataForm = this.formBuilder.group({
       productCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       productName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      type: ['', Validators.compose([Validators.required, Validators.maxLength(2), Validators.minLength(2), this.helper.noWhitespaceValidator])],
+      type: ['01', Validators.compose([Validators.required])],
       email: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       phone: [''],
       name: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
@@ -40,7 +50,6 @@ export class CreateComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
     // stop here if form is invalid
     if (this.dataForm.invalid) {
       return;

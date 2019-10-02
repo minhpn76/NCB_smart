@@ -99,17 +99,17 @@ export class ListComponent implements OnInit {
         }
     }
     onSearch(payload) {
-        if (payload.brnCode !== '' || payload.branchName !== '' || payload.departCode !== '' || payload.departName !== '' || payload.status !== '') {
+        if (payload.compCode !== '' || payload.compName !== '') {
+            payload.page = 0;
+        } else {
             payload.page = 0;
         }
-        // payload.page = 0;
+
         this.getListData(payload);
     }
     keyDownFunction(event) {
         if (event.keyCode === 13) {
-            this.isSearch = false;
-            this.re_search.branchCode = this.search_keyword;
-            this.getListData(this.re_search);
+            this.onSearch(this.re_search);
         }
     }
     changePageSize() {

@@ -59,7 +59,21 @@ export class ListComponent implements OnInit {
     this.ncbService.searchNcbFeedBack(params).then((result) => {
       setTimeout(() => {
         const body = result.json().body;
-        this.listData = body.content;
+        body.content.forEach(element => {
+          this.listData.push({
+            productCode: element.productCode,
+            address: element.address,
+            createdDate: element.createdDate,
+            description: element.description,
+            email: element.email,
+            id: element.id,
+            name: element.name,
+            phone: element.phone,
+            productName: element.productName,
+            status: element.status,
+            type: element.type === '01' ? 'Báo lỗi' : 'Góp ý'
+          });
+        });
         this.totalSearch = body.totalElements;
         this.isProcessLoad = 0;
       }, 300);

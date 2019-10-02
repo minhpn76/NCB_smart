@@ -67,7 +67,7 @@ export class ListComponent implements OnInit {
     }).catch(err => {
       this.listData = [];
       this.isProcessLoad = 0;
-      this.totalSearch = 0
+      this.totalSearch = 0;
     });
   }
 
@@ -135,16 +135,16 @@ export class ListComponent implements OnInit {
   onSearch(payload) {
     if (payload.cityCode !== '' || payload.cityName !== '' || payload.status !== '') {
       payload.page = 0;
+    } else {
+      payload.page = 0;
     }
     this.getListData(payload);
   }
-  // keyDownFunction(event) {
-  //   if (event.keyCode === 13) {
-  //     this.isSearch = false;
-  //     this.re_search.cityCode = this.search_keyword;
-  //     this.getListData(this.re_search);
-  //   }
-  // }
+  keyDownFunction(event) {
+    if (event.keyCode === 13) {
+      this.getListData(this.re_search);
+    }
+  }
   changePageSize() {
     this.re_search.page = 0;
     this.getListData(this.re_search);

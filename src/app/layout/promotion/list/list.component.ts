@@ -73,6 +73,11 @@ export class ListComponent implements OnInit {
     }).catch(err => {
     });
   }
+  keyDownFunction(event) {
+    if (event.keyCode === 13) {
+        this.onSearch(this.re_search);
+    }
+  }
 
   deleteItem(event, index, id) {
     Swal.fire({
@@ -91,6 +96,7 @@ export class ListComponent implements OnInit {
               'Dữ liệu đã xoá hoàn toàn.',
               'success'
             );
+            this.onSearch(this.re_search);
           } else {
             this.toastr.error('Xoá dự liệu thất bại!', 'Thất bại');
           }

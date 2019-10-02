@@ -107,12 +107,12 @@ export class ListComponent implements OnInit {
       name: 'Tất cả'
     },
     {
-      code: 'A',
-      name: 'Active'
+      code: 'S',
+      name: 'Trạng thái mềm'
     },
     {
-      code: 'D',
-      name: 'Deactive'
+      code: 'H',
+      name: 'Trạng thái cứng'
     }
   ];
   isProcessLoadExcel: any = 0;
@@ -230,8 +230,8 @@ export class ListComponent implements OnInit {
     });
   }
   async openModalPackage(data) {
-    // await this.getPassData(data);
-    // this.openModal(this.modalPackageElementRef, 'modal-package', 'static');
+    await this.getPassData(data);
+    this.openModal(this.modalPackageElementRef, 'modal-package', 'static');
   }
   getPassData(data) {
     this.dataForm.patchValue({

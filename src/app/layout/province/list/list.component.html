@@ -9,6 +9,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Mã Tỉnh/Thành phố:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
+                    (keydown)="keyDownFunction($event)"
                     itrim type="text" id="search" [(ngModel)]="re_search.cityCode"
                     placeholder="Mã Tỉnh/Thành phố">
                 </div>
@@ -17,6 +18,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Tên Tỉnh/Thành phố:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
+                    (keydown)="keyDownFunction($event)"
                     itrim type="text" id="search" [(ngModel)]="re_search.cityName"
                     placeholder="Tên Tỉnh/Thành phố">
                 </div>
@@ -50,7 +52,7 @@
         <div class="col-md-8">
             <div class="form-group row">
                 <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
-                    <select class="form-control col-sm-1" [(ngModel)]="re_search.size" (change)="changePageSize()">
+                    <select class="form-control col-sm-2" [(ngModel)]="re_search.size" (change)="changePageSize()">
                         <option *ngFor="let page_size of listPageSize" [value]="page_size">{{page_size}}</option>
                     </select> &nbsp;
                     <label for="search" class=" col-form-label">Bản ghi</label>  

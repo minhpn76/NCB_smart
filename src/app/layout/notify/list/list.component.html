@@ -31,16 +31,21 @@
             <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
                 <i class="fa fa-search"></i>&nbsp;Tìm kiếm
             </button>
-            <a class="btn btn-warning" [routerLink]="['/notify/create']">
+            <a class="btn btn-warning mr-3" [routerLink]="['/notify/create']">
                 <i class="fa fa-plus"></i>&nbsp;Thêm mới
             </a>
+            <button class="btn btn-success" (click)="exportExcel()">
+                <i *ngIf="isProcessLoadExcel === 1"
+                    class="fa fa-spinner font-20"></i>
+                <i  *ngIf="isProcessLoadExcel === 0" class="fa fa-file"></i>&nbsp;Xuất excel
+            </button>
         </div>
     </div>
     <div class="row mt-50">
         <div class="col-md-8">
             <div class="form-group row">
                 <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
-                <select class="form-control col-sm-1"
+                <select class="form-control col-sm-2"
                     [(ngModel)]="re_search.size" (change)="changePageSize()">
                     <option *ngFor="let page_size of listPageSize"
                         [value]="page_size">{{page_size}}</option>

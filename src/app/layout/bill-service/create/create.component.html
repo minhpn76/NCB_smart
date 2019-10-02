@@ -1,7 +1,7 @@
 <div>
     <app-page-header
-        [heading]="'Danh sách nhà cung cấp thanh toán hoá đơn'"
-        [heading_second]="'Thêm nhà cung cấp thanh toán hoá đơn'"
+        [heading]="'Danh sách nhà cung cấp dịch vụ'"
+        [heading_second]="'Thêm mới nhà cung cấp dịch vụ'"
         [url_heading]="'/bill-service'"
     >
     </app-page-header>
@@ -29,7 +29,7 @@
                         </select> -->
                         <div *ngIf="submitted && Form.partner.errors" class="invalid-feedback">
                             <div *ngIf="Form.partner.errors.required">Loại dịch vụ TTHD là bắt buộc</div>
-                            <div *ngIf="Form.providerCode.hasError('whitespace')">Loại dịch vụ TTHD không hợp lệ</div>
+                            <div *ngIf="Form.partner.hasError('whitespace')">Loại dịch vụ TTHD không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                     <div class="col-sm-7">
                         <input
                             class="form-control col-lg-12"
-                            placeholder="Tên nhà cung cấp TTHD VN"
+                            placeholder="Tên nhà cung cấp TTHD"
                             formControlName="providerName"
                             [ngClass]="{ 'is-invalid': submitted && Form.providerName.errors }"
                         />

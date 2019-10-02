@@ -49,11 +49,11 @@ export class ListComponent implements OnInit {
   listType: any = [
     {
       code: 1,
-      name: 'CARD'
+      name: 'Thẻ'
     },
     {
       code: 2,
-      name: 'ACCOUNT'
+      name: 'Tài khoản'
     }
   ];
   listService: any = [];
@@ -69,11 +69,11 @@ export class ListComponent implements OnInit {
       code: 0
     },
     {
-      name: 'Account',
+      name: 'Tài khoản',
       code: 2
     },
     {
-      name: 'Card',
+      name: 'Thẻ',
       code: 1
     }
   ];

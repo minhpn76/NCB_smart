@@ -26,6 +26,16 @@ export class EditComponent implements OnInit {
       code: 'D',
     }
   ];
+  listType: any = [
+    {
+      name : 'Báo lỗi',
+      code : '01',
+    },
+    {
+      name: 'Góp ý',
+      code : '02'
+    }
+  ];
 
   constructor(
     private formBuilder: FormBuilder,

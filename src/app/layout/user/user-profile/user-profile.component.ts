@@ -137,6 +137,11 @@ export class UserProfileComponent implements OnInit {
     });
     return promise;
   }
+  keyDownFunction(event) {
+    if (event.keyCode === 13) {
+      this.getListData(this.re_search);
+    }
+  }
   async exportExcel() {
     this.arrExport = [];
     this.isProcessLoadExcel = 1;

@@ -17,6 +17,57 @@ export class CreateComponent implements OnInit {
   dataForm: FormGroup;
   submitted = false;
   userInfo: any;
+  listProvider: any = ['VNPAY', 'PAYOO', 'NAPAS', 'NCB'];
+  listType: any = [
+    {
+      name: 'IBT',
+      code: 'CK liên ngân hàng'
+    },
+    {
+      name: 'URT',
+      code: 'CK nội bộ'
+    },
+    {
+      name: 'ISL',
+      code: 'CK 247'
+    },
+    {
+      name: 'OW6',
+      code: 'Gửi tiết kiệm'
+    },
+    {
+      name: 'IBT',
+      code: 'CK liên ngân hàng'
+    },
+    {
+      name: 'PLUS',
+      code: 'Nộp thêm tiết kiệm'
+    },
+    {
+      name: 'REDEEM',
+      code: 'Tất toán tiết kiệm'
+    },
+    {
+      name: 'BILL',
+      code: 'Thanh toán hóa đơn'
+    },
+    {
+      name: 'TOP',
+      code: 'Nạp tiền điện thoại'
+    },
+    {
+      name: 'EWL',
+      code: 'Nạp ví điện tử'
+    },
+    {
+      name: 'IZI',
+      code: 'Nạp tiền vào tkhoan IZI'
+    },
+    {
+      name: 'SYSTEM',
+      code: 'Mã lỗi chung, khác của hệ thống'
+    }
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
