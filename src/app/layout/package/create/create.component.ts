@@ -82,12 +82,12 @@ export class CreateComponent implements OnInit {
   ];
   listStatus: any = [
     {
-      code: 'S',
-      name: 'Trạng thái mềm'
+      code: 'A',
+      name: 'Active'
     },
     {
-      code: 'H',
-      name: 'Trạng thái cứng'
+      code: 'D',
+      name: 'Deactive'
     }
   ];
   listCustomer: any = [

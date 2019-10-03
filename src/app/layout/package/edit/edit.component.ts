@@ -29,12 +29,12 @@ export class EditComponent implements OnInit {
   };
   listStatus: any = [
     {
-      code: 'S',
-      name: 'Trạng thái mềm'
+      code: 'A',
+      name: 'Active'
     },
     {
-      code: 'H',
-      name: 'Trạng thái cứng'
+      code: 'D',
+      name: 'Deactive'
     }
   ];
   userInfo: any;
