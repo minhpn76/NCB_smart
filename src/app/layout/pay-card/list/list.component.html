@@ -150,7 +150,9 @@
                     <div class="form-group">
                         <label class="col-md-2 control-label">Giá trị:</label>
                         <div class="col-md-12">
-                            <input class="form-control" [(ngModel)]="creditForm.value" id="focusedInput" type="text" />
+                            <input class="form-control" 
+                            (keypress)="numericOnly($event)"
+                            [(ngModel)]="creditForm.value" id="focusedInput" type="text" />
                         </div>
                     </div>
                 </div>

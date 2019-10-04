@@ -163,7 +163,7 @@ export class ListComponent implements OnInit {
               'Dữ liệu đã xoá hoàn toàn.',
               'success'
             );
-            this.getListData(this.re_search);
+            this.onSearch(this.re_search);
           } else {
             this.toastr.error('Không thể xoá được dữ liệu', 'Thất bại');
           }

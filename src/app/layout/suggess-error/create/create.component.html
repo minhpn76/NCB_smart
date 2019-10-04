@@ -43,19 +43,47 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Số điện thoại:</label>
+                    <label for="search" class="col-sm-4 col-form-label">Nội dung(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
-                            formControlName="phone"
+                            formControlName="description"
                             class="form-control col-lg-12"
-                            placeholder="Số điện thoại"
-                            maxlength="13"
-                            pattern="^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$"
-                            [ngClass]="{ 'is-invalid': Form.phone.errors }"
+                            placeholder="Nội dung"
+                            [ngClass]="{ 'is-invalid': submitted && Form.description.errors }"
                         />
-                        <div *ngIf="submitted && Form.phone.errors" class="invalid-feedback">
-                            <div *ngIf="Form.phone.errors.pattern">Số điện thoại không đúng định dạng</div>
-                            <div *ngIf="Form.phone.errors.maxlength">Số điện thoại quá dài</div>
+                        <div *ngIf="submitted && Form.description.errors" class="invalid-feedback">
+                            <div *ngIf="Form.description.errors.required">Nội dung là bắt buộc</div>
+                            <div *ngIf="Form.description.hasError('whitespace')">Nội dung không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="name"
+                            class="form-control col-lg-12"
+                            placeholder="Tên khách hàng"
+                            [ngClass]="{ 'is-invalid': submitted && Form.name.errors }"
+                        />
+                        <div *ngIf="submitted && Form.name.errors" class="invalid-feedback">
+                            <div *ngIf="Form.name.errors.required">Tên khách hàng là bắt buộc</div>
+                            <div *ngIf="Form.name.hasError('whitespace')">Tên khách hàng không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Địa chỉ(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="address"
+                            class="form-control col-lg-12"
+                            placeholder="Địa chỉ"
+                            [ngClass]="{ 'is-invalid': submitted && Form.address.errors }"
+                        />
+                        <div *ngIf="submitted && Form.address.errors" class="invalid-feedback">
+                            <div *ngIf="Form.address.errors.required">Địa chỉ là bắt buộc</div>
+                            <div *ngIf="Form.address.hasError('whitespace')">Địa chỉ không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -78,47 +106,19 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Số điện thoại:</label>
                     <div class="col-sm-7">
                         <input
-                            formControlName="name"
+                            formControlName="phone"
                             class="form-control col-lg-12"
-                            placeholder="Tên"
-                            [ngClass]="{ 'is-invalid': submitted && Form.name.errors }"
+                            placeholder="Số điện thoại"
+                            maxlength="13"
+                            pattern="^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$"
+                            [ngClass]="{ 'is-invalid': Form.phone.errors }"
                         />
-                        <div *ngIf="submitted && Form.name.errors" class="invalid-feedback">
-                            <div *ngIf="Form.name.errors.required">Tên là bắt buộc</div>
-                            <div *ngIf="Form.name.hasError('whitespace')">Mã nhóm sản phẩm không hợp lệ</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Địa chỉ(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <input
-                            formControlName="address"
-                            class="form-control col-lg-12"
-                            placeholder="Địa chỉ"
-                            [ngClass]="{ 'is-invalid': submitted && Form.address.errors }"
-                        />
-                        <div *ngIf="submitted && Form.address.errors" class="invalid-feedback">
-                            <div *ngIf="Form.address.errors.required">Địa chỉ là bắt buộc</div>
-                            <div *ngIf="Form.address.hasError('whitespace')">Mã nhóm sản phẩm không hợp lệ</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mô tả(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <input
-                            formControlName="description"
-                            class="form-control col-lg-12"
-                            placeholder="Mô tả"
-                            [ngClass]="{ 'is-invalid': submitted && Form.description.errors }"
-                        />
-                        <div *ngIf="submitted && Form.description.errors" class="invalid-feedback">
-                            <div *ngIf="Form.description.errors.required">Mô tả là bắt buộc</div>
-                            <div *ngIf="Form.bankName.hasError('whitespace')">Mã nhóm sản phẩm không hợp lệ</div>
+                        <div *ngIf="submitted && Form.phone.errors" class="invalid-feedback">
+                            <div *ngIf="Form.phone.errors.pattern">Số điện thoại không đúng định dạng</div>
+                            <div *ngIf="Form.phone.errors.maxlength">Số điện thoại quá dài</div>
                         </div>
                     </div>
                 </div>

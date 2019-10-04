@@ -40,7 +40,8 @@ export class CreateComponent implements OnInit {
       productName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       type: ['01', Validators.compose([Validators.required])],
       email: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      phone: [''],
+      // tslint:disable-next-line:max-line-length
+      phone: ['', Validators.compose([Validators.maxLength(13), this.helper.noWhitespaceValidator, Validators.pattern(/^((?!\s{2,}).)*$/)])],
       name: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       address: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       description: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])]
@@ -61,7 +62,7 @@ export class CreateComponent implements OnInit {
           setTimeout(() => {
             this.router.navigateByUrl('/suggesstions-error');
           }, 500);
-        } else if (result.json().code === '908') {
+        } else if (result.json().code === ' ') {
           this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
         } else {
           this.toastr.error('Thêm mới thất bại', 'Thất bại!');
