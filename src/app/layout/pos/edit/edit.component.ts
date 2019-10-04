@@ -13,6 +13,8 @@ import { Helper } from '../../../helper';
 })
 export class EditComponent implements OnInit {
   dataForm: FormGroup;
+  listPGD: any = [];
+  listBranch: any = [];
   submitted = false;
   departCode: any;
   listStatus: any = [
@@ -54,6 +56,7 @@ export class EditComponent implements OnInit {
       status: ''
     });
     this.getItem(this.departCode);
+    this.getBranchs();
   }
   get Form() { return this.dataForm.controls; }
 
@@ -76,6 +79,24 @@ export class EditComponent implements OnInit {
     }).catch(err => {
       this.toastr.error(err.json().desciption, 'Thất bại!');
     });
+  }
+  getBranchs() {
+    this.listBranch = [];
+    this.ncbService
+        .getBranchs()
+        .then(result => {
+            this.listBranch.push({ code: '', name: 'Tất cả' });
+
+            result.json().body.forEach(element => {
+                this.listBranch.push({
+                    code: element.brnCode,
+                    name: element.branchName
+                });
+            });
+        })
+        .catch(err => {
+            this.toastr.error('Không lấy được dự liệu chi nhánh!', 'Thất bại!');
+        });
   }
   getItem(params) {
     this.ncbService.detailBranch({departCode: params}).then((result) => {

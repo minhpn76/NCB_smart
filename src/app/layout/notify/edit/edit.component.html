@@ -40,6 +40,7 @@
                     <label for="search" class="col-sm-4 col-form-label">Mã tin nhắn(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <input
+                            [attr.disabled]="true"
                             formControlName="msgCode"
                             class="form-control col-lg-12"
                             placeholder="Mã tin nhắn"

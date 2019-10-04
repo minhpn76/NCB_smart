@@ -78,7 +78,10 @@
                         </th>
                         <td>{{data?.serviceId}}</td>
                         <td>
-                           {{data?.content}}
+                            <div 
+                                style='width:100%; min-height:50px; z-index:4; visibility: visible; overflow: auto;'
+                                [innerHTML]="data?.content">
+                            </div>
                         </td>
                         <td>
                             <span *ngIf="data?.status === 'A'" class="badge

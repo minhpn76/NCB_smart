@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
@@ -22,6 +22,8 @@ export class ListComponent implements OnInit {
   my: any = new Date();
   my_7: any = new Date();
   isSearchItem = 0;
+  isSearchCode: any = 1;
+  codeCard: any = '';
   re_search = {
     compCode: '',
     idCard: '',
@@ -102,6 +104,7 @@ export class ListComponent implements OnInit {
 
   @ViewChild('popupReqest')
   public popupReqestElementRef: ElementRef;
+  @Output() emitCloseModal = new EventEmitter<any>();
 
   constructor(
     private ncbService: NCBService,
@@ -198,6 +201,10 @@ export class ListComponent implements OnInit {
       this.onSearch(this.re_search);
     }
   }
+  closeModal() {
+    this.modalOp.close();
+    this.getListData(this.re_search);
+  }
   tranferDate(params) {
     const tempMonth = (params.month < 10 ? '0' : '') + params.month;
     const tempDay = (params.day < 10 ? '0' : '') + params.day;
@@ -245,18 +252,29 @@ export class ListComponent implements OnInit {
   }
   getItem(params): Promise<any> {
     this.isSearchItem = 1;
+    this.codeCard = params;
     this.obj_request = {};
+    if (this.codeCard === '') {
+      this.toastr.error('Không được bỏ trống mã yêu cầu. Tự động chuyển về danh sách dịch vụ', 'Thất bại');
+      this.isSearchCode = 0;
+      setTimeout(() => {
+        this.closeModal();
+      }, 3000);
+      return;
+    }
     const promise = new Promise((resolve, reject) => {
-      this.ncbService.detailRegisterService(params).then((result) => {
+      this.ncbService.detailRegisterService(this.codeCard).then((result) => {
         setTimeout(() => {
-          const body = result.json().body.content;
+          const body = result.json().body;
           if (Object.keys(body).length === 0) {
             this.toastr.error('Không tìm thấy kết quả', 'Thất bại');
+            this.isSearchCode = 0;
             return;
           }
-          this.obj_request = body;
-          this.listLog = body.serviceRegisterLogResDtoList;
+          this.obj_request = body.content;
+          this.listLog = body.content.serviceRegisterLogResDtoList;
           this.isSearchItem = 0;
+          this.isSearchCode = 1;
           resolve();
         }, 1000);
       }).catch(err => {

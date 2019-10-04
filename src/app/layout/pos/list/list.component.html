@@ -83,7 +83,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 table-responsive">
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -93,16 +93,21 @@
                         <th scope="col">Mã PGD</th>
                         <th scope="col">Tên PGD</th>
                         <th scope="col">Địa chỉ</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col">Fax</th>
+                        <th scope="col">Kinh độ</th>
+                        <th scope="col">Vĩ độ</th>
+                        <th scope="col">Đường dẫn hình ảnh</th>
                         <th scope="col">Trạng thái</th>
                         <th scope="col">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngIf="isProcessLoad == 1" class="text-center">
-                        <td colspan="8"><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        <td colspan="13"><i class="fa fa-spin fa-spinner font-30"></i></td>
                     </tr>
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
-                        <td colspan="8">Không tìm thấy kết quả</td>
+                        <td colspan="13">Không tìm thấy kết quả</td>
                     </tr>
                     <tr *ngFor="let branch of listData; let i = index">
                         <th scope="row">
@@ -113,6 +118,13 @@
                         <td>{{ branch.departCode }}</td>
                         <td>{{ branch.departName }}</td>
                         <td>{{ branch.address }}</td>
+                        <td>{{ branch.phone }}</td>
+                        <td>{{ branch.fax }}</td>
+                        <td>{{ branch.longitude }}</td>
+                        <td>{{ branch.latitude }}</td>
+                        <td>{{ branch.urlImg }}</td>
+                       
+
 
                         <td>
                             <span *ngIf="branch.status == 'A'" class="badge badge-success">Active</span>

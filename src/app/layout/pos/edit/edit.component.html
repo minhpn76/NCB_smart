@@ -11,12 +11,21 @@
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Mã chi nhánh(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <input
+                        <!-- <input
                             formControlName="brnCode"
                             class="form-control col-lg-12"
                             placeholder="Mã chi nhánh"
                             [ngClass]="{ 'is-invalid': submitted && Form.brnCode.errors }"
-                        />
+                        /> -->
+                        <select 
+                            class="form-control" 
+                            formControlName="brnCode"
+                            [ngClass]="{ 'is-invalid': submitted && Form.brnCode.errors}"
+
+                        >
+                            <option *ngFor="let branch of listBranch" selected [value]="branch.code">{{branch.code}}</option>
+
+                        </select>
                         <div *ngIf="submitted && Form.brnCode.errors" class="invalid-feedback">
                             <div *ngIf="Form.brnCode.errors.required">Mã chi nhánh là bắt buộc</div>
                             <div *ngIf="Form.brnCode.hasError('whitespace')">Mã chi nhánh không hợp lê</div>
@@ -26,12 +35,21 @@
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Tên chi nhánh(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <input
+                        <select 
+                            class="form-control" 
+                            formControlName="branchName"
+                            [ngClass]="{ 'is-invalid': submitted && Form.brnCode.errors}"
+
+                        >
+                            <option *ngFor="let branch of listBranch" selected [value]="branch.name">{{branch.name}}</option>
+
+                        </select>
+                        <!-- <input
                             formControlName="branchName"
                             class="form-control col-lg-12"
                             placeholder="Tên chi nhánh"
                             [ngClass]="{ 'is-invalid': submitted && Form.branchName.errors }"
-                        />
+                        /> -->
                         <div *ngIf="submitted && Form.branchName.errors" class="invalid-feedback">
                             <div *ngIf="Form.branchName.errors.required">Tên chi nhánh là bắt buộc</div>
                             <div *ngIf="Form.branchName.hasError('whitespace')">Tên chi nhánh không hợp lê</div>
@@ -174,8 +192,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
+                <div class="row form-group">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <select class="form-control" formControlName="status" name="status">
                             <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
