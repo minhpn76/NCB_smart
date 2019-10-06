@@ -59,9 +59,9 @@ export class CreateComponent implements OnInit {
             compCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             compName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             address: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            dao: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            mcn: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            mp: ['', Validators.compose([Validators.maxLength(13), this.helper.noWhitespaceValidator])]
+            dao: [''],
+            mcn: [''],
+            mp: ['']
         });
     }
     get Form() {

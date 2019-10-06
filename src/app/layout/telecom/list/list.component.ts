@@ -65,6 +65,11 @@ export class ListComponent implements OnInit {
     });
 
   }
+  keyDownFunction(event) {
+    if (event.keyCode === 13) {
+      this.onSearch(this.re_search);
+    }
+  }
 
   deleteItem(event, index, code) {
     Swal.fire({
@@ -130,13 +135,6 @@ export class ListComponent implements OnInit {
   }
   exportExcel() {
 
-  }
-  keyDownFunction(event) {
-    if (event.keyCode === 13) {
-      this.isSearch = false;
-      this.re_search.filter = this.search_keyword;
-      this.getListData(this.re_search);
-    }
   }
   changePageSize() {
     this.re_search.page = 0;

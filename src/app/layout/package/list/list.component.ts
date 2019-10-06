@@ -107,12 +107,12 @@ export class ListComponent implements OnInit {
       name: 'Tất cả'
     },
     {
-      code: 'S',
-      name: 'Trạng thái mềm'
+      code: 'A',
+      name: 'Active'
     },
     {
-      code: 'H',
-      name: 'Trạng thái cứng'
+      code: 'D',
+      name: 'Deactive'
     }
   ];
   isProcessLoadExcel: any = 0;

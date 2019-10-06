@@ -99,6 +99,8 @@ export class UserProfileComponent implements OnInit {
     // date
     if (params.cifgrp !== '' || params.usrid !== '' || params.idno !== '') {
       params.page = 0;
+    } else {
+      params.page = 0;
     }
     this.getListData(params);
 
@@ -120,7 +122,6 @@ export class UserProfileComponent implements OnInit {
   }
   changePageSize() {
     this.re_search.page = 0;
-    this.isSearch = false;
     this.getListData(this.re_search);
   }
   // excel
@@ -139,7 +140,7 @@ export class UserProfileComponent implements OnInit {
   }
   keyDownFunction(event) {
     if (event.keyCode === 13) {
-      this.getListData(this.re_search);
+      this.onSearch(this.re_search);
     }
   }
   async exportExcel() {

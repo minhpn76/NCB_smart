@@ -5,163 +5,278 @@
         [url_heading]="'/user'">
     </app-page-header>
     <div class="row">
-        <div class="col-md-8">
-            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên đăng nhập(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <input 
-                            [attr.disabled]="true"
-                            formControlName="username"
-                            itrim
-                            class="form-control col-lg-12"
-                            placeholder="Tên đăng nhập"
-                            [ngClass]="{ 'is-invalid': submitted && Form.username.errors }"
-                        >
-                        <div *ngIf="submitted && Form.username.errors" class="invalid-feedback">
-                            <div *ngIf="Form.username.errors.required">Tên đăng nhập là bắt buộc</div>
-                            <div *ngIf="Form.username.errors.pattern">Tên đăng nhập không đúng định dạng</div>
-                            <div *ngIf="Form.username.errors.minlength">Tên đăng nhập không đúng định dạng</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Họ và tên(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <input 
-                            formControlName="fullName"
-                            itrim
-                            class="form-control col-lg-12"
-                            placeholder="Họ và tên"
-                            [ngClass]="{ 'is-invalid': submitted && Form.fullName.errors }"
-                        >
-                        <div *ngIf="submitted && Form.fullName.errors" class="invalid-feedback">
-                            <div *ngIf="Form.fullName.errors.required">Họ và tên là bắt buộc</div>
-                            <div *ngIf="Form.fullName.errors.maxlength">Họ và tên quá dài</div>
-                            <div *ngIf="Form.fullName.errors.pattern">Họ và tên không đúng định dạng</div>
-                            <div *ngIf="Form.fullName.errors.minlength">Họ và tên không đúng định dạng</div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Chi nhánh(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <select 
-                            class="form-control" 
-                            formControlName="branchCode"
-                            [ngClass]="{ 'is-invalid': submitted && Form.branchCode.errors}"
-                            (change)="onChangePGD(Form.branchCode.value)"
-
-                        >
-                            <option *ngFor="let branch of listBranch" selected [value]="branch.code">{{branch.name}}</option>
-
-                        </select>
-                        <div *ngIf="submitted && Form.branchCode.errors" class="invalid-feedback">
-                            <div *ngIf="Form.branchCode.errors.required">Chi nhánh là bắt buộc</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">PGD(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <select 
-                            class="form-control" 
-                            formControlName="transactionCode"
-                            [ngClass]="{ 'is-invalid': submitted && Form.transactionCode.errors}"
-
-                        >
-                            <option *ngFor="let pGD of listPGD" selected [value]="pGD.code">{{pGD.name}}</option>
-
-                        </select>
-                        <div *ngIf="submitted && Form.transactionCode.errors" class="invalid-feedback">
-                            <div *ngIf="Form.transactionCode.errors.required">Phòng giao dịch là bắt buộc</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã nhân viên(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <input 
-                            formControlName="userCode"
-                            itrim
-                            class="form-control col-lg-12"
-                            placeholder="Mã nhân viên"
-                            [ngClass]="{ 'is-invalid': submitted && Form.userCode.errors }"
-                        >
-                        <div *ngIf="submitted && Form.userCode.errors" class="invalid-feedback">
-                            <div *ngIf="Form.userCode.errors.required">Mã nhân viên là bắt buộc</div>
-                            <div *ngIf="Form.userCode.errors.pattern">Mã nhân viên không đúng định dạng</div>
-                        </div>
-                    </div>
-
-                </div> -->
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Số điện thoại:</label>
-                    <div class="col-sm-7">
-                        <input 
-                            formControlName="phone"
-                            itrim
-                            class="form-control col-lg-12"
-                            placeholder="Số điện thoại"
-                            minlength="10"
-                            pattern="^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$"
-                            [ngClass]="{ 'is-invalid': Form.phone.errors}"
-                            
-                        >
-                        <div *ngIf="submitted && Form.phone.errors" class="invalid-feedback">
-                            <div *ngIf="Form.phone.errors.pattern">Số điện thoại không đúng định dạng</div>
-                            <div *ngIf="Form.phone.errors.maxlength">Số điện thoại quá dài</div>
-                            <div *ngIf="Form.phone.errors.minlength">Số điện thoại quá ngắn</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Email(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <input 
-                            itrim
-                            formControlName="email"
-                            class="form-control col-lg-12"
-                            placeholder="Email"
-                            required
-                            pattern='^(([^\.@]+([\._][^\._@]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$' 
-                            [ngClass]="{ 'is-invalid': submitted && Form.email.errors}"
-                        >
-                        <div *ngIf="Form.email.errors" class="invalid-feedback">
-                            <div *ngIf="Form.email.errors.required && submitted ">Email là bắt buộc</div>
-                            <div *ngIf="Form.email.errors.pattern">Email không đúng định dạng</div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Trạng thái:</label>
-                    <div class="col-sm-7">
-                        <label class="switch">
-                            <input 
-                                type="checkbox" 
-                                formControlName="status"
-                                (change)="changeStatus($event, obj)"
-                                name="active">
-                            <span class="slider round"></span>
-                        </label>&nbsp;
-                        <label for=""><i>Bật/tắt trạng thái của tài khoản</i></label>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-7">
-                        <button class="btn btn-success mr-3" >
-                            <i class="fa fa-save" ></i>&nbsp;Lưu lại
-                        </button>
-                        <button class="btn btn-light" (click)="resetForm()">
-                            <i class="fa fa-close"></i>&nbsp;Huỷ
-                        </button>
-                    </div>
-                </div>
-            </form>
-
+        <div class="col-md-8 col-md-offset-4">
+            <ngb-tabset>
+                <ngb-tab>
+                    <ng-template ngbTabTitle>Chỉnh sửa thông tin</ng-template>
+                    <ng-template ngbTabContent>
+                        <br>
+                        <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                            <div class="form-group row">
+                                <label for="search" class="col-sm-4 col-form-label">Tên đăng nhập(<span class="text-danger">*</span>):</label>
+                                <div class="col-sm-7">
+                                    <input 
+                                        [attr.disabled]="true"
+                                        formControlName="username"
+                                        itrim
+                                        class="form-control col-lg-12"
+                                        placeholder="Tên đăng nhập"
+                                        [ngClass]="{ 'is-invalid': submitted && Form.username.errors }"
+                                    >
+                                    <div *ngIf="submitted && Form.username.errors" class="invalid-feedback">
+                                        <div *ngIf="Form.username.errors.required">Tên đăng nhập là bắt buộc</div>
+                                        <div *ngIf="Form.username.errors.pattern">Tên đăng nhập không đúng định dạng</div>
+                                        <div *ngIf="Form.username.errors.minlength">Tên đăng nhập không đúng định dạng</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="search" class="col-sm-4 col-form-label">Họ và tên(<span class="text-danger">*</span>):</label>
+                                <div class="col-sm-7">
+                                    <input 
+                                        formControlName="fullName"
+                                        itrim
+                                        class="form-control col-lg-12"
+                                        placeholder="Họ và tên"
+                                        [ngClass]="{ 'is-invalid': submitted && Form.fullName.errors }"
+                                    >
+                                    <div *ngIf="submitted && Form.fullName.errors" class="invalid-feedback">
+                                        <div *ngIf="Form.fullName.errors.required">Họ và tên là bắt buộc</div>
+                                        <div *ngIf="Form.fullName.errors.maxlength">Họ và tên quá dài</div>
+                                        <div *ngIf="Form.fullName.errors.pattern">Họ và tên không đúng định dạng</div>
+                                        <div *ngIf="Form.fullName.errors.minlength">Họ và tên không đúng định dạng</div>
+            
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Chi nhánh(<span class="text-danger">*</span>):</label>
+                                <div class="col-sm-7">
+                                    <select 
+                                        class="form-control" 
+                                        formControlName="branchCode"
+                                        [ngClass]="{ 'is-invalid': submitted && Form.branchCode.errors}"
+                                        (change)="onChangePGD(Form.branchCode.value)"
+            
+                                    >
+                                        <option *ngFor="let branch of listBranch" selected [value]="branch.code">{{branch.name}}</option>
+            
+                                    </select>
+                                    <div *ngIf="submitted && Form.branchCode.errors" class="invalid-feedback">
+                                        <div *ngIf="Form.branchCode.errors.required">Chi nhánh là bắt buộc</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">PGD(<span class="text-danger">*</span>):</label>
+                                <div class="col-sm-7">
+                                    <select 
+                                        class="form-control" 
+                                        formControlName="transactionCode"
+                                        [ngClass]="{ 'is-invalid': submitted && Form.transactionCode.errors}"
+            
+                                    >
+                                        <option *ngFor="let pGD of listPGD" selected [value]="pGD.code">{{pGD.name}}</option>
+            
+                                    </select>
+                                    <div *ngIf="submitted && Form.transactionCode.errors" class="invalid-feedback">
+                                        <div *ngIf="Form.transactionCode.errors.required">Phòng giao dịch là bắt buộc</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group row">
+                                <label for="search" class="col-sm-4 col-form-label">Mã nhân viên(<span class="text-danger">*</span>):</label>
+                                <div class="col-sm-7">
+                                    <input 
+                                        formControlName="userCode"
+                                        itrim
+                                        class="form-control col-lg-12"
+                                        placeholder="Mã nhân viên"
+                                        [ngClass]="{ 'is-invalid': submitted && Form.userCode.errors }"
+                                    >
+                                    <div *ngIf="submitted && Form.userCode.errors" class="invalid-feedback">
+                                        <div *ngIf="Form.userCode.errors.required">Mã nhân viên là bắt buộc</div>
+                                        <div *ngIf="Form.userCode.errors.pattern">Mã nhân viên không đúng định dạng</div>
+                                    </div>
+                                </div>
+            
+                            </div> -->
+                            <div class="form-group row">
+                                <label for="search" class="col-sm-4 col-form-label">Số điện thoại:</label>
+                                <div class="col-sm-7">
+                                    <input 
+                                        formControlName="phone"
+                                        itrim
+                                        class="form-control col-lg-12"
+                                        placeholder="Số điện thoại"
+                                        minlength="10"
+                                        pattern="^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$"
+                                        [ngClass]="{ 'is-invalid': Form.phone.errors}"
+                                        
+                                    >
+                                    <div *ngIf="submitted && Form.phone.errors" class="invalid-feedback">
+                                        <div *ngIf="Form.phone.errors.pattern">Số điện thoại không đúng định dạng</div>
+                                        <div *ngIf="Form.phone.errors.maxlength">Số điện thoại quá dài</div>
+                                        <div *ngIf="Form.phone.errors.minlength">Số điện thoại quá ngắn</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="search" class="col-sm-4 col-form-label">Email(<span class="text-danger">*</span>):</label>
+                                <div class="col-sm-7">
+                                    <input 
+                                        itrim
+                                        formControlName="email"
+                                        class="form-control col-lg-12"
+                                        placeholder="Email"
+                                        required
+                                        pattern='^(([^\.@]+([\._][^\._@]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$' 
+                                        [ngClass]="{ 'is-invalid': submitted && Form.email.errors}"
+                                    >
+                                    <div *ngIf="Form.email.errors" class="invalid-feedback">
+                                        <div *ngIf="Form.email.errors.required && submitted ">Email là bắt buộc</div>
+                                        <div *ngIf="Form.email.errors.pattern">Email không đúng định dạng</div>
+            
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Trạng thái:</label>
+                                <div class="col-sm-7">
+                                    <label class="switch">
+                                        <input 
+                                            type="checkbox" 
+                                            formControlName="status"
+                                            (change)="changeStatus($event, obj)"
+                                            name="active">
+                                        <span class="slider round"></span>
+                                    </label>&nbsp;
+                                    <label for=""><i>Bật/tắt trạng thái của tài khoản</i></label>
+                                </div>
+                            </div> -->
+                            <div class="form-group row">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-7">
+                                    <button class="btn btn-success mr-3" >
+                                        <i class="fa fa-save" ></i>&nbsp;Lưu lại
+                                    </button>
+                                    <button class="btn btn-light" (click)="resetForm()">
+                                        <i class="fa fa-close"></i>&nbsp;Huỷ
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                    <ng-template ngbTabTitle>Chỉnh sửa trạng thái</ng-template>
+                    <ng-template ngbTabContent>
+                        <br>
+                        <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Trạng thái:</label>
+                                <div class="col-sm-7">
+                                    <label class="switch">
+                                        <input 
+                                            type="checkbox" 
+                                            formControlName="status"
+                                            (change)="changeStatus($event, obj)"
+                                            name="active">
+                                        <span class="slider round"></span>
+                                    </label>&nbsp;
+                                    <label for=""><i>Bật/tắt trạng thái của tài khoản</i></label>
+                                </div>
+                            </div>
+                                </form>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                    <ng-template ngbTabTitle>Chỉnh sửa mật khẩu</ng-template>
+                    <ng-template ngbTabContent>
+                        <br>
+                        <form [formGroup]="userForm" (ngSubmit)="onSubmitPassW()">
+                            <div class="form-group row">
+                                <label for="search" class="col-sm-4 col-form-label">Tên đăng nhập(<span class="text-danger">*</span>):</label>
+                                <div class="col-sm-7">
+                                    <input 
+                                        formControlName="username"
+                                        class="form-control col-lg-12"
+                                        [attr.disabled]="true"
+                                    >
+                                </div>
+            
+                            </div>
+                            <div class="form-group row">
+                                <label for="search" class="col-sm-4 col-form-label">Mật khẩu cũ(<span class="text-danger">*</span>):</label>
+                                <div class="col-sm-7">
+                                    <input 
+                                        formControlName="oldPassword"
+                                        class="form-control col-lg-12"
+                                        type="password"
+                                        placeholder="Mật khẩu cũ"
+                                        [ngClass]="{ 'is-invalid': submitted && FormUser.oldPassword.errors }"
+                                    >
+                                    <div *ngIf="submitted && FormUser.oldPassword.errors" class="invalid-feedback">
+                                        <div *ngIf="FormUser.oldPassword.errors.required">Mật khẩu cũ là bắt buộc</div>
+                                    </div>
+                                </div>
+            
+                            </div>
+                            <div class="form-group row">
+                                <label for="search" class="col-sm-4 col-form-label">Mật khẩu mới(<span class="text-danger">*</span>):</label>
+                                <div class="col-sm-7">
+                                    <input 
+                                        formControlName="newPassword"
+                                        class="form-control col-lg-12"
+                                        placeholder="Mật khẩu mới"
+                                        minlength="8"
+                                        type="password"
+                                        [ngClass]="{ 'is-invalid': submitted && FormUser.newPassword.errors }"
+                                    >
+                                    <div *ngIf="submitted && FormUser.newPassword.errors" class="invalid-feedback">
+                                        <div *ngIf="FormUser.newPassword.errors.required">Mật khẩu mới là bắt buộc</div>
+                                        <div *ngIf="FormUser.newPassword.errors.minlength">Mật khẩu quá ngắn</div>
+                                        <div *ngIf="FormUser.re_newPassword.errors.pattern">Mật khẩu mới không đúng định dạng</div>
+                                    </div>
+                                </div>
+            
+                            </div>
+                            <div class="form-group row">
+                                <label for="search" class="col-sm-4 col-form-label">Nhập lại mật khẩu mới(<span class="text-danger">*</span>):</label>
+                                <div class="col-sm-7">
+                                    <input 
+                                        formControlName="re_newPassword"
+                                        class="form-control col-lg-12"
+                                        placeholder="Nhập lại mật khẩu mới"
+                                        type="password"
+                                        minlength="8"
+                                        [ngClass]="{ 'is-invalid': submitted && FormUser.re_newPassword.errors }"
+                                    >
+                                    <div *ngIf="submitted && FormUser.re_newPassword.errors" class="invalid-feedback">
+                                        <div *ngIf="FormUser.re_newPassword.errors.required">Nhập lại mật khẩu mới là bắt buộc</div>
+                                        <div *ngIf="FormUser.re_newPassword.errors.minlength">Mật khẩu mới quá ngắn</div>
+                                        <div *ngIf="FormUser.re_newPassword.errors.mustMatch">Mật khẩu mới không khớp</div>
+                                        <div *ngIf="FormUser.re_newPassword.errors.pattern">Mật khẩu mới không đúng định dạng</div>
+                                    </div>
+                                </div>
+            
+                            </div>
+            
+                            <div class="form-group row">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-7">
+                                    <button class="btn btn-success mr-3" >
+                                        <i class="fa fa-save" ></i>&nbsp;Lưu lại
+                                    </button>
+                                    <button class="btn btn-light" (click)="resetForm()">
+                                        <i class="fa fa-close"></i>&nbsp;Huỷ
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
         </div>
     </div>
 </div>

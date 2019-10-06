@@ -70,7 +70,7 @@
 
                 </div>
 
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <select class="form-control" formControlName="status" name="status">
@@ -82,7 +82,7 @@
                         </div>
                     </div>
 
-                </div>
+                </div> -->
                 
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Số lần giao dịch(<span class="text-danger">*</span>):</label>
@@ -141,8 +141,7 @@
                             formControlName="limitDaily"
                             class="form-control col-lg-12"
                             placeholder="Số tiền hạn chế trong ngày"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.ccy.errors }">
+                            [ngClass]="{ 'is-invalid': submitted && Form.limitDaily.errors }">
                         <div *ngIf="submitted && Form.limitDaily.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.limitDaily.errors.required">Số tiền hạn chế trong ngày là bắt buộc</div>
@@ -158,8 +157,7 @@
                             formControlName="min"
                             class="form-control col-lg-12"
                             placeholder="Số tiền tối thiếu / giao dịch"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.ccy.errors }">
+                            [ngClass]="{ 'is-invalid': submitted && Form.min.errors }">
                         <div *ngIf="submitted && Form.min.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.min.errors.required">Số tiền tối thiếu / giao dịch là bắt buộc</div>
@@ -270,7 +268,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Từ ngày(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8 input-group">
                         <input readonly class="form-control" placeholder="Từ ngày"
@@ -283,9 +281,9 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Đến ngày(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8 input-group">
                         <input readonly class="form-control" placeholder="Đến ngày"
@@ -299,7 +297,7 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="form-group row">
                     <div class="col-sm-4"></div>

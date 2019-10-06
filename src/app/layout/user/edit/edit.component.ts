@@ -14,12 +14,14 @@ import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 
 export class EditComponent implements OnInit {
   dataForm: FormGroup;
+  userForm: FormGroup;
   submitted = false;
   listPGD: any = [];
   listBranch: any = [];
   listRole: any = [];
   itemId: any = '';
   obj: any = {};
+  userInfo: any = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +35,7 @@ export class EditComponent implements OnInit {
       this.itemId = params.itemId;
     });
     this.getItem(this.itemId);
+    this.userInfo = localStorage.getItem('profile') ? JSON.parse(localStorage.getItem('profile')) : '';
   }
 
   ngOnInit() {
@@ -46,11 +49,20 @@ export class EditComponent implements OnInit {
       email: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])],
       phone: ['', Validators.compose([Validators.maxLength(13), Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])]
     });
+    this.userForm = this.formBuilder.group({
+      username: [''],
+      oldPassword: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      newPassword: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      re_newPassword: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+    }, {
+      validator: this.helper.MustMatch('newPassword', 're_newPassword')
+    });
     this.getBranchs();
     this.getListRole();
     this.getAllPGD();
   }
   get Form() { return this.dataForm.controls; }
+  get FormUser() { return this.userForm.controls; }
 
   getBranchs() {
     this.listBranch = [];
@@ -135,6 +147,9 @@ export class EditComponent implements OnInit {
         email: body.email,
         username: body.userName
       });
+      this.userForm.patchValue({
+        username: body.userName
+      });
     }).catch(err => {
       this.toastr.error(err.json().message, 'Thất bại!');
     });
@@ -152,6 +167,33 @@ export class EditComponent implements OnInit {
       this.toastr.success('Sửa thành công', 'Thành công!');
     }).catch((err) => {
       this.toastr.error(err, 'Thất bại!');
+
+    });
+  }
+  onSubmitPassW() {
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.userForm.invalid) {
+        return;
+    }
+    const payload = {
+      username: this.dataForm.value.username,
+      oldPassword: this.userForm.value.oldPassword,
+      newPassword: this.userForm.value.newPassword
+    };
+    this.ncbService.updatePassword(payload).then((result) => {
+      if (result.json().code === '00') {
+        this.toastr.success('Thay đổi mật khẩu thành công', 'Thành công!');
+        setTimeout(() => {
+          this.router.navigateByUrl('/user');
+        }, 500);
+      } else if (result.json().code === '405') {
+        this.toastr.error('Mật khẩu cũ không chính xác', 'Thất bại!');
+      } else {
+        this.toastr.error('Thay đổi mật khẩu thất bại', 'Thất bại!');
+      }
+    }).catch((err) => {
+
 
     });
   }

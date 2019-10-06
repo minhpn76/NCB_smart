@@ -137,7 +137,7 @@ export class CreateComponent implements OnInit {
       toDate: [this.mRatesDateS_7],
       prd: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       createBy: [JSON.stringify(this.userInfo.userId)],
-      status : ['S', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      status : ['A', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
     });
   }
   get Form() { return this.dataForm.controls; }
@@ -186,6 +186,8 @@ export class CreateComponent implements OnInit {
       if (result.status === 200) {
         if (result.json().code !== '00') {
           this.toastr.error(result.json().message, 'Thất bại!');
+        } else if (result.json().code !== '914') {
+          this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
         } else {
           this.toastr.success('Thêm thành công', 'Thành công!');
           setTimeout(() => {

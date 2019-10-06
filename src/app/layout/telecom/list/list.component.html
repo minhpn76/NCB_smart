@@ -10,6 +10,7 @@
                         class="form-control col-lg-12"
                         itrim
                         type="text"
+                        (keydown)="keyDownFunction($event)"
                         id="search"
                         [(ngModel)]="re_search.paramNo"
                         placeholder="Mã nhà mạng"
@@ -37,6 +38,7 @@
                         class="form-control col-lg-12"
                         itrim
                         type="text"
+                        (keydown)="keyDownFunction($event)"
                         id="search"
                         [(ngModel)]="re_search.paramName"
                         placeholder="Tên nhà mạng"
