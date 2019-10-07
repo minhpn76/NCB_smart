@@ -11,6 +11,7 @@
                         type="text"
                         id="search"
                         [(ngModel)]="re_search.brnCode"
+                        (keydown)="keyDownFunction($event)"
                         placeholder="Mã chi nhánh"
                     />
                 </div>
@@ -23,6 +24,7 @@
                         itrim
                         type="text"
                         id="search"
+                        (keydown)="keyDownFunction($event)"
                         [(ngModel)]="re_search.departCode"
                         placeholder="Mã PGD"
                     />
@@ -46,6 +48,7 @@
                         itrim
                         type="text"
                         id="branch_name"
+                        (keydown)="keyDownFunction($event)"
                         [(ngModel)]="re_search.branchName"
                         placeholder="Tên chi nhánh"
                     />
@@ -59,6 +62,7 @@
                         itrim
                         type="text"
                         id="branch_name"
+                        (keydown)="keyDownFunction($event)"
                         [(ngModel)]="re_search.departName"
                         placeholder="Tên PGD"
                     />

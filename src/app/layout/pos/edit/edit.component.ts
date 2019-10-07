@@ -47,12 +47,12 @@ export class EditComponent implements OnInit {
       departCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       departName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       address: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      phone: ['', Validators.compose([Validators.maxLength(13), this.helper.noWhitespaceValidator])],
-      fax: ['', Validators.compose([this.helper.noWhitespaceValidator])],
-      latitude: ['', Validators.compose([this.helper.noWhitespaceValidator])],
-      longitude: ['', Validators.compose([this.helper.noWhitespaceValidator])],
-      urlImg: ['', Validators.compose([this.helper.noWhitespaceValidator])],
-      dao: ['', Validators.compose([this.helper.noWhitespaceValidator])],
+      phone: ['', Validators.compose([Validators.maxLength(13)])],
+      fax: [''],
+      latitude: [''],
+      longitude: [''],
+      urlImg: [''],
+      dao: [''],
       status: ''
     });
     this.getItem(this.departCode);
