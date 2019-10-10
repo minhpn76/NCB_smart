@@ -12,6 +12,7 @@
                     <input class="form-control col-lg-12"
                         itrim type="text" id="search"
                         [(ngModel)]="re_search.serviceId"
+                        (keydown)="keyDownFunction($event)"
                         placeholder="Mã hướng dẫn">
                 </div>
             </div>

@@ -11,6 +11,7 @@
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
                     itrim type="text" id="search" [(ngModel)]="re_search.bankCode"
+                    (keydown)="keyDownFunction($event)"
                     placeholder="Mã ngân hàng chuyển khoản">
                 </div>
             </div>

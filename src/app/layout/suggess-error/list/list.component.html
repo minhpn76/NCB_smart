@@ -11,6 +11,7 @@
                     <input class="form-control col-lg-12"
                         itrim type="text" id="search"
                         [(ngModel)]="re_search.productCode"
+                        (keydown)="keyDownFunction($event)"
                         placeholder="Mã nhóm sản phẩm">
                 </div>
             </div>
@@ -20,6 +21,7 @@
                     <input class="form-control col-lg-12"
                         itrim type="text" id="search"
                         [(ngModel)]="re_search.productName"
+                        (keydown)="keyDownFunction($event)"
                         placeholder="Tên nhóm sản phẩm">
                 </div>
             </div>

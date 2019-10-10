@@ -272,6 +272,7 @@ export class ListComponent implements OnInit {
             return;
           }
           this.obj_request = body.content;
+          this.passData = body.content;
           this.listLog = body.content.serviceRegisterLogResDtoList;
           this.isSearchItem = 0;
           this.isSearchCode = 1;

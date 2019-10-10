@@ -109,7 +109,7 @@
                         <div *ngIf="submitted && Form.password.errors" class="invalid-feedback">
                             <div *ngIf="Form.password.errors.required">Mật khẩu là bắt buộc</div>
                             <div *ngIf="Form.password.errors.minlength">Mật khẩu quá ngắn</div>
-
+                            <div *ngIf="Form.password.hasError('whitespace')">Mật khẩu không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -130,6 +130,7 @@
                             <div *ngIf="Form.re_password.errors.required && submitted">Nhập lại mật khẩu là bắt buộc</div>
                             <div *ngIf="Form.re_password.errors.pattern">Mật khẩu không khớp</div>
                             <div *ngIf="Form.re_password.errors.mustMatch">Mật khẩu không khớp</div>
+                            <div *ngIf="Form.re_password.hasError('whitespace')">Mật khẩu không khớp</div>
                         </div>
                     </div>
                 </div>

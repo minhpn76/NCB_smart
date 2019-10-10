@@ -98,6 +98,11 @@ export class ListComponent implements OnInit {
       }
     });
   }
+  keyDownFunction(event) {
+    if (event.keyCode === 13) {
+      this.onSearch(this.re_search);
+    }
+  }
   loadPage(page: number) {
     const page_number = page - 1;
     if (page_number !== this.re_search.previous_page) {

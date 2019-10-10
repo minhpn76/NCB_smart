@@ -120,9 +120,16 @@ export class ListComponent implements OnInit {
       this.re_search.page = page;
     }
   }
+  keyDownFunction(event) {
+    if (event.keyCode === 13) {
+      this.onSearch(this.re_search);
+    }
+  }
   onSearch(payload) {
     // payload.page = 0;
     if (payload.productCode !== '' || payload.productName !== '' || payload.status !== '') {
+      payload.page = 0;
+    } else {
       payload.page = 0;
     }
     this.getListData(payload);

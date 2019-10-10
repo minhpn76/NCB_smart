@@ -43,34 +43,37 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Loại chuyển phí(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Loại giao dịch(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <select class="form-control" formControlName="tranType" name="tranType">
                             <option *ngFor="let data of listTranType" [value]="data.code" selected="selected">{{data.name}}</option>
                         </select>
                         <div *ngIf="submitted && Form.tranType.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.tranType.errors.required">Loại chuyển phí là bắt buộc</div>
+                            <div *ngIf="Form.tranType.errors.required">Loại giao dịch là bắt buộc</div>
+                            <div *ngIf="Form.tranType.hasError('whitespace')">Loại giao dịch không hợp lệ</div>
                         </div>
                     </div>
 
                 </div>
                 
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Kiểu loại(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Chi tiết loại giao dịch(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <select class="form-control" formControlName="typeId" name="typeId">
                             <option *ngFor="let data of listTypeId" [value]="data.code" selected="selected">{{data.name}}</option>
                         </select>
                         <div *ngIf="submitted && Form.typeId.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.typeId.errors.required">Kiểu loại là bắt buộc</div>
+                            <div *ngIf="Form.typeId.errors.required">Chi tiết loại giao dịch là bắt buộc</div>
+                            <div *ngIf="Form.typeId.hasError('whitespace')">Chi tiết loại giao dịch không hợp lệ</div>
+
                         </div>
                     </div>
 
                 </div>
 
-                <!-- <div class="form-group row">
+                <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <select class="form-control" formControlName="status" name="status">
@@ -82,21 +85,21 @@
                         </div>
                     </div>
 
-                </div> -->
+                </div>
                 
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Số lần giao dịch(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Số lần giao dịch hạn chế trong ngày(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <input
                             formControlName="quantity"
                             class="form-control col-lg-12"
-                            placeholder="Số lần giao dịch"
+                            placeholder="Số lần giao dịch hạn chế trong ngày"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.quantity.errors }">
                         <div *ngIf="submitted && Form.quantity.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.quantity.errors.required">Số lần giao dịch là bắt buộc</div>
-                            <div *ngIf="Form.quantity.hasError('whitespace')">Số lần giao dịch không hợp lệ</div>
+                            <div *ngIf="Form.quantity.errors.required">Số lần giao dịch hạn chế trong ngày là bắt buộc</div>
+                            <div *ngIf="Form.quantity.hasError('whitespace')">Số lần giao dịch hạn chế trong ngày không hợp lệ</div>
                         </div>
                     </div>
                 </div>
