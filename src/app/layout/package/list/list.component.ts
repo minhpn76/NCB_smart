@@ -4,13 +4,14 @@ import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from '../../../services/excel.service';
+import { Helper } from '../../../helper';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'package-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
-  providers: [NCBService, ExcelService]
+  providers: [NCBService, ExcelService, Helper]
 })
 export class ListComponent implements OnInit {
   search_keyword: any = '';
@@ -131,7 +132,8 @@ export class ListComponent implements OnInit {
     public toastr: ToastrService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
-    private excelService: ExcelService
+    private excelService: ExcelService,
+    public helper: Helper
   ) {
     this.userInfo = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : '';
   }

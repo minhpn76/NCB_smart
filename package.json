@@ -32,6 +32,7 @@
     "file-saver": "^2.0.2",
     "font-awesome": "4.7.0",
     "ng2-charts": "1.6.0",
+    "ng2-currency-mask": "^5.3.1",
     "ngx-pagination": "^3.3.1",
     "ngx-toastr": "^10.0.4",
     "primeicons": "^1.0.0",

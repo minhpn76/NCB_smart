@@ -103,6 +103,7 @@ export class CreateComponent implements OnInit {
 
   temp_mRatesDateS_7: any;
   temp_mRatesDateS: any;
+  optionCurrency: any = { prefix: '', thousands: '.', decimal: ',', align: 'left' };
 
 
   constructor(

@@ -37,6 +37,7 @@ export class EditComponent implements OnInit {
       name: 'Deactive'
     }
   ];
+  optionCurrency: any = { prefix: '', thousands: '.', decimal: ',', align: 'left' };
   userInfo: any;
   listCustomer: any = [
     {
