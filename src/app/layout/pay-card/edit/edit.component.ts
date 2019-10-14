@@ -23,6 +23,7 @@ export class EditComponent implements OnInit {
     path: null,
     name: ''
   };
+  optionCurrency: any = { prefix: '', thousands: '.', decimal: ',', align: 'left' };
   selectedFiles: FileList;
   objFile: any = {};
   fileName: File;
@@ -71,11 +72,11 @@ export class EditComponent implements OnInit {
       changesttFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       class_: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       directddFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      f01: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      f02: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      f03: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      f04: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      f05: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      f01: ['', Validators.compose([this.helper.noWhitespaceValidator])],
+      f02: ['', Validators.compose([this.helper.noWhitespaceValidator])],
+      f03: ['', Validators.compose([this.helper.noWhitespaceValidator])],
+      f04: ['', Validators.compose([this.helper.noWhitespaceValidator])],
+      f05: ['', Validators.compose([this.helper.noWhitespaceValidator])],
       issueFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       reissueFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       repinFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],

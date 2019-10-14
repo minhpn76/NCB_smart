@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'banner-list',
@@ -41,10 +42,16 @@ export class ListComponent implements OnInit {
             code: 'D'
         }
     ];
+    imageShow: any = '';
+    protected modalOp: NgbModalRef;
+
+  @ViewChild('showImage')
+  public showImageElementRef: ElementRef;
 
     constructor(
         private ncbService: NCBService,
-        public toastr: ToastrService
+        public toastr: ToastrService,
+        private modalService: NgbModal,
     ) { }
 
     ngOnInit() {
@@ -124,5 +131,28 @@ export class ListComponent implements OnInit {
     changePageSize() {
         this.re_search.page = 0;
         this.getListData(this.re_search);
+    }
+    openModal(content, classLayout = '', type = '') {
+        if (type === 'static') {
+          this.modalOp = this.modalService.open(content, { keyboard: false, backdrop: 'static', windowClass: classLayout, size: 'lg' });
+        } else if (type === 'sm') {
+          this.modalOp = this.modalService.open(content, { windowClass: classLayout, size: 'sm' });
+        } else {
+          this.modalOp = this.modalService.open(content, { windowClass: classLayout, size: 'lg' });
+        }
+        this.modalOp.result.then((result) => {
+        }, (reason) => {
+        });
+    }
+    closeModal() {
+        this.modalOp.close();
+    }
+    async modalShowImage(image) {
+    // tslint:disable-next-line:no-unused-expression
+    await this.getImageShow(image);
+    this.openModal(this.showImageElementRef, 'modal-showimage', 'sm');
+    }
+    getImageShow(image) {
+        this.imageShow = image;
     }
 }

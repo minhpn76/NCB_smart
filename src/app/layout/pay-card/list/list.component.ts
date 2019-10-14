@@ -25,6 +25,7 @@ export class ListComponent implements OnInit {
   isSearch: any = false;
   totalSearch: any = 0;
   isProcessLoad: any = 0;
+  imageShow: any = '';
   re_search: any = {
     product: '',
     page: 0,
@@ -105,6 +106,10 @@ export class ListComponent implements OnInit {
 
   @ViewChild('otherConfigCard')
   public otherConfigCardElementRef: ElementRef;
+
+  @ViewChild('showImage')
+  public showImageElementRef: ElementRef;
+
 
   @Output() emitCloseModal = new EventEmitter<any>();
 
@@ -456,6 +461,8 @@ export class ListComponent implements OnInit {
   openModal(content, classLayout = '', type = '') {
     if (type === 'static') {
       this.modalOp = this.modalService.open(content, { keyboard: false, backdrop: 'static', windowClass: classLayout, size: 'lg' });
+    } else if (type === 'sm') {
+      this.modalOp = this.modalService.open(content, { windowClass: classLayout, size: 'sm' });
     } else {
       this.modalOp = this.modalService.open(content, { windowClass: classLayout, size: 'lg' });
     }
@@ -470,7 +477,15 @@ export class ListComponent implements OnInit {
     this.openModal(this.reasonCardElementRef, 'modal-reasoncard', 'static');
   }
   modalOtherCard() {
-    this.openModal(this.otherConfigCardElementRef, 'modal-reasoncard', 'static');
+    this.openModal(this.otherConfigCardElementRef, 'modal-othercard', 'static');
+  }
+  async modalShowImage(image) {
+    // tslint:disable-next-line:no-unused-expression
+    await this.getImageShow(image);
+    this.openModal(this.showImageElementRef, 'modal-showimage', 'sm');
+  }
+  getImageShow(image) {
+    this.imageShow = image;
   }
   closeModal() {
     this.modalOp.close();

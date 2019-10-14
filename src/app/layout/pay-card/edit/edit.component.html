@@ -41,6 +41,8 @@
                         <input
                             formControlName="activeFee"
                             class="form-control col-lg-12"
+                            currencyMask
+                            [options]='optionCurrency'
                             placeholder="Phí kích hoạt"
                             [ngClass]="{ 'is-invalid': submitted && Form.activeFee.errors }"
                         />
@@ -72,6 +74,8 @@
                         <input
                             formControlName="changesttFee"
                             class="form-control col-lg-12"
+                            currencyMask
+                            [options]='optionCurrency'
                             placeholder="Phí thay đổi TT"
                             [ngClass]="{ 'is-invalid': submitted && Form.changesttFee.errors }"
                         />
@@ -102,6 +106,8 @@
                         <input
                             formControlName="directddFee"
                             class="form-control col-lg-12"
+                            currencyMask
+                            [options]='optionCurrency'
                             placeholder="Phí ĐK trích nợ tự động"
                             [ngClass]="{ 'is-invalid': submitted && Form.directddFee.errors }"
                         />
@@ -112,11 +118,13 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Phí khác (nếu có)(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Phí khác (nếu có):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="f01"
                             class="form-control col-lg-12"
+                            currencyMask
+                            [options]='optionCurrency'
                             placeholder="Phí khác (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted && Form.f01.errors }"
                         />
@@ -126,10 +134,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Phí khác (nếu có)(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Phí khác (nếu có):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="f02"
+                            currencyMask
+                            [options]='optionCurrency'
                             class="form-control col-lg-12"
                             placeholder="Phí khác (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted && Form.f02.errors }"
@@ -140,11 +150,13 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Phí khác (nếu có)(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Phí khác (nếu có):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="f03"
                             class="form-control col-lg-12"
+                            currencyMask
+                            [options]='optionCurrency'
                             placeholder="Phí khác (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted && Form.f03.errors }"
                         />
@@ -154,10 +166,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Phí khác (nếu có)(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Phí khác (nếu có):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="f04"
+                            currencyMask
+                            [options]='optionCurrency'
                             class="form-control col-lg-12"
                             placeholder="Phí khác (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted && Form.f04.errors }"
@@ -168,11 +182,13 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Phí khác (nếu có)(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Phí khác (nếu có):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="f05"
                             class="form-control col-lg-12"
+                            currencyMask
+                            [options]='optionCurrency'
                             placeholder="Phí khác (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted && Form.f05.errors }"
                         />
@@ -186,6 +202,8 @@
                     <div class="col-sm-7">
                         <input
                             formControlName="issueFee"
+                            currencyMask
+                            [options]='optionCurrency'
                             class="form-control col-lg-12"
                             placeholder="Phí phát hành mới"
                             [ngClass]="{ 'is-invalid': submitted && Form.issueFee.errors }"
@@ -202,6 +220,8 @@
                         <input
                             formControlName="reissueFee"
                             class="form-control col-lg-12"
+                            currencyMask
+                            [options]='optionCurrency'
                             placeholder="Phí phát hành lại thẻ"
                             [ngClass]="{ 'is-invalid': submitted && Form.reissueFee.errors }"
                         />
@@ -216,6 +236,8 @@
                     <div class="col-sm-7">
                         <input
                             formControlName="repinFee"
+                            currencyMask
+                            [options]='optionCurrency'
                             class="form-control col-lg-12"
                             placeholder="Phí in lại PIN"
                             [ngClass]="{ 'is-invalid': submitted && Form.repinFee.errors }"

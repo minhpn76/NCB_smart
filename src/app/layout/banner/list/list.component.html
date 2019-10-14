@@ -90,7 +90,10 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan="9">Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor="let data of listData; let i = index">
+                    <tr *ngFor="let data of listData; let i = index"
+                        (click)="modalShowImage(data?.linkImg)"
+                        style="cursor: pointer;"
+                    >
                         <th scope="row">
                             {{ i + 1 }}
                         </th>
@@ -141,3 +144,21 @@
     </div>
     <!-- /.row -->
 </div>
+<ng-template #showImage let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title">
+            <i class="icon-plus"></i>
+            Hình ảnh banner
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Crossclick')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="{{imageShow}}" alt="image" style="width: 100%;">
+            </div>
+        </div>
+    </div>
+</ng-template>
