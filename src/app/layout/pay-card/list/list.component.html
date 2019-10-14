@@ -92,7 +92,11 @@
                         <td>{{ data?.product }}</td>
                         <td>{{ data?.cardtype }}</td>
                         <td>{{ data?.class_ }}</td>
-                        <td>{{ data?.fileName }}</td>
+                        <td>
+                            <img width="70" src="{{ data?.linkUrl }}" alt="">
+                            <br>
+                            {{data?.fileName}}
+                        </td>
 
                         <td>
                             <span

@@ -33,7 +33,8 @@ const routes: Routes = [
             { path: 'notify', loadChildren: './notify/notify.module#NotifyModule' },
             { path: 'package', loadChildren: './package/package.module#PackageModule' },
             { path: 'promotion', loadChildren: './promotion/promotion.module#PromotionModule' },
-            { path: 'role-decen', loadChildren: './role-decen/role-decen.module#RoleDecenModule' }
+            { path: 'role-decen', loadChildren: './role-decen/role-decen.module#RoleDecenModule' },
+            { path: 'image-paycard', loadChildren: './image-paycard/image-paycard.module#ImgPayCardModule' },
         ]
     }
 ];

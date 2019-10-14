@@ -79,7 +79,16 @@
                             [routerLinkActive]="['router-link-active']"
                             class="list-group-item">
                             <i class="fa fa-paperclip"></i>&nbsp;
-                            <span>Hình ảnh thẻ (Phôi thẻ)</span>
+                            <span>Sản phẩm thẻ (hình ảnh)</span>
+                        </a>
+                    </li>
+                    <li *ngIf="giaodich.code === 'HINH_THE' && giaodich.isAll
+                    === true">
+                        <a [routerLink]="['/image-paycard']"
+                            [routerLinkActive]="['router-link-active']"
+                            class="list-group-item">
+                            <i class="fa fa-paperclip"></i>&nbsp;
+                            <span>Hình ảnh thẻ</span>
                         </a>
                     </li>
                     <li *ngIf="giaodich.code === 'CHI_NHANH' && giaodich.isAll
