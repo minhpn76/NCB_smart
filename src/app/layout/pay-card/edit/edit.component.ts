@@ -38,11 +38,11 @@ export class EditComponent implements OnInit {
   listStatus: any = [
     {
       name: 'Active',
-      code: 'A',
+      code: 'ACTIVE',
     },
     {
       name: 'Deactive',
-      code: 'D',
+      code: 'DEACTIVE',
     }
   ];
 

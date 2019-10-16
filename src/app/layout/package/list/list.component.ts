@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
@@ -126,6 +126,8 @@ export class ListComponent implements OnInit {
 
   @ViewChild('modalPackage')
   public modalPackageElementRef: ElementRef;
+  optionCurrency: any = { prefix: '', thousands: '.', decimal: ',', align: 'left' };
+  @Output() emitCloseModal = new EventEmitter<any>();
 
   constructor(
     private ncbService: NCBService,
@@ -238,7 +240,36 @@ export class ListComponent implements OnInit {
   getPassData(data) {
     this.dataForm.patchValue({
       prd: data.prd,
-      prdName: data.prdName
+      prdName: data.prdName,
+      tranType: data.tranType,
+      typeId: data.typeId,
+      limitDaily: data.limitDaily,
+      min: data.min,
+      max: data.max,
+      limitFaceid: data.limitFaceid,
+      limitFinger: data.limitFinger,
+      quantity: data.quantity
+    });
+    this.ncbService.getPopupFunction({
+      prd: data.prd
+    }).then(result => {
+      if (result.json().code !== '00') {
+        this.toastr.error('Không lấy được dữ liệu gói sản phẩm');
+      } else {
+        const body = result.json().body.productFee;
+        this.dataForm.patchValue({
+          grprdId: body.grprdId,
+          prdNameP: body.prdNameP,
+          feeAmount: body.feeAmount,
+          feeMin: body.feeMin,
+          feeMax: body.feeMax,
+          prdCode: body.prdCode,
+          feeType: body.feeType
+        });
+      }
+
+    }).catch(e => {
+      this.toastr.error('Không lấy được dữ liệu gói sản phẩm');
     });
   }
 
@@ -284,6 +315,9 @@ export class ListComponent implements OnInit {
           });
     });
     return promise;
+  }
+  closeModal() {
+    this.emitCloseModal.emit(false);
   }
   async exportExcel() {
     this.arrExport = [];

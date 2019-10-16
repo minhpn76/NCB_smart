@@ -90,10 +90,13 @@
                     <th scope="col">Hạn mức / ngày</th>
                     <th scope="col">Hạn mức / faceid</th>
                     <th scope="col">Hạn mức / finger</th>
-                    <th scope="col">Loại gói</th>
+                    <!-- <th scope="col">Loại gói</th> -->
                     <th scope="col">Tỉ lệ (%)</th>
                     <th scope="col">Loại khách hàng</th>
                     <th scope="col">Tiền tệ</th>
+                    <th scope="col">Loại giao dịch</th>
+                    <th scope="col">Chi tiết giao dịch</th>
+
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Thao tác</th>
 
@@ -101,10 +104,10 @@
                 </thead>
                 <tbody>
                     <tr *ngIf="isProcessLoad == 1" class="text-center">
-                        <td colspan=12><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        <td colspan=13><i class="fa fa-spin fa-spinner font-30"></i></td>
                     </tr>
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
-                        <td colspan=12>Không tìm thấy kết quả</td>
+                        <td colspan=13>Không tìm thấy kết quả</td>
                     </tr>
                     <tr *ngFor ="let data of listData; let i = index" (click)="openModalPackage(data)" style="cursor: pointer;">
                         
@@ -116,10 +119,29 @@
                         <td>{{helper.currencyFormatDE(data?.limitDaily)}}</td>
                         <td>{{helper.currencyFormatDE(data?.limitFaceid)}}</td>
                         <td>{{helper.currencyFormatDE(data?.limitFinger)}}</td>
-                        <td>{{data?.prdName}}</td>
+                        <!-- <td>{{data?.prdName}}</td> -->
                         <td>{{data?.percentage}}</td>
                         <td>{{data?.customerType}}</td>
+                        
                         <td>{{data?.ccy}}</td>
+                        <td>
+                            <span *ngIf="data?.tranType === 'CK'">Chuyển khoản</span>
+                            <span  *ngIf="data?.tranType === 'TK'">Tiết kiệm</span>
+                            <span  *ngIf="data?.tranType === 'TT'">Thanh toán</span>
+                            <span  *ngIf="data?.tranType === 'TOPUP'">Nạp tiền</span>
+                            <span  *ngIf="data?.tranType === 'QLTK'">Phí thường niên</span>
+                        </td>
+                        <td>
+                            <span *ngIf="data?.typeId === 'IBT'">Chuyển khoản LNH</span>
+                            <span  *ngIf="data?.typeId === 'URT'">Chuyển khoản nội bộ</span>
+                            <span  *ngIf="data?.typeId === 'ISL'">CK 247</span>
+                            <span  *ngIf="data?.typeId === 'OW6'">Chuyển tiền vãng lai</span>
+                            <span  *ngIf="data?.typeId === 'BILL'">Thanh toán hóa đơn</span>
+                            <span  *ngIf="data?.typeId === 'TOP'">Nạp tiền điện thoại</span>
+                            <span *ngIf="data?.typeId === 'EWL'">Nạp ví điện tử</span>
+                            <span *ngIf="data?.typeId === 'IZI'">Nạp tiền vào TK IZI</span>
+                        </td>
+                        
                         <td>
                             <span *ngIf="data?.status === 'A'" class="badge badge-success">Active</span>
                             <span *ngIf="data?.status === 'D'" class="badge badge-danger">Deactive</span>
@@ -170,6 +192,7 @@
                     <label for="search" class="col-sm-4 col-form-label">Mã gói:</label>
                     <div class="col-sm-6">
                         <input
+                            [attr.disabled]="true"
                             formControlName="prd"
                             class="form-control col-lg-12"
                             placeholder="Mã gói sản phẩm"
@@ -206,72 +229,74 @@
                             <div class="row" style="padding-top: 30px;">
                                 <div class="col-md-6">
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="">&nbsp;Chuyển khoản</label>
+                                        <label>Loại giao dịch</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="">&nbsp;Chuyển khoản liên ngân hàng</label>
+                                        <label><input type="checkbox" value="CK" [checked]="this.dataForm.value.tranType ==='CK'">&nbsp;Chuyển khoản</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="">&nbsp;Chuyển tiền nhanh 24/7</label>
+                                        <label><input type="checkbox" value="TK" [checked]="this.dataForm.value.tranType ==='TK'">&nbsp;Tiết kiệm</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="">&nbsp;Chuyển khoản</label>
+                                        <label><input type="checkbox" value="TT" [checked]="this.dataForm.value.tranType ==='TT'">&nbsp;Thanh toán</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="TOPUP" [checked]="this.dataForm.value.tranType ==='TOPUP'">&nbsp;Nạp tiền</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="QLTK"  [checked]="this.dataForm.value.tranType ==='QLTK'">&nbsp;Phí thường niên</label>
                                     </div>
                                 </div>            
                             </div>
                             <div class="row" style="padding-top: 10px;">
                                 <div class="col-md-6">
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="">&nbsp;Tiết kiệm</label>
+                                        <label>Chi tiết giao dịch</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="">&nbsp;Gửi tiết kiệm</label>
+                                        <label><input type="checkbox" value="IBT" [checked]="this.dataForm.value.typeId ==='IBT'">&nbsp;CK liên ngân hàng</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="">&nbsp;Tất toán tiết kiệm</label>
+                                        <label><input type="checkbox" value="URT" [checked]="this.dataForm.value.typeId ==='URT'">&nbsp;CK nội bộ</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="ISL" [checked]="this.dataForm.value.typeId ==='ISL'">&nbsp;CK 247</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="OW6" [checked]="this.dataForm.value.typeId ==='OW6'">&nbsp;Chuyển tiền vãng lai</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="BILL" [checked]="this.dataForm.value.typeId ==='BILL'">&nbsp;Thanh toán hóa đơn
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="TOP" [checked]="this.dataForm.value.typeId ==='TOP'">&nbsp;Nạp tiền điện thoại
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="EWL" [checked]="this.dataForm.value.typeId ==='EWL'">&nbsp;Nạp ví điện tử
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="IZI" [checked]="this.dataForm.value.typeId ==='IZI'">&nbsp;Nạp tiền vào tkhoan IZI
+                                        </label>
                                     </div>
                                 </div>
                 
                             </div>
-                            <div class="row" style="padding-top: 10px;">
-                                <div class="col-md-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" value="">&nbsp;Thanh toán hoá đơn</label>
-                                    </div>
-                                </div>
                             
-                            </div>
-                            <div class="row" style="padding-top: 10px;">
-                                <div class="col-md-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" value="">&nbsp;Nạp tiền</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" value="">&nbsp;Nạp tiền điện thoại</label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" value="">&nbsp;Ví điện tử Airpay</label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" value="">&nbsp;Nạp thẻ IZI</label>
-                                    </div>
-                                </div>
-                
-                            </div>
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label for="search" class="col-sm-4 col-form-label"></label>
                                 <div class="col-sm-6">
                                     <button class="btn btn-primary">Lưu</button>
                                     &nbsp;
                                     <button class="btn btn-default">Bỏ qua</button>
                                 </div>
-                            </div>
+                            </div> -->
                         </ng-template>
                     </ngb-tab>
                     <ngb-tab>
@@ -280,39 +305,66 @@
                             <div class="row" style="padding-top: 30px;">
                                 <div class="col-md-6">
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="">&nbsp;Chuyển khoản nội bộ</label>
+                                        <label>Chuyển khoản</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="comment">Hạn mức tối thiếu/giao dịch:</label>
-                                        <input type="password" class="form-control" valule="50000" id="pwd">
-                                        <p>Năm mươi nghìn đồng</p>
+                                        <label for="min">Hạn mức tối thiếu/giao dịch:</label>
+                                        <input 
+                                            currencyMask
+                                            [options]='optionCurrency' 
+                                            type="text" class="form-control" formControlName="min" id="min">
+                                        <i>Năm mươi nghìn đồng</i>
                                     </div>
                                     <div class="form-group">
-                                        <label for="comment">Hạn mức tối đa/giao dịch:</label>
-                                        <input type="password" class="form-control" valule="10000000" id="pwd">
-                                        <p>Một tỷ đồng</p>
+                                        <label for="max">Hạn mức tối đa/giao dịch:</label>
+                                        <input 
+                                            type="text" class="form-control" currencyMask
+                                            [options]='optionCurrency'  id="max"
+                                            formControlName="max"
+                                            >
+                                        <i>Một tỷ đồng</i>
                                     </div>
                                     <div class="form-group">
-                                        <label for="comment">Hạn mức tối đa/ngày:</label>
-                                        <input type="password" class="form-control" valule="50000" id="pwd">
-                                        <p>Năm mươi tỷ đồng</p>
+                                        <label for="limitDaily">Hạn mức tối đa/ngày:</label>
+                                        <input 
+                                            type="text" class="form-control" currencyMask
+                                            [options]='optionCurrency'  id="limitDaily"
+                                            formControlName="limitDaily"
+                                        >
+                                        <i>Năm mươi tỷ đồng</i>
                                     </div>
                                     <div class="form-group">
-                                        <label for="comment">Hạn mức giao dịch vân tay/FaceID:</label>
-                                        <input type="password" class="form-control" valule="50000" id="pwd">
-                                        <p>Năm mươi nghìn đồng</p>
+                                        <label for="limitFinger">Hạn mức giao dịch vân tay:</label>
+                                        <input 
+                                            type="text" class="form-control" currencyMask
+                                            [options]='optionCurrency'  id="limitFinger"
+                                            formControlName="limitFinger"
+                                        >
+                                        <i>Năm mươi nghìn đồng</i>
                                     </div>
                                     <div class="form-group">
-                                        <label for="comment">Số lần giao dịch:</label>
-                                        <input type="password" class="form-control" valule="20 lần" id="pwd">
+                                        <label for="limitFaceid">Hạn mức giao dịch Faceid:</label>
+                                        <input 
+                                            type="text" class="form-control" currencyMask
+                                            [options]='optionCurrency'  id="limitFaceid"
+                                            formControlName="limitFaceid"
+                                        >
+                                        <i>Năm mươi nghìn đồng</i>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="quantity">Số lần giao dịch:</label>
+                                        <input 
+                                            type="text" class="form-control" id="quantity"
+                                            formControlName="quantity"
+                                        >
 
                                     </div>
                                 </div>
                 
                             </div>
-                            <div class="row" style="padding-top: 10px;">
+                            <!-- <div class="row" style="padding-top: 10px;">
                                 <div class="col-md-12">
                                     <div class="checkbox">
                                         <label><input type="checkbox" value="">&nbsp;Chuyển tiền liên ngân hàng</label>
@@ -338,15 +390,15 @@
                                         <label><input type="checkbox" value="">&nbsp;Thanh toán QRPay</label>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                    <label for="search" class="col-sm-4 col-form-label"></label>
-                                    <div class="col-sm-6">
-                                        <button class="btn btn-primary">Lưu</button>
-                                        &nbsp;
-                                        <button class="btn btn-default">Bỏ qua</button>
-                                    </div>
+                            </div> -->
+                            <!-- <div class="form-group row">
+                                <label for="search" class="col-sm-4 col-form-label"></label>
+                                <div class="col-sm-6">
+                                    <button class="btn btn-primary">Lưu</button>
+                                    &nbsp;
+                                    <button class="btn btn-default">Bỏ qua</button>
                                 </div>
+                            </div> -->
                         </ng-template>
                     </ngb-tab>
                     <ngb-tab >
@@ -355,32 +407,69 @@
                             <div class="row" style="padding-top: 30px;">
                                 <div class="col-md-6">
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="">&nbsp;Phí thường niên</label>
+                                        <label>Loại phí</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" valule="0" id="pwd">
-                                        <p>Trên tháng</p>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="QLTK" [checked]="this.dataForm.value.feeType ==='QLTK'">&nbsp;Phí thường niên theo tháng</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="SMS" [checked]="this.dataForm.value.feeType ==='SMS'">&nbsp;Phí thường niên SMS theo tháng</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="IBT" [checked]="this.dataForm.value.feeType ==='IBT'">&nbsp;CK liên ngân hàng</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="URT" [checked]="this.dataForm.value.feeType ==='URT'">&nbsp;CK nội bộ</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="ISL" [checked]="this.dataForm.value.feeType ==='ISL'">&nbsp;CK 247
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="OW6" [checked]="this.dataForm.value.feeType ==='OW6'">&nbsp;Chuyển tiền vãng lai
+                                        </label>
                                     </div>
                                 </div>
+                
                 
                             </div>
                             <div class="row" style="padding-top: 10px;">
                                 <div class="col-md-6">
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="">&nbsp;Phí chuyển tiền nội bộ</label>
+                                        <label>Phí</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="password" class="form-control" valule="0" id="pwd">
-                                        <p>Trên giao dịch</p>
+                                        <label for="feeAmount">Số tiền thu phí:</label>
+                                        <input 
+                                            type="text" class="form-control" currencyMask
+                                            [options]='optionCurrency'  id="feeAmount"
+                                            formControlName="feeAmount"
+                                        >
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="feeMax">Số tiền phí max:</label>
+                                        <input 
+                                            type="text" class="form-control" currencyMask
+                                            [options]='optionCurrency'  id="feeMax"
+                                            formControlName="feeMax"
+                                        >
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="feeMin">Số tiền phí min:</label>
+                                        <input 
+                                            type="text" class="form-control" currencyMask
+                                            [options]='optionCurrency'  id="feeMin"
+                                            formControlName="feeMin"
+                                        >
                                     </div>
                                 </div>
                 
                             </div>
-                            <div class="row" style="padding-top: 10px;">
+                            <!-- <div class="row" style="padding-top: 10px;">
                                 <div class="col-md-6">
                                     <div class="checkbox">
                                         <label><input type="checkbox" value="">&nbsp;Phí chuyển tiền liên ngân hàng</label>
@@ -416,15 +505,15 @@
                                     </div>
                                 </div>
                 
-                            </div>
-                            <div class="form-group row">
+                            </div> -->
+                            <!-- <div class="form-group row">
                                 <label for="search" class="col-sm-4 col-form-label"></label>
                                 <div class="col-sm-6">
                                     <button class="btn btn-primary">Lưu</button>
                                     &nbsp;
                                     <button class="btn btn-default" (click)="d('Cross click')">Bỏ qua</button>
                                 </div>
-                            </div>
+                            </div> -->
                         </ng-template>
                     </ngb-tab>
                 </ngb-tabset>

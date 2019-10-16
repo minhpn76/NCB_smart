@@ -312,7 +312,7 @@
                     </tr>
                     <tr>
                         <td colspan="3">
-                            <button class="btn btn-warning btn-small" (click)="modalCreditCard()"><i class="fa fa-plus"></i> Thêm</button>
+                            <button class="btn btn-warning btn-small" [disabled]="parCardConfig.creditCardNumber.list.length > 0" (click)="modalCreditCard()"><i class="fa fa-plus"></i> Thêm</button>
                         </td>
                     </tr>
                 </tbody>

@@ -100,6 +100,32 @@ export class CreateComponent implements OnInit {
       name: 'Doanh nghiệp'
     }
   ];
+  listFeeType: any = [
+    {
+      code: 'QLTK',
+      name: 'Phí thường niên theo tháng'
+    },
+    {
+      code: 'SMS',
+      name: 'Phí thường niên SMS theo tháng'
+    },
+    {
+      code: 'IBT',
+      name: 'CK liên ngân hàng'
+    },
+    {
+      code: 'URT',
+      name: 'CK nội bộ'
+    },
+    {
+      code: 'ISL',
+      name: 'CK 247'
+    },
+    {
+      code: 'OW6',
+      name: 'Chuyển tiền vãng lai'
+    }
+  ];
 
   temp_mRatesDateS_7: any;
   temp_mRatesDateS: any;
@@ -137,8 +163,15 @@ export class CreateComponent implements OnInit {
       fromDate: [this.mRatesDateS],
       toDate: [this.mRatesDateS_7],
       prd: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      createBy: [JSON.stringify(this.userInfo.userId)],
-      status : ['A', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      createBy: [JSON.stringify(this.userInfo.userName)],
+      status: ['A', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      grprdId: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      prdNameP:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      feeAmount:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      feeMin:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      feeMax:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      prdCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      feeType:  ['QLTK', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
     });
   }
   get Form() { return this.dataForm.controls; }
@@ -163,25 +196,38 @@ export class CreateComponent implements OnInit {
       return;
     }
     const payload = {
-      prdName: this.dataForm.value.prdName,
-      tranType: this.dataForm.value.tranType,
-      typeId: this.dataForm.value.typeId,
-      status: this.dataForm.value.status,
-      quantity: parseInt(this.dataForm.value.quantity),
-      customerType: this.dataForm.value.customerType,
-      ccy: this.dataForm.value.ccy,
-      limitDaily: parseInt(this.dataForm.value.limitDaily),
-      min: parseInt(this.dataForm.value.min),
-      max: parseInt(this.dataForm.value.max),
-      limitFaceid: parseInt(this.dataForm.value.limitFaceid),
-      limitFinger: parseInt(this.dataForm.value.limitFinger),
-      promotion: this.dataForm.value.promotion,
-      promotionName: this.dataForm.value.promotionName,
-      percentage: parseInt(this.dataForm.value.percentage),
-      fromDate: this.dataForm.value.fromDate,
-      toDate: this.dataForm.value.toDate,
-      prd: this.dataForm.value.prd,
-      createBy: parseInt(this.dataForm.value.createBy)
+      function: {
+        prdName: this.dataForm.value.prdName,
+        tranType: this.dataForm.value.tranType,
+        typeId: this.dataForm.value.typeId,
+        status: this.dataForm.value.status,
+        quantity: parseInt(this.dataForm.value.quantity),
+        customerType: this.dataForm.value.customerType,
+        ccy: this.dataForm.value.ccy,
+        limitDaily: parseInt(this.dataForm.value.limitDaily),
+        min: parseInt(this.dataForm.value.min),
+        max: parseInt(this.dataForm.value.max),
+        limitFaceid: parseInt(this.dataForm.value.limitFaceid),
+        limitFinger: parseInt(this.dataForm.value.limitFinger),
+        promotion: this.dataForm.value.promotion,
+        promotionName: this.dataForm.value.promotionName,
+        percentage: parseInt(this.dataForm.value.percentage),
+        fromDate: this.dataForm.value.fromDate,
+        toDate: this.dataForm.value.toDate,
+        prd: this.dataForm.value.prd,
+        createBy: JSON.parse(this.dataForm.value.createBy)
+      },
+      productFee: {
+        grprdId: this.dataForm.value.grprdId,
+        prdName: this.dataForm.value.prdNameP,
+        feeAmount: this.dataForm.value.feeAmount,
+        feeMin: this.dataForm.value.feeMin,
+        feeMax: this.dataForm.value.feeMax,
+        prdCode: this.dataForm.value.prdCode,
+        feeType: this.dataForm.value.feeType,
+        createdUser: JSON.parse(this.dataForm.value.createBy)
+      }
+
     };
     this.ncbService.createPackage(payload).then((result) => {
       if (result.status === 200) {

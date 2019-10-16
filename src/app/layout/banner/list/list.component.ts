@@ -149,8 +149,8 @@ export class ListComponent implements OnInit {
     }
     async modalShowImage(image) {
     // tslint:disable-next-line:no-unused-expression
-    await this.getImageShow(image);
-    this.openModal(this.showImageElementRef, 'modal-showimage', 'sm');
+        this.getImageShow(image);
+        this.openModal(this.showImageElementRef, 'modal-showimage', 'sm');
     }
     getImageShow(image) {
         this.imageShow = image;

@@ -886,6 +886,10 @@ export class NCBService {
     const url = `${API_URL}/par-config/delete-other-param-config`;
     return this.auth.authRequest({ url: url, params: body, method: 'DELETE', application: true });
   }
+  getPopupFunction(body) {
+    const url = `${API_URL}/function/getPopup`;
+    return this.auth.authRequest({ url: url, method: 'GET', params: body, application: true  });
+  }
 
 
 }
