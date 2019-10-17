@@ -76,19 +76,22 @@
                         <th scope="col">Mã Banner</th>
                         <th scope="col">Tên Banner</th>
                         <th scope="col">Link Image</th>
-                        <th scope="col">Link Url Vn</th>
+                        <!-- <th scope="col">Link Url Vn</th> -->
                         <th scope="col">Link Url En</th>
                         <th scope="col">Ngày tạo</th>
+                        <th scope="col">Ngày giờ hiệu lực</th>
+                        <th scope="col">Ngày giờ kết thúc</th>
+                        <th scope="col">Phương thức show</th>
                         <th scope="col">Trạng thái</th>
                         <th scope="col">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngIf="isProcessLoad == 1" class="text-center">
-                        <td colspan="9"><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        <td colspan="11"><i class="fa fa-spin fa-spinner font-30"></i></td>
                     </tr>
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
-                        <td colspan="9">Không tìm thấy kết quả</td>
+                        <td colspan="11">Không tìm thấy kết quả</td>
                     </tr>
                     <tr *ngFor="let data of listData; let i = index"
                         (click)="modalShowImage(data?.linkImg)"
@@ -99,10 +102,25 @@
                         </th>
                         <td>{{ data?.bannerCode }}</td>
                         <td>{{ data?.bannerName }}</td>
-                        <td>{{ data?.linkImg }}</td>
-                        <td>{{ data?.linkUrlVn }}</td>
-                        <td>{{ data?.linkUrlEn }}</td>
+                        <td>
+                            <img width="70" src="{{ data?.linkImg }}" alt="">
+                            <br>
+                            {{ data?.linkImg }}
+                        </td>
+                        <!-- <td>{{ data?.linkUrlVn }}</td> -->
+                        <td>
+                            <img width="70" src="{{ data?.linkUrlEn }}" alt="">
+                            <br>
+                            {{ data?.linkUrlEn }}
+                        </td>
                         <td>{{ data?.createdDate }}</td>
+                        <td>{{ data?.scheduleStart }}</td>
+                        <td>{{ data?.scheduleEnd }}</td>
+                        <td>
+                            <span *ngIf="data?.oneTimeShow === 'Y'">Khách hàng bật app lên là thấy POPUP</span>
+                            <span *ngIf="data?.oneTimeShow === 'N'">Khách hàng bật app lên là thấy POPUP</span>
+                        </td>
+
                         <td>
                             <span *ngIf="data?.status === 'A'" class="badge badge-success">Active</span>
                             <span *ngIf="data?.status === 'D'" class="badge badge-danger">Deactive</span>

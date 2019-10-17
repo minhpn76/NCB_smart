@@ -194,7 +194,9 @@ export class ListComponent implements OnInit {
         'Chi nhánh': element.branchCode,
         'Phòng giao dịch': element.transactionCode,
         'Người tạo': element.updatedBy,
-        'Phân quyền': element.role.roleName
+        'Ngày tạo': element.createdDate,
+        'Phân quyền': element.role.roleName,
+        'Trạng thái': 'Active' ? element.status === 'A' : 'Deactive'
       });
     });
 

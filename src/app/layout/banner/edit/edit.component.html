@@ -53,11 +53,49 @@
                     <label for="search" class="col-sm-4 col-form-label">Hình ảnh hiện tại:</label>
                     <div class="col-sm-8">
                         <input
-                            formControlName="fileName"
+                            formControlName="linkImg"
                             [attr.disabled]="true"
                             class="form-control col-lg-12"
                             placeholder="Hình ảnh hiện tại"
                         />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Thời gian bắt đầu(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8 input-group">
+                        <input readonly class="form-control" placeholder="Thời gian bắt đầu"
+                            name="dFS" ngbDatepicker #dFS="ngbDatepicker"
+                            formControlName="scheduleStart"
+                            > 
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="dFS.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Thời gian kết thúc(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8 input-group">
+                        <input readonly class="form-control" placeholder="Thời gian kết thúc"
+                            name="dTS" ngbDatepicker #dTS="ngbDatepicker"
+                            formControlName="scheduleEnd"
+                            > 
+                        
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="dTS.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Phương thức show(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" formControlName="oneTimeShow" name="status">
+                            <option *ngFor="let status of listShow" [value]="status.code" selected="selected">{{ status.name }}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">

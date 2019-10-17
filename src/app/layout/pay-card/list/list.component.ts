@@ -21,6 +21,9 @@ export class ListComponent implements OnInit {
   my_7: any = new Date();
   listPGD: any = [];
   listBranch: any = [];
+  listNameProduct: any = [];
+  listNamePrdCode: any = [];
+
   listRole: any = [];
   isSearch: any = false;
   totalSearch: any = 0;
@@ -45,11 +48,11 @@ export class ListComponent implements OnInit {
     },
     {
       name: 'Active',
-      code: 'A',
+      code: 'ACTIVE',
     },
     {
       name: 'Deactive',
-      code: 'D',
+      code: 'DEACTIVE',
     }
   ];
   // khai bao tham so
@@ -127,6 +130,10 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.getListData(this.re_search);
+    this.getParamData({
+      page: 0,
+      size: 1000,
+    });
     this.getCreditCardNumber();
     this.getReasonCard();
     this.getOtherConfigCard();
@@ -144,6 +151,37 @@ export class ListComponent implements OnInit {
         this.totalSearch = body.totalElements;
 
       }, 500);
+    }).catch((err) => {
+      this.isProcessLoad = 0;
+      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+    });
+
+  }
+
+  getParamData(params) {
+    this.isProcessLoad = 1;
+    // xu ly
+    this.listData = [];
+    this.ncbService.searchPayCard(params).then((result) => {
+      const body = result.json().body.content;
+      body.forEach(element => {
+
+        this.listNamePrdCode.push(element.prdcode);
+        this.listNameProduct.push(element.product);
+
+      });
+      this.listNamePrdCode = this.listNamePrdCode.reduce(function (a, b) {
+        if (a.indexOf(b) === -1) {
+          a.push(b);
+        }
+        return a;
+      }, []);
+      this.listNameProduct = this.listNameProduct.reduce(function (a, b) {
+        if (a.indexOf(b) === -1) {
+          a.push(b);
+        }
+        return a;
+      }, []);
     }).catch((err) => {
       this.isProcessLoad = 0;
       this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');

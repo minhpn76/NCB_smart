@@ -15,6 +15,10 @@ import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChange
   providers: [NCBService, Helper]
 })
 export class CreateComponent implements OnInit {
+  mRatesDateS: NgbDateStruct;
+  mRatesDateS_7: NgbDateStruct;
+  my: any = new Date();
+  my_7: any = new Date();
   dataForm: FormGroup;
   submitted = false;
   objUpload: any = {};
@@ -23,6 +27,16 @@ export class CreateComponent implements OnInit {
   objFile: any = {};
   fileName: File;
   isLockSave = false;
+  listShow: any = [
+    {
+      code: 'Y',
+      name: 'Khách hàng bật app lên là thấy POPUP'
+    },
+    {
+      code: 'N',
+      name: 'Khách hàng nhìn thấy POPUP sẽ không hiển thị lại nữa'
+    }
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,17 +47,29 @@ export class CreateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loadDate();
     this.dataForm = this.formBuilder.group({
       bannerCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       bannerName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       linkImg: [''],
-      linkUrlVn: [''],
+      // linkUrlVn: [''],
       linkUrlEn: [''],
+      scheduleStart: [this.mRatesDateS],
+      scheduleEnd: [this.mRatesDateS_7],
+      oneTimeShow: ['Y'],
       actionScreen: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: 'A'
     });
   }
   get Form() { return this.dataForm.controls; }
+  tranferDate(params) {
+    return params.year + '/' + params.month + '/' + params.day;
+  }
+  public loadDate(): void {
+    this.my_7.setDate(this.my_7.getDate() - 7);
+    this.mRatesDateS = { year: this.my_7.getFullYear(), month: this.my_7.getMonth() + 1, day: this.my_7.getDate() };
+    this.mRatesDateS_7 = { year: this.my.getFullYear(), month: this.my.getMonth() + 1, day: this.my.getDate() };
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -52,7 +78,19 @@ export class CreateComponent implements OnInit {
     if (this.dataForm.invalid) {
       return;
     }
-    this.ncbService.createNcbBanner(this.dataForm.value).then((result) => {
+    const payload = {
+      bannerCode: this.dataForm.value.bannerCode,
+      bannerName: this.dataForm.value.bannerName,
+      linkImg: this.dataForm.value.linkImg,
+      // linkUrlVn: this.dataForm.value.linkUrlVn,
+      scheduleStart: this.helper.tranferDate(this.dataForm.value.scheduleStart),
+      scheduleEnd: this.helper.tranferDate(this.dataForm.value.scheduleEnd),
+      linkUrlEn: this.dataForm.value.linkUrlEn,
+      oneTimeShow: this.dataForm.value.oneTimeShow,
+      status: this.dataForm.value.status,
+      actionScreen: this.dataForm.value.actionScreen
+    };
+    this.ncbService.createNcbBanner(payload).then((result) => {
       if (result.status === 200) {
         if (result.json().code !== '00') {
           this.toastr.error(result.json().message, 'Thất bại!');
@@ -93,7 +131,7 @@ export class CreateComponent implements OnInit {
           this.objFile = result.json().body;
           this.dataForm.patchValue({
             linkImg: this.objFile.linkUrl,
-            linkUrlVn: this.objFile.linkUrl,
+            // linkUrlVn: this.objFile.linkUrl,
             linkUrlEn: this.objFile.linkUrl,
           });
           this.isLockSave = false;

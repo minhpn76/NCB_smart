@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { NCBService } from '../../../services/ncb.service';
 import { AppSettings } from '../../../app.settings';
 import { Helper } from '../../../helper';
+import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'banner-edit',
@@ -13,6 +14,10 @@ import { Helper } from '../../../helper';
   providers: [NCBService, Helper]
 })
 export class EditComponent implements OnInit {
+  mRatesDateS: NgbDateStruct;
+  mRatesDateS_7: NgbDateStruct;
+  my: any = new Date();
+  my_7: any = new Date();
   dataForm: FormGroup;
   submitted = false;
   itemId: any;
@@ -23,6 +28,16 @@ export class EditComponent implements OnInit {
   isLockSave = false;
   isEdit = true;
   editData: any = {};
+  listShow: any = [
+    {
+      code: 'Y',
+      name: 'Khách hàng bật app lên là thấy POPUP'
+    },
+    {
+      code: 'N',
+      name: 'Khách hàng nhìn thấy POPUP sẽ không hiển thị lại nữa'
+    }
+  ];
   obj: any = {
     status: '',
     bannerCode: '',
@@ -61,10 +76,12 @@ export class EditComponent implements OnInit {
       bannerCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       bannerName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       linkImg: [''],
-      linkUrlVn: [''],
+      // linkUrlVn: [''],
       linkUrlEn: [''],
-      fileName: [''],
-      actionScreen: ['', Validators.compose([Validators.required, Validators.maxLength(10), this.helper.noWhitespaceValidator])],
+      scheduleStart: [this.mRatesDateS],
+      scheduleEnd: [this.mRatesDateS_7],
+      oneTimeShow: ['Y'],
+      actionScreen: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: 'A'
     });
   }
@@ -145,8 +162,11 @@ export class EditComponent implements OnInit {
       bannerCode: this.dataForm.value.bannerCode,
       bannerName: this.dataForm.value.bannerName,
       linkImg: this.dataForm.value.linkImg,
-      linkUrlVn: this.dataForm.value.linkUrlVn,
+      // linkUrlVn: this.dataForm.value.linkUrlVn,
+      scheduleStart: this.helper.tranferDate(this.dataForm.value.scheduleStart),
+      scheduleEnd: this.helper.tranferDate(this.dataForm.value.scheduleEnd),
       linkUrlEn: this.dataForm.value.linkUrlEn,
+      oneTimeShow: this.dataForm.value.oneTimeShow,
       status: this.dataForm.value.status,
       actionScreen: this.dataForm.value.actionScreen
     };
@@ -177,10 +197,23 @@ export class EditComponent implements OnInit {
       const body = result.json().body;
       this.objItemFile = {
         linkImg: body.linkImg,
-        linkUrlVn: body.linkUrlVn,
+        // linkUrlVn: body.linkUrlVn,
         linkUrlEn: body.linkUrlEn
       };
       const stringSplit = body.linkImg.split('/');
+      const temp_fromDate_slipt = body.scheduleStart.split('/');
+      const temp_fromDate = {
+        year: parseInt(temp_fromDate_slipt[0]),
+        month: parseInt(temp_fromDate_slipt[1]),
+        day: parseInt(temp_fromDate_slipt[2])
+      };
+
+      const temp_toDate_slipt = body.scheduleEnd.split('/');
+      const temp_toDate = {
+        year: parseInt(temp_toDate_slipt[0]),
+        month: parseInt(temp_toDate_slipt[1]),
+        day: parseInt(temp_toDate_slipt[2])
+      };
 
       this.dataForm.patchValue({
         bannerCode: body.bannerCode,
@@ -188,7 +221,11 @@ export class EditComponent implements OnInit {
         bannerName: body.bannerName,
         status: body.status,
         linkImg: body.linkImg,
-        linkUrlVn: body.linkUrlVn,
+        scheduleStart: temp_fromDate !== null ? temp_fromDate : '',
+        scheduleEnd: temp_toDate !== null ? temp_fromDate : '',
+        oneTimeShow: body.oneTimeShow,
+
+        // linkUrlVn: body.linkUrlVn,
         linkUrlEn: body.linkUrlEn,
         fileName: stringSplit.slice(-1)[0]
       });

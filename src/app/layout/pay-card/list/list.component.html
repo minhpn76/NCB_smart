@@ -5,6 +5,11 @@
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Tên hiển thị:</label>
                 <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="re_search.product">
+                        <option *ngFor="let status of listNameProduct" [value]="status" selected="selected">{{ status }}</option>
+                    </select>
+                </div>
+                <!-- <div class="col-sm-6">
                     <input
                         class="form-control col-lg-12"
                         itrim
@@ -13,11 +18,16 @@
                         [(ngModel)]="re_search.product"
                         placeholder="Tên hiển thị"
                     />
-                </div>
+                </div> -->
             </div>
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Tên sản phẩm trên HT:</label>
                 <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="re_search.prdcode">
+                        <option *ngFor="let status of listNamePrdCode" [value]="status" selected="selected">{{ status }}</option>
+                    </select>
+                </div>
+                <!-- <div class="col-sm-6">
                     <input
                         class="form-control col-lg-12"
                         itrim
@@ -26,7 +36,7 @@
                         [(ngModel)]="re_search.prdcode"
                         placeholder="Tên sản phẩm trên HT"
                     />
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="col-md-6">
