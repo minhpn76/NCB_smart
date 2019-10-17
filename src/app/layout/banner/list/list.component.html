@@ -5,7 +5,7 @@
         <div class="col-md-6">
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Mã banner:</label>
-                <div class="col-sm-6">
+                <!-- <div class="col-sm-6">
                     <input
                         class="form-control col-lg-12"
                         itrim
@@ -14,6 +14,11 @@
                         [(ngModel)]="re_search.bannerCode"
                         placeholder="Mã banner"
                     />
+                </div> -->
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="re_search.bannerCode">
+                        <option *ngFor="let status of listBanner" [value]="status.code" selected="selected">{{ status.name }}</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group row">
@@ -100,7 +105,15 @@
                         <th scope="row">
                             {{ i + 1 }}
                         </th>
-                        <td>{{ data?.bannerCode }}</td>
+                        <td>
+                            <span *ngIf="data?.bannerCode === 'HOME_POPUP'">Hiển thị popup ở HOME</span>
+                            <span *ngIf="data?.bannerCode === 'HOME_BANNER'">BANNER ở màn hình home</span>
+                            <span *ngIf="data?.bannerCode === 'TOPUP_BANNER'">BANNER ở màn hình nạp tiền</span>
+                            <span *ngIf="data?.bannerCode === 'PAY_BANNER'">BANNER ở màn hình thanh toán dịch vụ</span>
+                            <span *ngIf="data?.bannerCode === 'CARD_BANNER'">BANNER ở màn hình dịch vụ thẻ</span>
+                            <span *ngIf="data?.bannerCode === 'FLASH'">FLASH</span>
+
+                        </td>
                         <td>{{ data?.bannerName }}</td>
                         <td>
                             <img width="70" src="{{ data?.linkImg }}" alt="">

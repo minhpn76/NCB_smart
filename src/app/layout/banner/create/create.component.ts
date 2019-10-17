@@ -27,6 +27,32 @@ export class CreateComponent implements OnInit {
   objFile: any = {};
   fileName: File;
   isLockSave = false;
+  listBanner: any = [
+    {
+      code: 'HOME_POPUP',
+      name: 'Hiển thị popup ở HOME'
+    },
+    {
+      code: 'HOME_BANNER',
+      name: 'BANNER ở màn hình home'
+    },
+    {
+      code: 'TOPUP_BANNER',
+      name: 'BANNER ở màn hình nạp tiền'
+    },
+    {
+      code: 'PAY_BANNER',
+      name: 'BANNER ở màn hình thanh toán dịch vụ'
+    },
+    {
+      code: 'CARD_BANNER',
+      name: 'BANNER ở màn hình dịch vụ thẻ'
+    },
+    {
+      code: 'FLASH',
+      name: 'FLASH'
+    }
+  ];
   listShow: any = [
     {
       code: 'Y',
@@ -49,7 +75,7 @@ export class CreateComponent implements OnInit {
   ngOnInit() {
     this.loadDate();
     this.dataForm = this.formBuilder.group({
-      bannerCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      bannerCode: ['HOME_POPUP', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       bannerName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       linkImg: [''],
       // linkUrlVn: [''],

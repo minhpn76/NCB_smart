@@ -28,6 +28,32 @@ export class EditComponent implements OnInit {
   isLockSave = false;
   isEdit = true;
   editData: any = {};
+  listBanner: any = [
+    {
+      code: 'HOME_POPUP',
+      name: 'Hiển thị popup ở HOME'
+    },
+    {
+      code: 'HOME_BANNER',
+      name: 'BANNER ở màn hình home'
+    },
+    {
+      code: 'TOPUP_BANNER',
+      name: 'BANNER ở màn hình nạp tiền'
+    },
+    {
+      code: 'PAY_BANNER',
+      name: 'BANNER ở màn hình thanh toán dịch vụ'
+    },
+    {
+      code: 'CARD_BANNER',
+      name: 'BANNER ở màn hình dịch vụ thẻ'
+    },
+    {
+      code: 'FLASH',
+      name: 'FLASH'
+    }
+  ];
   listShow: any = [
     {
       code: 'Y',
@@ -201,14 +227,14 @@ export class EditComponent implements OnInit {
         linkUrlEn: body.linkUrlEn
       };
       const stringSplit = body.linkImg.split('/');
-      const temp_fromDate_slipt = body.scheduleStart.split('/');
+      const temp_fromDate_slipt = body.scheduleStart !== null ? body.scheduleStart.split('/') : null;
       const temp_fromDate = {
         year: parseInt(temp_fromDate_slipt[0]),
         month: parseInt(temp_fromDate_slipt[1]),
         day: parseInt(temp_fromDate_slipt[2])
       };
 
-      const temp_toDate_slipt = body.scheduleEnd.split('/');
+      const temp_toDate_slipt = body.scheduleEnd !== null ? body.scheduleEnd.split('/') : null;
       const temp_toDate = {
         year: parseInt(temp_toDate_slipt[0]),
         month: parseInt(temp_toDate_slipt[1]),

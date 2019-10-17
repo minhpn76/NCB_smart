@@ -15,6 +15,36 @@ export class ListComponent implements OnInit {
     isSearch: any = false;
     isProcessLoad: any = 0;
     totalSearch: any = 0;
+    listBanner: any = [
+        {
+            code: '',
+            name: 'Tất cả'
+        },
+        {
+          code: 'HOME_POPUP',
+          name: 'Hiển thị popup ở HOME'
+        },
+        {
+          code: 'HOME_BANNER',
+          name: 'BANNER ở màn hình home'
+        },
+        {
+          code: 'TOPUP_BANNER',
+          name: 'BANNER ở màn hình nạp tiền'
+        },
+        {
+          code: 'PAY_BANNER',
+          name: 'BANNER ở màn hình thanh toán dịch vụ'
+        },
+        {
+          code: 'CARD_BANNER',
+          name: 'BANNER ở màn hình dịch vụ thẻ'
+        },
+        {
+          code: 'FLASH',
+          name: 'FLASH'
+        }
+      ];
     re_search = {
         bannerCode: '',
         bannerName: '',

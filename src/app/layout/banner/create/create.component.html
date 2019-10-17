@@ -9,7 +9,7 @@
                 <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                     <div class="form-group row">
                         <label for="search" class="col-sm-4 col-form-label">Mã banner(<span class="text-danger">*</span>):</label>
-                        <div class="col-sm-8">
+                        <!-- <div class="col-sm-8">
                             <input 
                                 formControlName="bannerCode"
                                 class="form-control col-lg-12"
@@ -20,6 +20,11 @@
                                 <div *ngIf="Form.bannerCode.errors.required">Mã banner là bắt buộc</div>
                                 <div *ngIf="Form.bannerCode.hasError('whitespace')">Mã banner khộng hợp lệ</div>
                             </div>
+                        </div> -->
+                        <div class="col-sm-8">
+                            <select class="form-control" formControlName="bannerCode" name="status">
+                                <option *ngFor="let status of listBanner" [value]="status.code" selected="selected">{{ status.name }}</option>
+                            </select>
                         </div>
     
                     </div>
