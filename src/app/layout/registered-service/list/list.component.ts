@@ -27,7 +27,7 @@ export class ListComponent implements OnInit {
   re_search = {
     compCode: '',
     idCard: '',
-    type: '0',
+    type: '1',
     service: '',
     status: '',
     size: 10,
@@ -48,16 +48,6 @@ export class ListComponent implements OnInit {
     comment: '',
     userId: ''
   };
-  listType: any = [
-    {
-      code: 1,
-      name: 'Thẻ'
-    },
-    {
-      code: 2,
-      name: 'Tài khoản'
-    }
-  ];
   listService: any = [];
   listLog: any = [];
 
@@ -67,16 +57,12 @@ export class ListComponent implements OnInit {
   listPageSize: any = [10, 20, 30, 40, 50];
   listPHe: any = [
     {
-      name: 'Tất cả',
-      code: 0
-    },
-    {
       name: 'Tài khoản',
-      code: 2
+      code: 1
     },
     {
       name: 'Thẻ',
-      code: 1
+      code: 2
     }
   ];
   listStatus: any = [

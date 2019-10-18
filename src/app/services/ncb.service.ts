@@ -894,6 +894,10 @@ export class NCBService {
     const url = `${API_URL}/ncb-branch/branch/list-comp-codename`;
     return this.auth.authRequest({ url: url, method: 'GET', application: true  });
   }
+  getListProdName() {
+    const url = `${API_URL}/provider/list-service-code`;
+    return this.auth.authRequest({ url: url, method: 'GET', application: true  });
+  }
 
 
 }

@@ -109,29 +109,29 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan=13>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor ="let data of listData; let i = index" (click)="openModalPackage(data)" style="cursor: pointer;">
+                    <tr *ngFor ="let data of listData; let i = index">
                         
-                        <th scope="row">
+                        <th scope="row" (click)="openModalPackage(data)" style="cursor: pointer;">
                             {{ i+1 }}
                         </th>
-                        <td>{{data?.promotionName}}</td>
-                        <td>{{data?.promotion}}</td>
-                        <td>{{helper.currencyFormatDE(data?.limitDaily)}}</td>
-                        <td>{{helper.currencyFormatDE(data?.limitFaceid)}}</td>
-                        <td>{{helper.currencyFormatDE(data?.limitFinger)}}</td>
+                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{data?.promotionName}}</td>
+                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{data?.promotion}}</td>
+                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitDaily)}}</td>
+                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitFaceid)}}</td>
+                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitFinger)}}</td>
                         <!-- <td>{{data?.prdName}}</td> -->
-                        <td>{{data?.percentage}}</td>
-                        <td>{{data?.customerType}}</td>
+                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{data?.percentage}}</td>
+                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{data?.customerType}}</td>
                         
-                        <td>{{data?.ccy}}</td>
-                        <td>
+                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{data?.ccy}}</td>
+                        <td (click)="openModalPackage(data)" style="cursor: pointer;">
                             <span *ngIf="data?.tranType === 'CK'">Chuyển khoản</span>
                             <span  *ngIf="data?.tranType === 'TK'">Tiết kiệm</span>
                             <span  *ngIf="data?.tranType === 'TT'">Thanh toán</span>
                             <span  *ngIf="data?.tranType === 'TOPUP'">Nạp tiền</span>
                             <span  *ngIf="data?.tranType === 'QLTK'">Phí thường niên</span>
                         </td>
-                        <td>
+                        <td (click)="openModalPackage(data)" style="cursor: pointer;">
                             <span *ngIf="data?.typeId === 'IBT'">Chuyển khoản LNH</span>
                             <span  *ngIf="data?.typeId === 'URT'">Chuyển khoản nội bộ</span>
                             <span  *ngIf="data?.typeId === 'ISL'">CK 247</span>
@@ -142,7 +142,7 @@
                             <span *ngIf="data?.typeId === 'IZI'">Nạp tiền vào TK IZI</span>
                         </td>
                         
-                        <td>
+                        <td (click)="openModalPackage(data)" style="cursor: pointer;">
                             <span *ngIf="data?.status === 'A'" class="badge badge-success">Active</span>
                             <span *ngIf="data?.status === 'D'" class="badge badge-danger">Deactive</span>
                         </td>

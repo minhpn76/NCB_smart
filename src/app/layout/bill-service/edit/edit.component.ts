@@ -15,6 +15,7 @@ export class EditComponent implements OnInit {
   dataForm: FormGroup;
   submitted = false;
   departCode: any;
+  listTempProd: any = [];
   listStatus: any = [
     {
       name: 'Active',
@@ -33,7 +34,9 @@ export class EditComponent implements OnInit {
     private route: ActivatedRoute,
     public ncbService: NCBService,
     private helper: Helper
-  ) { }
+  ) {
+    this.getListCompName();
+   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -49,6 +52,36 @@ export class EditComponent implements OnInit {
     this.getItem(this.departCode);
   }
   get Form() { return this.dataForm.controls; }
+  getListCompName() {
+    this.ncbService.getListProdName().then(res => {
+        if (res.json().code === '00') {
+            const body = res.json().body;
+            body.forEach(element => {
+                this.listTempProd.push({
+                    name: element.serviceName,
+                    code: element.serviceCode,
+                });
+            });
+        } else {
+            this.toastr.error('Không lấy được dự liệu', 'Thất bại');
+        }
+
+    }).catch(e => {
+
+    });
+  }
+  onChangeComp(event) {
+    const newArr = this.listTempProd.find(e => e.code === this.dataForm.value.serviceCode);
+    this.dataForm.patchValue({
+        providerName : newArr.name
+    });
+  }
+  onChangeCompC(event) {
+      const newArr = this.listTempProd.find(e => e.name === this.dataForm.value.providerName);
+      this.dataForm.patchValue({
+        serviceCode : newArr.code
+    });
+  }
 
   onSubmit() {
     this.submitted = true;

@@ -14,6 +14,7 @@ import { Helper } from '../../../helper';
 export class CreateComponent implements OnInit {
   dataForm: FormGroup;
   submitted = false;
+  listTempProd: any = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -21,7 +22,9 @@ export class CreateComponent implements OnInit {
     private ncbService: NCBService,
     public router: Router,
     private helper: Helper,
-  ) { }
+  ) {
+    this.getListCompName();
+   }
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
@@ -58,6 +61,36 @@ export class CreateComponent implements OnInit {
   }
   resetForm() {
       this.router.navigateByUrl('/bill-service');
+  }
+  getListCompName() {
+    this.ncbService.getListProdName().then(res => {
+        if (res.json().code === '00') {
+            const body = res.json().body;
+            body.forEach(element => {
+                this.listTempProd.push({
+                    name: element.serviceName,
+                    code: element.serviceCode,
+                });
+            });
+        } else {
+            this.toastr.error('Không lấy được dự liệu', 'Thất bại');
+        }
+
+    }).catch(e => {
+
+    });
+  }
+  onChangeComp(event) {
+    const newArr = this.listTempProd.find(e => e.code === this.dataForm.value.serviceCode);
+    this.dataForm.patchValue({
+        providerName : newArr.name
+    });
+  }
+  onChangeCompC(event) {
+      const newArr = this.listTempProd.find(e => e.name === this.dataForm.value.providerName);
+      this.dataForm.patchValue({
+        serviceCode : newArr.code
+    });
   }
 }
 

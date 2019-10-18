@@ -17,6 +17,7 @@ export class EditComponent implements OnInit {
   listBranch: any = [];
   submitted = false;
   departCode: any;
+  listTempComp: any = [];
   listStatus: any = [
     {
       name: 'Active',
@@ -35,7 +36,9 @@ export class EditComponent implements OnInit {
     private route: ActivatedRoute,
     public ncbService: NCBService,
     private helper: Helper
-  ) { }
+  ) {
+    this.getListCompName();
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -121,6 +124,36 @@ export class EditComponent implements OnInit {
   }
   resetForm() {
     this.router.navigateByUrl('/transaction-room');
+  }
+  getListCompName() {
+    this.ncbService.getListCompName().then(res => {
+      if (res.json().code === '00') {
+          const body = res.json().body;
+          body.forEach(element => {
+              this.listTempComp.push({
+                  name: element.compName,
+                  code: element.compCode,
+              });
+          });
+      } else {
+          this.toastr.error('Không lấy được dự liệu', 'Thất bại');
+      }
+
+    }).catch(e => {
+
+    });
+  }
+  onChangeComp(event) {
+      const newArr = this.listTempComp.find(e => e.code === this.dataForm.value.brnCode);
+      this.dataForm.patchValue({
+        branchName : newArr.name
+    });
+  }
+  onChangeCompC(event) {
+      const newArr = this.listTempComp.find(e => e.name === this.dataForm.value.branchName);
+      this.dataForm.patchValue({
+          brnCode : newArr.code
+    });
   }
 }
 
