@@ -46,52 +46,56 @@ export class ListComponent implements OnInit {
   ];
   listType: any = [
     {
-      name: 'IBT',
-      code: 'CK liên ngân hàng'
+      name: 'Tất cả',
+      code: ''
     },
     {
-      name: 'URT',
-      code: 'CK nội bộ'
+      code: 'IBT',
+      name: 'CK liên ngân hàng'
     },
     {
-      name: 'ISL',
-      code: 'CK 247'
+      code: 'URT',
+      name: 'CK nội bộ'
     },
     {
-      name: 'OW6',
-      code: 'Gửi tiết kiệm'
+      code: 'ISL',
+      name: 'CK 247'
     },
     {
-      name: 'IBT',
-      code: 'CK liên ngân hàng'
+      code: 'OW6',
+      name: 'Gửi tiết kiệm'
     },
     {
-      name: 'PLUS',
-      code: 'Nộp thêm tiết kiệm'
+      code: 'IBT',
+      name: 'CK liên ngân hàng'
     },
     {
-      name: 'REDEEM',
-      code: 'Tất toán tiết kiệm'
+      code: 'PLUS',
+      name: 'Nộp thêm tiết kiệm'
     },
     {
-      name: 'BILL',
-      code: 'Thanh toán hóa đơn'
+      code: 'REDEEM',
+      name: 'Tất toán tiết kiệm'
     },
     {
-      name: 'TOP',
-      code: 'Nạp tiền điện thoại'
+      code: 'BILL',
+      name: 'Thanh toán hóa đơn'
     },
     {
-      name: 'EWL',
-      code: 'Nạp ví điện tử'
+      code: 'TOP',
+      name: 'Nạp tiền điện thoại'
     },
     {
-      name: 'IZI',
-      code: 'Nạp tiền vào tkhoan IZI'
+      code: 'EWL',
+      name: 'Nạp ví điện tử'
     },
     {
-      name: 'SYSTEM',
-      code: 'Mã lỗi chung, khác của hệ thống'
+      code: 'IZI',
+      name: 'Nạp tiền vào tkhoan IZI'
+    },
+    {
+      code: 'SYSTEM',
+      name: 'Mã lỗi chung, khác của hệ thống'
     }
   ];
 
@@ -188,13 +192,11 @@ export class ListComponent implements OnInit {
     }
     this.getListData(payload);
   }
-  // keyDownFunction(event) {
-  //   if (event.keyCode === 13) {
-  //     this.isSearch = false;
-  //     this.re_search.cityCode = this.re_search_keyword;
-  //     this.getListData(this.re_search);
-  //   }
-  // }
+  keyDownFunction(event) {
+    if (event.keyCode === 13) {
+      this.onSearch(this.re_search);
+    }
+  }
   changePageSize() {
     this.re_search.page = 0;
     this.getListData(this.re_search);

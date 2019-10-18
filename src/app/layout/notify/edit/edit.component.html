@@ -16,7 +16,7 @@
                     <label for="search" class="col-sm-4 col-form-label">Loại giao dịch(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <select class="form-control" formControlName="type" name="type">
-                            <option *ngFor="let status of listType" [value]="status.name" selected="selected">{{ status.code }}</option>
+                            <option *ngFor="let status of listType" [value]="status.code" selected="selected">{{ status.name }}</option>
                         </select>
                     </div>
                 </div>

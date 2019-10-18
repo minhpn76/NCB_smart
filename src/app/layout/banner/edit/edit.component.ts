@@ -124,25 +124,26 @@ export class EditComponent implements OnInit {
     }
   }
   deleteFile(value, file) {
-    this.ncbService.deleteFileBanner({
-      fileName: value
-    }).then(result => {
-      if (result.status === 200) {
-        if (result.json().code !== '00') {
-          this.isLockSave = true;
-          this.toastr.error('Upload ảnh thất bại', 'Thất bại!');
-        } else {
-          this.uploadFile(file);
-          this.isLockSave = false;
-        }
-      } else {
-        this.isLockSave = true;
-        this.toastr.error('Upload ảnh thất bại', 'Thất bại!');
-      }
-    }).catch(err => {
-      this.isLockSave = true;
-      this.toastr.error('Upload ảnh thất bại', 'Thất bại!');
-    });
+    this.uploadFile(file);
+    // this.ncbService.deleteFileBanner({
+    //   fileName: value
+    // }).then(result => {
+    //   if (result.status === 200) {
+    //     if (result.json().code !== '00') {
+    //       this.isLockSave = true;
+    //       this.toastr.error('Upload ảnh thất bại', 'Thất bại!');
+    //     } else {
+    //       this.uploadFile(file);
+    //       this.isLockSave = false;
+    //     }
+    //   } else {
+    //     this.isLockSave = true;
+    //     this.toastr.error('Upload ảnh thất bại', 'Thất bại!');
+    //   }
+    // }).catch(err => {
+    //   this.isLockSave = true;
+    //   this.toastr.error('Upload ảnh thất bại', 'Thất bại!');
+    // });
   }
   uploadFile(value) {
     this.objUpload = {};

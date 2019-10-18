@@ -20,6 +20,7 @@ export class CreateComponent implements OnInit {
         path: null,
         name: ''
     };
+    listTempComp: any = [];
     temp: any = {
         loading: false
     };
@@ -52,7 +53,9 @@ export class CreateComponent implements OnInit {
         private ncbService: NCBService,
         private helper: Helper,
         public router: Router
-    ) { }
+    ) {
+        this.getListCompName();
+    }
 
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
@@ -103,6 +106,37 @@ export class CreateComponent implements OnInit {
     openModal(content) {
         this.modalOp = this.modalService.open(content);
     }
+    getListCompName() {
+        this.ncbService.getListCompName().then(res => {
+            if (res.json().code === '00') {
+                const body = res.json().body;
+                body.forEach(element => {
+                    this.listTempComp.push({
+                        name: element.compName,
+                        code: element.compCode,
+                    });
+                });
+            } else {
+                this.toastr.error('Không lấy được dự liệu', 'Thất bại');
+            }
+
+        }).catch(e => {
+
+        });
+    }
+    onChangeComp(event) {
+        const newArr = this.listTempComp.find(e => e.code === this.dataForm.value.brnCode);
+        this.dataForm.patchValue({
+           branchName : newArr.name
+       });
+    }
+    onChangeCompC(event) {
+        const newArr = this.listTempComp.find(e => e.name === this.dataForm.value.branchName);
+        this.dataForm.patchValue({
+            brnCode : newArr.code
+       });
+    }
+
 
     onUploadFile(event) {
         const fileList: FileList = event.files;

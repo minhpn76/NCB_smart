@@ -33,52 +33,52 @@ export class EditComponent implements OnInit {
   listProvider: any = ['VNPAY', 'PAYOO', 'NAPAS', 'NCB'];
   listType: any = [
     {
-      name: 'IBT',
-      code: 'CK liên ngân hàng'
+      code: 'IBT',
+      name: 'CK liên ngân hàng'
     },
     {
-      name: 'URT',
-      code: 'CK nội bộ'
+      code: 'URT',
+      name: 'CK nội bộ'
     },
     {
-      name: 'ISL',
-      code: 'CK 247'
+      code: 'ISL',
+      name: 'CK 247'
     },
     {
-      name: 'OW6',
-      code: 'Gửi tiết kiệm'
+      code: 'OW6',
+      name: 'Gửi tiết kiệm'
     },
     {
-      name: 'IBT',
-      code: 'CK liên ngân hàng'
+      code: 'IBT',
+      name: 'CK liên ngân hàng'
     },
     {
-      name: 'PLUS',
-      code: 'Nộp thêm tiết kiệm'
+      code: 'PLUS',
+      name: 'Nộp thêm tiết kiệm'
     },
     {
-      name: 'REDEEM',
-      code: 'Tất toán tiết kiệm'
+      code: 'REDEEM',
+      name: 'Tất toán tiết kiệm'
     },
     {
-      name: 'BILL',
-      code: 'Thanh toán hóa đơn'
+      code: 'BILL',
+      name: 'Thanh toán hóa đơn'
     },
     {
-      name: 'TOP',
-      code: 'Nạp tiền điện thoại'
+      code: 'TOP',
+      name: 'Nạp tiền điện thoại'
     },
     {
-      name: 'EWL',
-      code: 'Nạp ví điện tử'
+      code: 'EWL',
+      name: 'Nạp ví điện tử'
     },
     {
-      name: 'IZI',
-      code: 'Nạp tiền vào tkhoan IZI'
+      code: 'IZI',
+      name: 'Nạp tiền vào tkhoan IZI'
     },
     {
-      name: 'SYSTEM',
-      code: 'Mã lỗi chung, khác của hệ thống'
+      code: 'SYSTEM',
+      name: 'Mã lỗi chung, khác của hệ thống'
     }
   ];
 

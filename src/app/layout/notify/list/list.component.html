@@ -12,7 +12,8 @@
                     <input class="form-control col-lg-12"
                         itrim type="text" id="search"
                         [(ngModel)]="re_search.provider"
-                        placeholder="Mã hướng dẫn">
+                        (keydown)="keyDownFunction($event)"
+                        placeholder="Nhà cung cấp">
                 </div>
             </div>
         </div>
@@ -20,10 +21,11 @@
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Loại giao dịch:</label>
                 <div class="col-sm-6">
-                    <input class="form-control col-lg-12"
-                        itrim type="text" id="search"
-                        [(ngModel)]="re_search.type"
-                        placeholder="Loại giao dịch">
+
+                    <select class="form-control" [(ngModel)]="re_search.type" name="status">
+                        <option *ngFor="let status of listType" [value]="status.code" selected="selected">{{ status.name }}</option>
+                    </select>
+                
                 </div>
             </div>
         </div>
