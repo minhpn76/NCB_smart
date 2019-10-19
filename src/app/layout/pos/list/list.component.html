@@ -102,16 +102,17 @@
                         <th scope="col">Kinh độ</th>
                         <th scope="col">Vĩ độ</th>
                         <th scope="col">Đường dẫn hình ảnh</th>
+                        <th scope="col">Dao</th>
                         <th scope="col">Trạng thái</th>
                         <th scope="col">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngIf="isProcessLoad == 1" class="text-center">
-                        <td colspan="13"><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        <td colspan="14"><i class="fa fa-spin fa-spinner font-30"></i></td>
                     </tr>
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
-                        <td colspan="13">Không tìm thấy kết quả</td>
+                        <td colspan="14">Không tìm thấy kết quả</td>
                     </tr>
                     <tr *ngFor="let branch of listData; let i = index">
                         <th scope="row">
@@ -127,9 +128,7 @@
                         <td>{{ branch.longitude }}</td>
                         <td>{{ branch.latitude }}</td>
                         <td>{{ branch.urlImg }}</td>
-                       
-
-
+                        <td>{{ branch.dao }}</td>
                         <td>
                             <span *ngIf="branch.status == 'A'" class="badge badge-success">Active</span>
                             <span *ngIf="branch.status == 'D'" class="badge badge-danger">Deactive</span>

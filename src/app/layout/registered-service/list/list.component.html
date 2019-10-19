@@ -123,53 +123,91 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Mã chi nhánh - PGD</th>
-                        <th scope="col">Tên chi nhánh - PGD</th>
+                        <th scope="col">Mã company</th>
+                        <th scope="col">Tên company</th>
                         <th scope="col">Tên KH</th>
+                        <th scope="col">CIF</th>
                         <th scope="col">CMND/ Hộ chiếu</th>
+                        <th scope="col">Ngày cấp CMND/ Hộ chiếu</th>
                         <th scope="col">Số điện thoại</th>
+
                         <th scope="col">Dịch vụ</th>
-                        <th scope="col">Mã card</th>
-                        <th scope="col">Mã acct</th>
-                        <th scope="col">Lý do</th>
+                        <th scope="col">Số thẻ</th>
+                        <th scope="col">Số tài khoản</th>
+                        <th scope="col">Lý do phát hành thẻ</th>
                         <th scope="col">Sản phẩm</th>
-                        <th scope="col">Phí</th>
-                        <th scope="col">Ngày đăng ký</th>
-                        <th scope="col">Trạng thái</th>
-                        <!-- <th scope="col">Thao tác</th> -->
+                        <th scope="col">Hạng thẻ</th>
+                        <th scope="col">Phí DV</th>
+
+                        <th scope="col">Ngày yêu cầu</th>
+                        <th scope="col">Ngày xử lý yc</th>
+                        <th scope="col">Trạng thái yc</th>
+
+                        <th scope="col">Người xử lý yc</th>
+                        <th scope="col">Ghi chú</th>
+                        <th scope="col">Hình thức trả lương</th>
+                        <th scope="col">Tại ngân hàng</th>
+
+                        <th scope="col">Hạn mức mong muốn</th>
+                        <th scope="col">Thu nhập bình quân hàng tháng</th>
+                        <th scope="col">Chi phí hàng tháng</th>
+                        <th scope="col">Đăng ký trích nợ</th>
+
+                        <th scope="col">Số tiền đăng ký</th>
+                        <th scope="col">Số tài khoản</th>
+                        <th scope="col">User KH đăng ký</th>
                     </tr>
                 </thead>
                 
                 <tbody>
                     <tr *ngIf="isProcessLoad == 1" class="text-center">
-                        <td colspan=14><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        <td colspan=29><i class="fa fa-spin fa-spinner font-30"></i></td>
                     </tr>
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
-                        <td colspan=14>Không tìm thấy kết quả</td>
+                        <td colspan=29>Không tìm thấy kết quả</td>
                     </tr>
                     <tr *ngFor ="let data of listData; let i = index" style="cursor: pointer" (click)="openPopUpRequest(data.id, data)">
                         
                         <th scope="row">
                             {{i+1}}
                         </th>
-                        <td>{{data?.compCode}} 
-                        </td>
+                        <td>{{data?.compCode}} </td>
                         <td>{{data?.compName}}</td>
                         <td>{{data?.customerName}}</td>
+                        <td>{{data?.cif}}</td>
                         <td>{{data?.idCard}}</td>
+                        <td>{{data?.idCardIssueDate}}</td>
                         <td>{{data?.phone}}</td>
+
                         <td>{{data?.service}}</td>
-                        <td>{{data?.card_no}}</td>
+                        <td>{{data?.cardNo}}</td>
                         <td>{{data?.acctNo}}</td>
                         <td>{{data?.reissueReason}}</td>
                         <td>{{data?.product}}</td>
+                        <td>{{data?.cardClass}}</td>
                         <td>{{data?.fee}}</td>
+
                         <td>{{data?.requestDate}}</td>
+                        <td>{{data?.completedDate}}</td>
                         <td>
                             <span class="badge badge-success" *ngIf="data?.status === 'NEW'">NEW</span>
                             <span class="badge badge-warning"  *ngIf="data?.status === 'PROCESSING'">PROCESSING</span>
                             <span class="badge badge-danger" *ngIf="data?.status === 'CLOSED'" >CLOSED</span>
                         </td>
+
+                        <td>{{data?.userId}}</td>
+                        <td>{{data?.description}}</td>
+                        <td>{{data?.salaryCode}}</td>
+                        <td>{{data?.salaryBank}}</td>
+
+                        <td>{{data?.creditLimit}}</td>
+                        <td>{{helper.currencyFormatDE(data?.monthlyIncome)}}</td>
+                        <td>{{helper.currencyFormatDE(data?.monthlySpend)}}</td>
+                        <td>{{data?.autoDebit}}</td>
+                        
+                        <td>{{data?.repayMode}}</td>
+                        <td>{{data?.autoDebitBankAcct}}</td>
+                        <td>{{data?.userRegister}}</td>
                         <!-- <td>
                             <a class="mr-2 cursor-pointer text-blue" routerLink="/registered-service/edit/{{data.id}}">
                                 <i class="fa fa-edit"></i>

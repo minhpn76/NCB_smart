@@ -40,8 +40,8 @@ export class EditComponent implements OnInit {
       this.departCode = params.itemId;
     });
     this.dataForm = this.formBuilder.group({
-      cityName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      cityCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      shrtName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      proId: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: ['']
     });
     this.getItem(this.departCode);
@@ -76,8 +76,8 @@ export class EditComponent implements OnInit {
     this.ncbService.detailProvince({ cityId: params }).then((result) => {
       const body = result.json().body;
       this.dataForm.patchValue({
-        cityCode: body.cityCode,
-        cityName: body.cityName,
+        proId: body.proId,
+        shrtName: body.shrtName,
         status: body.status
       });
     }).catch(err => {

@@ -15,8 +15,8 @@ export class ListComponent implements OnInit {
   isProcessLoad: any = 0;
   totalSearch: any = 0;
   re_search = {
-    cityCode: '',
-    cityName: '',
+    proId: '',
+    shrtName: '',
     status: '',
     size: 10,
     page: 0,
@@ -76,7 +76,7 @@ export class ListComponent implements OnInit {
       result.json().body.content.forEach(element => {
         this.listProvinceName.push({
           id: element.cityId,
-          name: element.cityName
+          name: element.shrtName
         });
       });
     }).catch(err => {
@@ -133,7 +133,7 @@ export class ListComponent implements OnInit {
     }
   }
   onSearch(payload) {
-    if (payload.cityCode !== '' || payload.cityName !== '' || payload.status !== '') {
+    if (payload.proId !== '' || payload.shrtName !== '' || payload.status !== '') {
       payload.page = 0;
     } else {
       payload.page = 0;

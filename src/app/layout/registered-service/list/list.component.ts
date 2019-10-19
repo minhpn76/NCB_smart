@@ -3,13 +3,13 @@ import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from '../../../services/excel.service';
-
+import { Helper } from '../../../helper';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'register-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
-  providers: [NCBService, ExcelService]
+  providers: [NCBService, ExcelService, Helper]
 })
 export class ListComponent implements OnInit {
   keyword: any = '';
@@ -96,7 +96,8 @@ export class ListComponent implements OnInit {
     private ncbService: NCBService,
     public toastr: ToastrService,
     private modalService: NgbModal,
-    private excelService: ExcelService
+    private excelService: ExcelService,
+    public helper: Helper
   ) {
   }
 

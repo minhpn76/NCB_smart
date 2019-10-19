@@ -11,17 +11,17 @@
                         (<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
-                            formControlName="cityCode"
+                            formControlName="proId"
                             class="form-control col-lg-12"
                             placeholder="Mã tỉnh/ thành phố"
                             [ngClass]="{ 'is-invalid': submitted &&
-                            Form.cityCode.errors }"
+                            Form.proId.errors }"
                             />
-                        <div *ngIf="submitted && Form.cityCode.errors"
+                        <div *ngIf="submitted && Form.proId.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.cityCode.errors.required">Mã tỉnh/
+                            <div *ngIf="Form.proId.errors.required">Mã tỉnh/
                                 thành phố là bắt buộc</div>
-                            <div *ngIf="Form.cityCode.hasError('whitespace')">Mã tỉnh/
+                            <div *ngIf="Form.proId.hasError('whitespace')">Mã tỉnh/
                                 thành phố không hợp lệ</div>
                         </div>
                     </div>
@@ -32,17 +32,17 @@
                         (<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
-                            formControlName="cityName"
+                            formControlName="shrtName"
                             class="form-control col-lg-12"
                             placeholder="Tên tỉnh/ thành phố"
                             [ngClass]="{ 'is-invalid': submitted &&
-                            Form.cityName.errors }"
+                            Form.shrtName.errors }"
                             />
-                        <div *ngIf="submitted && Form.cityName.errors"
+                        <div *ngIf="submitted && Form.shrtName.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.cityName.errors.required">Tên tỉnh/
+                            <div *ngIf="Form.shrtName.errors.required">Tên tỉnh/
                                 thành phố là bắt buộc</div>
-                            <div *ngIf="Form.cityName.hasError('whitespace')">Tên tỉnh/
+                            <div *ngIf="Form.shrtName.hasError('whitespace')">Tên tỉnh/
                                 thành phố không hợp lệ</div>
                         </div>
                     </div>
