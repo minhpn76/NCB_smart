@@ -63,7 +63,13 @@ body {
   color: $body-color;
   text-align: left; // 3
   background-color: $body-bg; // 2
-  font-size: 14px;
+  font-size: 13px;
+}
+.btn {
+  font-size: 13px!important;
+}
+.form-control {
+  font-size: 13px!important;
 }
 
 // Suppress the focus outline on elements that cannot be accessed via keyboard.

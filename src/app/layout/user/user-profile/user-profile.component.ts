@@ -49,7 +49,7 @@ export class UserProfileComponent implements OnInit {
   ];
   protected modalOp: NgbModalRef;
 
-  @ViewChild('modalUser')
+  @ViewChild('modalUser', { static: false }) component;
   public modalUserElementRef: ElementRef;
   constructor(
     private ncbService: NCBService,
@@ -76,6 +76,8 @@ export class UserProfileComponent implements OnInit {
       }, 500);
     }).catch((err) => {
       this.isProcessLoad = 0;
+      this.listData = [];
+      this.totalSearch = 0;
       this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
     });
 

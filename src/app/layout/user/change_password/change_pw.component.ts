@@ -29,7 +29,7 @@ export class ChangePasswordComponent implements OnInit {
     public router: Router,
   ) {
     this.userInfo = localStorage.getItem('profile') ? JSON.parse(localStorage.getItem('profile')) : '';
-    if (this.userInfo.loginCount === 1) {
+    if (this.userInfo.passChange === '0') {
       this.toastr.warning('Tài khoản của bạn đăng nhập lần đầu. Hãy đổi lại mật khẩu!', 'Thông báo');
     }
   }

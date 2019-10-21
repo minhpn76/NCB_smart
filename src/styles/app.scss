@@ -4,6 +4,12 @@
 @import "utils";
 @import "rtl";
 @import "responsive";
+@import '~primeicons/primeicons.css';
+@import '~primeng/resources/themes/nova-light/theme.css';
+@import '~primeng/resources/primeng.min.css';
+.ui-multiselect{
+    width: 100%!important;
+}
 
 @media print {
     .breadcrumb {

@@ -49,7 +49,7 @@
                     <label for="search" class="col-sm-4 col-form-label">Loại giao dịch(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <select class="form-control" formControlName="tranType" name="tranType">
-                            <option *ngFor="let data of listTranType" [value]="data.code" selected="selected">{{data.name}}</option>
+                            <option *ngFor="let data of listTranType" [value]="data.code" selected="selected" (change)="getConfigDetailTransaction()">{{data.name}}</option>
                         </select>
                         <div *ngIf="submitted && Form.tranType.errors"
                             class="invalid-feedback">
@@ -314,126 +314,9 @@
                         </div>
                     </div>
                 </div> -->
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label"><u>Quản lý phí:</u></label>
-                </div>
-                
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã gói sản phẩm(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-8">
-                        <input
-                            formControlName="grprdId"
-                            class="form-control col-lg-12"
-                            placeholder="Mã gói sản phẩm"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.grprdId.errors }">
-                        <div *ngIf="submitted && Form.grprdId.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.grprdId.errors.required">Mã gói sản phẩm là bắt buộc</div>
-                            <div *ngIf="Form.grprdId.hasError('whitespace')">Mã gói sản phẩm không hợp lệ</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Định nghĩa gói sản phẩm(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-8">
-                        <input
-                            formControlName="prdNameP"
-                            class="form-control col-lg-12"
-                            placeholder="Định nghĩa gói sản phẩm"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.prdNameP.errors }">
-                        <div *ngIf="submitted && Form.prdNameP.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.prdNameP.errors.required">Định nghĩa gói sản phẩm là bắt buộc</div>
-                            <div *ngIf="Form.prdNameP.hasError('whitespace')">Định nghĩa gói sản phẩm không hợp lệ</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Product của tài khoản(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-8">
-                        <input
-                            formControlName="prdCode"
-                            class="form-control col-lg-12"
-                            placeholder="Product của tài khoản"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.prdCode.errors }">
-                        <div *ngIf="submitted && Form.prdCode.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.prdCode.errors.required">Product của tài khoản là bắt buộc</div>
-                            <div *ngIf="Form.prdCode.hasError('whitespace')">Product của tài khoản không hợp lệ</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Loại phí(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-8">
-                        <select class="form-control" formControlName="feeType" name="feeType">
-                            <option *ngFor="let data of listFeeType" [value]="data.code" selected="selected">{{data.name}}</option>
-                        </select>
-                        <div *ngIf="submitted && Form.feeType.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.feeType.errors.required">Loại phí là bắt buộc</div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Số tiền thu phí(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-8">
-                        <input
-                            formControlName="feeAmount"
-                            class="form-control col-lg-12"
-                            placeholder="Số tiền thu phí"
-                            currencyMask
-                            [options]='optionCurrency'
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.feeAmount.errors }">
-                        <div *ngIf="submitted && Form.feeAmount.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.feeAmount.errors.required">Số tiền thu phí là bắt buộc</div>
-                            <div *ngIf="Form.feeAmount.hasError('whitespace')">Số tiền thu phí không hợp lệ</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Số tiền phí min(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-8">
-                        <input
-                            formControlName="feeMin"
-                            class="form-control col-lg-12"
-                            currencyMask
-                            [options]='optionCurrency'
-                            placeholder="Số tiền phí min"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.feeMin.errors }">
-                        <div *ngIf="submitted && Form.feeMin.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.feeMin.errors.required">Số tiền phí min là bắt buộc</div>
-                            <div *ngIf="Form.feeMin.hasError('whitespace')">Số tiền phí min không hợp lệ</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Số tiền phí max(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-8">
-                        <input
-                            formControlName="feeMax"
-                            currencyMask
-                            [options]='optionCurrency'
-                            class="form-control col-lg-12"
-                            placeholder="Số tiền phí max"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.feeMax.errors }">
-                        <div *ngIf="submitted && Form.feeMax.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.feeMax.errors.required">Số tiền phí max là bắt buộc</div>
-                            <div *ngIf="Form.feeMax.hasError('whitespace')">Số tiền phí max không hợp lệ</div>
-                        </div>
-                    </div>
-                </div>
-        
+                </div> -->
                 <div class="form-group row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-7">

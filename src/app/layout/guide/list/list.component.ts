@@ -63,9 +63,10 @@ export class ListComponent implements OnInit {
         this.isProcessLoad = 0;
       }, 300);
     }).catch(err => {
+      this.isProcessLoad = 0;
       this.listData = [];
       this.totalSearch = 0;
-      this.isProcessLoad = 1;
+      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
     });
   }
 

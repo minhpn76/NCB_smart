@@ -5,7 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 import { isNumber, toInteger, padNumber } from '@ng-bootstrap/ng-bootstrap/util/util';
 import 'rxjs/add/operator/toPromise';
 import { FormControl, FormGroup } from '@angular/forms';
-import { element } from '@angular/core/src/render3';
 
 @Injectable()
 export class Helper {

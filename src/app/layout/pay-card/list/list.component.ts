@@ -101,16 +101,16 @@ export class ListComponent implements OnInit {
 
   protected modalOp: NgbModalRef;
 
-  @ViewChild('creditCard')
+  @ViewChild('creditCard', { static: false }) component;
   public creditCardElementRef: ElementRef;
 
-  @ViewChild('reasonCard')
+  @ViewChild('reasonCard', { static: false }) componentR;
   public reasonCardElementRef: ElementRef;
 
-  @ViewChild('otherConfigCard')
+  @ViewChild('otherConfigCard', { static: false }) componentO;
   public otherConfigCardElementRef: ElementRef;
 
-  @ViewChild('showImage')
+  @ViewChild('showImage', { static: false }) componentS;
   public showImageElementRef: ElementRef;
 
 

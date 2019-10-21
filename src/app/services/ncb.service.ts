@@ -898,6 +898,16 @@ export class NCBService {
     const url = `${API_URL}/provider/list-service-code`;
     return this.auth.authRequest({ url: url, method: 'GET', application: true  });
   }
+  // code = FUNCTION_TYPE
+  getConfigTransaction(data) {
+    const url = `${API_URL}/configMbApp/getTransaction`;
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true  });
+  }
+  // code = FUNCTION_TYPE , type = TOPUP
+  getConfigDetailTransaction(data) {
+    const url = `${API_URL}/configMbApp/detailTransaction`;
+    return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true  });
+  }
 
 
 }

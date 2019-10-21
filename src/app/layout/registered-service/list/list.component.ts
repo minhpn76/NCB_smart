@@ -27,7 +27,7 @@ export class ListComponent implements OnInit {
   re_search = {
     compCode: '',
     idCard: '',
-    type: '1',
+    type: 'CARD',
     service: '',
     status: '',
     size: 10,
@@ -57,12 +57,12 @@ export class ListComponent implements OnInit {
   listPageSize: any = [10, 20, 30, 40, 50];
   listPHe: any = [
     {
-      name: 'Tài khoản',
-      code: 1
+      name: 'Dịch vụ vay',
+      code: 'LOAN'
     },
     {
       name: 'Thẻ',
-      code: 2
+      code: 'CARD'
     }
   ];
   listStatus: any = [
@@ -88,7 +88,7 @@ export class ListComponent implements OnInit {
   infoUser: any = {};
   protected modalOp: NgbModalRef;
 
-  @ViewChild('popupReqest')
+  @ViewChild('popupReqest', { static: false }) component;
   public popupReqestElementRef: ElementRef;
   @Output() emitCloseModal = new EventEmitter<any>();
 
@@ -139,6 +139,7 @@ export class ListComponent implements OnInit {
       this.isProcessLoad = 0;
       this.listData = [];
       this.totalSearch = 0;
+      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
     });
   }
   public loadDate(): void {

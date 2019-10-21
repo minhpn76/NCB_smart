@@ -208,6 +208,36 @@ export class EditComponent implements OnInit {
   resetForm() {
     this.router.navigateByUrl('/package');
   }
+  getConfigTransaction() {
+    this.listTranType = [];
+    // xu ly
+    this.ncbService.getConfigTransaction({
+      code : 'FUNCTION_TYPE'
+    }).then((result) => {
+      setTimeout(() => {
+        const body = result.json().body;
+        this.listTranType = body;
+      }, 300);
+    }).catch(err => {
+      this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
+    });
+  }
+  getConfigDetailTransaction() {
+    const params = {
+      code: 'FUNCTION_TYPE',
+      type: this.dataForm.value.tranType
+    };
+    this.listTypeId = [];
+    // xu ly
+    this.ncbService.getConfigDetailTransaction(params).then((result) => {
+      setTimeout(() => {
+        const body = result.json().body;
+        this.listTypeId = body;
+      }, 300);
+    }).catch(err => {
+      this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
+    });
+  }
   getItem(params) {
     this.ncbService.detailPackage({prd: params}).then((result) => {
       const body = result.json().body;

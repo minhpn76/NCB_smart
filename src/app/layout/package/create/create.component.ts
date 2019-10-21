@@ -23,62 +23,11 @@ export class CreateComponent implements OnInit {
   submitted = false;
   userInfo: any = [];
   listTranType: any = [
-    {
-      code: 'CK',
-      name: 'Chuyển khoản'
-    },
-    {
-      code: 'TK',
-      name: 'Tiết kiệm'
-    },
-    {
-      code: 'TT',
-      name: 'Thanh toán'
-    },
-    {
-      code: 'TOPUP',
-      name: 'Nạp tiền'
-    },
-    {
-      code: 'QLTK',
-      name: 'Phí thường niên',
 
-    }
   ];
 
   listTypeId: any = [
-    {
-      code: 'IBT',
-      name: 'Chuyển khoản LNH'
-    },
-    {
-      code: 'URT',
-      name: 'Chuyển khoản nội bộ'
-    },
-    {
-      code: 'ISL',
-      name: 'CK 247'
-    },
-    {
-      code: 'OW6',
-      name: 'Chuyển tiền vãng lai'
-    },
-    {
-      code: 'BILL',
-      name: 'Thanh toán hóa đơn'
-    },
-    {
-      code: 'TOP',
-      name: 'Nạp tiền điện thoại'
-    },
-    {
-      code: 'EWL',
-      name: 'Nạp ví điện tử'
-    },
-    {
-      code: 'IZI',
-      name: 'Nạp tiền vào TK IZI'
-    }
+
   ];
   listStatus: any = [
     {
@@ -145,6 +94,7 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.loadDate();
+    this.getConfigTransaction();
     this.dataForm = this.formBuilder.group({
       prdName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       tranType: ['CK', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
@@ -164,14 +114,7 @@ export class CreateComponent implements OnInit {
       toDate: [this.mRatesDateS_7],
       prd: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       createBy: [JSON.stringify(this.userInfo.userName)],
-      status: ['A', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      grprdId: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      prdNameP:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      feeAmount:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      feeMin:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      feeMax:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      prdCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      feeType:  ['QLTK', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      status: ['A', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])]
     });
   }
   get Form() { return this.dataForm.controls; }
@@ -216,17 +159,17 @@ export class CreateComponent implements OnInit {
         toDate: this.dataForm.value.toDate,
         prd: this.dataForm.value.prd,
         createBy: JSON.parse(this.dataForm.value.createBy)
-      },
-      productFee: {
-        grprdId: this.dataForm.value.grprdId,
-        prdName: this.dataForm.value.prdNameP,
-        feeAmount: this.dataForm.value.feeAmount,
-        feeMin: this.dataForm.value.feeMin,
-        feeMax: this.dataForm.value.feeMax,
-        prdCode: this.dataForm.value.prdCode,
-        feeType: this.dataForm.value.feeType,
-        createdUser: JSON.parse(this.dataForm.value.createBy)
       }
+      // productFee: {
+      //   grprdId: this.dataForm.value.grprdId,
+      //   prdName: this.dataForm.value.prdNameP,
+      //   feeAmount: this.dataForm.value.feeAmount,
+      //   feeMin: this.dataForm.value.feeMin,
+      //   feeMax: this.dataForm.value.feeMax,
+      //   prdCode: this.dataForm.value.prdCode,
+      //   feeType: this.dataForm.value.feeType,
+      //   createdUser: JSON.parse(this.dataForm.value.createBy)
+      // }
 
     };
     this.ncbService.createPackage(payload).then((result) => {
@@ -250,6 +193,36 @@ export class CreateComponent implements OnInit {
   }
   resetForm() {
     this.router.navigateByUrl('/package');
+  }
+  getConfigTransaction() {
+    this.listTranType = [];
+    // xu ly
+    this.ncbService.getConfigTransaction({
+      code : 'FUNCTION_TYPE'
+    }).then((result) => {
+      setTimeout(() => {
+        const body = result.json().body;
+        this.listTranType = body;
+      }, 300);
+    }).catch(err => {
+      this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
+    });
+  }
+  getConfigDetailTransaction() {
+    const params = {
+      code: 'FUNCTION_TYPE',
+      type: this.dataForm.value.tranType
+    };
+    this.listTypeId = [];
+    // xu ly
+    this.ncbService.getConfigDetailTransaction(params).then((result) => {
+      setTimeout(() => {
+        const body = result.json().body;
+        this.listTypeId = body;
+      }, 300);
+    }).catch(err => {
+      this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
+    });
   }
 }
 
