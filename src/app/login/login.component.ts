@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
                     window.location.href = this.return_url;
                 } else {
                     localStorage.setItem('isLoggedin', 'true');
-                    if (result.json().body.loginCount === 1) {
+                    if (result.json().body.passChange === '0') {
                         this.router.navigateByUrl('/user/change-password');
                     } else {
                         this.router.navigateByUrl('/dashboard');
