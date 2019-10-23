@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Helper } from '../../../helper';
@@ -32,19 +32,32 @@ export class EditComponent implements OnInit {
   temp: any = {
     loading: false
   };
+  isProcessLoad: any = 0;
+  tempListImage: any = [];
+  totalSearch: any = 0;
+  re_search = {
+      fileName: '',
+      status: 'A',
+      size: 10,
+      page: 0,
+      previous_page: 0
+  };
   isEdit = true;
   editData: any = {};
   objItemFile: any = {};
   listStatus: any = [
     {
       name: 'Active',
-      code: 'ACTIVE',
+      code: 'A',
     },
     {
       name: 'Deactive',
-      code: 'DEACTIVE',
+      code: 'D',
     }
   ];
+
+  @ViewChild('modalUpload', { static: false }) modalUploadElementRef: ElementRef;
+  @Output() emitCloseModal = new EventEmitter<any>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -59,6 +72,7 @@ export class EditComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.itemId = params.itemId;
     });
+    this.getListData();
    }
 
   ngOnInit() {
@@ -79,13 +93,49 @@ export class EditComponent implements OnInit {
       f05: ['', Validators.compose([this.helper.noWhitespaceValidator])],
       issueFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       reissueFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      repinFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      fileName: [''],
-      linkUrl: ['']
+      repinFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])]
     });
   }
   get Form() { return this.dataForm.controls; }
+  getListData() {
+    this.tempListImage = [];
+    this.isProcessLoad = 1;
+    // xu ly
+    this.ncbService
+        .searchPaycardImg(this.re_search)
+        .then(result => {
+            setTimeout(() => {
+                const body = result.json().body;
+                this.tempListImage = body.content;
+                this.totalSearch = body.totalElements;
+                this.isProcessLoad = 0;
+            }, 300);
+        })
+        .catch(err => {
+            this.isProcessLoad = 0;
+            this.tempListImage = [];
+            this.totalSearch = 0;
+            this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+        });
+  }
 
+  loadPage(page: number) {
+    const page_number = page - 1;
+    if (page_number !== this.re_search.previous_page) {
+      this.re_search.page = page_number;
+      this.re_search.previous_page = page_number;
+      this.getListData();
+      this.re_search.page = page;
+    }
+  }
+  clickSetupImg(data) {
+    this.objFile = {
+      fileName: data.fileName,
+      linkUrl: data.linkUrl
+    };
+    console.log('1212==', this.objFile);
+    this.modalOp.close();
+  }
   onSubmit() {
     this.submitted = true;
 
@@ -110,8 +160,8 @@ export class EditComponent implements OnInit {
       issueFee: this.dataForm.value.issueFee,
       reissueFee: this.dataForm.value.reissueFee,
       repinFee: this.dataForm.value.repinFee,
-      fileName: this.dataForm.value.fileName,
-      linkUrl: this.dataForm.value.linkUrl
+      fileName: this.objFile.fileName,
+      linkUrl: this.objFile.linkUrl
     };
     // if (this.isEdit === true) {
     //   this.editData = {
@@ -156,18 +206,21 @@ export class EditComponent implements OnInit {
     }, (reason) => {
     });
   }
-
-  async handleFileInput(files: FileList): Promise<any> {
-    this.isEdit = false;
-    const check = await this.helper.validateFileImage(
-      files[0], AppSettings.UPLOAD_IMAGE.file_size, AppSettings.UPLOAD_IMAGE.file_ext
-    );
-    if (check === true) {
-      this.deleteFile(this.dataForm.value.fileName, files.item(0));
-    }
+  async openModalUpload() {
+    this.openModal(this.modalUploadElementRef, 'modal-package', 'static');
   }
-  getItem(params) {
-    this.ncbService.detailPayCard({ prdcode: params }).then((result) => {
+
+  // async handleFileInput(files: FileList): Promise<any> {
+  //   this.isEdit = false;
+  //   const check = await this.helper.validateFileImage(
+  //     files[0], AppSettings.UPLOAD_IMAGE.file_size, AppSettings.UPLOAD_IMAGE.file_ext
+  //   );
+  //   if (check === true) {
+  //     this.deleteFile(this.dataForm.value.fileName, files.item(0));
+  //   }
+  // }
+  async getItem(params) {
+    await this.ncbService.detailPayCard({ prdcode: params }).then((result) => {
       const body = result.json().body;
       // this.objItemFile = {
       //   fileName: body.fileName,
@@ -193,6 +246,10 @@ export class EditComponent implements OnInit {
         fileName: body.fileName !== null ? body.fileName : '',
         linkUrl: body.linkUrl !== null ? body.linkUrl : ''
       });
+      this.objFile = {
+        fileName: body.fileName,
+        linkUrl: body.linkUrl
+      };
     }).catch(err => {
       this.toastr.error('Không lấy được dữ liệu item', 'Thất bại!');
     });

@@ -21,8 +21,13 @@ export class CreateComponent implements OnInit {
   userInfo: any = [];
   cities1: any = [];
   selectedCities1: any = [];
+  listTempData: any = [];
 
   listFeeType: any = [
+    {
+      code: '',
+      name: '--Chọn giá trị--'
+    },
     {
       code: 'QLTK',
       name: 'Phí thường niên theo tháng'
@@ -57,44 +62,29 @@ export class CreateComponent implements OnInit {
     private helper: Helper
   ) {
     this.userInfo = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : '';
-    this.cities1 = [
-      {label: 'New York', value: {id: 1, name: 'New York', code: 'NY'}},
-      {label: 'Rome', value: {id: 2, name: 'Rome', code: 'RM'}},
-      {label: 'London', value: {id: 3, name: 'London', code: 'LDN'}},
-      {label: 'Istanbul', value: {id: 4, name: 'Istanbul', code: 'IST'}},
-      {label: 'Paris', value: {id: 5, name: 'Paris', code: 'PRS'}}
-    ];
+    this.getListPackage();
    }
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
-      grprdId: [[], Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      grprdId: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       prdName:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       feeAmount: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       ccy:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       feeMin:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       feeMax:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       prdCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      feeType: ['QLTK', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      createBy: [JSON.stringify(this.userInfo.userName)]
+      feeType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      codeFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      taxPercent: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      createdUser: [JSON.stringify(this.userInfo.userName)],
+      createdTime: [''],
     });
-    console.log('==this.selectedCities1', this.selectedCities1);
   }
   get Form() { return this.dataForm.controls; }
-  // onChange(event) {
-  //   const tempArr = [];
-  //   event.value.forEach(element => {
-  //     tempArr.push(element.code);
-  //   });
-  //   const _code = tempArr.join(',');
-  //   this.dataForm.patchValue({
-  //     grprdId: _code
-  //   });
-  // }
 
   onSubmit() {
     this.submitted = true;
-    console.log('==this.dataForm', this.dataForm.value);
 
     // stop here if form is invalid
     if (this.dataForm.invalid) {
@@ -102,30 +92,62 @@ export class CreateComponent implements OnInit {
     }
     const tempArr = [];
     this.dataForm.value.grprdId.forEach(element => {
-      tempArr.push(element.code);
+      tempArr.push(element);
     });
     const _code = tempArr.join(',');
-    console.log('==x', _code);
+    const payload = {
+      grprdId: _code,
+      prdName: this.dataForm.value.prdName,
+      feeAmount: this.dataForm.value.feeAmount,
+      feeMin: this.dataForm.value.feeMin,
+      feeMax: this.dataForm.value.feeMax,
+      prdCode: this.dataForm.value.prdCode,
+      feeType: this.dataForm.value.feeType,
+      ccy : this.dataForm.value.ccy,
+      codeFee : this.dataForm.value.codeFee,
+      taxPercent : this.dataForm.value.taxPercent,
+      createdUser: this.dataForm.value.createdUser,
+      createdTime: this.dataForm.value.createdTime
+    };
 
-    // this.ncbService.createNcbGuide(this.dataForm.value).then((result) => {
-    //   if (result.status === 200) {
-    //     if (result.json().code !== '00') {
-    //       this.toastr.error(result.json().message, 'Thất bại!');
-    //     } else {
-    //       this.toastr.success('Thêm thành công', 'Thành công!');
-    //       setTimeout(() => {
-    //         this.router.navigateByUrl('/guide');
-    //       }, 500);
-    //     }
-    //   } else {
-    //     this.toastr.error(result.message, 'Thất bại!');
-    //   }
-    // }).catch((err) => {
-    //   this.toastr.error(err.json().message, 'Thất bại!');
-    // });
+    this.ncbService.createPackageFee(payload).then((result) => {
+      if (result.status === 200) {
+        if (result.json().code !== '00') {
+          this.toastr.error(result.json().message, 'Thất bại!');
+        } else {
+          this.toastr.success('Thêm thành công', 'Thành công!');
+          setTimeout(() => {
+            this.router.navigateByUrl('/package-fee');
+          }, 500);
+        }
+      } else {
+        this.toastr.error(result.message, 'Thất bại!');
+      }
+    }).catch((err) => {
+      this.toastr.error(err.json().message, 'Thất bại!');
+    });
   }
   resetForm() {
     this.router.navigateByUrl('/package-fee');
+  }
+  getListPackage() {
+    this.listTempData = [];
+    // xu ly
+    this.ncbService.searchPackage({
+      page: 0,
+      size: 1000
+    }).then((result) => {
+      const body = result.json().body;
+      body.content.forEach(element => {
+        this.listTempData.push({
+          label: element.promotion,
+          value: element.prd
+        });
+      });
+
+    }).catch(err => {
+      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+    });
   }
 }
 

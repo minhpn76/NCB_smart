@@ -16,8 +16,8 @@ export class ListComponent implements OnInit {
   isProcessLoad: any = 0;
   totalSearch: any = 0;
   re_search = {
-    serviceId: '',
-    status: '',
+    prdName: '',
+    // status: '',
     size: 10,
     page: 0,
     previous_page: 0
@@ -57,7 +57,7 @@ export class ListComponent implements OnInit {
     this.listData = [];
     this.isProcessLoad = 1;
     // xu ly
-    this.ncbService.searchNcbGuide(params).then((result) => {
+    this.ncbService.searchPackageFee(params).then((result) => {
       setTimeout(() => {
         const body = result.json().body;
         this.listData = body.content;
@@ -82,13 +82,14 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.ncbService.deleteNcbGuide({ id: id }).then(() => {
+        this.ncbService.deletePackageFee({ functionFeeId: id }).then(() => {
           this.listData.splice(index, 1);
           Swal.fire(
             'Đã xoá!',
             'Dữ liệu đã xoá hoàn toàn.',
             'success'
           );
+          this.onSearch(this.re_search);
         });
         // For more information about handling dismissals please visit
         // https://sweetalert2.github.io/#handling-dismissals
@@ -116,7 +117,7 @@ export class ListComponent implements OnInit {
     }
   }
   onSearch(payload) {
-    if (payload.serviceId !== '' || payload.status !== '') {
+    if (payload.prdName !== '') {
       payload.page = 0;
     } else {
       payload.page = 0;

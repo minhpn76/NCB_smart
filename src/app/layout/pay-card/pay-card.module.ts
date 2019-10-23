@@ -12,6 +12,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FileUploadModule } from 'primeng/fileupload';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
             cancelButtonClass: 'btn'
         }),
         FileUploadModule,
-        CurrencyMaskModule
+        CurrencyMaskModule,
+        MultiSelectModule
     ],
     declarations: [
         ListComponent, CreateComponent, EditComponent

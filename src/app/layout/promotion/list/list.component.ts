@@ -19,6 +19,7 @@ export class ListComponent implements OnInit {
   arrExport: any = [];
   isProcessLoadExcel: any = 0;
   re_search = {
+    promotion: '',
     proName: '',
     status: '',
     size: 10,

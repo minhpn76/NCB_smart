@@ -16,8 +16,7 @@ export class ListComponent implements OnInit {
     isProcessLoad: any = 0;
     totalSearch: any = 0;
     re_search = {
-        bannerCode: '',
-        bannerName: '',
+        fileName: '',
         status: '',
         size: 10,
         page: 0,
@@ -63,7 +62,7 @@ export class ListComponent implements OnInit {
         this.isProcessLoad = 1;
         // xu ly
         this.ncbService
-            .searchNcbBanner(params)
+            .searchPaycardImg(params)
             .then(result => {
                 setTimeout(() => {
                     const body = result.json().body;
@@ -80,7 +79,7 @@ export class ListComponent implements OnInit {
             });
     }
 
-    deleteItem(event, index, id) {
+    deleteItem(event, index, data) {
         Swal.fire({
             title: 'Bạn có chắc chắn xoá?',
             text: 'Dữ liệu đã xoá không thể khôi phục lại',
@@ -90,11 +89,11 @@ export class ListComponent implements OnInit {
             cancelButtonText: 'Không, trở lại'
         }).then(result => {
             if (result.value) {
-                this.ncbService.deleteNcbBanner({ id: id }).then((res) => {
+                this.ncbService.deletePaycardImg({ fileName: data }).then((res) => {
                     // this.listData.splice(index, 1);
                     if (res.json().code === '00') {
                         Swal.fire('Đã xoá!', 'Dữ liệu đã xoá hoàn toàn.', 'success');
-                        this.getListData(this.re_search);
+                        this.onSearch(this.re_search);
                     } else {
                         this.toastr.error('Không thể xoá dự liệu', 'Thất bại');
                     }
@@ -107,7 +106,7 @@ export class ListComponent implements OnInit {
         });
     }
     cancelAction(event) {
-        console.log('huy bo thanh con');
+        console.log('huy bo thanh cong');
     }
     loadPage(page: number) {
       const page_number = page - 1;
@@ -119,18 +118,18 @@ export class ListComponent implements OnInit {
       }
     }
     onSearch(payload) {
-        if (payload.bannerCode !== '' || payload.bannerName !== '' || payload.status !== '') {
+        if (payload.fileName !== '' || payload.status !== '') {
+            payload.page = 0;
+        } else {
             payload.page = 0;
         }
         this.getListData(payload);
     }
-    // keyDownFunction(event) {
-    //   if (event.keyCode === 13) {
-    //     this.isSearch = false;
-    //     this.re_search.cityCode = this.re_search_keyword;
-    //     this.getListData(this.re_search);
-    //   }
-    // }
+    keyDownFunction(event) {
+      if (event.keyCode === 13) {
+        this.getListData(this.re_search);
+      }
+    }
     changePageSize() {
         this.re_search.page = 0;
         this.getListData(this.re_search);

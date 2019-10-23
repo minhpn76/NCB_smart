@@ -1,7 +1,8 @@
 <div>
     <app-page-header
-        [heading]="'Cấu hình phí gói sản phẩm'"
-        [url_heading]="'/package-fee'">
+        [heading]="'Gói sản phẩm'"
+        [heading_second]="'Cấu hình phí gói sản phẩm'"
+        [url_heading]="'/package'">
     </app-page-header>
     <div class="row">
         <div class="col-md-6">
@@ -10,13 +11,13 @@
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
                         itrim type="text" id="search"
-                        [(ngModel)]="re_search.serviceId"
+                        [(ngModel)]="re_search.prdName"
                         (keydown)="keyDownFunction($event)"
                         placeholder="Gói sản phẩm">
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
                 <div class="col-sm-6">
@@ -27,7 +28,7 @@
                 </div>
 
             </div>
-        </div>
+        </div> -->
         <div class="col-md-12 text-center">
             <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
                 <i class="fa fa-search"></i>&nbsp;Tìm kiếm
@@ -65,39 +66,54 @@
                         <th scope="col">Số tiền phí thu</th>
                         <th scope="col">Số tiền phí max</th>
                         <th scope="col">Số tiền phí min</th>
-                        <th scope="col">Trạng thái</th>
+                        <th scope="col">Phần trăm thuế %</th>
+                        <th scope="col">Mã phí</th>
+                        <!-- <th scope="col">Trạng thái</th> -->
                         <th scope="col">Thao tác</th>
 
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngIf="isProcessLoad == 1" class="text-center">
-                        <td colspan=11><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        <td colspan=12><i class="fa fa-spin fa-spinner font-30"></i></td>
                     </tr>
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0"
                         class="text-center">
-                        <td colspan=11>Không tìm thấy kết quả</td>
+                        <td colspan=12>Không tìm thấy kết quả</td>
                     </tr>
                     <tr *ngFor="let data of listData; let i= index">
 
                         <th scope="row">
                             {{ i+1 }}
                         </th>
-                        <td>{{data?.serviceId}}</td>
-                        <td>{{data?.serviceId}}</td>
-                        <td>{{data?.serviceId}}</td>
-                        <td>{{data?.serviceId}}</td>
-                        <td>{{data?.serviceId}}</td>
-                        <td>{{data?.serviceId}}</td>
-                        <td>{{data?.serviceId}}</td>
-                        <td>{{data?.serviceId}}</td>
-
+                        <td>{{data?.grprdId}}</td>
+                        <td>{{data?.prdName}}</td>
+                        <td>{{data?.prdCode}}</td>
                         <td>
+                            <span *ngIf="data?.feeType === 'QLTK'">Phí thường niên theo tháng</span>
+                            <span *ngIf="data?.feeType === 'SMS'">Phí thường niên SMS theo tháng</span>
+                            <span *ngIf="data?.feeType === 'IBT'">CK liên ngân hàng</span>
+                            <span *ngIf="data?.feeType === 'URT'">CK nội bộ</span>
+                            <span *ngIf="data?.feeType === 'ISL'">CK 247</span>
+                            <span *ngIf="data?.feeType === 'OW6'">Chuyển tiền vãng lai</span>
+
+                        </td>
+                        <td>{{data?.ccy}}</td>
+                        <td>{{data?.feeAmount}}</td>
+                        <td>{{data?.feeMax}}</td>
+                        <td>{{data?.feeMin}}</td>
+                        <td>
+                            <span *ngIf="data?.taxPercent !== null">{{data?.taxPercent}}</span>
+                            <span *ngIf="data?.taxPercent === null">0</span>
+                        </td>
+                        <td>{{data?.codeFee}}</td>
+
+                        <!-- <td>
                             <span *ngIf="data?.status === 'A'" class="badge
                                 badge-success">Active</span>
                             <span *ngIf="data?.status === 'D'" class="badge
                                 badge-danger">Deactive</span>
-                        </td>
+                        </td> -->
                         <td>
                             <a class="mr-2 cursor-pointer text-blue"
                                 routerLink="/package-fee/edit/{{data.id}}">

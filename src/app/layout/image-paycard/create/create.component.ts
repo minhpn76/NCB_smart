@@ -37,9 +37,8 @@ export class CreateComponent implements OnInit {
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
       linkUrl: ['', Validators.compose([this.helper.noWhitespaceValidator])],
-      nameImage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      linkUrlVn: [''],
-      linkUrlEn: [''],
+      fileName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      note: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: 'A'
     });
   }
@@ -52,16 +51,16 @@ export class CreateComponent implements OnInit {
     if (this.dataForm.invalid) {
       return;
     }
-    this.ncbService.createNcbBanner(this.dataForm.value).then((result) => {
+    this.ncbService.createPaycardImg(this.dataForm.value).then((result) => {
       if (result.status === 200) {
         if (result.json().code !== '00') {
           this.toastr.error(result.json().message, 'Thất bại!');
-        } else if (result.json().code === '910') {
+        } else if (result.json().code === '909') {
           this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
         } else {
           this.toastr.success('Thêm thành công', 'Thành công!');
           setTimeout(() => {
-            this.router.navigateByUrl('/banner');
+            this.router.navigateByUrl('/image-paycard');
           }, 500);
         }
       } else {
@@ -72,7 +71,7 @@ export class CreateComponent implements OnInit {
     });
   }
   resetForm() {
-    this.router.navigateByUrl('/banner');
+    this.router.navigateByUrl('/image-paycard');
   }
   async handleFileInput(files: FileList, eventTemp): Promise<any> {
     const check = await this.helper.validateFileImage(
@@ -93,17 +92,16 @@ export class CreateComponent implements OnInit {
   }
   uploadFile(value) {
     this.objUpload = {};
-    this.ncbService.uploadFileBanner(value).then((result) => {
+    this.ncbService.uploadFilePayCard(value).then((result) => {
       if (result.status === 200) {
         if (result.json().code !== '00') {
           this.isLockSave = true;
           this.toastr.error(result.json().message, 'Thất bại!');
         } else {
           this.objFile = result.json().body;
+          console.log('==this.objFile', this.objFile);
           this.dataForm.patchValue({
-            linkImg: this.objFile.linkUrl,
-            linkUrlVn: this.objFile.linkUrl,
-            linkUrlEn: this.objFile.linkUrl,
+            linkUrl: this.objFile.linkUrl,
           });
           this.isLockSave = false;
           this.toastr.success('Upload ảnh thành công', 'Thành công!');

@@ -69,7 +69,7 @@
         </div>
         <div class="col-md-4">
             <a class="btn btn-success pull-right" routerLink="/package-fee">
-                <i class="fa fa-question-circle" aria-hidden="true"></i>
+                <i class="fa fa-money" aria-hidden="true"></i>
                 Cấu hình phí
             </a>
         </div>
@@ -107,27 +107,27 @@
                     </tr>
                     <tr *ngFor ="let data of listData; let i = index">
                         
-                        <th scope="row" (click)="openModalPackage(data)" style="cursor: pointer;">
+                        <th scope="row"  style="cursor: pointer;">
                             {{ i+1 }}
                         </th>
-                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{data?.promotionName}}</td>
-                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{data?.promotion}}</td>
-                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitDaily)}}</td>
-                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitFaceid)}}</td>
-                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitFinger)}}</td>
+                        <td  style="cursor: pointer;">{{data?.promotionName}}</td>
+                        <td  style="cursor: pointer;">{{data?.promotion}}</td>
+                        <td  style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitDaily)}}</td>
+                        <td  style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitFaceid)}}</td>
+                        <td  style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitFinger)}}</td>
                         <!-- <td>{{data?.prdName}}</td> -->
-                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{data?.percentage}}</td>
-                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{data?.customerType}}</td>
+                        <td  style="cursor: pointer;">{{data?.percentage}}</td>
+                        <td  style="cursor: pointer;">{{data?.customerType}}</td>
                         
-                        <td (click)="openModalPackage(data)" style="cursor: pointer;">{{data?.ccy}}</td>
-                        <td (click)="openModalPackage(data)" style="cursor: pointer;">
+                        <td  style="cursor: pointer;">{{data?.ccy}}</td>
+                        <td  style="cursor: pointer;">
                             <span *ngIf="data?.tranType === 'CK'">Chuyển khoản</span>
                             <span  *ngIf="data?.tranType === 'TK'">Tiết kiệm</span>
                             <span  *ngIf="data?.tranType === 'TT'">Thanh toán</span>
                             <span  *ngIf="data?.tranType === 'TOPUP'">Nạp tiền</span>
                             <span  *ngIf="data?.tranType === 'QLTK'">Phí thường niên</span>
                         </td>
-                        <td (click)="openModalPackage(data)" style="cursor: pointer;">
+                        <td  style="cursor: pointer;">
                             <span *ngIf="data?.typeId === 'IBT'">Chuyển khoản LNH</span>
                             <span  *ngIf="data?.typeId === 'URT'">Chuyển khoản nội bộ</span>
                             <span  *ngIf="data?.typeId === 'ISL'">CK 247</span>
@@ -138,16 +138,16 @@
                             <span *ngIf="data?.typeId === 'IZI'">Nạp tiền vào TK IZI</span>
                         </td>
                         
-                        <td (click)="openModalPackage(data)" style="cursor: pointer;">
+                        <td  style="cursor: pointer;">
                             <span *ngIf="data?.status === 'A'" class="badge badge-success">Active</span>
                             <span *ngIf="data?.status === 'D'" class="badge badge-danger">Deactive</span>
                         </td>
                         <td>
-                            <a class="mr-2 cursor-pointer text-blue" routerLink="/package/edit/{{data.prd}}">
+                            <a class="mr-2 cursor-pointer text-blue" routerLink="/package/edit/{{data.id}}">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <span class="mr-2 cursor-pointer text-danger">
-                                <i class="fa fa-trash" (click)="deleteItem(1, i, data.prd)"></i>
+                                <i class="fa fa-trash" (click)="deleteItem(1, i, data.id)"></i>
                             </span>
                             
                         </td>

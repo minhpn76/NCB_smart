@@ -101,7 +101,7 @@ export class CreateComponent implements OnInit {
       typeId: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       quantity: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       customerType: ['CN', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      ccy: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(3), this.helper.noWhitespaceValidator])],
+      ccy: ['VND', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(3), this.helper.noWhitespaceValidator])],
       limitDaily: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       min: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       max: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],

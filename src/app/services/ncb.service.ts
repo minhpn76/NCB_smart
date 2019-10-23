@@ -908,6 +908,48 @@ export class NCBService {
     const url = `${API_URL}/configMbApp/detailTransaction`;
     return this.auth.authRequest({ url: url, params: data, method: 'GET', application: true  });
   }
+  // phi goi sp
+  searchPackageFee(params): Promise<any> {
+    const url = `${API_URL}/function/fee/search`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET', application: true });
+  }
+  createPackageFee(data): Promise<any> {
+    const url = `${API_URL}/function/fee/create`;
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
+  }
+  updatePackageFee(data): Promise<any> {
+    const url = `${API_URL}/function/fee/update`;
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
+  }
+  detailPackageFee(value): Promise<any> {
+    const url = `${API_URL}/function/fee/detail`;
+    return this.auth.authRequest({ url: url, params: value, method: 'GET', application: true });
+  }
+  deletePackageFee(value): Promise<any> {
+    const url = `${API_URL}/function/fee/delete`;
+    return this.auth.authRequest({ url: url, params: value, method: 'DELETE', application: true });
+  }
+  // hinh anh
+  searchPaycardImg(params): Promise<any> {
+    const url = `${API_URL}/parcard-picture/search`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET', application: true });
+  }
+  createPaycardImg(data): Promise<any> {
+    const url = `${API_URL}/parcard-picture/create`;
+    return this.auth.authRequest({ url: url, data: data, method: 'POST', application: true });
+  }
+  updatePaycardImg(data): Promise<any> {
+    const url = `${API_URL}/parcard-picture/update`;
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
+  }
+  detailPaycardImg(value): Promise<any> {
+    const url = `${API_URL}/parcard-picture/detail`;
+    return this.auth.authRequest({ url: url, params: value, method: 'GET', application: true });
+  }
+  deletePaycardImg(value): Promise<any> {
+    const url = `${API_URL}/parcard-picture/delete`;
+    return this.auth.authRequest({ url: url, params: value, method: 'DELETE', application: true });
+  }
 
 
 }

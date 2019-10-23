@@ -258,8 +258,9 @@ export class EditComponent implements OnInit {
     });
   }
   getItem(params) {
-    this.ncbService.detailPackage({prd: params}).then((result) => {
+    this.ncbService.detailPackage({functionId: params}).then((result) => {
       const body = result.json().body;
+      console.log('--=body', body);
       // const temp_fromDate_slipt = body.fromDate.split('-');
       // const temp_fromDate = {
       //   year: parseInt(temp_fromDate_slipt[0]),

@@ -7,7 +7,8 @@
                     <label for="search" class="col-sm-4 col-form-label">Mã gói sản phẩm(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <p-multiSelect
-                            [options]="cities1"
+                            [options]="listTempData"
+                            defaultLabel="Chọn giá trị"
                             formControlName="grprdId"
                         >
                         </p-multiSelect>

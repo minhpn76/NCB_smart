@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ElementRef, Output, ViewChild, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Helper } from '../../../helper';
@@ -18,20 +18,35 @@ export class CreateComponent implements OnInit {
   submitted = false;
   objUpload: any = {};
   optionCurrency: any = { prefix: '', thousands: '.', decimal: ',', align: 'left' };
-  private modalOp: NgbModalRef;
 
   fileExcel: any = {
     file: File,
     path: null,
     name: ''
   };
+  isProcessLoad: any = 0;
+  totalSearch: any = 0;
+  re_search = {
+      fileName: '',
+      status: 'A',
+      size: 10,
+      page: 0,
+      previous_page: 0
+  };
   selectedFiles: FileList;
+  choiceTempUrl: any = '';
+  tempListImage: any = [];
   objFile: any = {};
   fileName: File;
   isLockSave = false;
   temp: any = {
     loading: false
   };
+
+  protected modalOp: NgbModalRef;
+
+  @ViewChild('modalUpload', { static: false }) modalUploadElementRef: ElementRef;
+  @Output() emitCloseModal = new EventEmitter<any>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,7 +56,9 @@ export class CreateComponent implements OnInit {
     private helper: Helper,
     public router: Router,
     private cd: ChangeDetectorRef
-  ) { }
+  ) {
+    this.getListData();
+  }
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
@@ -64,6 +81,43 @@ export class CreateComponent implements OnInit {
     });
   }
   get Form() { return this.dataForm.controls; }
+  getListData() {
+    this.tempListImage = [];
+    this.isProcessLoad = 1;
+    // xu ly
+    this.ncbService
+        .searchPaycardImg(this.re_search)
+        .then(result => {
+            setTimeout(() => {
+                const body = result.json().body;
+                this.tempListImage = body.content;
+                this.totalSearch = body.totalElements;
+                this.isProcessLoad = 0;
+            }, 300);
+        })
+        .catch(err => {
+            this.isProcessLoad = 0;
+            this.tempListImage = [];
+            this.totalSearch = 0;
+            this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+        });
+  }
+  loadPage(page: number) {
+    const page_number = page - 1;
+    if (page_number !== this.re_search.previous_page) {
+      this.re_search.page = page_number;
+      this.re_search.previous_page = page_number;
+      this.getListData();
+      this.re_search.page = page;
+    }
+  }
+  clickSetupImg(data) {
+    this.objFile = {
+      fileName: data.fileName,
+      linkUrl: data.linkUrl
+    };
+    this.modalOp.close();
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -110,38 +164,42 @@ export class CreateComponent implements OnInit {
     }, (reason) => {
     });
   }
-
-  async handleFileInput(files: FileList): Promise<any> {
-    const check = await this.helper.validateFileImage(
-      files[0], AppSettings.UPLOAD_IMAGE.file_size, AppSettings.UPLOAD_IMAGE.file_ext
-    );
-    if (check === true) {
-        this.uploadFile(files.item(0));
-    }
+  async openModalUpload() {
+    // await this.getPassData(data);
+    this.openModal(this.modalUploadElementRef, 'modal-package', 'static');
   }
-  uploadFile(value) {
-    this.objUpload = {};
-    this.ncbService.uploadFilePayCard(value).then((result) => {
-      if (result.status === 200) {
-        if (result.json().code !== '00') {
-          this.isLockSave = true;
-          this.toastr.error(result.json().message, 'Thất bại!');
-        } else {
-          this.objFile = result.json().body;
-          this.isLockSave = false;
-          this.toastr.success('Upload ảnh thành công', 'Thành công!');
-        }
-      } else {
-        this.isLockSave = true;
-        this.toastr.error(result.message, 'Thất bại!');
-      }
 
-    }).catch((err) => {
-      this.isLockSave = true;
-      this.toastr.error(err.json().message, 'Thất bại!');
+  // async handleFileInput(files: FileList): Promise<any> {
+  //   const check = await this.helper.validateFileImage(
+  //     files[0], AppSettings.UPLOAD_IMAGE.file_size, AppSettings.UPLOAD_IMAGE.file_ext
+  //   );
+  //   if (check === true) {
+  //       this.uploadFile(files.item(0));
+  //   }
+  // }
+  // uploadFile(value) {
+  //   this.objUpload = {};
+  //   this.ncbService.uploadFilePayCard(value).then((result) => {
+  //     if (result.status === 200) {
+  //       if (result.json().code !== '00') {
+  //         this.isLockSave = true;
+  //         this.toastr.error(result.json().message, 'Thất bại!');
+  //       } else {
+  //         this.objFile = result.json().body;
+  //         this.isLockSave = false;
+  //         this.toastr.success('Upload ảnh thành công', 'Thành công!');
+  //       }
+  //     } else {
+  //       this.isLockSave = true;
+  //       this.toastr.error(result.message, 'Thất bại!');
+  //     }
 
-    });
-  }
+  //   }).catch((err) => {
+  //     this.isLockSave = true;
+  //     this.toastr.error(err.json().message, 'Thất bại!');
+
+  //   });
+  // }
   onUploadServer() {
     console.log('up to server');
     // let data = this.list_couriers.filter(v => v['CourierId'] == this.courierId);

@@ -7,11 +7,12 @@
                 <label for="search" class="col-sm-4 col-form-label">Tên hình ảnh:</label>
                 <div class="col-sm-6">
                     <input
+                        (keydown)="keyDownFunction($event)"
                         class="form-control col-lg-12"
                         itrim
                         type="text"
                         id="search"
-                        [(ngModel)]="re_search.bannerCode"
+                        [(ngModel)]="re_search.fileName"
                         placeholder="Tên hình ảnh"
                     />
                 </div>
@@ -43,16 +44,6 @@
                 <label for="search" class=" col-form-label">Bản ghi</label>
             </div>
         </div>
-        <!-- <div class="col-md-4">
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Tìm kiếm:</label>
-                <div class="col-sm-8">
-                    <input (keydown)="search.page=1;keyDownFunction($event)" class="form-control col-lg-12"
-                    itrim type="text" id="search" [(ngModel)]="search.keyword"
-                    placeholder="Tìm kiếm">
-                </div>
-            </div>
-        </div> -->
     </div>
     <div class="row">
         <div class="col-md-12 table-responsive">
@@ -62,44 +53,43 @@
                         <th scope="col">STT</th>
                         <th scope="col">Tên hình ảnh</th>
                         <th scope="col">Hình ảnh</th>
+                        <th scope="col">Mô tả</th>
+
                         <th scope="col">Trạng thái</th>
+                        
                         <th scope="col">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngIf="isProcessLoad == 1" class="text-center">
-                        <td colspan="5"><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        <td colspan="6"><i class="fa fa-spin fa-spinner font-30"></i></td>
                     </tr>
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
-                        <td colspan="5">Không tìm thấy kết quả</td>
+                        <td colspan="6">Không tìm thấy kết quả</td>
                     </tr>
                     <tr *ngFor="let data of listData; let i = index"
-                        (click)="modalShowImage(data?.linkImg)"
+                        
                         style="cursor: pointer;"
                     >
-                        <th scope="row">
+                        <th scope="row" (click)="modalShowImage(data?.linkUrl)">
                             {{ i + 1 }}
                         </th>
-                        <td>{{ data?.imageName }}</td>
-                        <td>
-                            <img src="{{ data?.linkUrl }}" alt="">
+                        <td (click)="modalShowImage(data?.linkUrl)">{{ data?.fileName }}</td>
+                        <td (click)="modalShowImage(data?.linkUrl)">
+                            <img width=100 src="{{ data?.linkUrl }}" alt="">
                         </td>
-                        <td>
+                        <td>{{data?.note}}</td>
+                        <td (click)="modalShowImage(data?.linkUrl)">
                             <span *ngIf="data?.status === 'A'" class="badge badge-success">Active</span>
                             <span *ngIf="data?.status === 'D'" class="badge badge-danger">Deactive</span>
                         </td>
                         <td>
-                            <a class="mr-2 cursor-pointer text-blue" routerLink="/image-paycard/edit/{{ data.id }}">
+                            <a class="mr-2 cursor-pointer text-blue" routerLink="/image-paycard/edit/{{ data.fileName }}">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <!-- <span class="mr-2 cursor-pointer text-blue">
-                                <i class="fa fa-lock"></i>
-                            </span> -->
-                            <!-- <span class="mr-2 cursor-pointer text-danger">
-                                <i class="fa fa-unlock-alt"></i>
-                            </span> -->
+            
                             <span class="mr-2 cursor-pointer text-danger">
-                                <i class="fa fa-trash" (click)="deleteItem(1, i, data.id)"></i>
+                                <i class="fa fa-trash" (click)="deleteItem(1, i, data.fileName)"></i>
                             </span>
                         </td>
                     </tr>

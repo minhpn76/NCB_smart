@@ -160,7 +160,7 @@ export class ListComponent implements OnInit {
       fromDate: ['', this.mRatesDateS],
       toDate: ['', this.mRatesDateS_7],
       prd: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      createBy: [JSON.stringify(this.userInfo.userId)],
+      createBy: [JSON.stringify(this.userInfo.userName)],
       status : ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
     });
   }
@@ -195,7 +195,7 @@ export class ListComponent implements OnInit {
     });
   }
 
-  deleteItem(event, index, code) {
+  deleteItem(event, index, data) {
     Swal.fire({
       title: 'Bạn có chắc chắn xoá?',
       text: 'Dữ liệu đã xoá không thể khôi phục lại',
@@ -205,7 +205,9 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.ncbService.deletePackage({ prd: code }).then(() => {
+        this.ncbService.deletePackage({
+          functionId: data
+        }).then(() => {
           this.listData.splice(index, 1);
           Swal.fire(
             'Đã xoá!',
