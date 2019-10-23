@@ -33,9 +33,14 @@
             <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
                 <i class="fa fa-search"></i>&nbsp;Tìm kiếm
             </button>
-            <a class="btn btn-warning" [routerLink]="['/promotion/create']">
+            <a class="btn btn-warning mr-3" [routerLink]="['/promotion/create']">
                 <i class="fa fa-plus"></i>&nbsp;Thêm mới
             </a>
+            <button class="btn btn-success" (click)="exportExcel()">
+                <i *ngIf="isProcessLoadExcel === 1"
+                    class="fa fa-spinner font-20"></i>
+                <i  *ngIf="isProcessLoadExcel === 0" class="fa fa-file"></i>&nbsp;Xuất excel
+            </button>
         </div>
     </div>
     <div class="row mt-50">
@@ -66,12 +71,12 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Tên chương trình</th>
+                        <th scope="col">Mã gói khuyến mại</th>
+                        <th scope="col">Tên gói khuyến mại</th>
                         <th scope="col">Nội dung chương trình</th>
-                        <th scope="col">Loại khách hàng</th>
-                        <th scope="col">Phí</th>
-                        <th scope="col">Gói sản phẩm áp dụng</th>
-                        <th scope="col">Loại phí</th>
+                        <th scope="col">Ngày bắt đầu</th>
+                        <th scope="col">Ngày kết thúc</th>
+                        <th scope="col">Ngày tạo</th>
                         <th scope="col">Trạng thái</th>
                         <th scope="col">Thao tác</th>
                     </tr>
@@ -88,19 +93,18 @@
                         <th scope="row">
                             {{ i+1 }}
                         </th>
-                        <td>{{data?.promotion}}</td>
-                        <td>{{data?.promotionName}}</td>
-                        <td>{{data?.customerType}}</td>
-                        <td>{{data?.percentage}} %</td>
-                        <td>{{data?.prdName}}</td>
-                        <td>{{data?.tranType}} - {{data?.typeId}}</td>
-
+                        <td>{{data?.proCode}}</td>
+                        <td>{{data?.proName}}</td>
+                        <td>{{data?.proDes}}</td>
+                        <td>{{data?.fromDate}}</td>
+                        <td>{{data?.toDate}}</td>
+                        <td>{{data?.createdDate}}</td>
                         <td>
                             <span *ngIf="data?.status === 'A'" class="badge badge-success">Active</span>
                             <span *ngIf="data?.status === 'D'" class="badge badge-danger">Deactive</span>
                         </td>
                         <td>
-                            <a class="mr-2 cursor-pointer text-blue" routerLink="/promotion/edit/{{data.id}}">
+                            <a class="mr-2 cursor-pointer text-blue" routerLink="/promotion/edit/{{data.proCode}}">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <span class="mr-2 cursor-pointer text-danger">

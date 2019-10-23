@@ -85,7 +85,7 @@ export class CreateComponent implements OnInit {
       type: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       error: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       msgCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      msg_Code_1: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      msg_Code_1: [''],
       mes_Vn: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       mes_En: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       user_Id: [this.userInfo.userId],

@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
+import { ExcelService } from '../../../services/excel.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
@@ -8,15 +9,17 @@ import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConf
   selector: 'promotion-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
-  providers: [NCBService]
+  providers: [NCBService, ExcelService]
 })
 export class ListComponent implements OnInit {
   search_keyword: any = '';
   isSearch: any = false;
   isProcessLoad: any = 0;
   totalSearch: any = 0;
+  arrExport: any = [];
+  isProcessLoadExcel: any = 0;
   re_search = {
-    promotion: '',
+    proName: '',
     status: '',
     size: 10,
     page: 0,
@@ -51,7 +54,8 @@ export class ListComponent implements OnInit {
   constructor(
     private ncbService: NCBService,
     public toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private excelService: ExcelService
   ) {
   }
 
@@ -93,7 +97,7 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.ncbService.deletePromotion({ id: id }).then((res) => {
+        this.ncbService.deletePromotion({ prodCode: id }).then((res) => {
           if (res.json().code === '00') {
             Swal.fire(
               'Đã xoá!',
@@ -154,5 +158,50 @@ export class ListComponent implements OnInit {
   changePageSize() {
     this.re_search.page = 0;
     this.getListData(this.re_search);
+  }
+
+  getDataExcel(search): Promise<any> {
+    const promise = new Promise((resolve, reject) => {
+      this.ncbService.searchPromotion(search)
+        .then((result) => {
+            this.arrExport = this.arrExport.concat(result.json().body.content);
+            resolve();
+          })
+          .catch((err) => {
+              resolve();
+          });
+    });
+    return promise;
+  }
+  async exportExcel() {
+    this.arrExport = [];
+    this.isProcessLoadExcel = 1;
+    const search = Object.assign({}, this.re_search);
+    search.size = 1000;
+    const page = Math.ceil(this.totalSearch / search.size);
+    search.page = 0;
+    await this.getDataExcel(search);
+    // const page = Math.ceil(this.totalSearch / search.size);
+    // console.log('==page', page);
+    // for (let i = 0; i <= (page <= 0 ? 1 : page); i++) {
+    //     search.page = i;
+    //     const result = await this.getDataExcel(search);
+    // }
+    const data = [];
+    this.arrExport.forEach((element) => {
+      data.push({
+        'Mã gói khuyến mại': element.proCode,
+        'Tên gói khuyến mại': element.proName,
+        'Nội dung chương trình': element.proDes,
+        'Ngày bắt đầu': element.fromDate,
+        'Ngày kết thúc': element.toDate,
+        'Trạng thái': element.status === 'A' ? 'Active' : 'Deactive',
+        'Người tạo': element.createdBy,
+        'Ngày tạo': element.createdDate
+      });
+    });
+    this.excelService.exportAsExcelFile(data, 'list_promotion');
+    this.isProcessLoadExcel = 0;
+    return;
   }
 }

@@ -66,10 +66,6 @@ export class ListComponent implements OnInit {
       name: 'Gửi tiết kiệm'
     },
     {
-      code: 'IBT',
-      name: 'CK liên ngân hàng'
-    },
-    {
       code: 'PLUS',
       name: 'Nộp thêm tiết kiệm'
     },

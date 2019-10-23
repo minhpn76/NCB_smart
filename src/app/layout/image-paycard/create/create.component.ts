@@ -23,6 +23,8 @@ export class CreateComponent implements OnInit {
   objFile: any = {};
   fileName: File;
   isLockSave = false;
+  tempUrl: any = '';
+  tempNameImg: any = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,8 +37,7 @@ export class CreateComponent implements OnInit {
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
       linkUrl: ['', Validators.compose([this.helper.noWhitespaceValidator])],
-      imageName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      linkImg: [''],
+      nameImage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       linkUrlVn: [''],
       linkUrlEn: [''],
       status: 'A'
@@ -73,10 +74,19 @@ export class CreateComponent implements OnInit {
   resetForm() {
     this.router.navigateByUrl('/banner');
   }
-  async handleFileInput(files: FileList): Promise<any> {
+  async handleFileInput(files: FileList, eventTemp): Promise<any> {
     const check = await this.helper.validateFileImage(
       files[0], AppSettings.UPLOAD_IMAGE.file_size, AppSettings.UPLOAD_IMAGE.file_ext
     );
+    if (eventTemp.target.files && eventTemp.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(files[0]); // read file as data url
+      this.tempNameImg = files[0].name;
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.tempUrl = (<FileReader>event.target).result;
+      };
+    }
+
     if (check === true) {
         this.uploadFile(files.item(0));
     }

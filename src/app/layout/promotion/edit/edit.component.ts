@@ -159,7 +159,7 @@ export class EditComponent implements OnInit {
     private helper: Helper
   ) {
     this.route.params.subscribe(params => {
-      this.itemId = params.itemId;
+      this.itemId = params.Id;
     });
     this.getPrdName();
     this.userInfo = localStorage.getItem('profile') ? JSON.parse(localStorage.getItem('profile')) : '';

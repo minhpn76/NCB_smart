@@ -29,7 +29,7 @@ const routes: Routes = [
       }
     },
     {
-      path: 'edit/:itemId',
+      path: 'edit/:Id',
       component: EditComponent,
       data: {
         icon: 'icon-plus',

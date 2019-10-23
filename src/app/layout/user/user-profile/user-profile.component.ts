@@ -162,7 +162,7 @@ export class UserProfileComponent implements OnInit {
         'CMND/HC': element.datCfmast.idno,
         'Nhóm khách hàng': element.crtusrid,
         'Gói sản phẩm': element.promotion,
-        'CT ưu đã': element.promotionName
+        'CT ưu đãi': element.promotionName
       });
     });
     this.excelService.exportAsExcelFile(data, 'list_user');

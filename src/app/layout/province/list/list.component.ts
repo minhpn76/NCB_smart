@@ -93,7 +93,7 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.ncbService.deleteProvince({ cityId: code }).then(res => {
+        this.ncbService.deleteProvince({ proId: code }).then(res => {
           if (res.json().code === '00') {
             // this.listData.splice(index, 1);
             Swal.fire(
@@ -101,6 +101,7 @@ export class ListComponent implements OnInit {
               'Dữ liệu đã xoá hoàn toàn.',
               'success'
             );
+            this.onSearch(this.re_search);
           } else {
             this.toastr.error('Xoá thất bại', 'Thất bại');
           }

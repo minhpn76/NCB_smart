@@ -87,7 +87,19 @@
                             {{ i+1 }}
                         </th>
                         <td>{{data?.provider}}</td>
-                        <td>{{data?.type}}</td>
+                        <td>
+                            <span *ngIf="data?.type === 'IBT'">CK liên ngân hàng</span>
+                            <span *ngIf="data?.type === 'URT'">CK nội bộ</span>
+                            <span *ngIf="data?.type === 'ISL'">CK 247</span>
+                            <span *ngIf="data?.type === 'OW6'">Gửi tiết kiệm</span>
+                            <span *ngIf="data?.type === 'PLUS'">Nộp thêm tiết kiệm</span>
+                            <span *ngIf="data?.type === 'REDEEM'">Tất toán tiết kiệm</span>
+                            <span *ngIf="data?.type === 'BILL'">Thanh toán hóa đơn</span>
+                            <span *ngIf="data?.type === 'TOP'">Nạp tiền điện thoại</span>
+                            <span *ngIf="data?.type === 'EWL'">Nạp ví điện tử</span>
+                            <span *ngIf="data?.type === 'IZI'">Nạp tiền vào tkhoan IZI</span>
+                            <span *ngIf="data?.type === 'SYSTEM'">Mã lỗi chung, khác của hệ thống</span>
+                        </td>
                         <td>{{data?.msgCode}}</td>
                         <td>{{data?.msg_Code_1}}</td>
                         <td>{{data?.mes_Vn}}</td>

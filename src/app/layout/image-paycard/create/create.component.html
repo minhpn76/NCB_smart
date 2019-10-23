@@ -34,10 +34,11 @@
                                     type="file"
                                     name="img"
                                     accept="image/*"
-                                    (change)="handleFileInput($event.target.files)"
+                                    (change)="handleFileInput($event.target.files, $event)"
                                     aria-describedby="inputGroupFileAddon01"
                                 />
-                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                <label *ngIf="tempNameImg === ''" class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                <label *ngIf="tempNameImg !== ''" class="custom-file-label" for="inputGroupFile01">{{tempNameImg}}</label>
                             </div>
                         </div>
                     </div>
@@ -71,6 +72,10 @@
                     </div>
                 </form>
     
+            </div>
+            <div class="col-md-4">
+                <img style="border: 1px dashed #004e96;padding: 5px;" *ngIf="tempUrl === ''" src="assets/images/preiview-img.jpg" height=200 width=200/>
+                <img style="border: 1px dashed #004e96;padding: 5px;"  *ngIf="tempUrl !== ''" [src]="tempUrl" height="200" width=200>
             </div>
         </div>
     </div>
