@@ -133,7 +133,6 @@ export class EditComponent implements OnInit {
       fileName: data.fileName,
       linkUrl: data.linkUrl
     };
-    console.log('1212==', this.objFile);
     this.modalOp.close();
   }
   onSubmit() {
@@ -229,22 +228,20 @@ export class EditComponent implements OnInit {
       this.dataForm.patchValue({
         prdcode: body.prdcode !== null ? body.prdcode : '',
         product: body.product !== null ? body.product : '',
-        activeFee: body.activeFee !== null ? body.activeFee : '',
+        activeFee: body.activeFee !== null ? body.activeFee.toString() : '',
         cardtype: body.cardtype !== null ? body.cardtype : '',
-        changesttFee: body.changesttFee !== null ? body.changesttFee : '',
+        changesttFee: body.changesttFee !== null ? body.changesttFee.toString() : '',
         class_: body.class_ !== null ? body.class_ : '',
-        directddFee: body.directddFee !== null ? body.directddFee : '',
-        f01: body.f01 !== null ? body.f01 : '',
-        f02: body.f02 !== null ? body.f02 : '',
-        f03: body.f03 !== null ? body.f03 : '',
-        f04: body.f04 !== null ? body.f04 : '',
-        f05: body.f05 !== null ? body.f05 : '',
-        issueFee: body.issueFee !== null ? body.issueFee : '',
-        reissueFee: body.reissueFee !== null ? body.reissueFee : '',
-        repinFee: body.repinFee !== null ? body.repinFee : '',
-        status: body.status !== null ? body.status : '',
-        fileName: body.fileName !== null ? body.fileName : '',
-        linkUrl: body.linkUrl !== null ? body.linkUrl : ''
+        directddFee: body.directddFee !== null ? body.directddFee.toString() : '',
+        f01: body.f01 !== null ? body.f01.toString() : '',
+        f02: body.f02 !== null ? body.f02.toString() : '',
+        f03: body.f03 !== null ? body.f03.toString() : '',
+        f04: body.f04 !== null ? body.f04.toString() : '',
+        f05: body.f05 !== null ? body.f05.toString() : '',
+        issueFee: body.issueFee !== null ? body.issueFee.toString() : '',
+        reissueFee: body.reissueFee !== null ? body.reissueFee.toString() : '',
+        repinFee: body.repinFee !== null ? body.repinFee.toString() : '',
+        status: body.status !== null ? body.status : ''
       });
       this.objFile = {
         fileName: body.fileName,
