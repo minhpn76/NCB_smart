@@ -97,8 +97,8 @@ export class CreateComponent implements OnInit {
     this.getConfigTransaction();
     this.dataForm = this.formBuilder.group({
       prdName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      tranType: ['CK', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      typeId: ['IBT', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      tranType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      typeId: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       quantity: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       customerType: ['CN', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       ccy: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(3), this.helper.noWhitespaceValidator])],
@@ -116,6 +116,7 @@ export class CreateComponent implements OnInit {
       createBy: [JSON.stringify(this.userInfo.userName)],
       status: ['A', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])]
     });
+    // this.getConfigDetailTransaction();
   }
   get Form() { return this.dataForm.controls; }
 
@@ -200,9 +201,18 @@ export class CreateComponent implements OnInit {
     this.ncbService.getConfigTransaction({
       code : 'FUNCTION_TYPE'
     }).then((result) => {
+      this.listTranType.push({
+        name: '--Chọn giá trị--',
+        code: ''
+      });
       setTimeout(() => {
         const body = result.json().body;
-        this.listTranType = body;
+        body.forEach(element => {
+          this.listTranType.push({
+            name: element,
+            code: element
+          });
+        });
       }, 300);
     }).catch(err => {
       this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
@@ -218,7 +228,17 @@ export class CreateComponent implements OnInit {
     this.ncbService.getConfigDetailTransaction(params).then((result) => {
       setTimeout(() => {
         const body = result.json().body;
-        this.listTypeId = body;
+        this.listTypeId.push({
+          name: '--Chọn giá trị--',
+          code: ''
+        });
+        body.forEach(element => {
+          this.listTypeId.push({
+            name: element.name,
+            code: element.value
+          });
+        });
+
       }, 300);
     }).catch(err => {
       this.toastr.error('Không lấy được dữ liệu', 'Thất bại');

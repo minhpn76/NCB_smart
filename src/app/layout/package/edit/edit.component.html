@@ -46,7 +46,7 @@
                         <label for="search" class="col-sm-4 col-form-label">Loại giao dịch(<span class="text-danger">*</span>):</label>
                         <div class="col-sm-8">
                             <select class="form-control" formControlName="tranType" name="tranType" (change)="getConfigDetailTransaction()">
-                                <option *ngFor="let data of listTranType" [value]="data.code" selected="selected">{{data.name}}</option>
+                                <option *ngFor="let data of listTranType" [value]="data.code" selected="selected" >{{data.name}}</option>
                             </select>
                             <div *ngIf="submitted && Form.tranType.errors"
                                 class="invalid-feedback">
@@ -56,7 +56,6 @@
                         </div>
     
                     </div>
-                    
                     <div class="form-group row">
                         <label for="search" class="col-sm-4 col-form-label">Chi tiết loại giao dịch(<span class="text-danger">*</span>):</label>
                         <div class="col-sm-8">

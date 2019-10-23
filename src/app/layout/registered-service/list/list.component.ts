@@ -63,6 +63,10 @@ export class ListComponent implements OnInit {
     {
       name: 'Thẻ',
       code: 'CARD'
+    },
+    {
+      name: 'ALL',
+      code: 'ALL'
     }
   ];
   listStatus: any = [
@@ -88,8 +92,8 @@ export class ListComponent implements OnInit {
   infoUser: any = {};
   protected modalOp: NgbModalRef;
 
-  @ViewChild('popupReqest', { static: false }) component;
-  public popupReqestElementRef: ElementRef;
+  @ViewChild('popupReqest', { static: false }) popupReqestElementRef: ElementRef;
+  // public popupReqestElementRef: ElementRef;
   @Output() emitCloseModal = new EventEmitter<any>();
 
   constructor(
@@ -215,6 +219,7 @@ export class ListComponent implements OnInit {
     this.passData = {};
     await this.getItem(id);
     this.passData = data;
+    console.log('==this.passData', this.passData);
     this.openModal(this.popupReqestElementRef, 'popup-request', 'static');
   }
   getBranchs() {

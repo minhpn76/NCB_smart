@@ -214,9 +214,18 @@ export class EditComponent implements OnInit {
     this.ncbService.getConfigTransaction({
       code : 'FUNCTION_TYPE'
     }).then((result) => {
+      this.listTranType.push({
+        name: '--Chọn giá trị--',
+        code: ''
+      });
       setTimeout(() => {
         const body = result.json().body;
-        this.listTranType = body;
+        body.forEach(element => {
+          this.listTranType.push({
+            name: element,
+            code: element
+          });
+        });
       }, 300);
     }).catch(err => {
       this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
@@ -232,7 +241,17 @@ export class EditComponent implements OnInit {
     this.ncbService.getConfigDetailTransaction(params).then((result) => {
       setTimeout(() => {
         const body = result.json().body;
-        this.listTypeId = body;
+        this.listTypeId.push({
+          name: '--Chọn giá trị--',
+          code: ''
+        });
+        body.forEach(element => {
+          this.listTypeId.push({
+            name: element.name,
+            code: element.value
+          });
+        });
+
       }, 300);
     }).catch(err => {
       this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
@@ -241,19 +260,19 @@ export class EditComponent implements OnInit {
   getItem(params) {
     this.ncbService.detailPackage({prd: params}).then((result) => {
       const body = result.json().body;
-      const temp_fromDate_slipt = body.fromDate.split('-');
-      const temp_fromDate = {
-        year: parseInt(temp_fromDate_slipt[0]),
-        month: parseInt(temp_fromDate_slipt[1]),
-        day: parseInt(temp_fromDate_slipt[2])
-      };
+      // const temp_fromDate_slipt = body.fromDate.split('-');
+      // const temp_fromDate = {
+      //   year: parseInt(temp_fromDate_slipt[0]),
+      //   month: parseInt(temp_fromDate_slipt[1]),
+      //   day: parseInt(temp_fromDate_slipt[2])
+      // };
 
-      const temp_toDate_slipt = body.toDate.split('-');
-      const temp_toDate = {
-        year: parseInt(temp_toDate_slipt[0]),
-        month: parseInt(temp_toDate_slipt[1]),
-        day: parseInt(temp_toDate_slipt[2])
-      };
+      // const temp_toDate_slipt = body.toDate.split('-');
+      // const temp_toDate = {
+      //   year: parseInt(temp_toDate_slipt[0]),
+      //   month: parseInt(temp_toDate_slipt[1]),
+      //   day: parseInt(temp_toDate_slipt[2])
+      // };
       // con
       try {
         this.dataForm.patchValue({
@@ -272,8 +291,8 @@ export class EditComponent implements OnInit {
           promotion: body.promotion !== null ? body.promotion : '',
           promotionName: body.promotionName !== null ? body.promotionName : '',
           percentage: body.percentage !== null ? body.percentage : '',
-          fromDate: temp_fromDate !== null ? temp_fromDate : '',
-          toDate: temp_toDate !== null ? temp_toDate : '',
+          // fromDate: temp_fromDate !== null ? temp_fromDate : '',
+          // toDate: temp_toDate !== null ? temp_toDate : '',
           prd: body.prd !== null ? body.prd : '',
           createBy: body.createBy !== null ? body.createBy : '',
           status: body.status !== null ? body.status : ''
@@ -281,6 +300,7 @@ export class EditComponent implements OnInit {
       } catch (e) {
         console.log('e', e);
       }
+      // this.getConfigDetailTransaction();
     }).catch(err => {
 
     });

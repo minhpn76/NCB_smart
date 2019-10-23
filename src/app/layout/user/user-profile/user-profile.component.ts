@@ -49,8 +49,8 @@ export class UserProfileComponent implements OnInit {
   ];
   protected modalOp: NgbModalRef;
 
-  @ViewChild('modalUser', { static: false }) component;
-  public modalUserElementRef: ElementRef;
+  @ViewChild('modalUser', { static: false }) modalUserElementRef: ElementRef;
+  // public modalUserElementRef: ElementRef;
   constructor(
     private ncbService: NCBService,
     public toastr: ToastrService,

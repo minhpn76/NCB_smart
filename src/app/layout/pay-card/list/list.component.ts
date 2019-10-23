@@ -101,17 +101,17 @@ export class ListComponent implements OnInit {
 
   protected modalOp: NgbModalRef;
 
-  @ViewChild('creditCard', { static: false }) component;
-  public creditCardElementRef: ElementRef;
+  @ViewChild('creditCard', { static: false }) creditCardElementRef: ElementRef;
+  // public creditCardElementRef: ElementRef;
 
-  @ViewChild('reasonCard', { static: false }) componentR;
-  public reasonCardElementRef: ElementRef;
+  @ViewChild('reasonCard', { static: false }) reasonCardElementRef: ElementRef;
+  // public reasonCardElementRef: ElementRef;
 
-  @ViewChild('otherConfigCard', { static: false }) componentO;
-  public otherConfigCardElementRef: ElementRef;
+  @ViewChild('otherConfigCard', { static: false }) otherConfigCardElementRef: ElementRef;
+  // public otherConfigCardElementRef: ElementRef;
 
-  @ViewChild('showImage', { static: false }) componentS;
-  public showImageElementRef: ElementRef;
+  @ViewChild('showImage', { static: false }) showImageElementRef: ElementRef;
+  // public showImageElementRef: ElementRef;
 
 
   @Output() emitCloseModal = new EventEmitter<any>();

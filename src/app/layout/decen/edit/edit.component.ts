@@ -62,7 +62,7 @@ export class EditComponent implements OnInit {
     if (this.dataForm.invalid) {
       return;
     }
-    this.ncbService.updateRoles(this.obj).then((result) => {
+    this.ncbService.updateRoles(this.dataForm.value).then((result) => {
       if (result.status === 200) {
         if (result.json().code !== '00') {
           this.toastr.error(result.json().message, 'Thất bại!');

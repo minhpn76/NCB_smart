@@ -45,8 +45,8 @@ export class ListComponent implements OnInit {
     imageShow: any = '';
     protected modalOp: NgbModalRef;
 
-    @ViewChild('showImage', { static: false }) component;
-  public showImageElementRef: ElementRef;
+    @ViewChild('showImage', { static: false }) showImageElementRef: ElementRef;
+//   public showImageElementRef: ElementRef;
 
     constructor(
         private ncbService: NCBService,

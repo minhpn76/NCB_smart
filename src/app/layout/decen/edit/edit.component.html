@@ -16,7 +16,7 @@
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Mô tả(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
-                        <textarea formControlName="description" [attr.disabled]="true" class="form-control col-lg-12" placeholder="Mô tả" [ngClass]="{ 'is-invalid': submitted && Form.description.errors }">
+                        <textarea formControlName="description" class="form-control col-lg-12" placeholder="Mô tả" [ngClass]="{ 'is-invalid': submitted && Form.description.errors }">
                         </textarea>
                         <div *ngIf="submitted && Form.description.errors" class="invalid-feedback">
                             <div *ngIf="Form.description.errors.required">Mô tả là bắt buộc</div>

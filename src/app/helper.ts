@@ -187,6 +187,9 @@ export class Helper {
         return promise;
     }
     currencyFormatDE(num) {
+        if (num === null) {
+            return 0.00;
+        }
         return (
           num
             .toFixed(2) // always two decimal digits

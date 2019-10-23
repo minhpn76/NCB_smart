@@ -81,7 +81,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
-            menu: 'GIAO_DICH'
+            menu: 'THAM_SO'
         },
         {
             code: 'GOI_SP',

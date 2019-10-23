@@ -45,8 +45,8 @@ export class ListComponent implements OnInit {
   ];
   protected modalOp: NgbModalRef;
 
-  @ViewChild('modalPackage', { static: false }) component;
-  public modalPackageElementRef: ElementRef;
+  @ViewChild('modalPackage', { static: false }) modalPackageElementRef: ElementRef;
+  // public modalPackageElementRef: ElementRef;
 
   constructor(
     private ncbService: NCBService,
