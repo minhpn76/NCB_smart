@@ -92,23 +92,22 @@
                         <td colspan="8">Không tìm thấy kết quả</td>
                     </tr>
                     <tr *ngFor="let data of listData; let i = index"
-                        (click)="modalShowImage(data?.linkUrl)"
                         style="cursor: pointer;"
                     >
-                        <th scope="row">
+                        <th scope="row" (click)="modalShowImage(data?.linkUrl)">
                             {{ i + 1 }}
                         </th>
-                        <td>{{ data?.prdcode }}</td>
-                        <td>{{ data?.product }}</td>
-                        <td>{{ data?.cardtype }}</td>
-                        <td>{{ data?.class_ }}</td>
-                        <td>
+                        <td (click)="modalShowImage(data?.linkUrl)">{{ data?.prdcode }}</td>
+                        <td (click)="modalShowImage(data?.linkUrl)">{{ data?.product }}</td>
+                        <td (click)="modalShowImage(data?.linkUrl)">{{ data?.cardtype }}</td>
+                        <td (click)="modalShowImage(data?.linkUrl)">{{ data?.class_ }}</td>
+                        <td (click)="modalShowImage(data?.linkUrl)">
                             <img width="70" src="{{ data?.linkUrl }}" alt="">
                             <br>
                             {{data?.fileName}}
                         </td>
 
-                        <td>
+                        <td (click)="modalShowImage(data?.linkUrl)">
                             <span
                                 *ngIf="data.status === 'A' || data.status === 'ACTIVE'"
                                 class="badge
