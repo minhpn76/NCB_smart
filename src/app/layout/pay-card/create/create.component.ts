@@ -36,7 +36,10 @@ export class CreateComponent implements OnInit {
   selectedFiles: FileList;
   choiceTempUrl: any = '';
   tempListImage: any = [];
-  objFile: any = {};
+  objFile: any = {
+    linkUrl: '',
+    fileName: ''
+  };
   fileName: File;
   isLockSave = false;
   temp: any = {

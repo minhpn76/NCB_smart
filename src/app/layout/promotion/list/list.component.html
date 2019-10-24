@@ -7,13 +7,23 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Tên chương trình:</label>
+                <label for="search" class="col-sm-4 col-form-label">Mã chương trình khuyến mãi:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
-                        [(ngModel)]="re_search.promotion"
+                        [(ngModel)]="re_search.proCode"
                         (keydown)="keyDownFunction($event)"
                         itrim type="text" id="search"
-                        placeholder="Tên chương trình">
+                        placeholder="Mã chương khuyến mãi">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Tên chương trình khuyến mãi:</label>
+                <div class="col-sm-6">
+                    <input class="form-control col-lg-12"
+                        [(ngModel)]="re_search.proName"
+                        (keydown)="keyDownFunction($event)"
+                        itrim type="text" id="search"
+                        placeholder="Tên chương trình khuyến mãi">
                 </div>
             </div>
         </div>
@@ -108,7 +118,7 @@
                                 <i class="fa fa-edit"></i>
                             </a>
                             <span class="mr-2 cursor-pointer text-danger">
-                                <i class="fa fa-trash" (click)="deleteItem(1, i, data.id)"></i>
+                                <i class="fa fa-trash" (click)="deleteItem(1, i, data.proCode)"></i>
                             </span>
                             
                         </td>
@@ -135,103 +145,3 @@
     </div>
     <!-- /.row -->
 </div>
-<ng-template #modalPackage let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <h5 class="modal-title">Chi tiết khuyến mãi/ưu đã</h5>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body p-t-0">
-        <div class="col-md-12">
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Tên chương trình:</label>
-                <div class="col-sm-6">
-                    <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.name"
-                    itrim type="text" id="search"
-                    placeholder="Tên chương trình">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Nội dung:</label>
-                <div class="col-sm-6">
-                    <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.description"
-                    itrim type="text" id="search"
-                    placeholder="Nội dung">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Loại khách hàng:</label>
-                <div class="col-sm-6">
-                    <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.typeCustomer"
-                    itrim type="text" id="search"
-                    placeholder="Loại khách hàng">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Phí thường niên:</label>
-                <div class="col-sm-6">
-                    <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.feeQLTK"
-                    itrim type="text" id="search"
-                    placeholder="Phí thường niên">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Phí chuyển khoản nội bộ:</label>
-                <div class="col-sm-6">
-                    <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.feeURT"
-                    itrim type="text" id="search"
-                    placeholder="Phí chuyển khoản nội bộ">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Phí chuyển khoản 247:</label>
-                <div class="col-sm-6">
-                    <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.feeISL"
-                    itrim type="text" id="search"
-                    placeholder="Phí chuyển khoản 247">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Phí chuyển tiền Citad:</label>
-                <div class="col-sm-6">
-                    <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.feeIBT"
-                    itrim type="text" id="search"
-                    placeholder="Phí chuyển tiền Citad">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Gía trị chọn:</label>
-                <div class="col-sm-6">
-                    <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.value"
-                    itrim type="text" id="search"
-                    placeholder="Giá trị chọn">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Gói sản phẩm áp dụng:</label>
-                <div class="col-sm-6">
-                    <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.packagePromotion"
-                    itrim type="text" id="search"
-                    placeholder="Goí sản phẩm áp dụng">
-                </div>
-            </div>
-            <div class="col-md-12 text-center">
-                <button class="btn btn-primary">
-                    Sửa
-                </button>
-                <button class="btn btn-default">Huỷ</button>
-            </div>
-        </div>
-    </div>
-</ng-template>

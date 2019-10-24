@@ -140,8 +140,8 @@ export class EditComponent implements OnInit {
       promotion: [''],
       promotionName: [''],
       percentage: [''],
-      fromDate: ['', this.mRatesDateS],
-      toDate: ['', this.mRatesDateS_7],
+      // fromDate: ['', this.mRatesDateS],
+      // toDate: ['', this.mRatesDateS_7],
       prd: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       createBy: [JSON.stringify(this.userInfo.userName)],
       status : ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
@@ -183,8 +183,8 @@ export class EditComponent implements OnInit {
       promotion: this.dataForm.value.promotion,
       promotionName: this.dataForm.value.promotionName,
       percentage: parseInt(this.dataForm.value.percentage),
-      fromDate: this.helper.tranferDate(this.dataForm.value.fromDate),
-      toDate: this.helper.tranferDate(this.dataForm.value.toDate),
+      // fromDate: this.helper.tranferDate(this.dataForm.value.fromDate),
+      // toDate: this.helper.tranferDate(this.dataForm.value.toDate),
       prd: this.dataForm.value.prd,
       createBy: parseInt(this.dataForm.value.createBy)
     };
@@ -260,7 +260,6 @@ export class EditComponent implements OnInit {
   getItem(params) {
     this.ncbService.detailPackage({functionId: params}).then((result) => {
       const body = result.json().body;
-      console.log('--=body', body);
       // const temp_fromDate_slipt = body.fromDate.split('-');
       // const temp_fromDate = {
       //   year: parseInt(temp_fromDate_slipt[0]),

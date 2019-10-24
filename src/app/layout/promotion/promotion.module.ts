@@ -10,6 +10,7 @@ import { PageHeaderModule } from '../../shared';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
             customClass: 'modal-content',
             confirmButtonClass: 'btn btn-primary',
             cancelButtonClass: 'btn'
-        })
+        }),
+        CurrencyMaskModule
     ],
     declarations: [
         ListComponent, CreateComponent, EditComponent

@@ -208,12 +208,12 @@ export class ListComponent implements OnInit {
         this.ncbService.deletePackage({
           functionId: data
         }).then(() => {
-          this.listData.splice(index, 1);
           Swal.fire(
             'Đã xoá!',
             'Dữ liệu đã xoá hoàn toàn.',
             'success'
           );
+          this.onSearch(this.re_search);
         });
       // For more information about handling dismissals please visit
       // https://sweetalert2.github.io/#handling-dismissals
@@ -288,6 +288,8 @@ export class ListComponent implements OnInit {
   }
   onSearch(payload) {
     if (payload.prd !== '' || payload.tranType !== '' || payload.typeId !== '' || payload.status !== '' ) {
+      payload.page = 0;
+    } else {
       payload.page = 0;
     }
     this.getListData(payload);

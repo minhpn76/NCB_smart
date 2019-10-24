@@ -268,7 +268,8 @@
                     <label for="search" class="col-sm-4 col-form-label">Hình ảnh(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Hình ảnh">
+                            <img *ngIf="objFile.linkUrl !== ''" style="border: 1px dashed #004e96;padding: 5px;" width=200 height=200 [src]="objFile.linkUrl" alt="">
+                            <img style="border: 1px dashed #004e96;padding: 5px;" *ngIf="objFile.linkUrl === ''" src="assets/images/preiview-img.jpg" height=200 width=200/>
                             <div class="input-group-btn">
                                 <span class="btn btn-default" (click)="openModalUpload()">
                                     <i class="fa fa-file-image-o" aria-hidden="true"></i> Chọn hình ảnh

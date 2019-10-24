@@ -44,7 +44,8 @@ export class CreateComponent implements OnInit {
   temp_mRatesDateS_7_4: any;
   temp_mRatesDateS_4: any;
   tempArrPackage: any = [];
-
+  optionCurrency: any = { prefix: '', thousands: '.', decimal: ',', align: 'left' };
+  userInfo: any;
   listPrdName: any;
 
   package: any = {
@@ -153,27 +154,20 @@ export class CreateComponent implements OnInit {
     private helper: Helper
   ) {
     this.getPrdName();
+    this.userInfo = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : '';
   }
 
   ngOnInit() {
     this.loadDate();
     this.dataForm = this.formBuilder.group({
-      customerType: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(2), this.helper.noWhitespaceValidator])],
-      promotionName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      promotion: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      percentage1: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      fromDate1: [this.mRatesDateS_1],
-      toDate1: [this.mRatesDateS_7_1],
-      percentage2: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      fromDate2: [this.mRatesDateS_2],
-      toDate2: [this.mRatesDateS_7_2],
-      percentage3: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      fromDate3: [this.mRatesDateS_3],
-      toDate3: [this.mRatesDateS_7_3],
-      percentage4: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      fromDate4: [this.mRatesDateS_4],
-      toDate4: [this.mRatesDateS_7_4],
-      prdName: ['']
+      proCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      proName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      proDes: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      fromDate: [this.mRatesDateS_1],
+      toDate: [this.mRatesDateS_7_1],
+      // createdDate: [''],
+      createdBy: [JSON.stringify(this.userInfo.userName)],
+      status: ['A']
     });
   }
   get Form() { return this.dataForm.controls; }
@@ -182,67 +176,31 @@ export class CreateComponent implements OnInit {
   }
   public loadDate(): void {
     this.my_7_1.setDate(this.my_7_1.getDate() - 7);
-    this.my_7_2.setDate(this.my_7_2.getDate() - 7);
-    this.my_7_3.setDate(this.my_7_3.getDate() - 7);
-    this.my_7_4.setDate(this.my_7_4.getDate() - 7);
 
     this.mRatesDateS_1 = { year: this.my_7_1.getFullYear(), month: this.my_7_1.getMonth() + 1, day: this.my_7_1.getDate() };
     this.mRatesDateS_7_1 = { year: this.my_1.getFullYear(), month: this.my_1.getMonth() + 1, day: this.my_1.getDate() };
 
-    this.mRatesDateS_2 = { year: this.my_7_2.getFullYear(), month: this.my_7_2.getMonth() + 1, day: this.my_7_2.getDate() };
-    this.mRatesDateS_7_2 = { year: this.my_2.getFullYear(), month: this.my_2.getMonth() + 1, day: this.my_2.getDate() };
-
-    this.mRatesDateS_3 = { year: this.my_7_3.getFullYear(), month: this.my_7_3.getMonth() + 1, day: this.my_7_3.getDate() };
-    this.mRatesDateS_7_3 = { year: this.my_3.getFullYear(), month: this.my_3.getMonth() + 1, day: this.my_3.getDate() };
-
-    this.mRatesDateS_4 = { year: this.my_7_4.getFullYear(), month: this.my_7_4.getMonth() + 1, day: this.my_7_4.getDate() };
-    this.mRatesDateS_7_4 = { year: this.my_4.getFullYear(), month: this.my_4.getMonth() + 1, day: this.my_4.getDate() };
   }
   onSubmit() {
     this.submitted = true;
     if (this.mRatesDateS_7_1 !== undefined && this.mRatesDateS_1 !== undefined) {
-      this.dataForm.value.toDate1 = this.tranferDate(this.mRatesDateS_7_1);
-      this.dataForm.value.fromDate1 = this.tranferDate(this.mRatesDateS_1);
-    }
-    if (this.mRatesDateS_7_2 !== undefined && this.mRatesDateS_2 !== undefined) {
-      this.dataForm.value.toDate2 = this.tranferDate(this.mRatesDateS_7_2);
-      this.dataForm.value.fromDate2 = this.tranferDate(this.mRatesDateS_2);
-    }
-    if (this.mRatesDateS_7_3 !== undefined && this.mRatesDateS_3 !== undefined) {
-      this.dataForm.value.toDate3 = this.tranferDate(this.mRatesDateS_7_3);
-      this.dataForm.value.fromDate3 = this.tranferDate(this.mRatesDateS_3);
-    }
-    if (this.mRatesDateS_7_4 !== undefined && this.mRatesDateS_4 !== undefined) {
-      this.dataForm.value.toDate4 = this.tranferDate(this.mRatesDateS_7_4);
-      this.dataForm.value.fromDate4 = this.tranferDate(this.mRatesDateS_4);
+      this.dataForm.value.toDate = this.tranferDate(this.mRatesDateS_7_1);
+      this.dataForm.value.fromDate = this.tranferDate(this.mRatesDateS_1);
     }
 
     // stop here if form is invalid
     if (this.dataForm.invalid) {
       return;
     }
-
-    if (this.tempArrPackage.length === 0) {
-      this.toastr.error('Gói sp áp dụng không được bỏ trống', 'Thất bại!');
-      return;
-    }
     const payload = {
-      customerType: this.dataForm.value.customerType,
-      promotionName: this.dataForm.value.promotionName,
-      promotion: this.dataForm.value.promotion,
-      percentage1: this.dataForm.value.percentage1,
-      fromDate1: this.dataForm.value.fromDate1,
-      toDate1: this.dataForm.value.toDate1,
-      percentage2: this.dataForm.value.percentage2,
-      fromDate2: this.dataForm.value.fromDate2,
-      toDate2: this.dataForm.value.toDate2,
-      percentage3: this.dataForm.value.percentage3,
-      fromDate3: this.dataForm.value.fromDate3,
-      toDate3: this.dataForm.value.toDate3,
-      percentage4: this.dataForm.value.percentage4,
-      fromDate4: this.dataForm.value.fromDate4,
-      toDate4: this.dataForm.value.toDate4,
-      prdName: this.tempArrPackage.join(','),
+      proCode: this.dataForm.value.proCode,
+      proName: this.dataForm.value.proName,
+      proDes: this.dataForm.value.proDes,
+      fromDate: this.dataForm.value.fromDate,
+      toDate: this.dataForm.value.toDate,
+      createdBy: this.dataForm.value.createdBy,
+      // createdDate: this.dataForm.value.createdDate,
+      status: this.dataForm.value.status
     };
 
     this.ncbService.createPromotion(payload).then((result) => {

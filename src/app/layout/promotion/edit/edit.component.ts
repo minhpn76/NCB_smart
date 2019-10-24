@@ -46,6 +46,7 @@ export class EditComponent implements OnInit {
   my_7_4: any = new Date();
   temp_mRatesDateS_7_4: any;
   temp_mRatesDateS_4: any;
+  optionCurrency: any = { prefix: '', thousands: '.', decimal: ',', align: 'left' };
 
   submitted = false;
   itemId: any;
@@ -159,7 +160,7 @@ export class EditComponent implements OnInit {
     private helper: Helper
   ) {
     this.route.params.subscribe(params => {
-      this.itemId = params.Id;
+      this.itemId = params.itemId;
     });
     this.getPrdName();
     this.userInfo = localStorage.getItem('profile') ? JSON.parse(localStorage.getItem('profile')) : '';
@@ -170,17 +171,14 @@ export class EditComponent implements OnInit {
     this.getItem(this.itemId);
     this.loadDate();
     this.dataForm = this.formBuilder.group({
-      customerType: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(2), this.helper.noWhitespaceValidator])],
-      promotionName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      promotion: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      percentage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      fromDate: [''],
-      toDate: [''],
-      status: [''],
-      prdName: [''],
-      tranType: [''],
-      typeId: [''],
-      createdBy: [JSON.stringify(this.userInfo.userName)]
+      proCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      proName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      proDes: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      fromDate: [this.mRatesDateS_1],
+      toDate: [this.mRatesDateS_7_1],
+      // createdDate: [''],
+      createdBy: [JSON.stringify(this.userInfo.userName)],
+      status: ['A']
     });
   }
   get Form() { return this.dataForm.controls; }
@@ -201,18 +199,16 @@ export class EditComponent implements OnInit {
       this.toastr.error('Gói sp áp dụng không được bỏ trống', 'Thất bại!');
       return;
     }
+
+
     const passData = {
-      customerType: this.dataForm.value.customerType,
-      promotionName: this.dataForm.value.promotionName,
-      promotion: this.dataForm.value.promotion,
+      proCode: this.dataForm.value.proCode,
+      proName: this.dataForm.value.proName,
+      proDes: this.dataForm.value.proDes,
       percentage: this.dataForm.value.percentage,
       fromDate: this.helper.tranferDate(this.dataForm.value.fromDate),
       toDate: this.helper.tranferDate(this.dataForm.value.toDate),
       createdBy: this.dataForm.value.createdBy,
-      tranType: this.dataForm.value.tranType,
-      typeId: this.dataForm.value.typeId,
-      createdDate: this.helper.formatDate(new Date()),
-      prdName: this.tempArrPackage.join(','),
       status: this.dataForm.value.status
     };
 
@@ -274,16 +270,16 @@ export class EditComponent implements OnInit {
     }
   }
   async getItem(params) {
-    this.ncbService.detailPromotion({ id: params }).then((result) => {
+    this.ncbService.detailPromotion({ proCode: params }).then((result) => {
       const body = result.json().body;
-      const temp_fromDate_slipt = body.fromDate.split('-');
+      const temp_fromDate_slipt = body.fromDate.split('/');
       const temp_fromDate = {
         year: parseInt(temp_fromDate_slipt[0]),
         month: parseInt(temp_fromDate_slipt[1]),
         day: parseInt(temp_fromDate_slipt[2])
       };
 
-      const temp_toDate_slipt = body.toDate.split('-');
+      const temp_toDate_slipt = body.toDate.split('/');
       const temp_toDate = {
         year: parseInt(temp_toDate_slipt[0]),
         month: parseInt(temp_toDate_slipt[1]),
@@ -291,38 +287,32 @@ export class EditComponent implements OnInit {
       };
 
       // change
-      const tempPackage = (body.prdName !== null) ? body.prdName.split(',') : [];
-      tempPackage.forEach(element => {
-        if (this.tempPrdName.includes(element) === true) {
-          this.listPrdName = this.listPrdName.filter(e => e.name !== element.toString());
-          this.listPrdName.push({
-            name: element,
-            code: true
-          });
-        }
-      });
-      const tempListPrdName = this.listPrdName.filter(e => e.code === true);
-      tempListPrdName.forEach(element => {
-        this.tempArrPackage.push(element.name);
-      });
+      // const tempPackage = (body.prdName !== null) ? body.prdName.split(',') : [];
+      // tempPackage.forEach(element => {
+      //   if (this.tempPrdName.includes(element) === true) {
+      //     this.listPrdName = this.listPrdName.filter(e => e.name !== element.toString());
+      //     this.listPrdName.push({
+      //       name: element,
+      //       code: true
+      //     });
+      //   }
+      // });
+      // const tempListPrdName = this.listPrdName.filter(e => e.code === true);
+      // tempListPrdName.forEach(element => {
+      //   this.tempArrPackage.push(element.name);
+      // });
       // end
-
       this.dataForm.patchValue({
-        customerType: body.customerType,
-        promotionName: body.promotionName,
-        promotion: body.promotion,
-        percentage: body.percentage,
-        // tslint:disable-next-line:no-bitwise
+        proCode: body.proCode,
+        proName: body.proName,
+        proDes: body.proDes,
         fromDate: temp_fromDate,
         toDate: temp_toDate,
-        prdName: tempPackage,
         status: body.status,
-        tranType: body.tranType,
-        typeId: body.typeId
+        createdBy: body.createdBy
       });
     }).catch(err => {
-      console.log('===', err);
-      this.toastr.error(err.json().decription, 'Thất bại!');
+      this.toastr.error('Lỗi hệ thống', 'Thất bại!');
     });
   }
   resetForm() {

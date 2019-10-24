@@ -1,73 +1,57 @@
 <div>
-    <app-page-header [heading]="'Khuyễn mãi/ ưu đãi'" [heading_second]="'Sửa khuyến mãi ưu đãi'" [url_heading]="'/promotion'">
+    <app-page-header [heading]="'Khuyễn mãi/ ưu đãi'" [heading_second]="'Thêm mới khuyến mãi ưu đãi'" [url_heading]="'/promotion'">
     </app-page-header>
     <div class="row">
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên chương trình(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Mã chường trình(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
-                            formControlName="promotion"
+                            formControlName="proCode"
                             class="form-control col-lg-12"
-                            placeholder="Tên chương trình"
-                            [ngClass]="{ 'is-invalid': submitted && Form.promotion.errors }"
+                            placeholder="Mã chương trình"
+                            [ngClass]="{ 'is-invalid': submitted && Form.proCode.errors }"
                         />
-                        <div *ngIf="submitted && Form.promotion.errors" class="invalid-feedback">
-                            <div *ngIf="Form.promotion.errors.required">Tên chương trình là bắt buộc</div>
-                            <div *ngIf="Form.promotion.hasError('whitespace')">Tên chương trình không hợp lệ</div>
+                        <div *ngIf="submitted && Form.proCode.errors" class="invalid-feedback">
+                            <div *ngIf="Form.proCode.errors.required">Mã chương trình là bắt buộc</div>
+                            <div *ngIf="Form.proCode.hasError('whitespace')">Mã chương trình không hợp lệ</div>
                         </div>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên chường trình(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="proName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên chương trình"
+                            [ngClass]="{ 'is-invalid': submitted && Form.proName.errors }"
+                        />
+                        <div *ngIf="submitted && Form.proName.errors" class="invalid-feedback">
+                            <div *ngIf="Form.proName.errors.required">Tên chương trình là bắt buộc</div>
+                            <div *ngIf="Form.proName.hasError('whitespace')">Tên chương trình không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Nội dung(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <textarea
-                            formControlName="promotionName"
+                            formControlName="proDes"
                             class="form-control col-lg-12"
                             placeholder="Nội dung"
-                            [ngClass]="{ 'is-invalid': submitted && Form.promotionName.errors }"
+                            [ngClass]="{ 'is-invalid': submitted && Form.proDes.errors }"
                         ></textarea>
 
-                        <div *ngIf="submitted && Form.promotionName.errors" class="invalid-feedback">
-                            <div *ngIf="Form.promotionName.errors.required">Nội dung là bắt buộc</div>
-                            <div *ngIf="Form.promotionName.hasError('whitespace')">Nội dung chương trình không hợp lệ</div>
+                        <div *ngIf="submitted && Form.proDes.errors" class="invalid-feedback">
+                            <div *ngIf="Form.proDes.errors.required">Nội dung là bắt buộc</div>
+                            <div *ngIf="Form.proDes.hasError('whitespace')">Nội dung chương trình không hợp lệ</div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Kiểu loại khách hàng(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <input
-                            formControlName="customerType"
-                            class="form-control col-lg-12"
-                            placeholder="Kiểu loại khách hàng"
-                            [ngClass]="{ 'is-invalid': submitted && Form.customerType.errors }"
-                        />
-                        <div *ngIf="submitted && Form.customerType.errors" class="invalid-feedback">
-                            <div *ngIf="Form.customerType.errors.required">Kiểu loại khách hàng là bắt buộc</div>
-                            <div *ngIf="Form.customerType.hasError('whitespace')">Kiểu loại khách hàng không hợp lệ</div>
-                            <div *ngIf="Form.customerType.errors.maxlength">Kiểu loại khách hàng qúa dài</div>
-                            <div *ngIf="Form.customerType.errors.minlength">Kiểu loại khách hàng qúa ngắn</div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Phí(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <input
-                            formControlName="percentage"
-                            class="form-control col-lg-12"
-                            placeholder="Phí"
-                            [ngClass]="{ 'is-invalid': submitted && Form.percentage.errors }"
-                        />
-                        <div *ngIf="submitted && Form.percentage.errors" class="invalid-feedback">
-                            <div *ngIf="Form.percentage.errors.required">Phí là bắt buộc</div>
-                            <div *ngIf="Form.percentage.hasError('whitespace')">Phí không hợp lệ</div>
-                        </div>
-                    </div>
-                </div>
+              
 
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Từ ngày:</label>
@@ -109,28 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Gói sp áp dụng(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <div class="checkbox">
-                            <label 
-                                formArrayName="prdName" 
-                                class="checkbox-inline" 
-                                style="margin-right: 10px"
-                                *ngFor="let item of listPrdName"
-                            >
-                                <input 
-                                    type="checkbox"
-                                    [name]="item.name"
-                                    [checked]="item.code"
-                                    [id]="item.name" 
-                                    (change)="changePackage($event, item)" 
-                                />&nbsp; {{item.name}}
-                            </label>
-                            
-                        </div>
-                    </div>
-                </div>
+            
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">

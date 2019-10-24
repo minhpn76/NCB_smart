@@ -19,7 +19,7 @@ export class ListComponent implements OnInit {
   arrExport: any = [];
   isProcessLoadExcel: any = 0;
   re_search = {
-    promotion: '',
+    proCode: '',
     proName: '',
     status: '',
     size: 10,
@@ -98,7 +98,7 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.ncbService.deletePromotion({ prodCode: id }).then((res) => {
+        this.ncbService.deletePromotion({ proCode: id }).then((res) => {
           if (res.json().code === '00') {
             Swal.fire(
               'Đã xoá!',
@@ -151,7 +151,9 @@ export class ListComponent implements OnInit {
     }
   }
   onSearch(payload) {
-    if (payload.promotionName !== '' || payload.status !== '') {
+    if (payload.proCode !== '' || payload.status !== '' || payload.proName !== '') {
+      payload.page = 0;
+    } else {
       payload.page = 0;
     }
     this.getListData(payload);

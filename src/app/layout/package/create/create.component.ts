@@ -110,10 +110,10 @@ export class CreateComponent implements OnInit {
       promotion: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       promotionName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       percentage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      fromDate: [this.mRatesDateS],
-      toDate: [this.mRatesDateS_7],
+      // fromDate: [this.mRatesDateS],
+      // toDate: [this.mRatesDateS_7],
       prd: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      createBy: [JSON.stringify(this.userInfo.userName)],
+      createdBy: [JSON.stringify(this.userInfo.userName)],
       status: ['A', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])]
     });
     // this.getConfigDetailTransaction();
@@ -140,39 +140,27 @@ export class CreateComponent implements OnInit {
       return;
     }
     const payload = {
-      function: {
-        prdName: this.dataForm.value.prdName,
-        tranType: this.dataForm.value.tranType,
-        typeId: this.dataForm.value.typeId,
-        status: this.dataForm.value.status,
-        quantity: parseInt(this.dataForm.value.quantity),
-        customerType: this.dataForm.value.customerType,
-        ccy: this.dataForm.value.ccy,
-        limitDaily: parseInt(this.dataForm.value.limitDaily),
-        min: parseInt(this.dataForm.value.min),
-        max: parseInt(this.dataForm.value.max),
-        limitFaceid: parseInt(this.dataForm.value.limitFaceid),
-        limitFinger: parseInt(this.dataForm.value.limitFinger),
-        promotion: this.dataForm.value.promotion,
-        promotionName: this.dataForm.value.promotionName,
-        percentage: parseInt(this.dataForm.value.percentage),
-        fromDate: this.dataForm.value.fromDate,
-        toDate: this.dataForm.value.toDate,
-        prd: this.dataForm.value.prd,
-        createBy: JSON.parse(this.dataForm.value.createBy)
-      }
-      // productFee: {
-      //   grprdId: this.dataForm.value.grprdId,
-      //   prdName: this.dataForm.value.prdNameP,
-      //   feeAmount: this.dataForm.value.feeAmount,
-      //   feeMin: this.dataForm.value.feeMin,
-      //   feeMax: this.dataForm.value.feeMax,
-      //   prdCode: this.dataForm.value.prdCode,
-      //   feeType: this.dataForm.value.feeType,
-      //   createdUser: JSON.parse(this.dataForm.value.createBy)
-      // }
-
+      prdName: this.dataForm.value.prdName,
+      tranType: this.dataForm.value.tranType,
+      typeId: this.dataForm.value.typeId,
+      status: this.dataForm.value.status,
+      quantity: parseInt(this.dataForm.value.quantity),
+      customerType: this.dataForm.value.customerType,
+      ccy: this.dataForm.value.ccy,
+      limitDaily: parseInt(this.dataForm.value.limitDaily),
+      min: parseInt(this.dataForm.value.min),
+      max: parseInt(this.dataForm.value.max),
+      limitFaceid: parseInt(this.dataForm.value.limitFaceid),
+      limitFinger: parseInt(this.dataForm.value.limitFinger),
+      promotion: this.dataForm.value.promotion,
+      promotionName: this.dataForm.value.promotionName,
+      percentage: parseInt(this.dataForm.value.percentage),
+      // fromDate: this.dataForm.value.fromDate,
+      // toDate: this.dataForm.value.toDate,
+      prd: this.dataForm.value.prd,
+      createdBy: JSON.parse(this.dataForm.value.createdBy)
     };
+
     this.ncbService.createPackage(payload).then((result) => {
       if (result.status === 200) {
         if (result.json().code !== '00') {
