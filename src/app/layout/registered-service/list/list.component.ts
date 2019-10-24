@@ -27,7 +27,7 @@ export class ListComponent implements OnInit {
   re_search = {
     compCode: '',
     idCard: '',
-    type: 'CARD',
+    type: '',
     service: '',
     status: '',
     size: 10,
@@ -249,11 +249,17 @@ export class ListComponent implements OnInit {
     this.isProcessLoad = 1;
     // xu ly
     this.ncbService.getAllTypeService().then((result) => {
-      setTimeout(() => {
-        const body = result.json().body;
-        this.listPHe = body;
-
-      }, 300);
+      this.listPHe.push({
+        code: '',
+        name: 'Tất cả'
+      });
+      const body = result.json().body;
+      body.forEach(element => {
+        this.listPHe.push({
+          code: element,
+          name: element
+        });
+      });
     }).catch(err => {
       this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
     });

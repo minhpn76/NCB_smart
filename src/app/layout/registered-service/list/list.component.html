@@ -29,7 +29,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Phân hệ:</label>
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.type" (change)="onSearch(re_search)">
-                        <option *ngFor="let status of listPHe" [value]="status" selected="selected">{{status}}</option>
+                        <option *ngFor="let status of listPHe" [value]="status.code" selected="selected">{{status.name}}</option>
 
                     </select>
                 </div>
@@ -119,7 +119,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 table-responsive">
-            <table class="table table-striped table-bordered" *ngIf="re_search.type === 'CARD'">
+            <table class="table table-striped table-bordered" *ngIf="re_search.type === 'CARD' || re_search.type === ''">
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
