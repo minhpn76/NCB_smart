@@ -56,18 +56,18 @@ export class ListComponent implements OnInit {
   listProvinceName: any = [];
   listPageSize: any = [10, 20, 30, 40, 50];
   listPHe: any = [
-    {
-      name: 'Dịch vụ vay',
-      code: 'LOAN'
-    },
-    {
-      name: 'Thẻ',
-      code: 'CARD'
-    },
-    {
-      name: 'ALL',
-      code: 'ALL'
-    }
+    // {
+    //   name: 'Dịch vụ vay',
+    //   code: 'LOAN'
+    // },
+    // {
+    //   name: 'Thẻ',
+    //   code: 'CARD'
+    // },
+    // {
+    //   name: 'ALL',
+    //   code: 'ALL'
+    // }
   ];
   listStatus: any = [
     {
@@ -112,6 +112,7 @@ export class ListComponent implements OnInit {
     this.getBranchs();
     this.getListService();
     this.getAllPGD();
+    this.getAllTypeService();
   }
   openModal(content, classLayout = '', type = '') {
       if (type === 'static') {
@@ -242,6 +243,20 @@ export class ListComponent implements OnInit {
     if (event.keyCode === 13) {
       this.getItem(id);
     }
+  }
+  getAllTypeService() {
+    this.listPHe = [];
+    this.isProcessLoad = 1;
+    // xu ly
+    this.ncbService.getAllTypeService().then((result) => {
+      setTimeout(() => {
+        const body = result.json().body;
+        this.listPHe = body;
+
+      }, 300);
+    }).catch(err => {
+      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+    });
   }
   getItem(params): Promise<any> {
     this.isSearchItem = 1;

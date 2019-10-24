@@ -81,8 +81,8 @@
                 <thead>
                     <tr>
                     <th scope="col">STT</th>
+                    <th scope="col">Mã gói sản phẩm</th>
                     <th scope="col">Tên gói sản phẩm</th>
-                    <th scope="col">Nội dung</th>
                     <th scope="col">Hạn mức / ngày</th>
                     <th scope="col">Hạn mức / faceid</th>
                     <th scope="col">Hạn mức / finger</th>
@@ -110,8 +110,8 @@
                         <th scope="row"  style="cursor: pointer;">
                             {{ i+1 }}
                         </th>
-                        <td  style="cursor: pointer;">{{data?.promotionName}}</td>
-                        <td  style="cursor: pointer;">{{data?.promotion}}</td>
+                        <td  style="cursor: pointer;">{{data?.prd}}</td>
+                        <td  style="cursor: pointer;">{{data?.prdName}}</td>
                         <td  style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitDaily)}}</td>
                         <td  style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitFaceid)}}</td>
                         <td  style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitFinger)}}</td>

@@ -950,6 +950,11 @@ export class NCBService {
     const url = `${API_URL}/parcard-picture/delete`;
     return this.auth.authRequest({ url: url, params: value, method: 'DELETE', application: true });
   }
+  // phan he
+  getAllTypeService(): Promise<any> {
+    const url = `${API_URL}/service-register/depart/type-list`;
+    return this.auth.authRequest({ url: url, method: 'GET', application: true });
+  }
 
 
 }
