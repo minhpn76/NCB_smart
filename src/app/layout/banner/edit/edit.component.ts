@@ -57,11 +57,11 @@ export class EditComponent implements OnInit {
   listShow: any = [
     {
       code: 'Y',
-      name: 'Khách hàng bật app lên là thấy POPUP'
+      name: 'Show một lần'
     },
     {
       code: 'N',
-      name: 'Khách hàng nhìn thấy POPUP sẽ không hiển thị lại nữa'
+      name: 'Show mãi mãi'
     }
   ];
   obj: any = {
