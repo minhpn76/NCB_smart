@@ -226,8 +226,6 @@ export class ListComponent implements OnInit {
   getBranchs() {
     this.listBranch = [];
     this.ncbService.getBranchs().then((result) => {
-      this.listBranch.push({ code: '', name: 'Tất cả' });
-
       result.json().body.forEach(element => {
         this.listBranch.push({
           code: element.brnCode,
@@ -397,14 +395,34 @@ export class ListComponent implements OnInit {
     const data = [];
     this.arrExport.forEach((element) => {
       data.push({
-        'Mã yêu cầu': 'CARD' + element.id,
-        'Khách hàng': element.customerName,
-        'Chi nhánh(PGD)': element.compName,
+        'Mã company': element.compCode,
+        'Tên company': element.compName,
+        'Tên KH': element.customerName,
+        'CIF': element.cif,
+        'CMND/ Hộ chiếu': element.idCard,
+        'Ngày cấp CMND/ Hộ chiếu': element.idCardIssueDate,
         'Số điện thoại': element.phone,
-        'CNMD/HC': element.idCard,
-        'Sản phẩm dịch vụ': element.service,
-        'Trạng thái': element.status,
-        'Ngày yêu cầu': element.requestDate
+        'Dịch vụ': element.service,
+        'Số thẻ': element.cardNo,
+        'Số tài khoản': element.acctNo,
+        'Lý do phát hành thẻ': element.reissueReason,
+        'Sản phẩm': element.product,
+        'Hạng thẻ': element.cardClass,
+        'Phí DV': element.fee,
+        'Ngày yêu cầu': element.requestDate,
+        'Ngày xử lý yc': element.completedDate,
+        'Trạng thái yc': element.status,
+        'Người xử lý yc': element.userId,
+        'Ghi chú': element.description,
+        'Hình thức trả lương': element.salaryCode,
+        'Tại ngân hàng': element.salaryBank,
+        'Hạn mức mong muốn': element.creditLimit,
+        'Thu nhập bình quân hàng tháng': this.helper.currencyFormatDE(element.monthlyIncome),
+        'Chi phí hàng tháng': element.this.helper.currencyFormatDE(element.monthlySpend),
+        'Đăng ký trích nợ': element.autoDebit,
+        'Số tiền đăng ký': element.repayMode,
+        'Số tài khoản Debit': element.autoDebitBankAcct,
+        'User KH đăng ký': element.userRegister,
       });
     });
 

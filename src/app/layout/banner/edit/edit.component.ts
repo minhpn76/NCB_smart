@@ -104,8 +104,8 @@ export class EditComponent implements OnInit {
       linkImg: [''],
       // linkUrlVn: [''],
       linkUrlEn: [''],
-      scheduleStart: [this.mRatesDateS],
-      scheduleEnd: [this.mRatesDateS_7],
+      scheduleStart: [''],
+      scheduleEnd: [''],
       oneTimeShow: ['Y'],
       actionScreen: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: 'A'
@@ -219,8 +219,8 @@ export class EditComponent implements OnInit {
 
     });
   }
-  getItem(params) {
-    this.ncbService.detailNcbBannner({ id: params }).then((result) => {
+  async getItem(params) {
+    await this.ncbService.detailNcbBannner({ id: params }).then((result) => {
       const body = result.json().body;
       this.objItemFile = {
         linkImg: body.linkImg,
@@ -236,6 +236,7 @@ export class EditComponent implements OnInit {
       };
 
       const temp_toDate_slipt = body.scheduleEnd !== null ? body.scheduleEnd.split('/') : null;
+      console.log('!@', temp_toDate_slipt);
       const temp_toDate = {
         year: parseInt(temp_toDate_slipt[0]),
         month: parseInt(temp_toDate_slipt[1]),
@@ -249,7 +250,7 @@ export class EditComponent implements OnInit {
         status: body.status,
         linkImg: body.linkImg,
         scheduleStart: temp_fromDate !== null ? temp_fromDate : '',
-        scheduleEnd: temp_toDate !== null ? temp_fromDate : '',
+        scheduleEnd: temp_toDate !== null ? temp_toDate : '',
         oneTimeShow: body.oneTimeShow,
 
         // linkUrlVn: body.linkUrlVn,

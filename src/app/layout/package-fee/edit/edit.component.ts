@@ -135,32 +135,64 @@ export class EditComponent implements OnInit {
   resetForm() {
     this.router.navigateByUrl('/package-fee');
   }
-  async getItem(params) {
-    await this.ncbService.detailPackageFee({productFeeId: params}).then((result) => {
-      const body = result.json().body;
-      try {
-        const tempGrp = body.grprdId.split(',');
-        this.dataForm.patchValue({
-          id: body.id !== null ? body.id : '',
-          grprdId: tempGrp,
-          prdName: body.prdName !== null ? body.prdName : '',
-          feeAmount: body.feeAmount !== null ? body.feeAmount : '',
-          ccy: body.ccy !== null ? body.ccy : '',
-          feeMax: body.feeMax !== null ? body.feeMax : '',
-          feeMin: body.feeMin !== null ? body.feeMin : '',
-          prdCode: body.prdCode !== null ? body.prdCode : '',
-          feeType: body.feeType !== null ? body.feeType : '',
-          codeFee: body.codeFee !== null ? body.codeFee : '',
-          taxPercent: body.taxPercent !== null ? body.taxPercent : ''
-        });
-      } catch (e) {
-        console.log('e', e);
-      }
-      // this.getConfigDetailTransaction();
-    }).catch(err => {
+  getItem(params): Promise<any> {
+    const promise = new Promise((resolve, reject) => {
 
+      this.ncbService.detailPackageFee({productFeeId: params}).then((result) => {
+        const body = result.json().body;
+        try {
+          // const tempGrp = body.grprdId.split(',');
+          this.dataForm.patchValue({
+            id: body.id !== null ? body.id : '',
+            grprdId: body.grprdId.split(','),
+            prdName: body.prdName !== null ? body.prdName : '',
+            feeAmount: body.feeAmount !== null ? body.feeAmount : '',
+            ccy: body.ccy !== null ? body.ccy : '',
+            feeMax: body.feeMax !== null ? body.feeMax : '',
+            feeMin: body.feeMin !== null ? body.feeMin : '',
+            prdCode: body.prdCode !== null ? body.prdCode : '',
+            feeType: body.feeType !== null ? body.feeType : '',
+            codeFee: body.codeFee !== null ? body.codeFee : '',
+            taxPercent: body.taxPercent !== null ? body.taxPercent : ''
+          });
+          console.log('==this.dataForm', this.dataForm.value);
+          resolve();
+        } catch (e) {
+          console.log('e', e);
+          resolve();
+        }
+      });
     });
+    return promise;
   }
+  // async getItem(params) {
+  //   await this.ncbService.detailPackageFee({productFeeId: params}).then((result) => {
+  //     const body = result.json().body;
+  //     try {
+  //       const tempGrp = body.grprdId.split(',');
+  //       this.dataForm.patchValue({
+  //         id: body.id !== null ? body.id : '',
+  //         grprdId: tempGrp,
+  //         prdName: body.prdName !== null ? body.prdName : '',
+  //         feeAmount: body.feeAmount !== null ? body.feeAmount : '',
+  //         ccy: body.ccy !== null ? body.ccy : '',
+  //         feeMax: body.feeMax !== null ? body.feeMax : '',
+  //         feeMin: body.feeMin !== null ? body.feeMin : '',
+  //         prdCode: body.prdCode !== null ? body.prdCode : '',
+  //         feeType: body.feeType !== null ? body.feeType : '',
+  //         codeFee: body.codeFee !== null ? body.codeFee : '',
+  //         taxPercent: body.taxPercent !== null ? body.taxPercent : ''
+  //       });
+  //       console.log('==this.dataForm', this.dataForm.value);
+  //     } catch (e) {
+  //       console.log('e', e);
+  //     }
+  //     // this.getConfigDetailTransaction();
+  //   }).catch(err => {
+
+  //   });
+  // }
+
   getListPackage() {
     this.listTempData = [];
     // xu ly
@@ -171,10 +203,11 @@ export class EditComponent implements OnInit {
       const body = result.json().body;
       body.content.forEach(element => {
         this.listTempData.push({
-          label: element.promotion,
+          label: element.prdName,
           value: element.prd
         });
       });
+      console.log('==this.listTempData', this.listTempData);
 
     }).catch(err => {
       this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');

@@ -137,12 +137,12 @@ export class CreateComponent implements OnInit {
 
     this.ncbService.createPayCard(payload).then((result) => {
       if (result.status === 200) {
-        if (result.json().code !== '00') {
-          this.toastr.error('Lỗi hệ thống', 'Thất bại!');
+        if (result.json().code === '00') {
+          this.toastr.success('Thêm mới thành công', 'Thành công!');
         } else if (result.json().code === '901') {
           this.toastr.error('Hình ảnh phôi thẻ đã tồn tại', 'Thất bại!');
         } else {
-          this.toastr.success('Thêm mới thành công', 'Thành công!');
+          this.toastr.error('Lỗi hệ thống', 'Thất bại!');
           setTimeout(() => {
             this.router.navigateByUrl('/pay-card');
           }, 500);

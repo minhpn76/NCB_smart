@@ -294,13 +294,11 @@ export class ListComponent implements OnInit {
     }
     this.getListData(payload);
   }
-  // keyDownFunction(event) {
-  //   if (event.keyCode === 13) {
-  //     this.isSearch = false;
-  //     this.re_search.cityCode = this.re_search_keyword;
-  //     this.getListData(this.re_search);
-  //   }
-  // }
+  keyDownFunction(event) {
+    if (event.keyCode === 13) {
+      this.getListData(this.re_search);
+    }
+  }
   changePageSize() {
     this.re_search.page = 0;
     this.isSearch = false;

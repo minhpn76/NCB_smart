@@ -168,7 +168,7 @@ export class ListComponent implements OnInit {
         });
     });
     return promise;
-}
+  }
   async exportToExcel() {
     this.arrDataExport = [];
     this.search.process_export = 1;
