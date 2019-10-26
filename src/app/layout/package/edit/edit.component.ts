@@ -84,27 +84,6 @@ export class EditComponent implements OnInit {
     }
   ];
   listTranType: any = [
-    {
-      code: 'CK',
-      name: 'Chuyển khoản'
-    },
-    {
-      code: 'TK',
-      name: 'Tiết kiệm'
-    },
-    {
-      code: 'TT',
-      name: 'Thanh toán'
-    },
-    {
-      code: 'TOPUP',
-      name: 'Nạp tiền'
-    },
-    {
-      code: 'QLTK',
-      name: 'Phí thường niên',
-
-    }
   ];
 
   constructor(
@@ -124,6 +103,7 @@ export class EditComponent implements OnInit {
 
   ngOnInit() {
     this.getItem(this.itemId);
+    this.getConfigTransaction();
     this.dataForm = this.formBuilder.group({
       id: [''],
       prdName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],

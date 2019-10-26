@@ -53,6 +53,7 @@ export class EditComponent implements OnInit {
     }
   ];
   itemId: any = '';
+  listTempGrd: any = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -67,12 +68,13 @@ export class EditComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.itemId = params.itemId;
     });
+    this.getItem(this.itemId);
    }
 
   ngOnInit() {
-    this.getItem(this.itemId);
+
     this.dataForm = this.formBuilder.group({
-      grprdId: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      grprdId: [this.listTempGrd],
       prdName:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       feeAmount: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       ccy:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
@@ -135,27 +137,28 @@ export class EditComponent implements OnInit {
   resetForm() {
     this.router.navigateByUrl('/package-fee');
   }
-  getItem(params): Promise<any> {
+  mapItem(params): Promise<any> {
     const promise = new Promise((resolve, reject) => {
 
-      this.ncbService.detailPackageFee({productFeeId: params}).then((result) => {
+      this.ncbService.detailPackageFee({ productFeeId: params }).then((result) => {
         const body = result.json().body;
         try {
           // const tempGrp = body.grprdId.split(',');
-          this.dataForm.patchValue({
-            id: body.id !== null ? body.id : '',
-            grprdId: body.grprdId.split(','),
-            prdName: body.prdName !== null ? body.prdName : '',
-            feeAmount: body.feeAmount !== null ? body.feeAmount : '',
-            ccy: body.ccy !== null ? body.ccy : '',
-            feeMax: body.feeMax !== null ? body.feeMax : '',
-            feeMin: body.feeMin !== null ? body.feeMin : '',
-            prdCode: body.prdCode !== null ? body.prdCode : '',
-            feeType: body.feeType !== null ? body.feeType : '',
-            codeFee: body.codeFee !== null ? body.codeFee : '',
-            taxPercent: body.taxPercent !== null ? body.taxPercent : ''
-          });
-          console.log('==this.dataForm', this.dataForm.value);
+          setTimeout(() => {
+            this.dataForm.patchValue({
+              id: body.id !== null ? body.id : '',
+              grprdId: body.grprdId.split(','),
+              prdName: body.prdName !== null ? body.prdName : '',
+              feeAmount: body.feeAmount !== null ? body.feeAmount : '',
+              ccy: body.ccy !== null ? body.ccy : '',
+              feeMax: body.feeMax !== null ? body.feeMax : '',
+              feeMin: body.feeMin !== null ? body.feeMin : '',
+              prdCode: body.prdCode !== null ? body.prdCode : '',
+              feeType: body.feeType !== null ? body.feeType : '',
+              codeFee: body.codeFee !== null ? body.codeFee : '',
+              taxPercent: body.taxPercent !== null ? body.taxPercent : ''
+            });
+          }, 500);
           resolve();
         } catch (e) {
           console.log('e', e);
@@ -165,33 +168,9 @@ export class EditComponent implements OnInit {
     });
     return promise;
   }
-  // async getItem(params) {
-  //   await this.ncbService.detailPackageFee({productFeeId: params}).then((result) => {
-  //     const body = result.json().body;
-  //     try {
-  //       const tempGrp = body.grprdId.split(',');
-  //       this.dataForm.patchValue({
-  //         id: body.id !== null ? body.id : '',
-  //         grprdId: tempGrp,
-  //         prdName: body.prdName !== null ? body.prdName : '',
-  //         feeAmount: body.feeAmount !== null ? body.feeAmount : '',
-  //         ccy: body.ccy !== null ? body.ccy : '',
-  //         feeMax: body.feeMax !== null ? body.feeMax : '',
-  //         feeMin: body.feeMin !== null ? body.feeMin : '',
-  //         prdCode: body.prdCode !== null ? body.prdCode : '',
-  //         feeType: body.feeType !== null ? body.feeType : '',
-  //         codeFee: body.codeFee !== null ? body.codeFee : '',
-  //         taxPercent: body.taxPercent !== null ? body.taxPercent : ''
-  //       });
-  //       console.log('==this.dataForm', this.dataForm.value);
-  //     } catch (e) {
-  //       console.log('e', e);
-  //     }
-  //     // this.getConfigDetailTransaction();
-  //   }).catch(err => {
-
-  //   });
-  // }
+  async getItem(params) {
+    await this.mapItem(params);
+  }
 
   getListPackage() {
     this.listTempData = [];

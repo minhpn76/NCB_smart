@@ -53,9 +53,14 @@
             <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
                 <i class="fa fa-search"></i>&nbsp;Tìm kiếm
             </button>
-            <a class="btn btn-warning" [routerLink]="['/package/create']">
+            <a class="btn btn-warning mr-3" [routerLink]="['/package/create']">
                 <i class="fa fa-plus"></i>&nbsp;Thêm mới
             </a>
+            <button class="btn btn-success" (click)="exportExcel()">
+                <i *ngIf="isProcessLoadExcel === 1"
+                    class="fa fa-spinner font-20"></i>
+                <i  *ngIf="isProcessLoadExcel === 0" class="fa fa-file"></i>&nbsp;Xuất excel
+            </button>
         </div>
     </div>
     <div class="row mt-50">
@@ -88,12 +93,16 @@
                     <th scope="col">Hạn mức / faceid</th>
                     <th scope="col">Hạn mức / finger</th>
                     <!-- <th scope="col">Loại gói</th> -->
-                    <th scope="col">Tỉ lệ (%)</th>
+                    <!-- <th scope="col">Tỉ lệ (%)</th> -->
                     <th scope="col">Loại khách hàng</th>
                     <th scope="col">Tiền tệ</th>
                     <th scope="col">Loại giao dịch</th>
                     <th scope="col">Chi tiết giao dịch</th>
-
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Số tiền tối thiểu / giao dịch</th>
+                    <th scope="col">Số tiền tối đa / giao dịch</th>
+                    <th scope="col">Ngừời tạo</th>
+                    <th scope="col">Ngày tạo</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Thao tác</th>
 
@@ -101,10 +110,10 @@
                 </thead>
                 <tbody>
                     <tr *ngIf="isProcessLoad == 1" class="text-center">
-                        <td colspan=13><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        <td colspan=17><i class="fa fa-spin fa-spinner font-30"></i></td>
                     </tr>
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
-                        <td colspan=13>Không tìm thấy kết quả</td>
+                        <td colspan=17>Không tìm thấy kết quả</td>
                     </tr>
                     <tr *ngFor ="let data of listData; let i = index">
                         
@@ -117,7 +126,7 @@
                         <td  style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitFaceid)}}</td>
                         <td  style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitFinger)}}</td>
                         <!-- <td>{{data?.prdName}}</td> -->
-                        <td  style="cursor: pointer;">{{data?.percentage}}</td>
+                        <!-- <td  style="cursor: pointer;">{{data?.percentage}}</td> -->
                         <td  style="cursor: pointer;">{{data?.customerType}}</td>
                         
                         <td  style="cursor: pointer;">{{data?.ccy}}</td>
@@ -138,6 +147,11 @@
                             <span *ngIf="data?.typeId === 'EWL'">Nạp ví điện tử</span>
                             <span *ngIf="data?.typeId === 'IZI'">Nạp tiền vào TK IZI</span>
                         </td>
+                        <td  style="cursor: pointer;">{{data?.quantity}}</td>
+                        <td  style="cursor: pointer;">{{helper.currencyFormatDE(data?.min)}}</td>
+                        <td  style="cursor: pointer;">{{helper.currencyFormatDE(data?.max)}}</td>
+                        <td  style="cursor: pointer;">{{data?.createdBy}}</td>
+                        <td  style="cursor: pointer;">{{data?.createdDate | date:'MM.dd.yyyy HH:mm'}}</td>
                         
                         <td  style="cursor: pointer;">
                             <span *ngIf="data?.status === 'A'" class="badge badge-success">Active</span>

@@ -77,7 +77,7 @@ export class CreateComponent implements OnInit {
       feeType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       codeFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       taxPercent: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      createdUser: [JSON.stringify(this.userInfo.userName)],
+      createdUser: [this.userInfo.userName],
       createdTime: [''],
     });
   }
@@ -140,7 +140,7 @@ export class CreateComponent implements OnInit {
       const body = result.json().body;
       body.content.forEach(element => {
         this.listTempData.push({
-          label: element.promotion,
+          label: element.prdName,
           value: element.prd
         });
       });

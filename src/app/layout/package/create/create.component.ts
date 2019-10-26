@@ -107,9 +107,9 @@ export class CreateComponent implements OnInit {
       max: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       limitFaceid: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       limitFinger: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      promotion: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      promotionName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      percentage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      promotion: [''],
+      promotionName: [''],
+      percentage: [''],
       // fromDate: [this.mRatesDateS],
       // toDate: [this.mRatesDateS_7],
       prd: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
@@ -154,7 +154,7 @@ export class CreateComponent implements OnInit {
       limitFinger: parseInt(this.dataForm.value.limitFinger),
       promotion: this.dataForm.value.promotion,
       promotionName: this.dataForm.value.promotionName,
-      percentage: parseInt(this.dataForm.value.percentage),
+      percentage: this.dataForm.value.percentage,
       // fromDate: this.dataForm.value.fromDate,
       // toDate: this.dataForm.value.toDate,
       prd: this.dataForm.value.prd,
@@ -163,15 +163,16 @@ export class CreateComponent implements OnInit {
 
     this.ncbService.createPackage(payload).then((result) => {
       if (result.status === 200) {
-        if (result.json().code !== '00') {
-          this.toastr.error(result.json().message, 'Thất bại!');
-        } else if (result.json().code === '914') {
-          this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
-        } else {
+        if (result.json().code === '00') {
           this.toastr.success('Thêm thành công', 'Thành công!');
           setTimeout(() => {
             this.router.navigateByUrl('/package');
           }, 500);
+
+        } else if (result.json().code === '914') {
+          this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
+        } else {
+          this.toastr.error(result.json().message, 'Thất bại!');
         }
       } else {
         this.toastr.error(result.message, 'Thất bại!');

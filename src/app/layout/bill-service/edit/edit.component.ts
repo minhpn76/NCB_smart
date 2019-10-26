@@ -44,8 +44,8 @@ export class EditComponent implements OnInit {
     });
     this.dataForm = this.formBuilder.group({
       providerCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      providerName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      serviceCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      providerName: ['--Chọn giá trị--', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      serviceCode: ['--Chọn giá trị--', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       partner: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: ['']
     });
@@ -54,17 +54,21 @@ export class EditComponent implements OnInit {
   get Form() { return this.dataForm.controls; }
   getListCompName() {
     this.ncbService.getListProdName().then(res => {
-        if (res.json().code === '00') {
-            const body = res.json().body;
-            body.forEach(element => {
-                this.listTempProd.push({
-                    name: element.serviceName,
-                    code: element.serviceCode,
-                });
+      if (res.json().code === '00') {
+        this.listTempProd.push({
+          name: '--Chọn giá trị--',
+          code: '--Chọn giá trị--',
+        });
+        const body = res.json().body;
+        body.forEach(element => {
+            this.listTempProd.push({
+                name: element.serviceName,
+                code: element.serviceCode,
             });
-        } else {
-            this.toastr.error('Không lấy được dự liệu', 'Thất bại');
-        }
+        });
+      } else {
+          this.toastr.error('Không lấy được dự liệu', 'Thất bại');
+      }
 
     }).catch(e => {
 

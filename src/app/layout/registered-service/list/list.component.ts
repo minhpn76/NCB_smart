@@ -292,6 +292,8 @@ export class ListComponent implements OnInit {
         }, 1000);
       }).catch(err => {
         resolve();
+        this.toastr.error('Lỗi hệ thống', 'Thất bại');
+        this.isSearchCode = 0;
       });
     });
     return promise;
@@ -377,7 +379,7 @@ export class ListComponent implements OnInit {
     this.arrExport = [];
     this.isProcessLoadExcel = 1;
     const search = Object.assign({}, this.re_search);
-    search.size = 1000;
+    // search.size = 1000;
     // if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
     //   search.toDate = this.tranferDate(this.mRatesDateS_7);
     //   search.fromDate = this.tranferDate(this.mRatesDateS);
@@ -391,6 +393,7 @@ export class ListComponent implements OnInit {
         search.page = i;
         await this.getDataExcel(search);
     }
+    search.page = 0;
 
     const data = [];
     this.arrExport.forEach((element) => {

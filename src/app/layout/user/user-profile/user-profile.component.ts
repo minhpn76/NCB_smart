@@ -149,10 +149,16 @@ export class UserProfileComponent implements OnInit {
     this.arrExport = [];
     this.isProcessLoadExcel = 1;
     const search = Object.assign({}, this.re_search);
-    search.size = 1000;
+    // search.size = 1000;
+    // const page = Math.ceil(this.totalSearch / search.size);
+    // search.page = 0;
+    // await this.getDataExcel(search);
     const page = Math.ceil(this.totalSearch / search.size);
+    for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {
+        search.page = i;
+        await this.getDataExcel(search);
+    }
     search.page = 0;
-    await this.getDataExcel(search);
     const data = [];
     this.arrExport.forEach((element) => {
       data.push({

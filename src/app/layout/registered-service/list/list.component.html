@@ -327,6 +327,39 @@
         <div class="row m-t-10" *ngIf="isSearchItem === 0">
             <div class="col-md-12">
                 <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên đăng nhập:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control col-lg-12"
+                            itrim type="text" id="search"
+                            [(ngModel)]="passData.userId"
+                            [attr.disabled]="true"
+                            placeholder="Tên đăng nhập"
+                        >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Họ và tên KH:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control col-lg-12"
+                            itrim type="text" id="search"
+                            [(ngModel)]="passData.customerName"
+                            [attr.disabled]="true"
+                            placeholder="Họ và tên KH"
+                        >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">CIF:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control col-lg-12"
+                            itrim type="text" id="search"
+                            [(ngModel)]="passData.cif"
+                            [attr.disabled]="true"
+                            placeholder="CIF"
+                        >
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Sản phẩm/ dịch vụ:</label>
                     <div class="col-sm-6">
                         <input class="form-control col-lg-12"
@@ -360,18 +393,34 @@
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Chi nhánh:</label>
-                    <div class="col-sm-6">
+                    <!-- <div class="col-sm-6">
                         <select class="form-control" [(ngModel)]="passData.compCode">
                             <option *ngFor="let item of listBranch" [value]="item.code">{{item.name}}</option>
                         </select>
+                    </div> -->
+                    <div class="col-sm-6">
+                        <input class="form-control col-lg-12"
+                            itrim type="text" id="search"
+                            [(ngModel)]="passData.compName"
+                            [attr.disabled]="true"
+                            placeholder="Chi nhánh"
+                        >
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
-                    <div class="col-sm-6">
+                    <!-- <div class="col-sm-6">
                         <select class="form-control" [(ngModel)]="passData.status">
                             <option *ngFor="let item of listStatus" [value]="item.code">{{item.name}}</option>
                         </select>
+                    </div> -->
+                    <div class="col-sm-6">
+                        <input class="form-control col-lg-12"
+                            itrim type="text" id="search"
+                            [(ngModel)]="passData.status"
+                            [attr.disabled]="true"
+                            placeholder="Trạng thái"
+                        >
                     </div>
                 </div>
                 <div class="form-group row">

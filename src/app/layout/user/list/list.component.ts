@@ -179,12 +179,12 @@ export class ListComponent implements OnInit {
       search.fromDate = this.tranferDate(this.mRatesDateS);
     }
     const page = Math.ceil(this.totalSearch / search.size);
-    // for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {
-    //     search.page = i;
-    //     await this.getDataExcel(search);
-    // }
+    for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {
+        search.page = i;
+        await this.getDataExcel(search);
+    }
     search.page = 0;
-    await this.getDataExcel(search);
+    // await this.getDataExcel(search);
     const data = [];
     this.arrExport.forEach((element) => {
       data.push({

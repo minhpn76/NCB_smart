@@ -326,26 +326,33 @@ export class ListComponent implements OnInit {
     this.arrExport = [];
     this.isProcessLoadExcel = 1;
     const search = Object.assign({}, this.re_search);
-    search.size = 1000;
+    // search.size = 1000;
     const page = Math.ceil(this.totalSearch / search.size);
-    // for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {
-    //     search.page = i;
-    //     await this.getDataExcel(search);
-    // }
+    for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {
+        search.page = i;
+        await this.getDataExcel(search);
+    }
     search.page = 0;
-    await this.getDataExcel(search);
+
     const data = [];
     this.arrExport.forEach((element) => {
       data.push({
-        'Tên đăng nhập': element.userName,
-        'Mã nhân viên': element.userCode,
-        'Họ và tên': element.fullName,
-        'Email': element.email,
-        'Số điện thoại': element.phone,
-        'Chi nhánh': element.branchCode,
-        'Phòng giao dịch': element.transactionCode,
-        'Người tạo': element.updatedBy,
-        'Phân quyền': element.role.roleName
+        'Mã gói sản phẩm': element.prd,
+        'Tên gói sản phẩm': element.prdName,
+        'Hạn mức / ngày': this.helper.currencyFormatDE(element.limitDaily),
+        'Hạn mức / faceid': this.helper.currencyFormatDE(element.limitFaceid),
+        'Hạn mức / finger':  this.helper.currencyFormatDE(element.limitFinger),
+        'Loại khách hàng': element.customerType,
+        'Tiền tệ': element.ccy,
+        'Loại giao dịch': element.tranType,
+        'Chi tiết giao dịch': element.typeId,
+        'Số lượng': element.quantity,
+        'Số tiền tối thiểu / giao dịch': this.helper.currencyFormatDE(element.min),
+        'Số tiền tối đa / giao dịch': this.helper.currencyFormatDE(element.max),
+        'Ngừời tạo': element.createdDate,
+        'Ngày tạo': element.createdBy,
+        'Trạng thái': element.status === 'A' ? 'Active' : 'Deactive'
+
       });
     });
 
