@@ -120,6 +120,10 @@
                             <span class="mr-2 cursor-pointer text-danger">
                                 <i class="fa fa-trash" (click)="deleteItem(1, i, data.proCode)"></i>
                             </span>
+                            <a class="mr-2 cursor-pointer text-blue" data-toggle="tooltip" data-placement="top" title="Gán mã khuyến mãi với sản phẩm" routerLink="/promotion/link/{{data.proCode}}">
+                                <i class="fa fa-tags" aria-hidden="true"></i>
+                            </a>
+                            
                             
                         </td>
                     </tr>

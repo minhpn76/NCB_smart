@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ListComponent } from './list/list.component';
 import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
+import { LinkComponent } from './link/link.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PromotionRoutingModule } from './promotion.routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -11,6 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 @NgModule({
     imports: [
@@ -25,10 +27,11 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
             confirmButtonClass: 'btn btn-primary',
             cancelButtonClass: 'btn'
         }),
-        CurrencyMaskModule
+        CurrencyMaskModule,
+        MultiSelectModule
     ],
     declarations: [
-        ListComponent, CreateComponent, EditComponent
+        ListComponent, CreateComponent, EditComponent, LinkComponent
     ]
 })
 export class PromotionModule {}

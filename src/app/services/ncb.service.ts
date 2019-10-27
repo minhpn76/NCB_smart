@@ -751,6 +751,12 @@ export class NCBService {
     const url = `${API_URL}/img/uploadFile`;
     return this.auth.authRequestFile({ url: url, data: formData, method: 'POST' });
   }
+  upFileExcel(file,params): Promise<any> {
+    const formData: FormData = new FormData();
+    formData.append('File', file, file.name);
+    const url = `${API_URL}/telecom/uploadFile`;
+    return this.auth.authRequestFile({url : url, data : formData, params: params, method  : 'POST'});
+  }
   // delete file
   deleteFilePayCard(payload) {
     const url = `${API_URL}/img/deleteFile`;

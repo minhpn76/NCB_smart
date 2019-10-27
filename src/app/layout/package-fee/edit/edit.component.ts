@@ -74,7 +74,7 @@ export class EditComponent implements OnInit {
   ngOnInit() {
 
     this.dataForm = this.formBuilder.group({
-      grprdId: [this.listTempGrd],
+      grprdId: [''],
       prdName:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       feeAmount: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       ccy:  ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],

@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from '../../../services/excel.service';
+import { Helper } from '../../../helper';
+import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'telecom-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
-  providers: [NCBService, ExcelService]
+  providers: [NCBService, ExcelService, Helper]
 })
 export class ListComponent implements OnInit {
   isSearch: any = false;
@@ -17,6 +19,17 @@ export class ListComponent implements OnInit {
   search_keyword: any = '';
   arrExport: any = [];
   isProcessLoadExcel: any = 0;
+  fileExcel: any = {
+    file: File,
+    path: null,
+    name: ''
+  };
+  temp: any = {
+    loading: false
+  };
+  file_ext = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel';
+  file_size: number = 15 * 1024 * 1024;
+
   re_search: any = {
     paramNo: '',
     paramName: '',
@@ -25,6 +38,9 @@ export class ListComponent implements OnInit {
     size: 10,
     previous_page: 0
   };
+  protected modalOp: NgbModalRef;
+
+  @ViewChild('uploadFile', { static: false }) uploadFileElementRef: ElementRef;
   listData: any = [];
   listPageSize: any = [10, 20, 30, 40, 50];
   listStatus: any = [
@@ -44,7 +60,9 @@ export class ListComponent implements OnInit {
   constructor(
     private ncbService: NCBService,
     public toastr: ToastrService,
-    private excelService: ExcelService
+    private excelService: ExcelService,
+    private modalService: NgbModal,
+    public helper: Helper
   ) { }
 
   ngOnInit() {
@@ -185,6 +203,90 @@ export class ListComponent implements OnInit {
     this.excelService.exportAsExcelFile(data, 'list_telecom');
     this.isProcessLoadExcel = 0;
     return;
+  }
+  popUpImportExcel() {
+
+  }
+
+  // onUploadFile(event) {
+  //   const fileList: FileList = event.files;
+  //   if (fileList.length > 0) {
+  //     this.fileExcel.file = fileList[0];
+  //     this.fileExcel.name = fileList[0].name;
+  //     this.fileExcel.size = fileList[0].size;
+  //   }
+  // }
+
+  async onUploadFile(event, call_upload = 1): Promise<void> {
+    const fileList: FileList = event.files;
+    try {
+        const check = await this.helper.validateFileImage(event.files[0], this.file_size, this.file_ext);
+        if (check) {
+            if (fileList.length > 0) {
+              this.fileExcel.file = fileList[0];
+              this.fileExcel.name = fileList[0].name;
+              console.log('XXx==', this.fileExcel);
+            }
+        }
+    } catch (err) {
+        console.log(err);
+    }
+  }
+  onUploadServer() {
+    console.log('up to server');
+    // let data = this.list_couriers.filter(v => v['CourierId'] == this.courierId);
+    // let courierName = data[0].Name
+
+    // if (this.fileExcel.file) {
+    //     this.temp.loading = true
+    //     let file: File = this.fileExcel.file;
+    //     this.ncbService.authRequestFile(file, {
+    //         'courierId': this.courierId,
+    //         'courierName': courierName,
+    //         'email_upload': this.user_email
+    //     }).then((result) => {
+    //         let rep = result.json()
+    //         if (rep.error == true) {
+    //             this.appComponent.toasterTranslate('error', 'TICM_uploadfileloihaythulai');
+    //         } else {
+    //             let dataReponse = {
+    //                 'FileUpload': result.json().data,
+    //                 'CourierId': this.courierId,
+    //                 'courierName': courierName,
+    //                 'email_upload': this.user_email,
+    //                 'Action': 'uploadFile'
+    //             }
+    //             this.change.emit(dataReponse);
+    //             this.appComponent.toastr.success(result.json().messages, 'Oops!');
+    //         }
+    //         this.temp.loading = false
+    //         this.emitCloseModal.emit(true);
+    //     })
+    //         .catch((err) => {
+    //             this.temp.loading = false
+    //             this.appComponent.toastr.warning(this.appComponent.instantTranslate('Toaster_PleaseTryAgain'), 'Oops!');
+    //         });
+    // }
+  }
+
+  openModal(content, classLayout = '', type = '') {
+    if (type === 'static') {
+      this.modalOp = this.modalService.open(content, { keyboard: false, backdrop: 'static', windowClass: classLayout, size: 'lg' });
+    } else if (type === 'sm') {
+      this.modalOp = this.modalService.open(content, { windowClass: classLayout, size: 'sm' });
+    } else {
+      this.modalOp = this.modalService.open(content, { windowClass: classLayout, size: 'lg' });
+    }
+    this.modalOp.result.then((result) => {
+    }, (reason) => {
+    });
+  }
+  closeModal() {
+      this.modalOp.close();
+  }
+  async modalUploadFile(image) {
+    // tslint:disable-next-line:no-unused-expression
+      this.openModal(this.uploadFileElementRef, 'modal-uploadFile', 'sm');
   }
 
 }
