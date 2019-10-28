@@ -75,15 +75,17 @@
                         <th scope="col">CMND/HC</th>
                         <th scope="col">Nhóm khách hàng</th>
                         <th scope="col">Gói sản phẩm</th>
-                        <th scope="col">CT Ưu đãi</th>
+                        <th scope="col">Ưu đãi</th>
+                        <th scope="col">Tên CT Ưu đãi</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngIf="isProcessLoad == 1" class="text-center">
-                        <td colspan=8><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        <td colspan=9><i class="fa fa-spin fa-spinner font-30"></i></td>
                     </tr>
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
-                        <td colspan=8>Không tìm thấy kết quả</td>
+                        <td colspan=9>Không tìm thấy kết quả</td>
                     </tr>
                     <tr *ngFor ="let data of listData; let i = index" (click)="openModalUser(data)" style="cursor: pointer">
                         
@@ -98,7 +100,9 @@
                         <td>{{data?.datCfmast?.idno}}</td>
                         <td>{{data?.crtusrid}}</td>
                         <td>{{data?.function?.prdName}}</td> 
-                        <td>{{data?.function?.promotionName}}</td>                    
+                        <td>{{data?.function?.promotionName}}</td>
+                        <td>{{data?.function?.prodName}}</td>                    
+
                     </tr>
                     
                 </tbody>

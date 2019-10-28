@@ -36,6 +36,8 @@ const routes: Routes = [
             { path: 'promotion', loadChildren: () => import('./promotion/promotion.module').then(m => m.PromotionModule) },
             { path: 'role-decen', loadChildren: () => import('./role-decen/role-decen.module').then(m => m.RoleDecenModule) },
             { path: 'image-paycard', loadChildren: () => import('./image-paycard/image-paycard.module').then(m => m.ImgPayCardModule) },
+            { path: 'promotion-package', loadChildren: () => import('./promotion-package/link.module').then(m => m.PromotionPGModule) }
+
         ]
     }
 ];

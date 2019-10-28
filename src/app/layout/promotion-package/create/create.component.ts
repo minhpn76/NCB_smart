@@ -8,12 +8,12 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'provision-link',
-  templateUrl: './link.component.html',
-  styleUrls: ['./link.component.css'],
+  selector: 'link-create',
+  templateUrl: './create.component.html',
+  styleUrls: ['./create.component.css'],
   providers: [NCBService, Helper]
 })
-export class LinkComponent implements OnInit {
+export class CreateComponent implements OnInit {
   listTempData: any = [];
   dataForm: FormGroup;
   submitted = false;

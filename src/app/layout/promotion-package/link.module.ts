@@ -4,7 +4,7 @@ import { ListComponent } from './list/list.component';
 import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { PromotionRoutingModule } from './promotion.routing.module';
+import { PromotionPGModuleRoutingModule } from './link.routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PageHeaderModule } from '../../shared';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -15,7 +15,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
 
 @NgModule({
     imports: [
-        CommonModule, PromotionRoutingModule, PageHeaderModule, NgbModule,
+        CommonModule, PromotionPGModuleRoutingModule, PageHeaderModule, NgbModule,
         FormsModule,
         ReactiveFormsModule,
         TranslateModule.forChild(),
@@ -33,4 +33,4 @@ import {MultiSelectModule} from 'primeng/multiselect';
         ListComponent, CreateComponent, EditComponent
     ]
 })
-export class PromotionModule {}
+export class PromotionPGModule {}

@@ -1,7 +1,9 @@
 <div>
     <app-page-header 
-        [heading]="'Khuyến mãi/ ưu đãi'"
+        [heading]="'Khuyến mãi / ưu đãi'"
+        [heading_second]="'Gán mã khuyến mãi gói sản phẩm'"
         [url_heading]="'/promotion'">
+    >
     </app-page-header>
     <!-- {{'Admin_function.DS_province' | translate}} -->
     <div class="row">
@@ -17,13 +19,13 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Tên chương trình khuyến mãi:</label>
+                <label for="search" class="col-sm-4 col-form-label">Mã gói sản phẩm:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
-                        [(ngModel)]="re_search.proName"
+                        [(ngModel)]="re_search.prd"
                         (keydown)="keyDownFunction($event)"
                         itrim type="text" id="search"
-                        placeholder="Tên chương trình khuyến mãi">
+                        placeholder="Mã gói sản phẩm">
                 </div>
             </div>
         </div>
@@ -43,16 +45,8 @@
             <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
                 <i class="fa fa-search"></i>&nbsp;Tìm kiếm
             </button>
-            <a class="btn btn-warning mr-3" [routerLink]="['/promotion/create']">
+            <a class="btn btn-warning mr-3" [routerLink]="['/promotion-package/create']">
                 <i class="fa fa-plus"></i>&nbsp;Thêm mới
-            </a>
-            <button class="btn btn-success mr-3" (click)="exportExcel()">
-                <i *ngIf="isProcessLoadExcel === 1"
-                    class="fa fa-spinner font-20"></i>
-                <i  *ngIf="isProcessLoadExcel === 0" class="fa fa-file"></i>&nbsp;Xuất excel
-            </button>
-            <a class="btn btn-warning" [routerLink]="['/promotion-package']">
-                <i class="fa fa-tags"></i>&nbsp;Gán mã khuyến mãi sản phẩm
             </a>
         </div>
     </div>
@@ -85,10 +79,12 @@
                     <tr>
                         <th scope="col">STT</th>
                         <th scope="col">Mã gói khuyến mại</th>
-                        <th scope="col">Tên gói khuyến mại</th>
-                        <th scope="col">Nội dung chương trình</th>
-                        <th scope="col">Ngày bắt đầu</th>
-                        <th scope="col">Ngày kết thúc</th>
+                        <th scope="col">Mã gói sản phẩm</th>
+                        <th scope="col">Mã giao dịch</th>
+                        <th scope="col">Loại giao dịch</th>
+                        <th scope="col">Tiền tệ</th>
+                        <th scope="col">Giảm phí khuyến mại</th>
+                        <th scope="col">Tạo bởi</th>
                         <th scope="col">Ngày tạo</th>
                         <th scope="col">Trạng thái</th>
                         <th scope="col">Thao tác</th>
@@ -96,10 +92,10 @@
                 </thead>
                 <tbody>
                     <tr *ngIf="isProcessLoad == 1" class="text-center">
-                        <td colspan=9><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        <td colspan=11><i class="fa fa-spin fa-spinner font-30"></i></td>
                     </tr>
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
-                        <td colspan=9>Không tìm thấy kết quả</td>
+                        <td colspan=11>Không tìm thấy kết quả</td>
                     </tr>
                     <tr *ngFor ="let data of listData; let i = index">
                         
@@ -107,10 +103,27 @@
                             {{ i+1 }}
                         </th>
                         <td>{{data?.proCode}}</td>
-                        <td>{{data?.proName}}</td>
-                        <td>{{data?.proDes}}</td>
-                        <td>{{data?.fromDate}}</td>
-                        <td>{{data?.toDate}}</td>
+                        <td>{{data?.prd}}</td>
+                        <td >
+                            <span *ngIf="data?.tranType === 'CK'">Chuyển khoản</span>
+                            <span  *ngIf="data?.tranType === 'TK'">Tiết kiệm</span>
+                            <span  *ngIf="data?.tranType === 'TT'">Thanh toán</span>
+                            <span  *ngIf="data?.tranType === 'TOPUP'">Nạp tiền</span>
+                            <span  *ngIf="data?.tranType === 'QLTK'">Phí thường niên</span>
+                        </td>
+                        <td >
+                            <span *ngIf="data?.typeId === 'IBT'">Chuyển khoản LNH</span>
+                            <span  *ngIf="data?.typeId === 'URT'">Chuyển khoản nội bộ</span>
+                            <span  *ngIf="data?.typeId === 'ISL'">CK 247</span>
+                            <span  *ngIf="data?.typeId === 'OW6'">Chuyển tiền vãng lai</span>
+                            <span  *ngIf="data?.typeId === 'BILL'">Thanh toán hóa đơn</span>
+                            <span  *ngIf="data?.typeId === 'TOP'">Nạp tiền điện thoại</span>
+                            <span *ngIf="data?.typeId === 'EWL'">Nạp ví điện tử</span>
+                            <span *ngIf="data?.typeId === 'IZI'">Nạp tiền vào TK IZI</span>
+                        </td>
+                        <td>{{data?.ccy}}</td>
+                        <td>{{data?.percentage}}</td>
+                        <td>{{data?.createdBy}}</td>
                         <td>{{data?.createdDate}}</td>
                         <td>
                             <span *ngIf="data?.status === 'A'" class="badge badge-success">Active</span>
@@ -123,9 +136,9 @@
                             <span class="mr-2 cursor-pointer text-danger">
                                 <i class="fa fa-trash" (click)="deleteItem(1, i, data.proCode)"></i>
                             </span>
-                            <!-- <a class="mr-2 cursor-pointer text-blue" data-toggle="tooltip" data-placement="top" title="Gán mã khuyến mãi với sản phẩm" routerLink="/promotion/link/{{data.proCode}}">
+                            <a class="mr-2 cursor-pointer text-blue" data-toggle="tooltip" data-placement="top" title="Gán mã khuyến mãi với sản phẩm" routerLink="/promotion/link/{{data.proCode}}">
                                 <i class="fa fa-tags" aria-hidden="true"></i>
-                            </a> -->
+                            </a>
                             
                             
                         </td>

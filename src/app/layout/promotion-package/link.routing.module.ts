@@ -5,6 +5,7 @@ import { ListComponent } from './list/list.component';
 import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
 
+
 const routes: Routes = [
   {
     path: '',
@@ -44,5 +45,5 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class PromotionRoutingModule {}
+export class PromotionPGModuleRoutingModule {}
 

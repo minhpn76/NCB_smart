@@ -119,7 +119,10 @@ export class UserProfileComponent implements OnInit {
   }
   async openModalUser(data) {
     this.passData = data;
-    // await this.getItem(id);
+    if (this.passData.function === null) {
+      this.toastr.error('Dữ liệu gói sản phẩm và chương trình khuyến mãi đang là rỗng', 'Thất bại');
+      return;
+    }
     this.openModal(this.modalUserElementRef, 'modal-package', 'static');
   }
   changePageSize() {

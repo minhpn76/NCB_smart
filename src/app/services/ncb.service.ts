@@ -188,7 +188,7 @@ export class NCBService {
   }
   // quan ly thong tin khach hang
   searchProfileUser(params): Promise<any> {
-    const url = `${API_URL}/user-profile/searchConsumer`;
+    const url = `${API_URL}/user-profile/searchUser`;
     return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   // tham so tong dai
@@ -751,7 +751,7 @@ export class NCBService {
     const url = `${API_URL}/img/uploadFile`;
     return this.auth.authRequestFile({ url: url, data: formData, method: 'POST' });
   }
-  upFileExcel(file,params): Promise<any> {
+  upFileExcel(file, params): Promise<any> {
     const formData: FormData = new FormData();
     formData.append('File', file, file.name);
     const url = `${API_URL}/telecom/uploadFile`;
@@ -960,6 +960,37 @@ export class NCBService {
   getAllTypeService(): Promise<any> {
     const url = `${API_URL}/service-register/depart/type-list`;
     return this.auth.authRequest({ url: url, method: 'GET', application: true });
+  }
+
+  // gan khuyen mai goi sản phảm
+  searchPromotionPackage(params): Promise<any> {
+    const url = `${API_URL}/promotions/fee/search`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
+  }
+  detailPromotionPackage(params): Promise<any> {
+    const url = `${API_URL}/promotions/fee/detail`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
+  }
+  updatePromotionPackage(data): Promise<any> {
+    const url = `${API_URL}/promotions/fee/update`;
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
+  }
+  deletePromotionPackage(params): Promise<any> {
+    const url = `${API_URL}/promotions/fee/delete`;
+    return this.auth.authRequest({ url: url, params: params, method: 'DELETE' });
+  }
+  createPromotionPackage(body): Promise<any> {
+    const url = `${API_URL}/promotions/fee/create`;
+    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
+  }
+
+  getAllProCode(params): Promise<any> {
+    const url = `${API_URL}/promotions/add-function/getAllProCode`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
+  }
+  getAllProdName(params): Promise<any> {
+    const url = `${API_URL}/function/getAllPrdAndPrdName`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
 
 
