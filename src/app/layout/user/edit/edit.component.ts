@@ -59,7 +59,7 @@ export class EditComponent implements OnInit {
     });
     this.getBranchs();
     this.getListRole();
-    this.getAllPGD();
+    // this.getAllPGD();
   }
   get Form() { return this.dataForm.controls; }
   get FormUser() { return this.userForm.controls; }
@@ -97,7 +97,6 @@ export class EditComponent implements OnInit {
           name: element.departName,
         });
       });
-
     }).catch((err) => {
       this.toastr.error('Không lấy được dữ liệu phòng giao dịch', 'Thất bại');
     });
@@ -150,6 +149,7 @@ export class EditComponent implements OnInit {
       this.userForm.patchValue({
         username: body.userName
       });
+      this.getPGD(this.dataForm.value.branchCode);
     }).catch(err => {
       this.toastr.error(err.json().message, 'Thất bại!');
     });

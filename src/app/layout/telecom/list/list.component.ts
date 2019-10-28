@@ -284,7 +284,7 @@ export class ListComponent implements OnInit {
   closeModal() {
       this.modalOp.close();
   }
-  async modalUploadFile(image) {
+  async modalUploadFile() {
     // tslint:disable-next-line:no-unused-expression
       this.openModal(this.uploadFileElementRef, 'modal-uploadFile', 'sm');
   }
