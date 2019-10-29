@@ -44,7 +44,7 @@
     "tslib": "^1.10.0",
     "typescript": "^3.5.3",
     "xlsx": "^0.14.3",
-    "yarn": "1.12.1",
+    "yarn": "1.19.1",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
