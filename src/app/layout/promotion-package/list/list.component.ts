@@ -161,7 +161,7 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.ncbService.deletePromotionPackage({ proCode: id }).then((res) => {
+        this.ncbService.deletePromotionPackage({ prdPromotionId: id }).then((res) => {
           if (res.json().code === '00') {
             Swal.fire(
               'Đã xoá!',

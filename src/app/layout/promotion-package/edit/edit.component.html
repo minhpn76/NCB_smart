@@ -1,33 +1,98 @@
 <div style="min-height: 100vh;">
-    <app-page-header [heading]="'Khuyễn mãi/ ưu đãi'" [heading_second]="'Gán mã khuyến mãi với sản phẩm'" [url_heading]="'/promotion'">
+    <app-page-header [heading]="'Gán mã khuyến mãi với sản phẩm'" [heading_second]="'Sửa gán mã khuyến mãi'" [url_heading]="'/promotion-package'">
     </app-page-header>
     <div class="row">
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã chường trình(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Mã chương trình khuyến mại(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <input
-                            [attr.disabled]="true"
+                        <p-multiSelect
+                            [options]="listTempProCode"
+                            defaultLabel="Chọn giá trị"
                             formControlName="proCode"
-                            class="form-control col-lg-12"
-                            placeholder="Mã chương trình"
-                        />
+                        >
+                        </p-multiSelect>
+                        <div *ngIf="submitted && Form.proCode.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.proCode.errors.required">Mã chương trình khuyến mại là bắt buộc</div>
+                            <div *ngIf="Form.proCode.hasError('whitespace')">Mã chương trình khuyến mại không hợp lệ</div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Gói sản phẩm(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Mã gói sản phẩm(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <p-multiSelect
-                            [options]="listTempData"
+                            [options]="listTempProd"
                             defaultLabel="Chọn giá trị"
-                            formControlName="listPackage"
+                            formControlName="prd"
                         >
                         </p-multiSelect>
-                        <div *ngIf="submitted && Form.listPackage.errors"
+                        <div *ngIf="submitted && Form.prd.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.listPackage.errors.required">Gói sản phẩm là bắt buộc</div>
-                            <div *ngIf="Form.listPackage.hasError('whitespace')">Gói sản phẩm không hợp lệ</div>
+                            <div *ngIf="Form.prd.errors.required">Mã gói sản phẩm là bắt buộc</div>
+                            <div *ngIf="Form.prd.hasError('whitespace')">Mã gói sản phẩm không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Loại giao dịch(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" formControlName="tranType" name="tranType" (change)="getConfigDetailTransaction()">
+                            <option *ngFor="let data of listTranType" [value]="data.code" selected="selected" >{{data.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.tranType.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.tranType.errors.required">Loại giao dịch là bắt buộc</div>
+                            <div *ngIf="Form.tranType.hasError('whitespace')">Loại giao dịch không hợp lệ</div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Chi tiết loại giao dịch(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" formControlName="typeId" name="typeId">
+                            <option *ngFor="let data of listTypeId" [value]="data.code" selected="selected">{{data.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.typeId.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.typeId.errors.required">Chi tiết loại giao dịch là bắt buộc</div>
+                            <div *ngIf="Form.typeId.hasError('whitespace')">Chi tiết loại giao dịch không hợp lệ</div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Loại tiền tệ(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="ccy"
+                            class="form-control col-lg-12"
+                            placeholder="Loại tiền tệ"
+                            [ngClass]="{ 'is-invalid': submitted && Form.ccy.errors }">
+                        <div *ngIf="submitted && Form.ccy.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.ccy.errors.required">Loại tiền tệ là bắt buộc</div>
+                            <div *ngIf="Form.ccy.hasError('whitespace')">Loại tiền tệ không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Phần trăm(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="percentage"
+                            class="form-control col-lg-12"
+                            placeholder="Loại tiền tệ"
+                            [ngClass]="{ 'is-invalid': submitted && Form.percentage.errors }">
+                        <div *ngIf="submitted && Form.percentage.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.percentage.errors.required">Phần trăm là bắt buộc</div>
+                            <div *ngIf="Form.percentage.hasError('whitespace')">Phần trăm không hợp lệ</div>
                         </div>
                     </div>
                 </div>

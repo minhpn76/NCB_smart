@@ -984,13 +984,13 @@ export class NCBService {
     return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
   }
 
-  getAllProCode(params): Promise<any> {
+  getAllProCode(): Promise<any> {
     const url = `${API_URL}/promotions/add-function/getAllProCode`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
+    return this.auth.authRequest({ url: url, method: 'GET' });
   }
-  getAllProdName(params): Promise<any> {
+  getAllProdName(): Promise<any> {
     const url = `${API_URL}/function/getAllPrdAndPrdName`;
-    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
+    return this.auth.authRequest({ url: url, method: 'GET' });
   }
 
 

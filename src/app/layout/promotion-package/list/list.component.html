@@ -104,12 +104,12 @@
                         </th>
                         <td>{{data?.proCode}}</td>
                         <td>{{data?.prd}}</td>
-                        <td >
-                            <span *ngIf="data?.tranType === 'CK'">Chuyển khoản</span>
-                            <span  *ngIf="data?.tranType === 'TK'">Tiết kiệm</span>
-                            <span  *ngIf="data?.tranType === 'TT'">Thanh toán</span>
-                            <span  *ngIf="data?.tranType === 'TOPUP'">Nạp tiền</span>
-                            <span  *ngIf="data?.tranType === 'QLTK'">Phí thường niên</span>
+                        <td>
+                            <span *ngIf="data?.tranType === 'CK'">Chuyển khoản</span>
+                            <span *ngIf="data?.tranType === 'TK'">Tiết kiệm</span>
+                            <span *ngIf="data?.tranType === 'TT'">Thanh toán</span>
+                            <span *ngIf="data?.tranType === 'TOPUP'">Nạp tiền</span>
+                            <span *ngIf="data?.tranType === 'QLTK'">Phí thường niên</span>
                         </td>
                         <td >
                             <span *ngIf="data?.typeId === 'IBT'">Chuyển khoản LNH</span>
@@ -123,24 +123,19 @@
                         </td>
                         <td>{{data?.ccy}}</td>
                         <td>{{data?.percentage}}</td>
-                        <td>{{data?.createdBy}}</td>
+                        <td>{{data?.createdBy}}</td>
                         <td>{{data?.createdDate}}</td>
                         <td>
                             <span *ngIf="data?.status === 'A'" class="badge badge-success">Active</span>
                             <span *ngIf="data?.status === 'D'" class="badge badge-danger">Deactive</span>
                         </td>
                         <td>
-                            <a class="mr-2 cursor-pointer text-blue" routerLink="/promotion/edit/{{data.proCode}}">
+                            <a class="mr-2 cursor-pointer text-blue" routerLink="/promotion/edit/{{data.id}}">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <span class="mr-2 cursor-pointer text-danger">
-                                <i class="fa fa-trash" (click)="deleteItem(1, i, data.proCode)"></i>
-                            </span>
-                            <a class="mr-2 cursor-pointer text-blue" data-toggle="tooltip" data-placement="top" title="Gán mã khuyến mãi với sản phẩm" routerLink="/promotion/link/{{data.proCode}}">
-                                <i class="fa fa-tags" aria-hidden="true"></i>
-                            </a>
-                            
-                            
+                                <i class="fa fa-trash" (click)="deleteItem(1, i, data.id)"></i>
+                            </span>                            
                         </td>
                     </tr>
                     

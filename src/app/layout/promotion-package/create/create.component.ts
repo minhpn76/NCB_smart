@@ -18,6 +18,12 @@ export class CreateComponent implements OnInit {
   dataForm: FormGroup;
   submitted = false;
   itemId: any = '';
+  userInfo: any;
+  listTempProCode: any = [];
+  listTempProd: any = [];
+  listTypeId: any = [];
+  listTranType: any = [];
+
 
 
   constructor(
@@ -28,17 +34,21 @@ export class CreateComponent implements OnInit {
     private route: ActivatedRoute,
     private helper: Helper
   ) {
-    this.route.params.subscribe(params => {
-      this.itemId = params.itemId;
-    });
-    this.getListPackage();
+    this.userInfo = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : '';
+    this.getTempListPro();
+    this.getTempListPackage();
   }
 
   ngOnInit() {
-    this.getItem(this.itemId);
     this.dataForm = this.formBuilder.group({
+      prd: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       proCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      listPackage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])]
+      tranType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      typeId: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      status: ['A', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      ccy: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      percentage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      createdBy: [JSON.stringify(this.userInfo.userName)],
     });
   }
   get Form() { return this.dataForm.controls; }
@@ -48,60 +58,54 @@ export class CreateComponent implements OnInit {
     if (this.dataForm.invalid) {
       return;
     }
-    const tempArr = [];
-    this.dataForm.value.grprdId.forEach(element => {
-      tempArr.push(element);
+    const tempArrPrd = [];
+    const tempArrPro = [];
+    this.dataForm.value.prd.forEach(element => {
+      tempArrPrd.push(element);
     });
-    const _code = tempArr.join(',');
+    this.dataForm.value.proCode.forEach(element => {
+      tempArrPro.push(element);
+    });
+    const _codePrd = tempArrPrd.join(',');
+    const _codePrdCode = tempArrPro.join(',');
+
     const payload = {
-      proCode: this.dataForm.value.proCode,
-      listPackage: _code
+      proCode: _codePrdCode,
+      prd: _codePrd,
+      tranType: this.dataForm.value.tranType,
+      typeId: this.dataForm.value.typeId,
+      status: this.dataForm.value.status,
+      ccy: this.dataForm.value.ccy,
+      percentage: this.dataForm.value.percentage,
+      createdBy: this.dataForm.value.createdBy
     };
 
-    // this.ncbService.createPromotion(payload).then((result) => {
-    //   if (result.status === 200) {
-    //     if (result.json().code !== '00') {
-    //       this.toastr.error(result.json().message, 'Thất bại!');
-    //     }  else if (result.json().code === '911') {
-    //       this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
-    //     } else {
-    //       this.toastr.success('Thêm thành công', 'Thành công!');
-    //       setTimeout(() => {
-    //         this.router.navigateByUrl('/promotion');
-    //       }, 500);
-    //     }
-    //   } else {
-    //     this.toastr.error(result.message, 'Thất bại!');
-    //   }
-    // }).catch((err) => {
-    //   this.toastr.error(err.json().message, 'Thất bại!');
-    // });
-  }
-  resetForm() {
-    this.router.navigateByUrl('/promotion');
-  }
-  async getItem(params) {
-    await this.ncbService.detailPromotion({ proCode: params }).then((result) => {
-      const body = result.json().body;
-      setTimeout(() => {
-        this.dataForm.patchValue({
-          proCode: body.proCode
-        });
-      }, 500);
-
-    }).catch(err => {
-      this.toastr.error('Lỗi hệ thống', 'Thất bại!');
+    this.ncbService.createPromotionPackage(payload).then((result) => {
+      if (result.status === 200) {
+        if (result.json().code === '00') {
+          this.toastr.success('Thêm thành công', 'Thành công!');
+          setTimeout(() => {
+            this.router.navigateByUrl('/promotion-package');
+          }, 500);
+        } else {
+          this.toastr.error(result.json().message, 'Thất bại!');
+        }
+      } else {
+        this.toastr.error(result.message, 'Thất bại!');
+      }
+    }).catch((err) => {
+      this.toastr.error(err.json().message, 'Thất bại!');
     });
   }
-  getListPackage() {
+  resetForm() {
+    this.router.navigateByUrl('/promotion-package');
+  }
+  getTempListPackage() {
     this.listTempData = [];
     // xu ly
-    this.ncbService.searchPackage({
-      page: 0,
-      size: 1000
-    }).then((result) => {
+    this.ncbService.getAllProdName().then((result) => {
       const body = result.json().body;
-      body.content.forEach(element => {
+      body.forEach(element => {
         this.listTempData.push({
           label: element.prdName,
           value: element.prd
@@ -110,6 +114,71 @@ export class CreateComponent implements OnInit {
 
     }).catch(err => {
       this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+    });
+  }
+  getTempListPro() {
+    this.listTempData = [];
+    // xu ly
+    this.ncbService.getAllProCode().then((result) => {
+      const body = result.json().body;
+      body.forEach(element => {
+        this.listTempData.push({
+          label: element,
+          value: element
+        });
+      });
+
+    }).catch(err => {
+      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+    });
+  }
+  getConfigTransaction() {
+    this.listTranType = [];
+    // xu ly
+    this.ncbService.getConfigTransaction({
+      code : 'FUNCTION_TYPE'
+    }).then((result) => {
+      this.listTranType.push({
+        name: '--Chọn giá trị--',
+        code: ''
+      });
+      setTimeout(() => {
+        const body = result.json().body;
+        body.forEach(element => {
+          this.listTranType.push({
+            name: element,
+            code: element
+          });
+        });
+      }, 300);
+    }).catch(err => {
+      this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
+    });
+  }
+  getConfigDetailTransaction() {
+    const params = {
+      code: 'FUNCTION_TYPE',
+      type: this.dataForm.value.tranType
+    };
+    this.listTypeId = [];
+    // xu ly
+    this.ncbService.getConfigDetailTransaction(params).then((result) => {
+      setTimeout(() => {
+        const body = result.json().body;
+        this.listTypeId.push({
+          name: '--Chọn giá trị--',
+          code: ''
+        });
+        body.forEach(element => {
+          this.listTypeId.push({
+            name: element.name,
+            code: element.value
+          });
+        });
+
+      }, 300);
+    }).catch(err => {
+      this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
     });
   }
 }
