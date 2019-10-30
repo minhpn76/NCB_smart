@@ -9,57 +9,6 @@
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã nhà cung cấp TTHD(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <select class="form-control" formControlName="serviceCode" name="serviceCode" (change)="onChangeComp($event)">
-                            <option *ngFor="let status of listTempProd" [value]="status.code" selected="selected">{{ status.code }}</option>
-                        </select>
-                        <!-- <input
-                            class="form-control col-lg-12"
-                            placeholder="Mã nhà cung cấp TTHD"
-                            formControlName="serviceCode"
-                            [ngClass]="{ 'is-invalid': submitted && Form.serviceCode.errors }"
-                        />
-                        <div *ngIf="submitted && Form.serviceCode.errors" class="invalid-feedback">
-                            <div *ngIf="Form.serviceCode.errors.required">Mã nhà cung cấp TTHD là bắt buộc</div>
-                            <div *ngIf="Form.serviceCode.hasError('whitespace')">Mã nhà cung cấp TTHD không hợp lệ</div>
-                        </div> -->
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên nhà cung cấp TTHD(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <select class="form-control" formControlName="providerName" name="providerName" (change)="onChangeCompC($event)">
-                            <option *ngFor="let status of listTempProd" [value]="status.name" selected="selected">{{ status.name }}</option>
-                        </select>
-                        <!-- <input
-                            class="form-control col-lg-12"
-                            placeholder="Tên nhà cung cấp TTHD"
-                            formControlName="providerName"
-                            [ngClass]="{ 'is-invalid': submitted && Form.providerName.errors }"
-                        />
-                        <div *ngIf="submitted && Form.providerName.errors" class="invalid-feedback">
-                            <div *ngIf="Form.providerName.errors.required">Tên nhà cung cấp TTHD là bắt buộc</div>
-                            <div *ngIf="Form.providerName.hasError('whitespace')">Tên nhà cung cấp TTHD không hợp lệ</div>
-                        </div> -->
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã dịch vụ TTHD(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <input
-                            formControlName="providerCode"
-                            class="form-control col-lg-12"
-                            placeholder="Mã dịch vụ TTHD"
-                            [ngClass]="{ 'is-invalid': submitted && Form.providerCode.errors }"
-                        />
-                        <div *ngIf="submitted && Form.providerCode.errors" class="invalid-feedback">
-                            <div *ngIf="Form.providerCode.errors.required">Mã dịch vụ TTHD là bắt buộc</div>
-                            <div *ngIf="Form.providerCode.hasError('whitespace')">Mã dịch vụ TTHD không hợp lệ</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Đối tác(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
@@ -84,8 +33,53 @@
                         </div>
                     </div>
                 </div>
-                
-                
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã dịch vụ TTHD(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="providerCode"
+                            class="form-control col-lg-12"
+                            placeholder="Mã dịch vụ TTHD"
+                            [ngClass]="{ 'is-invalid': submitted && Form.providerCode.errors }"
+                        />
+                        <div *ngIf="submitted && Form.providerCode.errors" class="invalid-feedback">
+                            <div *ngIf="Form.providerCode.errors.required">Mã dịch vụ TTHD là bắt buộc</div>
+                            <div *ngIf="Form.providerCode.hasError('whitespace')">Mã dịch vụ TTHD không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="form-group row" style="display: none;">
+                    <label for="search" class="col-sm-4 col-form-label">Mã nhà cung cấp TTHD(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" formControlName="serviceCode" name="serviceCode" (change)="onChangeComp($event)">
+                            <option *ngFor="let status of listTempProd" [value]="status.code" selected="selected">{{ status.code }}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.serviceCode.errors" class="invalid-feedback">
+                            <div *ngIf="Form.serviceCode.errors.required">Mã nhà cung cấp TTHD là bắt buộc</div>
+                            <div *ngIf="Form.serviceCode.hasError('whitespace')">Mã nhà cung cấp TTHD không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên nhà cung cấp TTHD(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" formControlName="providerName" name="providerName" (change)="onChangeCompC($event)">
+                            <option *ngFor="let status of listTempProd" [value]="status.name" selected="selected">{{ status.name }}</option>
+                        </select>
+                        <!-- <input
+                            class="form-control col-lg-12"
+                            placeholder="Tên nhà cung cấp TTHD"
+                            formControlName="providerName"
+                            [ngClass]="{ 'is-invalid': submitted && Form.providerName.errors }"
+                        />
+                        <div *ngIf="submitted && Form.providerName.errors" class="invalid-feedback">
+                            <div *ngIf="Form.providerName.errors.required">Tên nhà cung cấp TTHD là bắt buộc</div>
+                            <div *ngIf="Form.providerName.hasError('whitespace')">Tên nhà cung cấp TTHD không hợp lệ</div>
+                        </div> -->
+                    </div>
+                </div>
+
 
                 <div class="form-group row">
                     <div class="col-sm-4"></div>

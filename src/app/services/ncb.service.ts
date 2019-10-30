@@ -99,6 +99,10 @@ export class NCBService {
     const url = `${API_URL}/bank-transfer/delete`;
     return this.auth.authRequest({ url: url, params: params, method: 'DELETE' });
   }
+  deActiveBankTranfer(params): Promise<any> {
+    const url = `${API_URL}/bank-transfer/deActive`;
+    return this.auth.authRequest({ url: url, params: params, method: 'DELETE' });
+  }
   getListProvider(params): Promise<any> {
     const url = `${API_URL}/provider/getAll`;
     return this.auth.authRequest({ url: url, params: params, method: 'GET' });

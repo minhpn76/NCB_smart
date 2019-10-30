@@ -112,6 +112,43 @@ export class ListComponent implements OnInit {
       }
     });
   }
+  deActiveItem(event, index, code) {
+    Swal.fire({
+      title: 'Bạn có chắc chắn thay đổi trạng thái?',
+      text: 'Dữ liệu đã thay đổi trạng thái vẫn có thể sửa lại',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Đồng ý',
+      cancelButtonText: 'Không, trở lại'
+    }).then((result) => {
+      if (result.value) {
+        // tslint:disable-next-line:no-shadowed-variable
+        this.ncbService.deActiveBankTranfer({ bankCode: code }).then((result) => {
+          if (result.status === 200) {
+            if (result.json().code === '00') {
+              Swal.fire(
+                'Đã xoá!',
+                'Dữ liệu đã thay đổi.',
+                'success'
+              );
+              this.re_search.page = 0;
+              this.onSearch(this.re_search);
+            } else {
+              this.toastr.error('Xoá thất bại', 'Lỗi hệ thống!');
+            }
+          } else {
+            this.toastr.error('Xoá thất bại', 'Lỗi hệ thống!');
+          }
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Huỷ bỏ',
+          'Dữ liệu được bảo toàn :)',
+          'error'
+        );
+      }
+    });
+  }
   loadPage(page: number) {
     const page_number = page - 1;
     if (page_number !== this.re_search.previous_page) {

@@ -15,6 +15,7 @@ import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 export class EditComponent implements OnInit {
   dataForm: FormGroup;
   userForm: FormGroup;
+  passForm: FormGroup;
   submitted = false;
   listPGD: any = [];
   listBranch: any = [];
@@ -22,6 +23,7 @@ export class EditComponent implements OnInit {
   itemId: any = '';
   obj: any = {};
   userInfo: any = [];
+  statusUser: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,6 +51,9 @@ export class EditComponent implements OnInit {
       email: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])],
       phone: ['', Validators.compose([Validators.maxLength(13), Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])]
     });
+    this.passForm = this.formBuilder.group({
+      status: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])]
+    });
     this.userForm = this.formBuilder.group({
       username: [''],
       oldPassword: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
@@ -63,6 +68,8 @@ export class EditComponent implements OnInit {
   }
   get Form() { return this.dataForm.controls; }
   get FormUser() { return this.userForm.controls; }
+  get FormPass() { return this.passForm.controls; }
+
 
   getBranchs() {
     this.listBranch = [];
@@ -149,26 +156,16 @@ export class EditComponent implements OnInit {
       this.userForm.patchValue({
         username: body.userName
       });
+      this.passForm.patchValue({
+        status: body.status === 'A' ? true : false,
+      });
       this.getPGD(this.dataForm.value.branchCode);
     }).catch(err => {
       this.toastr.error(err.json().message, 'Thất bại!');
     });
   }
-  changeStatus(event, data) {
-    const payload = {
-      username: this.dataForm.controls.username.value,
-      status: event.currentTarget.checked === true ? 'A' : 'D'
-    };
-    this.ncbService.updateStatusUser(payload).then((result) => {
-      if (result.json().code !== '00') {
-        this.toastr.error('Có lỗi xảy ra!', 'Thất bại!');
-        return;
-      }
-      this.toastr.success('Sửa thành công', 'Thành công!');
-    }).catch((err) => {
-      this.toastr.error(err, 'Thất bại!');
-
-    });
+  changeStatus(event) {
+    this.statusUser = event.currentTarget.checked === true ? 'A' : 'D';
   }
   onSubmitPassW() {
     this.submitted = true;
@@ -194,6 +191,30 @@ export class EditComponent implements OnInit {
       }
     }).catch((err) => {
 
+
+    });
+  }
+  onSubmitStatus() {
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.passForm.invalid) {
+        return;
+    }
+    const payload = {
+      username: this.dataForm.controls.username.value,
+      status: this.statusUser
+    };
+    this.ncbService.updateStatusUser(payload).then((result) => {
+      if (result.json().code !== '00') {
+        this.toastr.error('Có lỗi xảy ra!', 'Thất bại!');
+        return;
+      }
+      this.toastr.success('Sửa thành công', 'Thành công!');
+      setTimeout(() => {
+        this.router.navigateByUrl('/user');
+      }, 500);
+    }).catch((err) => {
+      this.toastr.error(err, 'Thất bại!');
 
     });
   }

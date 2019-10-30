@@ -24,16 +24,6 @@ export class AppSettings {
             menu: 'QUAN_TRI'
         },
         {
-            code: 'NHOM_PHAN_QUYEN',
-            name: 'Nhóm phân quyền',
-            isAll: false,
-            isC: false,
-            isR: false,
-            isU: false,
-            isD: false,
-            menu: 'QUAN_TRI'
-        },
-        {
             code: 'PHAN_QUYEN',
             name: 'Phân quyền',
             isAll: false,
@@ -224,7 +214,6 @@ export class AppSettings {
             menu: 'TRA_CUU'
         }
     ];
-
     public static getListRoles() {
         const getListRoles = localStorage.getItem('roles') ? JSON.parse(localStorage.getItem('roles')) : '';
         return getListRoles;

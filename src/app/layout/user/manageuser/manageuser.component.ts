@@ -159,7 +159,7 @@ export class ManageUserComponent implements OnInit {
                 } else if (result.json().code === '404') {
                     this.toastr.error('Tài khoản đã tồn tại', 'Thất bại!');
                 } else {
-                    this.toastr.error('Thay đổi mật khẩu thất bại', 'Thất bại!');
+                    this.toastr.error('Thêm mới không thành công', 'Thất bại!');
                 }
             })
             .catch(err => {});

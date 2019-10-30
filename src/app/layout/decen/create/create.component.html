@@ -1,11 +1,11 @@
 <div>
     <app-page-header [heading]="'Phân quyền'" [heading_second]="'Thêm mới phân quyền'" [url_heading]="'/decen'"> </app-page-header>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Tên phân quyền(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-6">
                         <input
                             formControlName="roleName"
                             class="form-control col-lg-12"
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mô tả(<span class="text-danger">*</span>):</label>
+                    <!-- <label for="search" class="col-sm-4 col-form-label">Mô tả(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <textarea
                             formControlName="description"
@@ -32,6 +32,74 @@
                             <div *ngIf="Form.description.errors.required">Mô tả là bắt buộc</div>
                             <div *ngIf="Form.description.hasError('whitespace')">Mô tả không hợp lệ</div>
                         </div>
+                    </div> -->
+                    <div class="col-md-12 mt-3 custom-check table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr *ngFor="let role of listRoles">
+                                    <th scope="row">
+                                        <div class="custom-control form-control-lg custom-checkbox" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                                            <input 
+                                                type="checkbox" class="custom-control-input" 
+                                                id="{{role.code}}" 
+                                                type="checkbox" 
+                                                [checked]="role.isAll"
+                                                (click)="clickFullRoles($event)"
+                                            >
+                                            <label class="custom-control-label" style="font-size: 17px" for="{{role.code}}"><b class="text-blue">{{ role.name }}</b></label>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <div class="custom-control form-control-lg custom-checkbox">
+                                            <input 
+                                                type="checkbox" class="custom-control-input" 
+                                                id="add_{{role.code}}" 
+                                                [checked]="role.isC"
+                                                (click)="clickSetRole($event, 1)"
+                                                type="checkbox" 
+                                            >
+                                            <label class="custom-control-label" style="font-size: 17px" for="add_{{role.code}}">CREATE {{ role.code }}</label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="custom-control form-control-lg custom-checkbox">
+                                            <input 
+                                                class="custom-control-input" 
+                                                id="read_{{role.code}}" 
+                                                type="checkbox"
+                                                (click)="clickSetRole($event, 2)"
+                                                [checked]="role.isR"
+                                            >
+                                            <label class="custom-control-label" style="font-size: 17px" for="read_{{role.code}}">READ {{ role.code }}</label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="custom-control form-control-lg custom-checkbox">
+                                            <input 
+                                                class="custom-control-input" 
+                                                id="update_{{role.code}}" 
+                                                type="checkbox"
+                                                (click)="clickSetRole($event, 3)"
+                                                [checked]="role.isU"
+                                            >
+                                            <label class="custom-control-label" style="font-size: 17px" for="update_{{role.code}}">UPDATE {{ role.code }}</label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="custom-control form-control-lg custom-checkbox">
+                                            <input 
+                                                class="custom-control-input" 
+                                                id="delete_{{role.code}}" 
+                                                type="checkbox"
+                                                (click)="clickSetRole($event, 4)"
+                                                [checked]="role.isD"
+                                            >
+                                            <label class="custom-control-label" style="font-size: 17px" for="delete_{{role.code}}">DELETE {{ role.code }}</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="form-group row">

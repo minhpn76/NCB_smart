@@ -5,35 +5,40 @@ import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { NCBService } from '../../../services/ncb.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Helper } from '../../../helper';
+import { AppSettings } from '../../../app.settings';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'roles-edit',
+  selector: 'role-decen',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
   providers: [NCBService, Helper]
 })
 export class EditComponent implements OnInit {
-  public Editor = ClassicEditor;
   dataForm: FormGroup;
   submitted = false;
-  itemId: any;
-  obj: any = {
-    status: '',
-    description: '',
-    roleName: ''
+  listPGD: any = [];
+  listBranch: any = [];
+  isSearch: any = false;
+  totalSearch: any = 0;
+  isProcessLoad: any = 0;
+  re_search: any = {
+    roleName: '',
+    status: 'A',
+    page: 1,
+    size: 1000
   };
-  listStatus: any = [
-    {
-      name: 'Active',
-      code: 'A',
-    },
-    {
-      name: 'Deactive',
-      code: 'D',
-    }
-  ];
-
+  isArrayRole = false;
+  listRoles: any;
+  tempRole: any;
+  obj: any = {};
+  role: any = {
+    create: null,
+    delete: null,
+    read: null,
+    update: null,
+  };
+  itemId: any;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -42,60 +47,160 @@ export class EditComponent implements OnInit {
     private ncbService: NCBService,
     private helper: Helper
   ) {
-      this.route.params.subscribe(params => {
-        this.itemId = params.itemId;
+    this.route.params.subscribe(params => {
+      this.itemId = params.itemId;
     });
-   }
+    this.getItemRole();
+  }
 
   ngOnInit() {
-    this.dataForm = this.formBuilder.group({
-      roleName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      description: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      status: ''
-    });
-    this.getItem({id: this.itemId});
-  }
-  get Form() { return this.dataForm.controls; }
-  onSubmit() {
-    this.submitted = true;
-    // stop here if form is invalid
-    if (this.dataForm.invalid) {
-      return;
-    }
-    this.ncbService.updateRoles(this.dataForm.value).then((result) => {
-      if (result.status === 200) {
-        if (result.json().code !== '00') {
-          this.toastr.error(result.json().message, 'Thất bại!');
-        } else {
-          this.toastr.success('Sửa thành công', 'Thành công!');
-          setTimeout(() => {
-            this.router.navigateByUrl('/decen');
-          }, 500);
-        }
-      } else {
-        this.toastr.error(result.message, 'Thất bại!');
-      }
-    }).catch((err) => {
-      this.toastr.error(err.message, 'Thất bại!');
 
+  }
+
+  getItemRole() {
+    this.totalSearch = 0;
+    this.isProcessLoad = 1;
+    this.ncbService.searchRoles({
+      roleName: this.itemId,
+      status: 'A',
+      page: 1,
+      size: 1000
+    }).then((result) => {
+      setTimeout(() => {
+        this.isProcessLoad = 0;
+        const body = result.json().body.content;
+        if (body.length === 0) {
+          this.isProcessLoad = 1;
+          this.totalSearch = 0;
+          setTimeout(() => {
+            this.isProcessLoad = 0;
+          }, 1000);
+          return;
+        }
+        this.obj = body[0];
+        if (this.obj.description.indexOf('[') > -1) {
+          this.listRoles = JSON.parse(this.obj.description) ? JSON.parse(this.obj.description) : '';
+        } else {
+          this.listRoles = AppSettings.listRoles;
+        }
+        this.totalSearch = result.json().body.content.length;
+        }, 3000);
+    }).catch((err) => {
+      this.isProcessLoad = 1;
+      this.totalSearch = 0;
+      setTimeout(() => {
+        this.isProcessLoad = 0;
+        this.toastr.error(`Có lỗi xảy ra ${err.json()}`, 'Vui lòng thử lại!');
+      }, 500);
     });
+  }
+  updateRole(obj): Promise < any > {
+    const promise = new Promise((resolve, reject) => {
+      this.ncbService.updateRoles(obj).then((result) => {
+        if (result.status === 200) {
+          if (result.json().code !== '00') {
+            this.toastr.error(result.json().message, 'Thất bại!');
+            resolve();
+          } else {
+            this.obj.description = JSON.stringify(this.listRoles);
+            this.toastr.success('Cập nhật thành công', 'Thành công!');
+            resolve();
+          }
+        } else {
+          this.toastr.error(result.message, 'Thất bại!');
+          resolve();
+        }
+      }).catch((err) => {
+        this.toastr.error(err.message, 'Thất bại!');
+        resolve();
+      });
+    });
+    return promise;
+  }
+  clickFullRoles(event) {
+    this.listRoles.forEach(role => {
+      if (role.code === event.target.id) {
+        if (event.currentTarget.checked === true) {
+          role.isC = true;
+          role.isU = true;
+          role.isD = true;
+          role.isR = true;
+          role.isAll = true;
+        } else {
+          role.isC = false;
+          role.isU = false;
+          role.isD = false;
+          role.isR = false;
+          role.isAll = false;
+        }
+      }
+    });
+  }
+  clickSetRole(event, value) {
+    const passCode = event.target.id;
+    this.tempRole = {};
+    switch (value) {
+      case 1:
+          const splited_add = passCode.split('add_')[1];
+          this.listRoles.forEach(role => {
+            if (role.code === splited_add) {
+              if (event.currentTarget.checked === true) {
+                role.isC = true;
+              } else {
+                role.isC = false;
+              }
+            }
+          });
+        break;
+      case 2:
+        const splited_read = passCode.split('read_')[1];
+        this.listRoles.forEach(role => {
+          if (role.code === splited_read) {
+            if (event.currentTarget.checked === true) {
+              role.isR = true;
+            } else {
+              role.isR = false;
+            }
+          }
+        });
+        break;
+      case 3:
+        const splited_update = passCode.split('update_')[1];
+        this.listRoles.forEach(role => {
+          if (role.code === splited_update) {
+            if (event.currentTarget.checked === true) {
+              role.isU = true;
+            } else {
+              role.isU = false;
+            }
+          }
+        });
+        break;
+      case 4:
+        const splited_delete = passCode.split('delete_')[1];
+        this.listRoles.forEach(role => {
+          if (role.code === splited_delete) {
+            if (event.currentTarget.checked === true) {
+              role.isD = true;
+            } else {
+              role.isD = false;
+            }
+          }
+        });
+        break;
+    }
+
+
   }
   resetForm() {
     this.router.navigateByUrl('/decen');
   }
-  getItem(params) {
-    this.ncbService.detailRoles(params.id).then((result) => {
-      const body = result.json().body;
-      this.dataForm.patchValue({
-        status: body.status,
-        roleName: body.roleName,
-        description: body.description
-      });
-    }).catch(err => {
-
-    });
+  async onSubmitRole() {
+    const payload = {
+      roleName: this.itemId,
+      description: JSON.stringify(this.listRoles),
+      status: 'A'
+    };
+    await this.updateRole(payload);
   }
 }
-
-
-

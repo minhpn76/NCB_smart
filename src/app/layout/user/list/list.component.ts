@@ -32,9 +32,9 @@ export class ListComponent implements OnInit {
     transactionCode: '',
     branchCode: '',
     userName: '',
-    previous_page: 0,
-    fromDate: 0,
-    toDate: 0
+    previous_page: 0
+    // fromDate: 0,
+    // toDate: 0
   };
   listData: any = [];
   listPageSize: any = ['10', '20', '30', '40', '50'];
@@ -60,7 +60,7 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadDate();
+    // this.loadDate();
     this.getListData(this.re_search);
     this.getBranchs();
     this.getAllPGD();
@@ -70,10 +70,10 @@ export class ListComponent implements OnInit {
     this.isProcessLoad = 1;
     // xu ly
     this.listData = [];
-    if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
-      params.toDate = this.tranferDate(this.mRatesDateS_7);
-      params.fromDate = this.tranferDate(this.mRatesDateS);
-    }
+    // if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
+    //   params.toDate = this.tranferDate(this.mRatesDateS_7);
+    //   params.fromDate = this.tranferDate(this.mRatesDateS);
+    // }
     this.ncbService.searchUser(params).then((result) => {
       setTimeout(() => {
         this.isProcessLoad = 0;
@@ -153,6 +153,8 @@ export class ListComponent implements OnInit {
     // date
     if (params.userName !== '' || params.fullName !== '' || params.transactionCode !== '' || params.branchCode !== '' || params.status !== '') {
       params.page = 0;
+    } else {
+      params.page = 0;
     }
     this.getListData(params);
   }
@@ -174,10 +176,10 @@ export class ListComponent implements OnInit {
     this.isProcessLoadExcel = 1;
     const search = Object.assign({}, this.re_search);
     search.size = 1000;
-    if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
-      search.toDate = this.tranferDate(this.mRatesDateS_7);
-      search.fromDate = this.tranferDate(this.mRatesDateS);
-    }
+    // if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
+    //   search.toDate = this.tranferDate(this.mRatesDateS_7);
+    //   search.fromDate = this.tranferDate(this.mRatesDateS);
+    // }
     const page = Math.ceil(this.totalSearch / search.size);
     for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {
         search.page = i;
@@ -209,7 +211,7 @@ export class ListComponent implements OnInit {
 
   keyDownFunction(event) {
     if (event.keyCode === 13) {
-      this.getListData(this.re_search);
+      this.onSearch(this.re_search);
     }
   }
 

@@ -86,6 +86,10 @@
                             <a class="mr-2 cursor-pointer text-blue" routerLink="/bank-tranfer/edit/{{data.bankCode}}">
                                 <i class="fa fa-edit"></i>
                             </a>
+
+                            <span class="mr-2 cursor-pointer text-warning">
+                                <i class="fa fa-recycle" (click)="deActiveItem(1, i, data.bankCode)"></i>
+                            </span>
                             <span class="mr-2 cursor-pointer text-danger">
                                 <i class="fa fa-trash" (click)="deleteItem(1, i, data.bankCode)"></i>
                             </span>
