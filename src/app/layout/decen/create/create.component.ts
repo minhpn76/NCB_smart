@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NCBService } from '../../../services/ncb.service';
 import { Router } from '@angular/router';
 import { Helper } from '../../../helper';
 import { AppSettings } from '../../../app.settings';
+import { Location } from '@angular/common';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -16,7 +17,8 @@ import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChange
 export class CreateComponent implements OnInit {
   dataForm: FormGroup;
   submitted = false;
-  listRoles: any;
+  // listRoles: any;
+  @Input() listRoles: any = AppSettings.listRoles;
   tempRole: any;
   obj: any = {};
   role: any = {
@@ -25,7 +27,6 @@ export class CreateComponent implements OnInit {
     read: null,
     update: null,
   };
-  listRolesTemp: any = [];
 
 
   constructor(
@@ -33,11 +34,13 @@ export class CreateComponent implements OnInit {
     private toastr: ToastrService,
     private ncbService: NCBService,
     public router: Router,
-    private helper: Helper
+    private helper: Helper,
+    public location: Location
   ) {
     this.listRoles = AppSettings.listRoles;
-    console.log('===>', this.listRoles);
-    this.listRolesTemp = this.listRoles;
+    if (localStorage.getItem('redirect') === 'true') {
+      this.router.navigateByUrl('/decen');
+    }
    }
 
   ngOnInit() {
@@ -48,6 +51,10 @@ export class CreateComponent implements OnInit {
     });
   }
   get Form() { return this.dataForm.controls; }
+  pageRefresh() {
+    location.reload();
+    localStorage.setItem('redirect', 'true');
+ }
 
   onSubmit() {
     this.submitted = true;
@@ -58,7 +65,7 @@ export class CreateComponent implements OnInit {
     }
     const payload = {
       roleName: this.dataForm.value.roleName,
-      description: JSON.stringify(this.listRolesTemp),
+      description: JSON.stringify(this.listRoles),
       status: this.dataForm.value.status
 
     };
@@ -70,9 +77,9 @@ export class CreateComponent implements OnInit {
           this.toastr.error(result.json().message, 'Thất bại!');
         } else {
           this.toastr.success('Thêm thành công', 'Thành công!');
-          this.listRolesTemp.length = 0;
+          this.pageRefresh();
           setTimeout(() => {
-            this.router.navigateByUrl('/decen');
+            this.resetForm();
           }, 500);
         }
       } else {
@@ -85,31 +92,8 @@ export class CreateComponent implements OnInit {
   resetForm() {
     this.router.navigateByUrl('/decen');
   }
-  updateRole(obj): Promise < any > {
-    const promise = new Promise((resolve, reject) => {
-      this.ncbService.updateRoles(obj).then((result) => {
-        if (result.status === 200) {
-          if (result.json().code !== '00') {
-            this.toastr.error(result.json().message, 'Thất bại!');
-            resolve();
-          } else {
-            this.obj.description = JSON.stringify(this.listRoles);
-            this.toastr.success('Cập nhật thành công', 'Thành công!');
-            resolve();
-          }
-        } else {
-          this.toastr.error(result.message, 'Thất bại!');
-          resolve();
-        }
-      }).catch((err) => {
-        this.toastr.error(err.message, 'Thất bại!');
-        resolve();
-      });
-    });
-    return promise;
-  }
   clickFullRoles(event) {
-    this.listRolesTemp.forEach(role => {
+    this.listRoles.forEach(role => {
       if (role.code === event.target.id) {
         if (event.currentTarget.checked === true) {
           role.isC = true;
@@ -183,20 +167,6 @@ export class CreateComponent implements OnInit {
 
 
   }
-
-  async onSubmitRole() {
-    const payload = {
-      // roleName: this.itemId,
-      // description: JSON.stringify(this.listRoles),
-      // status: 'A'
-    };
-    await this.updateRole(payload);
-  }
-  // public ngOnDestroy(): void {
-  //   if (this.listRoles) {
-  //       this.listRoles.unsubscribe();
-  //   }
-  // }
 }
 
 

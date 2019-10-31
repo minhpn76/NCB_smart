@@ -299,6 +299,39 @@ export class EditComponent implements OnInit {
 
     });
   }
+  onCreate() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.dataForm.invalid) {
+      return;
+    }
+
+    const payload = {
+      ...this.dataForm.value,
+      ...this.objFile
+    };
+
+    this.ncbService.createPayCard(payload).then((result) => {
+      if (result.status === 200) {
+        if (result.json().code === '00') {
+          this.toastr.success('Thêm mới thành công', 'Thành công!');
+          setTimeout(() => {
+            this.router.navigateByUrl('/pay-card');
+          }, 500);
+        } else if (result.json().code === '901') {
+          this.toastr.error('Hình ảnh phôi thẻ đã tồn tại', 'Thất bại!');
+        } else {
+          this.toastr.error('Lỗi hệ thống', 'Thất bại!');
+
+        }
+      } else {
+        this.toastr.error(result.json().description, 'Thất bại!');
+      }
+    }).catch((err) => {
+      this.toastr.error(err.json().description, 'Thất bại!');
+    });
+  }
 }
 
 

@@ -49,7 +49,8 @@ export class EditComponent implements OnInit {
       // tslint:disable-next-line:max-line-length
       fullName: ['', Validators.compose([Validators.required, Validators.maxLength(30), Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])],
       email: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])],
-      phone: ['', Validators.compose([Validators.maxLength(13), Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])]
+      phone: ['', Validators.compose([Validators.maxLength(13), Validators.minLength(2), Validators.pattern(/^((?!\s{2,}).)*$/)])],
+      roleId: [''],
     });
     this.passForm = this.formBuilder.group({
       status: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)])]
@@ -130,7 +131,6 @@ export class EditComponent implements OnInit {
       page: 1,
       size: 1000
     }).then((result) => {
-      this.listRole.push({ code: '', name: 'Tất cả' });
       result.json().body.content.forEach(element => {
         this.listRole.push({
           code: element.roleId,
@@ -151,7 +151,8 @@ export class EditComponent implements OnInit {
         status: body.status === 'A' ? true : false,
         phone: body.phone,
         email: body.email,
-        username: body.userName
+        username: body.userName,
+        roleId: body.role.roleId
       });
       this.userForm.patchValue({
         username: body.userName
@@ -226,7 +227,16 @@ export class EditComponent implements OnInit {
         return;
     }
     delete this.dataForm.value['status'];
-    this.ncbService.updateUser(this.dataForm.value).then((result) => {
+    const payload = {
+      branchCode: this.dataForm.value.branchCode,
+      transactionCode: this.dataForm.value.transactionCode,
+      username: this.dataForm.value.username,
+      fullName: this.dataForm.value.username,
+      email: this.dataForm.value.email,
+      phone: this.dataForm.value.phone,
+      roleId: parseInt(this.dataForm.value.roleId)
+    };
+    this.ncbService.updateUser(payload).then((result) => {
       if (result.json().code !== '00') {
         this.toastr.error('Có lỗi xảy ra!', 'Thất bại!');
         return;

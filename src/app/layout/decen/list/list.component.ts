@@ -44,6 +44,7 @@ export class ListComponent implements OnInit {
     private ncbService: NCBService,
     public toastr: ToastrService,
   ) {
+    localStorage.setItem('redirect', 'false');
   }
 
   ngOnInit() {
