@@ -28,6 +28,11 @@
                         href="javascript:void(0)">
                         <i class="fa fa-exchange"></i> Đổi mật khẩu
                     </a>
+                    <a class="dropdown-item"
+                        [routerLink]="['/config-cronjob']"
+                        href="javascript:void(0)">
+                        <i class="fa fa-calendar"></i> Cấu hình Schedule
+                    </a>
                     <a class="dropdown-item" [routerLink]="['/login']"
                         (click)="onLoggedout()">
                         <i class="fa fa-fw fa-power-off"></i> Đăng xuất

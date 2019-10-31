@@ -81,19 +81,19 @@ export class EditComponent implements OnInit {
       prdcode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       product: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: '',
-      activeFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      activeFee: ['', Validators.compose([this.helper.noWhitespaceValidator])],
       cardtype: ['', Validators.compose([Validators.required, Validators.maxLength(2), this.helper.noWhitespaceValidator])],
-      changesttFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      changesttFee: ['', Validators.compose([this.helper.noWhitespaceValidator])],
       class_: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      directddFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      directddFee: ['', Validators.compose([this.helper.noWhitespaceValidator])],
       f01: ['', Validators.compose([this.helper.noWhitespaceValidator])],
       f02: ['', Validators.compose([this.helper.noWhitespaceValidator])],
       f03: ['', Validators.compose([this.helper.noWhitespaceValidator])],
       f04: ['', Validators.compose([this.helper.noWhitespaceValidator])],
       f05: ['', Validators.compose([this.helper.noWhitespaceValidator])],
-      issueFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      reissueFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      repinFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])]
+      issueFee: ['', Validators.compose([this.helper.noWhitespaceValidator])],
+      reissueFee: ['', Validators.compose([this.helper.noWhitespaceValidator])],
+      repinFee: ['', Validators.compose([this.helper.noWhitespaceValidator])]
     });
   }
   get Form() { return this.dataForm.controls; }

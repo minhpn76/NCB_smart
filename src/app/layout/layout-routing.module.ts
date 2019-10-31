@@ -34,7 +34,7 @@ const routes: Routes = [
             { path: 'notify', loadChildren: () => import('./notify/notify.module').then(m => m.NotifyModule) },
             { path: 'package', loadChildren: () => import('./package/package.module').then(m => m.PackageModule) },
             { path: 'promotion', loadChildren: () => import('./promotion/promotion.module').then(m => m.PromotionModule) },
-            { path: 'role-decen', loadChildren: () => import('./role-decen/role-decen.module').then(m => m.RoleDecenModule) },
+            { path: 'config-cronjob', loadChildren: () => import('./cronjob/cronjob.module').then(m => m.CronjobModule) },
             { path: 'image-paycard', loadChildren: () => import('./image-paycard/image-paycard.module').then(m => m.ImgPayCardModule) },
             { path: 'promotion-package', loadChildren: () => import('./promotion-package/link.module').then(m => m.PromotionPGModule) }
 

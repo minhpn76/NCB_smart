@@ -32,8 +32,8 @@ export class UserProfileComponent implements OnInit {
     idno: '',
     page: 0,
     size: 10,
-    fromDate: 0,
-    toDate: 0,
+    // fromDate: 0,
+    // toDate: 0,
     previous_page: 0
   };
   listData: any = [];
@@ -65,7 +65,7 @@ export class UserProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadDate();
+    // this.loadDate();
     this.getListData(this.re_search);
   }
   tranferDate(params) {
@@ -81,10 +81,10 @@ export class UserProfileComponent implements OnInit {
     this.isProcessLoad = 1;
     // xu ly
     this.listData = [];
-    if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
-      params.toDate = this.tranferDate(this.mRatesDateS_7);
-      params.fromDate = this.tranferDate(this.mRatesDateS);
-    }
+    // if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
+    //   params.toDate = this.tranferDate(this.mRatesDateS_7);
+    //   params.fromDate = this.tranferDate(this.mRatesDateS);
+    // }
     this.ncbService.searchProfileUser(params).then((result) => {
       setTimeout(() => {
         this.isProcessLoad = 0;

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ListComponent } from './list/list.component';
+import { CreateComponent } from './create/create.component';
 
 const routes: Routes = [
   {
@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
     {
       path: '',
-      component: ListComponent,
+      component: CreateComponent,
       data: {
         icon: 'icon-tag',
         title: 'SideBar.ProductInventory',
@@ -24,5 +24,5 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class RoleDecenModuleRoutingModule {}
+export class CronjobModuleRoutingModule {}
 

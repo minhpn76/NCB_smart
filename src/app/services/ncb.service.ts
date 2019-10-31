@@ -192,7 +192,7 @@ export class NCBService {
   }
   // quan ly thong tin khach hang
   searchProfileUser(params): Promise<any> {
-    const url = `${API_URL}/user-profile/searchUser`;
+    const url = `${API_URL}/user-profile/searchConsumer`;
     return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
   // tham so tong dai
