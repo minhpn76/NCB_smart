@@ -13,6 +13,10 @@ import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConf
   providers: [NCBService, ExcelService]
 })
 export class UserProfileComponent implements OnInit {
+  mRatesDateS: NgbDateStruct;
+  mRatesDateS_7: NgbDateStruct;
+  my_7: any = new Date();
+  my: any = new Date();
   listPGD: any = [];
   listBranch: any = [];
   listRole: any = [];
@@ -28,6 +32,8 @@ export class UserProfileComponent implements OnInit {
     idno: '',
     page: 0,
     size: 10,
+    fromDate: 0,
+    toDate: 0,
     previous_page: 0
   };
   listData: any = [];
@@ -59,13 +65,26 @@ export class UserProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loadDate();
     this.getListData(this.re_search);
+  }
+  tranferDate(params) {
+    return params.year + '/' + params.month + '/' + params.day;
+  }
+  public loadDate(): void {
+    this.my_7.setDate(this.my_7.getDate() - 7);
+    this.mRatesDateS = { year: this.my_7.getFullYear(), month: this.my_7.getMonth() + 1, day: this.my_7.getDate() };
+    this.mRatesDateS_7 = { year: this.my.getFullYear(), month: this.my.getMonth() + 1, day: this.my.getDate() };
   }
 
   getListData(params) {
     this.isProcessLoad = 1;
     // xu ly
     this.listData = [];
+    if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
+      params.toDate = this.tranferDate(this.mRatesDateS_7);
+      params.fromDate = this.tranferDate(this.mRatesDateS);
+    }
     this.ncbService.searchProfileUser(params).then((result) => {
       setTimeout(() => {
         this.isProcessLoad = 0;
@@ -152,30 +171,35 @@ export class UserProfileComponent implements OnInit {
     this.arrExport = [];
     this.isProcessLoadExcel = 1;
     const search = Object.assign({}, this.re_search);
-    // search.size = 1000;
-    // const page = Math.ceil(this.totalSearch / search.size);
-    // search.page = 0;
-    // await this.getDataExcel(search);
-    const page = Math.ceil(this.totalSearch / search.size);
-    for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {
-        search.page = i;
-        await this.getDataExcel(search);
-    }
-    search.page = 0;
-    const data = [];
-    this.arrExport.forEach((element) => {
-      data.push({
-        'CIF': element.cifgrp,
-        'Tên đăng nhập': element.usrid,
-        'Họ và tên': element.usrfname,
-        'CMND/HC': element.datCfmast.idno,
-        'Nhóm khách hàng': element.crtusrid,
-        'Gói sản phẩm': element.promotion,
-        'CT ưu đãi': element.promotionName
+    if (this.totalSearch > 1000) {
+      this.toastr.error('Dữ liệu quá lớn không thể xuất được dữ liệu', 'Thất bại');
+      this.isProcessLoadExcel = 0;
+    } else {
+      // search.size = 1000;
+      // const page = Math.ceil(this.totalSearch / search.size);
+      // search.page = 0;
+      // await this.getDataExcel(search);
+      const page = Math.ceil(this.totalSearch / search.size);
+      for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {
+          search.page = i;
+          await this.getDataExcel(search);
+      }
+      search.page = 0;
+      const data = [];
+      this.arrExport.forEach((element) => {
+        data.push({
+          'CIF': element.cifgrp,
+          'Tên đăng nhập': element.usrid,
+          'Họ và tên': element.usrfname,
+          'CMND/HC': element.datCfmast.idno,
+          'Nhóm khách hàng': element.crtusrid,
+          'Gói sản phẩm': element.promotion,
+          'CT ưu đãi': element.promotionName
+        });
       });
-    });
-    this.excelService.exportAsExcelFile(data, 'list_user');
-    this.isProcessLoadExcel = 0;
-    return;
+      this.excelService.exportAsExcelFile(data, 'list_user');
+      this.isProcessLoadExcel = 0;
+      return;
+    }
   }
 }
