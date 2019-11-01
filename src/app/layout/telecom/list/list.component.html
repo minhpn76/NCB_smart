@@ -1,10 +1,10 @@
 <div>
-    <app-page-header [heading]="'Danh sách nhà mạng'"
+    <app-page-header [heading]="'Danh sách số tổng đài'"
         [url_heading]="'/telecom'"> </app-page-header>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Mã nhà mạng:</label>
+                <label for="search" class="col-sm-4 col-form-label">Mã quản lý:</label>
                 <div class="col-sm-6">
                     <input
                         class="form-control col-lg-12"
@@ -13,7 +13,7 @@
                         (keydown)="keyDownFunction($event)"
                         id="search"
                         [(ngModel)]="re_search.paramNo"
-                        placeholder="Mã nhà mạng"
+                        placeholder="Mã quản lý"
                         />
                 </div>
             </div>
@@ -31,8 +31,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Tên nhà
-                    mạng:</label>
+                <label for="search" class="col-sm-4 col-form-label">Tên tham số:</label>
                 <div class="col-sm-6">
                     <input
                         class="form-control col-lg-12"
@@ -41,7 +40,7 @@
                         (keydown)="keyDownFunction($event)"
                         id="search"
                         [(ngModel)]="re_search.paramName"
-                        placeholder="Tên nhà mạng"
+                        placeholder="Tên tham số"
                         />
                 </div>
             </div>
@@ -96,10 +95,10 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Mã nhà mạng</th>
-                        <th scope="col">Tên nhà mạng</th>
-                        <th scope="col">Giá trị</th>
-                        <th scope="col">Mô tả</th>
+                        <th scope="col">Mã quản lý</th>
+                        <th scope="col">Tên tham số</th>
+                        <th scope="col">Giá trị tham số</th>
+                        <th scope="col">Ghi chú</th>
                         <th scope="col">Trạng thái</th>
                         <th scope="col">Thao tác</th>
                     </tr>
