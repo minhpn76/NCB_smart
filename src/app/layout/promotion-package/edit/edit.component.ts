@@ -40,8 +40,9 @@ export class EditComponent implements OnInit {
     this.userInfo = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : '';
     this.getItem(this.itemId);
     this.getTempListPro();
-    this.getTempListPackage();
+    this.getPrdName();
     this.getConfigTransaction();
+    this.getConfigDetailTransaction('');
   }
 
   ngOnInit() {
@@ -53,7 +54,7 @@ export class EditComponent implements OnInit {
       status: ['A', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       ccy: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       percentage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      createdBy: [JSON.stringify(this.userInfo.userName)],
+      createdBy: [this.userInfo.userName],
     });
   }
   get Form() { return this.dataForm.controls; }
@@ -117,14 +118,15 @@ export class EditComponent implements OnInit {
               id: body.id !== null ? body.id : '',
               proCode: body.proCode.split(','),
               prd: body.prd.split(','),
-              tranType: body.tranType !== null ? body.tranType : '',
-              typeId: body.typeId !== null ? body.typeId : '',
-              status: body.status !== null ? body.status : '',
-              ccy: body.ccy !== null ? body.ccy : '',
-              percentage: body.percentage !== null ? body.percentage : '',
-              createdBy: body.createdBy !== null ? body.createdBy : '',
+              tranType: body.tranType,
+              typeId: body.typeId,
+              status: body.status,
+              ccy: body.ccy,
+              percentage: body.percentage,
+              createdBy: body.createdBy,
             });
-          }, 500);
+          }, 1000);
+
           resolve();
         } catch (e) {
           console.log('e', e);
@@ -137,29 +139,14 @@ export class EditComponent implements OnInit {
   async getItem(params) {
     await this.mapItem(params);
   }
-  getTempListPackage() {
-    this.listTempData = [];
-    // xu ly
-    this.ncbService.getAllProdName().then((result) => {
-      const body = result.json().body;
-      body.forEach(element => {
-        this.listTempData.push({
-          label: element.prdName,
-          value: element.prd
-        });
-      });
 
-    }).catch(err => {
-      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
-    });
-  }
   getTempListPro() {
-    this.listTempData = [];
+    this.listTempProCode = [];
     // xu ly
     this.ncbService.getAllProCode().then((result) => {
       const body = result.json().body;
       body.forEach(element => {
-        this.listTempData.push({
+        this.listTempProCode.push({
           label: element,
           value: element
         });
@@ -192,10 +179,26 @@ export class EditComponent implements OnInit {
       this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
     });
   }
-  getConfigDetailTransaction() {
+  getPrdName() {
+    this.listTempProd = [];
+    // xu ly
+    this.ncbService.getListPrdName().then((result) => {
+      const body = result.json().body;
+      body.forEach(element => {
+        this.listTempProd.push({
+          label: element,
+          value: element
+        });
+      });
+
+    }).catch(err => {
+      this.toastr.error('Không thể lấy được dự liệu gói sản phẩm', 'Thất bại!');
+    });
+  }
+  getConfigDetailTransaction(code) {
     const params = {
       code: 'FUNCTION_TYPE',
-      type: this.dataForm.value.tranType
+      type: code
     };
     this.listTypeId = [];
     // xu ly

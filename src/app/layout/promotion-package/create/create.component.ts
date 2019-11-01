@@ -36,7 +36,7 @@ export class CreateComponent implements OnInit {
   ) {
     this.userInfo = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : '';
     this.getTempListPro();
-    this.getTempListPackage();
+    this.getPrdName();
     this.getConfigTransaction();
   }
 
@@ -49,7 +49,7 @@ export class CreateComponent implements OnInit {
       status: ['A', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       ccy: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       percentage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      createdBy: [JSON.stringify(this.userInfo.userName)],
+      createdBy: [this.userInfo.userName],
     });
   }
   get Form() { return this.dataForm.controls; }
@@ -101,29 +101,29 @@ export class CreateComponent implements OnInit {
   resetForm() {
     this.router.navigateByUrl('/promotion-package');
   }
-  getTempListPackage() {
-    this.listTempData = [];
-    // xu ly
-    this.ncbService.getAllProdName().then((result) => {
-      const body = result.json().body;
-      body.forEach(element => {
-        this.listTempData.push({
-          label: element.prdName,
-          value: element.prd
-        });
-      });
+  // getTempListPackage() {
+  //   this.listTempData = [];
+  //   // xu ly
+  //   this.ncbService.getAllProdName().then((result) => {
+  //     const body = result.json().body;
+  //     body.forEach(element => {
+  //       this.listTempData.push({
+  //         label: element.prdName,
+  //         value: element.prd
+  //       });
+  //     });
 
-    }).catch(err => {
-      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
-    });
-  }
+  //   }).catch(err => {
+  //     this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+  //   });
+  // }
   getTempListPro() {
-    this.listTempData = [];
+    this.listTempProCode = [];
     // xu ly
     this.ncbService.getAllProCode().then((result) => {
       const body = result.json().body;
       body.forEach(element => {
-        this.listTempData.push({
+        this.listTempProCode.push({
           label: element,
           value: element
         });
@@ -180,6 +180,22 @@ export class CreateComponent implements OnInit {
       }, 300);
     }).catch(err => {
       this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
+    });
+  }
+  getPrdName() {
+    this.listTempProd = [];
+    // xu ly
+    this.ncbService.getListPrdName().then((result) => {
+      const body = result.json().body;
+      body.forEach(element => {
+        this.listTempProd.push({
+          label: element,
+          value: element
+        });
+      });
+
+    }).catch(err => {
+      this.toastr.error('Không thể lấy được dự liệu gói sản phẩm', 'Thất bại!');
     });
   }
 }
