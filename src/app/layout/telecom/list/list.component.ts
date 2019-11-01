@@ -232,24 +232,6 @@ export class ListComponent implements OnInit {
         console.log(err);
     }
   }
-  uploadFile(value) {
-    this.ncbService.uploadFileTelecom(value).then((result) => {
-      if (result.status === 200) {
-        if (result.json().code !== '00') {
-          // this.isLockSave = true;
-          this.toastr.error(result.json().message, 'Thất bại!');
-        } else {
-          this.toastr.success('Upload dữ liệu thành công', 'Thành công!');
-        }
-      } else {
-        this.toastr.error(result.message, 'Thất bại!');
-      }
-
-    }).catch((err) => {
-      this.toastr.error(err.json().message, 'Thất bại!');
-
-    });
-  }
   onUploadServer() {
     if (this.fileExcel.file) {
       this.temp.loading = true;
