@@ -41,6 +41,7 @@ export class ListComponent implements OnInit {
   protected modalOp: NgbModalRef;
 
   @ViewChild('uploadFile', { static: false }) uploadFileElementRef: ElementRef;
+  @Output() emitCloseModal = new EventEmitter<any>();
   listData: any = [];
   listPageSize: any = [10, 20, 30, 40, 50];
   listStatus: any = [
@@ -225,48 +226,52 @@ export class ListComponent implements OnInit {
             if (fileList.length > 0) {
               this.fileExcel.file = fileList[0];
               this.fileExcel.name = fileList[0].name;
-              console.log('XXx==', this.fileExcel);
             }
         }
     } catch (err) {
         console.log(err);
     }
   }
-  onUploadServer() {
-    console.log('up to server');
-    // let data = this.list_couriers.filter(v => v['CourierId'] == this.courierId);
-    // let courierName = data[0].Name
+  uploadFile(value) {
+    this.ncbService.uploadFileTelecom(value).then((result) => {
+      if (result.status === 200) {
+        if (result.json().code !== '00') {
+          // this.isLockSave = true;
+          this.toastr.error(result.json().message, 'Thất bại!');
+        } else {
+          this.toastr.success('Upload dữ liệu thành công', 'Thành công!');
+        }
+      } else {
+        this.toastr.error(result.message, 'Thất bại!');
+      }
 
-    // if (this.fileExcel.file) {
-    //     this.temp.loading = true
-    //     let file: File = this.fileExcel.file;
-    //     this.ncbService.authRequestFile(file, {
-    //         'courierId': this.courierId,
-    //         'courierName': courierName,
-    //         'email_upload': this.user_email
-    //     }).then((result) => {
-    //         let rep = result.json()
-    //         if (rep.error == true) {
-    //             this.appComponent.toasterTranslate('error', 'TICM_uploadfileloihaythulai');
-    //         } else {
-    //             let dataReponse = {
-    //                 'FileUpload': result.json().data,
-    //                 'CourierId': this.courierId,
-    //                 'courierName': courierName,
-    //                 'email_upload': this.user_email,
-    //                 'Action': 'uploadFile'
-    //             }
-    //             this.change.emit(dataReponse);
-    //             this.appComponent.toastr.success(result.json().messages, 'Oops!');
-    //         }
-    //         this.temp.loading = false
-    //         this.emitCloseModal.emit(true);
-    //     })
-    //         .catch((err) => {
-    //             this.temp.loading = false
-    //             this.appComponent.toastr.warning(this.appComponent.instantTranslate('Toaster_PleaseTryAgain'), 'Oops!');
-    //         });
-    // }
+    }).catch((err) => {
+      this.toastr.error(err.json().message, 'Thất bại!');
+
+    });
+  }
+  onUploadServer() {
+    if (this.fileExcel.file) {
+      this.temp.loading = true;
+       const file: File = this.fileExcel.file;
+      this.ncbService.uploadFileTelecom(file).then((result) => {
+        if (result.status === 200) {
+          if (result.json().code !== '00') {
+            this.toastr.error(result.json().message, 'Thất bại!');
+          } else {
+            this.toastr.success('Upload dữ liệu thành công', 'Thành công!');
+            this.temp.loading = false;
+            this.emitCloseModal.emit(true);
+          }
+        } else {
+          this.toastr.error(result.message, 'Thất bại!');
+        }
+
+      }).catch((err) => {
+        this.toastr.error(err.json().message, 'Thất bại!');
+
+      });
+    }
   }
 
   openModal(content, classLayout = '', type = '') {

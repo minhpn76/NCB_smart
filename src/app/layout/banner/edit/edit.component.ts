@@ -64,6 +64,8 @@ export class EditComponent implements OnInit {
       name: 'Show mãi mãi'
     }
   ];
+  tempNameImg: any = '';
+  tempUrl: any = '';
   obj: any = {
     status: '',
     bannerCode: '',
@@ -114,13 +116,21 @@ export class EditComponent implements OnInit {
 
   get Form() { return this.dataForm.controls; }
 
-  async handleFileInput(files: FileList): Promise<any> {
-    this.isEdit = false;
+  async handleFileInput(files: FileList, eventTemp): Promise<any> {
     const check = await this.helper.validateFileImage(
       files[0], AppSettings.UPLOAD_IMAGE.file_size, AppSettings.UPLOAD_IMAGE.file_ext
     );
+    if (eventTemp.target.files && eventTemp.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(files[0]); // read file as data url
+      this.tempNameImg = files[0].name;
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.tempUrl = (<FileReader>event.target).result;
+      };
+    }
+
     if (check === true) {
-      this.deleteFile(this.dataForm.value.fileName, files.item(0));
+        this.uploadFile(files.item(0));
     }
   }
   deleteFile(value, file) {
@@ -227,6 +237,9 @@ export class EditComponent implements OnInit {
         // linkUrlVn: body.linkUrlVn,
         linkUrlEn: body.linkUrlEn
       };
+      this.tempUrl = body.linkImg;
+
+
       const stringSplit = body.linkImg.split('/');
       const temp_fromDate_slipt = body.scheduleStart !== null ? body.scheduleStart.split('/') : null;
       const temp_fromDate = {
@@ -236,13 +249,12 @@ export class EditComponent implements OnInit {
       };
 
       const temp_toDate_slipt = body.scheduleEnd !== null ? body.scheduleEnd.split('/') : null;
-      console.log('!@', temp_toDate_slipt);
       const temp_toDate = {
         year: parseInt(temp_toDate_slipt[0]),
         month: parseInt(temp_toDate_slipt[1]),
         day: parseInt(temp_toDate_slipt[2])
       };
-
+      this.tempNameImg = stringSplit.slice(-1)[0];
       this.dataForm.patchValue({
         bannerCode: body.bannerCode,
         actionScreen: body.actionScreen,

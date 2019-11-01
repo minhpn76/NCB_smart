@@ -191,7 +191,7 @@ export class CreateComponent implements OnInit {
       code : 'FUNCTION_TYPE'
     }).then((result) => {
       this.listTranType.push({
-        name: '--Chọn giá trị--',
+        name: '--Chọn tất cả--',
         code: ''
       });
       setTimeout(() => {

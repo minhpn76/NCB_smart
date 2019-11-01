@@ -160,7 +160,7 @@ export class ListComponent implements OnInit {
       fromDate: ['', this.mRatesDateS],
       toDate: ['', this.mRatesDateS_7],
       prd: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
-      createBy: [JSON.stringify(this.userInfo.userName)],
+      createBy: [this.userInfo.userName],
       status : ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
     });
   }
@@ -349,8 +349,8 @@ export class ListComponent implements OnInit {
         'Số lượng': element.quantity,
         'Số tiền tối thiểu / giao dịch': this.helper.currencyFormatDE(element.min),
         'Số tiền tối đa / giao dịch': this.helper.currencyFormatDE(element.max),
-        'Ngừời tạo': element.createdDate,
-        'Ngày tạo': element.createdBy,
+        'Ngừời tạo': element.createdBy,
+        'Ngày tạo': element.createdDate,
         'Trạng thái': element.status === 'A' ? 'Active' : 'Deactive'
 
       });

@@ -37,6 +37,7 @@ export class CreateComponent implements OnInit {
     this.userInfo = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : '';
     this.getTempListPro();
     this.getTempListPackage();
+    this.getConfigTransaction();
   }
 
   ngOnInit() {

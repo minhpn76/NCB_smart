@@ -123,7 +123,7 @@ export class EditComponent implements OnInit {
       // fromDate: ['', this.mRatesDateS],
       // toDate: ['', this.mRatesDateS_7],
       prd: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      createBy: [JSON.stringify(this.userInfo.userName)],
+      createBy: [this.userInfo.userName],
       status : ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
     });
   }
@@ -195,7 +195,7 @@ export class EditComponent implements OnInit {
       code : 'FUNCTION_TYPE'
     }).then((result) => {
       this.listTranType.push({
-        name: '--Chọn giá trị--',
+        name: '--Chọn tất cả--',
         code: ''
       });
       setTimeout(() => {

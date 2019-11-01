@@ -27,6 +27,7 @@ export class CreateComponent implements OnInit {
   objFile: any = {};
   fileName: File;
   isLockSave = false;
+  tempNameImg: any = '';
   listBanner: any = [
     {
       code: 'HOME_POPUP',
@@ -63,6 +64,7 @@ export class CreateComponent implements OnInit {
       name: 'Show mãi mãi'
     }
   ];
+  tempUrl: any = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -118,15 +120,15 @@ export class CreateComponent implements OnInit {
     };
     this.ncbService.createNcbBanner(payload).then((result) => {
       if (result.status === 200) {
-        if (result.json().code !== '00') {
-          this.toastr.error(result.json().message, 'Thất bại!');
-        } else if (result.json().code === '910') {
-          this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
-        } else {
+        if (result.json().code === '00') {
           this.toastr.success('Thêm thành công', 'Thành công!');
           setTimeout(() => {
             this.router.navigateByUrl('/banner');
           }, 500);
+        } else if (result.json().code === '908') {
+          this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
+        } else {
+          this.toastr.error(result.json().message, 'Thất bại!');
         }
       } else {
         this.toastr.error(result.message, 'Thất bại!');
@@ -138,10 +140,19 @@ export class CreateComponent implements OnInit {
   resetForm() {
     this.router.navigateByUrl('/banner');
   }
-  async handleFileInput(files: FileList): Promise<any> {
+  async handleFileInput(files: FileList, eventTemp): Promise<any> {
     const check = await this.helper.validateFileImage(
       files[0], AppSettings.UPLOAD_IMAGE.file_size, AppSettings.UPLOAD_IMAGE.file_ext
     );
+    if (eventTemp.target.files && eventTemp.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(files[0]); // read file as data url
+      this.tempNameImg = files[0].name;
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.tempUrl = (<FileReader>event.target).result;
+      };
+    }
+
     if (check === true) {
         this.uploadFile(files.item(0));
     }

@@ -996,6 +996,16 @@ export class NCBService {
     const url = `${API_URL}/function/getAllPrdAndPrdName`;
     return this.auth.authRequest({ url: url, method: 'GET' });
   }
+  createConfigCronjob(body): Promise<any> {
+    const url = `${API_URL}/config-cronjob/saveOrUpdate`;
+    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
+  }
+  uploadFileTelecom(file): Promise<any> {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    const url = `${API_URL}/param-manager/create/uploadFile`;
+    return this.auth.authRequestFile({ url: url, data: formData, method: 'POST' });
+  }
 
 
 }
