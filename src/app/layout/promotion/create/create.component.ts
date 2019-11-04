@@ -166,7 +166,7 @@ export class CreateComponent implements OnInit {
       fromDate: [this.mRatesDateS_1],
       toDate: [this.mRatesDateS_7_1],
       // createdDate: [''],
-      createdBy: [JSON.stringify(this.userInfo.userName)],
+      createdBy: [this.userInfo.userName],
       status: ['A']
     });
   }

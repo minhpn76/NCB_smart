@@ -6,14 +6,24 @@
             <div class="mt-2">Tên tài khoản:</div>
             
             <div class="mt-2">Họ và tên:</div>
-            
+
+            <div class="mt-2">Email:</div>
+
+            <div class="mt-2">Số điện thoại:</div>
+
             <div class="mt-2">Chi nhánh:</div>
+
+            <div class="mt-2">Phòng giao dịch:</div>
+
+            <div class="mt-2">Quyền truy cập:</div>
+
+
             
-            <div class="mt-2">Điểm giao dịch:</div>
+            <!-- <div class="mt-2">Điểm giao dịch:</div>
             
             <div class="mt-2">Lần cuối đăng nhập cuối cùng:</div>
             
-            <div class="mt-2">IP đăng nhập cuối cùng:</div>
+            <div class="mt-2">IP đăng nhập cuối cùng:</div> -->
             
 
 
@@ -22,18 +32,29 @@
             <div class="mt-2"><b>{{profile?.userName}}</b></div>
             
             <div class="mt-2"><b>{{profile?.fullName}}</b></div>
+
+            <div class="mt-2"><b>{{profile?.email}}</b></div>
+
+            <div class="mt-2"><b>{{profile?.phone}}</b></div>
+
+            <div class="mt-2">
+                <b *ngIf="nameBranch; else ''">{{nameBranch}}</b>
+            </div>
             
 
-            <div class="mt-2"><b>{{profile?.branchName}}</b></div>
-            
+            <div class="mt-2">
+                <b *ngIf="nameTransaction != '';else transaction_else">{{nameTransaction}}</b>
+                <ng-template #transaction_else><br/></ng-template>
+            </div>
 
-            <div class="mt-2"><b>{{profile?.posName}}</b></div>
-            
+            <div class="mt-2"><b>{{profile?.role?.roleName}}</b></div>
 
+            
+<!-- 
             <div class="mt-2"><b>{{profile?.lastTime}}</b></div>
             
 
-            <div class="mt-2"><b>{{profile?.lastIp}}</b></div>
+            <div class="mt-2"><b>{{profile?.lastIp}}</b></div> -->
 
         </div>
     </div>  

@@ -23,6 +23,16 @@ export class EditComponent implements OnInit {
   listTempProd: any = [];
   listTypeId: any = [];
   listTranType: any = [];
+  listStatus: any = [
+    {
+      name: 'Active',
+      code: 'A',
+    },
+    {
+      name: 'Deactive',
+      code: 'D',
+    }
+  ];
 
 
 
@@ -55,6 +65,7 @@ export class EditComponent implements OnInit {
       ccy: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       percentage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       createdBy: [this.userInfo.userName],
+      id: [''],
     });
   }
   get Form() { return this.dataForm.controls; }
@@ -76,6 +87,7 @@ export class EditComponent implements OnInit {
     const _codePrdCode = tempArrPro.join(',');
 
     const payload = {
+      id : this.dataForm.value.id,
       proCode: _codePrdCode,
       prd: _codePrd,
       tranType: this.dataForm.value.tranType,
@@ -123,7 +135,7 @@ export class EditComponent implements OnInit {
               status: body.status,
               ccy: body.ccy,
               percentage: body.percentage,
-              createdBy: body.createdBy,
+              createdBy: body.createdBy
             });
           }, 1000);
 

@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Phần trăm(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Giảm phí khuyến mãi (%)(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <input
                             formControlName="percentage"
@@ -91,11 +91,19 @@
                             [ngClass]="{ 'is-invalid': submitted && Form.percentage.errors }">
                         <div *ngIf="submitted && Form.percentage.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.percentage.errors.required">Phần trăm là bắt buộc</div>
-                            <div *ngIf="Form.percentage.hasError('whitespace')">Phần trăm không hợp lệ</div>
+                            <div *ngIf="Form.percentage.errors.required">Giảm phí khuyến mãi (%) là bắt buộc</div>
+                            <div *ngIf="Form.percentage.hasError('whitespace')">Giảm phí khuyến mãi (%) không hợp lệ</div>
                         </div>
                     </div>
                 </div>
+                <div class="form-group row">
+                        <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" formControlName="status" name="status">
+                                <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
+                            </select>
+                        </div>
+                    </div>
 
                 <div class="form-group row">
                     <div class="col-sm-4"></div>

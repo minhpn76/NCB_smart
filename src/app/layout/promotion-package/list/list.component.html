@@ -110,6 +110,7 @@
                             <span *ngIf="data?.tranType === 'TT'">Thanh toán</span>
                             <span *ngIf="data?.tranType === 'TOPUP'">Nạp tiền</span>
                             <span *ngIf="data?.tranType === 'QLTK'">Phí thường niên</span>
+                            <span *ngIf="data?.tranType === 'CARD'">CARD</span>
                         </td>
                         <td >
                             <span *ngIf="data?.typeId === 'IBT'">Chuyển khoản LNH</span>
@@ -120,6 +121,15 @@
                             <span  *ngIf="data?.typeId === 'TOP'">Nạp tiền điện thoại</span>
                             <span *ngIf="data?.typeId === 'EWL'">Nạp ví điện tử</span>
                             <span *ngIf="data?.typeId === 'IZI'">Nạp tiền vào TK IZI</span>
+                            <span *ngIf="data?.typeId === 'FEE'">Thu phí dịch vụ</span>
+                            <span *ngIf="data?.typeId === 'VPMT'">Thanh toán thẻ tín dụng</span>
+                            <span *ngIf="data?.typeId === 'IN'">Nộp tiền tại quần</span>
+                            <span *ngIf="data?.typeId === 'OUT'">Rút tiền mặt tại quầy</span>
+                            <span *ngIf="data?.typeId === 'REDEEM'">Tất toán tiết kiệm</span>
+                            <span *ngIf="data?.typeId === 'PLUS'">Nộp thêm tiết kiệm</span>
+                            <span *ngIf="data?.typeId === 'OPEN'">Gửi tiết kiệm</span>
+                            <span *ngIf="data?.typeId === 'PAY'">Trả lãi tiết kiệm</span>
+                            <span *ngIf="data?.typeId === 'NEW'">NEW</span>
                         </td>
                         <td>{{data?.ccy}}</td>
                         <td>{{data?.percentage}}</td>

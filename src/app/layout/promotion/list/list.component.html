@@ -90,6 +90,7 @@
                         <th scope="col">Ngày bắt đầu</th>
                         <th scope="col">Ngày kết thúc</th>
                         <th scope="col">Ngày tạo</th>
+                        <th scope="col">Người tạo</th>
                         <th scope="col">Trạng thái</th>
                         <th scope="col">Thao tác</th>
                     </tr>
@@ -112,6 +113,7 @@
                         <td>{{data?.fromDate}}</td>
                         <td>{{data?.toDate}}</td>
                         <td>{{data?.createdDate}}</td>
+                        <td>{{data?.createdBy}}</td>      
                         <td>
                             <span *ngIf="data?.status === 'A'" class="badge badge-success">Active</span>
                             <span *ngIf="data?.status === 'D'" class="badge badge-danger">Deactive</span>

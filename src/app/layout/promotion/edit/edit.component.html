@@ -1,5 +1,5 @@
 <div>
-    <app-page-header [heading]="'Khuyễn mãi/ ưu đãi'" [heading_second]="'Thêm mới khuyến mãi ưu đãi'" [url_heading]="'/promotion'">
+    <app-page-header [heading]="'Khuyễn mãi/ ưu đãi'" [heading_second]="'Sửa khuyến mãi ưu đãi'" [url_heading]="'/promotion'">
     </app-page-header>
     <div class="row">
         <div class="col-md-8">
@@ -9,6 +9,7 @@
                     <div class="col-sm-7">
                         <input
                             formControlName="proCode"
+                            [attr.disabled]="true"
                             class="form-control col-lg-12"
                             placeholder="Mã chương trình"
                             [ngClass]="{ 'is-invalid': submitted && Form.proCode.errors }"
