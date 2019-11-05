@@ -152,10 +152,10 @@
     <!-- khai bao hinh anh the -->
     <ng-template #creditCard let-c="close" let-d="dismiss">
         <div class="modal-header">
-            <h5 class="modal-title">
+            <h6 class="modal-title">
                 <i class="icon-plus"></i>
-                Số lượng thẻ KH có thể mở
-            </h5>
+                <b>Số lượng thẻ KH có thể mở</b>
+            </h6>
             <button type="button" class="close" aria-label="Close" (click)="d('Crossclick')">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -181,10 +181,10 @@
 
     <ng-template #reasonCard let-c="close" let-d="dismiss">
         <div class="modal-header">
-            <h5 class="modal-title">
+            <h6 class="modal-title">
                 <i class="icon-plus"></i>
-                Lý do phát hành lại thẻ
-            </h5>
+                <b>Lý do phát hành lại thẻ</b>
+            </h6>
             <button type="button" class="close" aria-label="Close" (click)="d('Crossclick')">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -216,10 +216,10 @@
 
     <ng-template #otherConfigCard let-c="close" let-d="dismiss">
         <div class="modal-header">
-            <h5 class="modal-title">
+            <h6 class="modal-title">
                 <i class="icon-plus"></i>
-                Tham số khác
-            </h5>
+                <b>Tham số khác</b>
+            </h6>
             <button type="button" class="close" aria-label="Close" (click)="d('Crossclick')">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -268,7 +268,7 @@
     <div class="row" style="margin-top: 50px">
         <div class="col-md-12 table-responsive">
             <h5><b>Khai báo tham số thẻ</b></h5>
-            <h6>Số lượng thẻ tối đa KH có thể mở</h6>
+            <h6><b>Số lượng thẻ tối đa KH có thể mở</b></h6>
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -287,7 +287,7 @@
                     </tr>
                     <tr 
                         *ngFor="let cd of parCardConfig.creditCardNumber.list; let i = index"
-                        (click)="editDataCreditCard(cd)"
+                        (click)="editDataCreditCard(cd, i)"
                         >
                         <td>{{ i + 1 }}</td>
                         <td>
@@ -311,11 +311,15 @@
                         <td>
                             <button class="btn btn-primary btn-small"
                                 (click)="saveCreditForm(cd.value)"
-                                [disabled]="parCardConfig.creditCardNumber.editRow === ''"
+                                [disabled]="indexTempCreditCard != i"
                                 ><i class="fa fa-edit"></i> Lưu</button>
                             &nbsp;
-                            <button (click)="deleteCreditCard(i, cd.value)" class="btn btn-default btn-small">
+                            <button (click)="deleteCreditCard(i, cd.value)" class="btn btn-danger btn-small">
                                 <i class="fa fa-trash"></i> Xoá
+                            </button>
+                            &nbsp;
+                            <button class="btn btn-default btn-small" (click)="cancelCreditCard(cd, i)">
+                                <i class="fa fa-close"></i> Huỷ
                             </button>
                         </td>
                     </tr>
@@ -328,7 +332,7 @@
             </table>
 
             <br />
-            <h6>Lý do phát hành lại thẻ</h6>
+            <h6><b>Lý do phát hành lại thẻ</b></h6>
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -345,7 +349,7 @@
                     <tr *ngIf="parCardConfig.reasonCard.total == 0 && parCardConfig.reasonCard.isLoad == 0" class="text-center">
                         <td colspan="4">Không tìm thấy kết quả</td>
                     </tr>
-                    <tr (click)="editReasonCard(cd)" *ngFor="let cd of parCardConfig.reasonCard.list; let i = index">
+                    <tr (click)="editReasonCard(cd, i)" *ngFor="let cd of parCardConfig.reasonCard.list; let i = index">
                         <td>{{ i + 1 }}</td>
                         <td>
                             <input
@@ -367,13 +371,17 @@
                             <button
                                 class="btn btn-primary btn-small"
                                 (click)="saveReasonCard(cd)"
-                                [disabled]="parCardConfig.reasonCard.editRow === ''"
+                                [disabled]="indexTempReasonCard != i"
                             >
                                 <i class="fa fa-edit"></i> Lưu
                             </button>
                             &nbsp;
-                            <button (click)="deleteReasonCard(i, cd.value, cd.code)" class="btn btn-default btn-small">
+                            <button (click)="deleteReasonCard(i, cd.value, cd.code)" class="btn btn-danger btn-small">
                                 <i class="fa fa-trash"></i> Xoá
+                            </button>
+                            &nbsp;
+                            <button class="btn btn-default btn-small" (click)="cancelReasonCard(cd, i)">
+                                <i class="fa fa-close"></i> Huỷ
                             </button>
                         </td>
                     </tr>
@@ -386,7 +394,7 @@
             </table>
 
             <br />
-            <h6>Tham số khác</h6>
+            <h6><b>Tham số khác</b></h6>
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -408,7 +416,7 @@
                     <tr
                         style="cursor: pointer;"
                         *ngFor="let cd of parCardConfig.otherConfig.list; let i = index"
-                        (click)="editOtherConfigCard(cd)"
+                        (click)="editOtherConfigCard(cd, i)"
                     >
                         <td>{{ i + 1 }}</td>
                         <td>
@@ -440,14 +448,19 @@
                             <button
                                 class="btn btn-primary btn-small"
                                 (click)="saveOtherConfig(cd)"
-                                [disabled]="parCardConfig.otherConfig.editRow === ''"
+                                [disabled]="indexTempOtherCard != i"
                             >
                                 <i class="fa fa-edit"></i> Lưu
                             </button>
                             &nbsp;
-                            <button (click)="deleteOtherConfigCard(i, cd.param, cd.code)" class="btn btn-default btn-small">
+                            <button (click)="deleteOtherConfigCard(i, cd.param, cd.code)" class="btn btn-danger btn-small">
                                 <i class="fa fa-trash"></i> Xoá
                             </button>
+                            &nbsp;
+                            <button class="btn btn-default btn-small" (click)="cancelOtherConfigCard(cd, i)">
+                                <i class="fa fa-close"></i> Huỷ
+                            </button>
+                            
                         </td>
                     </tr>
                     <tr>

@@ -58,6 +58,11 @@ export class ListComponent implements OnInit {
   // khai bao tham so
   EditRowID1: any = '';
   showEditTable = false;
+  indexTempReasonCard: any;
+  indexTempOtherCard: any;
+  indexTempCreditCard: any;
+
+
   parCardConfig: any = {
     creditCardNumber: {
       list: [],
@@ -309,9 +314,16 @@ export class ListComponent implements OnInit {
   }
 
 
-  editDataCreditCard(val, value) {
+  editDataCreditCard(val, index) {
+    this.indexTempCreditCard = index;
     this.parCardConfig.creditCardNumber.editRow = val.code;
     this.objEditCredit.oldValue = val.value;
+  }
+  cancelCreditCard(val, index) {
+    this.indexTempCreditCard = '';
+    this.parCardConfig.creditCardNumber.editRow = '';
+    this.objEditCredit.oldValue = '';
+    this.getCreditCardNumber();
   }
   handledDataCredit(event) {
     this.objEditCredit.newValue = event;
@@ -346,14 +358,29 @@ export class ListComponent implements OnInit {
     });
   }
 
-  editOtherConfigCard(val) {
+  editOtherConfigCard(val, index) {
     this.parCardConfig.otherConfig.editRow = val.code;
+    this.indexTempOtherCard = index;
     this.otherForm = val;
   }
+  cancelOtherConfigCard(val, index) {
+    this.parCardConfig.otherConfig.editRow = '';
+    this.indexTempOtherCard = '';
+    this.otherForm = {};
+   this.getOtherConfigCard();
+  }
 
-  editReasonCard(val) {
+  editReasonCard(val, index) {
+    this.indexTempReasonCard = index;
     this.parCardConfig.reasonCard.editRow = val.code;
     this.reasonForm = val;
+  }
+
+  cancelReasonCard(val, index) {
+    this.indexTempReasonCard = '';
+    this.parCardConfig.reasonCard.editRow = '';
+    this.reasonForm = {};
+    this.getReasonCard();
   }
 
   saveReasonCard() {

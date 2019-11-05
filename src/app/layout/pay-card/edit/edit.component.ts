@@ -59,6 +59,7 @@ export class EditComponent implements OnInit {
   ];
 
   @ViewChild('modalUpload', { static: false }) modalUploadElementRef: ElementRef;
+  @ViewChild('modalCopy', { static: false }) modalCopyElementRef: ElementRef;
   @Output() emitCloseModal = new EventEmitter<any>();
 
   constructor(
@@ -246,6 +247,9 @@ export class EditComponent implements OnInit {
   async openModalUpload() {
     this.openModal(this.modalUploadElementRef, 'modal-package', 'static');
   }
+  async openModalCopy() {
+    this.openModal(this.modalCopyElementRef, 'modal-package', 'static');
+  }
 
   // async handleFileInput(files: FileList): Promise<any> {
   //   this.isEdit = false;
@@ -358,7 +362,7 @@ export class EditComponent implements OnInit {
             this.router.navigateByUrl('/pay-card');
           }, 500);
         } else if (result.json().code === '901') {
-          this.toastr.error('Hình ảnh phôi thẻ đã tồn tại', 'Thất bại!');
+          this.toastr.error('Sản phẩm đã tồn tại, vui lòng kiểm tra lại thông tin!', 'Thất bại!');
         } else {
           this.toastr.error('Lỗi hệ thống', 'Thất bại!');
 
@@ -370,6 +374,9 @@ export class EditComponent implements OnInit {
       this.toastr.error(err.json().description, 'Thất bại!');
     });
   }
+  closeModal() {
+    this.modalOp.close();
+}
 }
 
 

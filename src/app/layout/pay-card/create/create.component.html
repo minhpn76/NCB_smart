@@ -10,9 +10,12 @@
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Tên sản phẩm thẻ trên HT(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select class="form-control" formControlName="prdcode" name="prdcode">
-                            <option *ngFor="let status of listNamePrdCode" [value]="status" selected="selected">{{ status }}</option>
-                        </select>
+                        <input 
+                            formControlName="prdcode"
+                            class="form-control col-lg-12"
+                            placeholder="Tên sản phẩm thẻ trên HT"
+                            [ngClass]="{ 'is-invalid': submitted && Form.prdcode.errors }"
+                        >
                         <div *ngIf="submitted && Form.prdcode.errors" class="invalid-feedback">
                             <div *ngIf="Form.prdcode.errors.required">Tên sản phẩm thẻ trên HT là bắt buộc</div>
                             <div *ngIf="Form.prdcode.hasError('whitespace')">Tên sản phẩm thẻ trên HT không đúng định dạng</div>
@@ -22,9 +25,12 @@
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Tên hiển thị(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select class="form-control" formControlName="product" name="product">
-                            <option *ngFor="let status of listNameProduct" [value]="status" selected="selected">{{ status }}</option>
-                        </select>
+                        <input 
+                            formControlName="product"
+                            class="form-control col-lg-12"
+                            placeholder="Tên hiển thị"
+                            [ngClass]="{ 'is-invalid': submitted && Form.product.errors }"
+                        >
             
                         <div *ngIf="submitted && Form.product.errors" class="invalid-feedback">
                             <div *ngIf="Form.product.errors.required">Tên hiển thị là bắt buộc</div>
@@ -73,8 +79,6 @@
                             formControlName="issueFee"
                             class="form-control col-lg-12"
                             placeholder="Phí phát hành mới"
-                            currencyMask
-                            [options]='optionCurrency'
                             [ngClass]="{ 'is-invalid': submitted && Form.issueFee.errors }"
                         >
                         <div *ngIf="submitted && Form.issueFee.errors" class="invalid-feedback">
@@ -89,8 +93,6 @@
                     <div class="col-sm-7">
                         <input 
                             formControlName="reissueFee"
-                            currencyMask
-                            [options]='optionCurrency'
                             class="form-control col-lg-12"
                             placeholder="Phí phát hành lại thẻ"
                             [ngClass]="{ 'is-invalid': submitted && Form.reissueFee.errors }"
@@ -105,8 +107,6 @@
                     <label for="search" class="col-sm-4 col-form-label">Phí in lại PIN:</label>
                     <div class="col-sm-7">
                         <input
-                            currencyMask
-                            [options]='optionCurrency'
                             formControlName="repinFee"
                             class="form-control col-lg-12"
                             placeholder="Phí in lại PIN"
@@ -124,8 +124,6 @@
                     <div class="col-sm-7">
                         <input 
                             formControlName="activeFee"
-                            currencyMask
-                            [options]='optionCurrency'
                             class="form-control col-lg-12"
                             placeholder="Phí kích hoạt"
                             [ngClass]="{ 'is-invalid': submitted && Form.activeFee.errors }"
@@ -141,8 +139,6 @@
                     <label for="search" class="col-sm-4 col-form-label">Phí thay đổi TT:</label>
                     <div class="col-sm-7">
                         <input 
-                            currencyMask
-                            [options]='optionCurrency'
                             formControlName="changesttFee"
                             class="form-control col-lg-12"
                             placeholder="Phí thay đổi TT"
@@ -160,8 +156,6 @@
                     <div class="col-sm-7">
                         <input 
                             formControlName="directddFee"
-                            currencyMask
-                            [options]='optionCurrency'
                             class="form-control col-lg-12"
                             placeholder="Phí ĐK trích nợ tự động"
                             [ngClass]="{ 'is-invalid': submitted && Form.directddFee.errors }"
@@ -177,8 +171,6 @@
                     <label for="search" class="col-sm-4 col-form-label">F01 (nếu có):</label>
                     <div class="col-sm-7">
                         <input 
-                            currencyMask
-                            [options]='optionCurrency'
                             formControlName="f01"
                             class="form-control col-lg-12"
                             placeholder="F01 (nếu có)"
@@ -195,8 +187,6 @@
                     <div class="col-sm-7">
                         <input 
                             formControlName="f02"
-                            currencyMask
-                            [options]='optionCurrency'
                             class="form-control col-lg-12"
                             placeholder="F02 (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted && Form.f02.errors }"
@@ -212,8 +202,6 @@
                     <div class="col-sm-7">
                         <input 
                             formControlName="f03"
-                            currencyMask
-                            [options]='optionCurrency'
                             class="form-control col-lg-12"
                             placeholder="F03 (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted && Form.f03.errors }"
@@ -229,8 +217,6 @@
                     <div class="col-sm-7">
                         <input 
                             formControlName="f04"
-                            currencyMask
-                            [options]='optionCurrency'
                             class="form-control col-lg-12"
                             placeholder="F04 (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted && Form.f04.errors }"
@@ -246,8 +232,6 @@
                     <div class="col-sm-7">
                         <input 
                             formControlName="f05"
-                            currencyMask
-                            [options]='optionCurrency'
                             class="form-control col-lg-12"
                             placeholder="F05 (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted && Form.f05.errors }"
@@ -257,6 +241,14 @@
                         </div>
                     </div>
 
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" formControlName="status" name="status">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Hình ảnh(<span class="text-danger">*</span>):</label>

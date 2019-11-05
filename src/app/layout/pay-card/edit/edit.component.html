@@ -5,14 +5,23 @@
         [url_heading]="'/pay-card'">
     </app-page-header>
     <div class="row">
+        <div class="col-md-12" style="margin-bottom: 10px;">
+            <a class="btn btn-warning mr-3" (click)="openModalCopy()"> <i class="fa fa-files-o"></i>&nbsp;Copy bản ghi </a>
+            <!-- <br/> -->
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Tên sản phẩm thẻ trên HT(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select class="form-control" formControlName="prdcode" name="prdcode">
-                            <option *ngFor="let status of listNamePrdCode" [value]="status" selected="selected">{{ status }}</option>
-                        </select>
+                        <input 
+                            formControlName="prdcode"
+                            class="form-control col-lg-12"
+                            placeholder="Tên sản phẩm thẻ trên HT"
+                            [ngClass]="{ 'is-invalid': submitted && Form.prdcode.errors }"
+                        >
                         <div *ngIf="submitted && Form.prdcode.errors" class="invalid-feedback">
                             <div *ngIf="Form.prdcode.errors.required">Tên sản phẩm thẻ trên HT là bắt buộc</div>
                             <div *ngIf="Form.prdcode.hasError('whitespace')">Tên sản phẩm thẻ trên HT không đúng định dạng</div>
@@ -22,9 +31,12 @@
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Tên hiển thị(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select class="form-control" formControlName="product" name="product">
-                            <option *ngFor="let status of listNameProduct" [value]="status" selected="selected">{{ status }}</option>
-                        </select>
+                        <input 
+                            formControlName="product"
+                            class="form-control col-lg-12"
+                            placeholder="Tên hiển thị"
+                            [ngClass]="{ 'is-invalid': submitted && Form.product.errors }"
+                        >
             
                         <div *ngIf="submitted && Form.product.errors" class="invalid-feedback">
                             <div *ngIf="Form.product.errors.required">Tên hiển thị là bắt buộc</div>
@@ -69,8 +81,6 @@
                     <div class="col-sm-7">
                         <input
                             formControlName="issueFee"
-                            currencyMask
-                            [options]='optionCurrency'
                             class="form-control col-lg-12"
                             placeholder="Phí phát hành mới"
                             [ngClass]="{ 'is-invalid': submitted && Form.issueFee.errors }"
@@ -87,8 +97,6 @@
                         <input
                             formControlName="reissueFee"
                             class="form-control col-lg-12"
-                            currencyMask
-                            [options]='optionCurrency'
                             placeholder="Phí phát hành lại thẻ"
                             [ngClass]="{ 'is-invalid': submitted && Form.reissueFee.errors }"
                         />
@@ -103,8 +111,6 @@
                     <div class="col-sm-7">
                         <input
                             formControlName="repinFee"
-                            currencyMask
-                            [options]='optionCurrency'
                             class="form-control col-lg-12"
                             placeholder="Phí in lại PIN"
                             [ngClass]="{ 'is-invalid': submitted && Form.repinFee.errors }"
@@ -122,8 +128,6 @@
                         <input
                             formControlName="activeFee"
                             class="form-control col-lg-12"
-                            currencyMask
-                            [options]='optionCurrency'
                             placeholder="Phí kích hoạt"
                             [ngClass]="{ 'is-invalid': submitted && Form.activeFee.errors }"
                         />
@@ -140,8 +144,6 @@
                         <input
                             formControlName="changesttFee"
                             class="form-control col-lg-12"
-                            currencyMask
-                            [options]='optionCurrency'
                             placeholder="Phí thay đổi TT"
                             [ngClass]="{ 'is-invalid': submitted && Form.changesttFee.errors }"
                         />
@@ -157,8 +159,6 @@
                         <input
                             formControlName="directddFee"
                             class="form-control col-lg-12"
-                            currencyMask
-                            [options]='optionCurrency'
                             placeholder="Phí ĐK trích nợ tự động"
                             [ngClass]="{ 'is-invalid': submitted && Form.directddFee.errors }"
                         />
@@ -174,8 +174,6 @@
                         <input
                             formControlName="f01"
                             class="form-control col-lg-12"
-                            currencyMask
-                            [options]='optionCurrency'
                             placeholder="F01 (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted && Form.f01.errors }"
                         />
@@ -189,8 +187,6 @@
                     <div class="col-sm-7">
                         <input
                             formControlName="f02"
-                            currencyMask
-                            [options]='optionCurrency'
                             class="form-control col-lg-12"
                             placeholder="F02 (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted && Form.f02.errors }"
@@ -206,8 +202,6 @@
                         <input
                             formControlName="f03"
                             class="form-control col-lg-12"
-                            currencyMask
-                            [options]='optionCurrency'
                             placeholder="F03 (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted && Form.f03.errors }"
                         />
@@ -221,8 +215,6 @@
                     <div class="col-sm-7">
                         <input
                             formControlName="f04"
-                            currencyMask
-                            [options]='optionCurrency'
                             class="form-control col-lg-12"
                             placeholder="F04 (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted && Form.f04.errors }"
@@ -238,8 +230,6 @@
                         <input
                             formControlName="f05"
                             class="form-control col-lg-12"
-                            currencyMask
-                            [options]='optionCurrency'
                             placeholder="F05 (nếu có)"
                             [ngClass]="{ 'is-invalid': submitted && Form.f05.errors }"
                         />
@@ -278,7 +268,6 @@
                     <div class="col-sm-4"></div>
                     <div class="col-sm-7">
                         <button class="btn btn-success mr-3" [disabled]="isLockSave"><i class="fa fa-save"></i>&nbsp;Lưu chỉnh sửa</button>
-                        <a class="btn btn-warning mr-3" (click)="onCreate()"> <i class="fa fa-plus"></i>&nbsp;Thêm mới </a>
                         <button class="btn btn-light" (click)="resetForm()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
                     </div>
                 </div>
@@ -354,4 +343,277 @@
     </div>
 </ng-template>
 
+
+<ng-template #modalCopy let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title">Tạo một bản ghi mới</h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body p-t-0">
+        <div class="col-md-12">
+            <form [formGroup]="dataForm" (ngSubmit)="onCreate()">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên sản phẩm thẻ trên HT(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input 
+                            formControlName="prdcode"
+                            class="form-control col-lg-12"
+                            placeholder="Tên sản phẩm thẻ trên HT"
+                            [ngClass]="{ 'is-invalid': submitted && Form.prdcode.errors }"
+                        >
+                        <div *ngIf="submitted && Form.prdcode.errors" class="invalid-feedback">
+                            <div *ngIf="Form.prdcode.errors.required">Tên sản phẩm thẻ trên HT là bắt buộc</div>
+                            <div *ngIf="Form.prdcode.hasError('whitespace')">Tên sản phẩm thẻ trên HT không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên hiển thị(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input 
+                            formControlName="product"
+                            class="form-control col-lg-12"
+                            placeholder="Tên hiển thị"
+                            [ngClass]="{ 'is-invalid': submitted && Form.product.errors }"
+                        >
+            
+                        <div *ngIf="submitted && Form.product.errors" class="invalid-feedback">
+                            <div *ngIf="Form.product.errors.required">Tên hiển thị là bắt buộc</div>
+                            <div *ngIf="Form.product.hasError('whitespace')">Tên hiển thị không đúng định dạng</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Hạng thẻ(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="class_"
+                            class="form-control col-lg-12"
+                            placeholder="Hạng thẻ"
+                            [ngClass]="{ 'is-invalid': submitted && Form.class_.errors }"
+                        />
+                        <div *ngIf="submitted && Form.class_.errors" class="invalid-feedback">
+                            <div *ngIf="Form.class_.errors.required">Hạng thẻ là bắt buộc</div>
+                            <div *ngIf="Form.class_.hasError('whitespace')">Hạng thẻ không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Loại sản phẩm(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="cardtype"
+                            class="form-control col-lg-12"
+                            placeholder="Loại sản phẩm"
+                            [ngClass]="{ 'is-invalid': submitted && Form.cardtype.errors }"
+                        />
+                        <div *ngIf="submitted && Form.cardtype.errors" class="invalid-feedback">
+                            <div *ngIf="Form.cardtype.errors.required">Loại sản phẩm là bắt buộc</div>
+                            <div *ngIf="Form.cardtype.errors.maxlength">Loại sản phẩm quá dài</div>
+                            <div *ngIf="Form.cardtype.hasError('whitespace')">Loại sản phẩm không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Phí phát hành mới:</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="issueFee"
+                            class="form-control col-lg-12"
+                            placeholder="Phí phát hành mới"
+                            [ngClass]="{ 'is-invalid': submitted && Form.issueFee.errors }"
+                        />
+                        <div *ngIf="submitted && Form.issueFee.errors" class="invalid-feedback">
+                            <!-- <div *ngIf="Form.issueFee.errors.required">Phí phát hành mới là bắt buộc</div> -->
+                            <div *ngIf="Form.issueFee.hasError('whitespace')">Phí phát hành mới không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Phí phát hành lại thẻ:</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="reissueFee"
+                            class="form-control col-lg-12"
+                            placeholder="Phí phát hành lại thẻ"
+                            [ngClass]="{ 'is-invalid': submitted && Form.reissueFee.errors }"
+                        />
+                        <div *ngIf="submitted && Form.reissueFee.errors" class="invalid-feedback">
+                            <!-- <div *ngIf="Form.reissueFee.errors.required">Phí phát hành lại thẻ là bắt buộc</div> -->
+                            <div *ngIf="Form.reissueFee.hasError('whitespace')">Phí phát hành lại thẻ không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Phí in lại PIN:</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="repinFee"
+                            class="form-control col-lg-12"
+                            placeholder="Phí in lại PIN"
+                            [ngClass]="{ 'is-invalid': submitted && Form.repinFee.errors }"
+                        />
+                        <div *ngIf="submitted && Form.repinFee.errors" class="invalid-feedback">
+                            <!-- <div *ngIf="Form.repinFee.errors.required">Phí in lại PIN là bắt buộc</div> -->
+                            <div *ngIf="Form.repinFee.hasError('whitespace')">Phí in lại PIN không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Phí kích hoạt:</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="activeFee"
+                            class="form-control col-lg-12"
+                            placeholder="Phí kích hoạt"
+                            [ngClass]="{ 'is-invalid': submitted && Form.activeFee.errors }"
+                        />
+                        <div *ngIf="submitted && Form.activeFee.errors" class="invalid-feedback">
+                            <!-- <div *ngIf="Form.activeFee.errors.required">Phí kích hoạt là bắt buộc</div> -->
+                            <div *ngIf="Form.activeFee.hasError('whitespace')">Phí kích hoạt không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Phí thay đổi TT:</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="changesttFee"
+                            class="form-control col-lg-12"
+                            placeholder="Phí thay đổi TT"
+                            [ngClass]="{ 'is-invalid': submitted && Form.changesttFee.errors }"
+                        />
+                        <div *ngIf="submitted && Form.changesttFee.errors" class="invalid-feedback">
+                            <!-- <div *ngIf="Form.changesttFee.errors.required">Phí thay đổi TT là bắt buộc</div> -->
+                            <div *ngIf="Form.changesttFee.hasError('whitespace')">Phí thay đổi TT không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Phí ĐK trích nợ tự động:</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="directddFee"
+                            class="form-control col-lg-12"
+                            placeholder="Phí ĐK trích nợ tự động"
+                            [ngClass]="{ 'is-invalid': submitted && Form.directddFee.errors }"
+                        />
+                        <div *ngIf="submitted && Form.directddFee.errors" class="invalid-feedback">
+                            <!-- <div *ngIf="Form.directddFee.errors.required">Phí ĐK trích nợ tự động là bắt buộc</div> -->
+                            <div *ngIf="Form.directddFee.hasError('whitespace')">Phí ĐK trích nợ tự động không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">F01 (nếu có):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="f01"
+                            class="form-control col-lg-12"
+                            placeholder="F01 (nếu có)"
+                            [ngClass]="{ 'is-invalid': submitted && Form.f01.errors }"
+                        />
+                        <div *ngIf="submitted && Form.f01.errors" class="invalid-feedback">
+                            <div *ngIf="Form.f01.hasError('whitespace')">F01 (nếu có) không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">F02 (nếu có):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="f02"
+                            class="form-control col-lg-12"
+                            placeholder="F02 (nếu có)"
+                            [ngClass]="{ 'is-invalid': submitted && Form.f02.errors }"
+                        />
+                        <div *ngIf="submitted && Form.f02.errors" class="invalid-feedback">
+                            <div *ngIf="Form.f02.hasError('whitespace')">F02 (nếu có) không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">F03 (nếu có):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="f03"
+                            class="form-control col-lg-12"
+                            placeholder="F03 (nếu có)"
+                            [ngClass]="{ 'is-invalid': submitted && Form.f03.errors }"
+                        />
+                        <div *ngIf="submitted && Form.f03.errors" class="invalid-feedback">
+                            <div *ngIf="Form.f03.hasError('whitespace')">F03 (nếu có) không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">F04 (nếu có):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="f04"
+                            class="form-control col-lg-12"
+                            placeholder="F04 (nếu có)"
+                            [ngClass]="{ 'is-invalid': submitted && Form.f04.errors }"
+                        />
+                        <div *ngIf="submitted && Form.f04.errors" class="invalid-feedback">
+                            <div *ngIf="Form.f04.hasError('whitespace')">F04 (nếu có) không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">F05 (nếu có):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="f05"
+                            class="form-control col-lg-12"
+                            placeholder="F05 (nếu có)"
+                            [ngClass]="{ 'is-invalid': submitted && Form.f05.errors }"
+                        />
+                        <div *ngIf="submitted && Form.f05.errors" class="invalid-feedback">
+                            <div *ngIf="Form.f05.hasError('whitespace')">Phí khác F06 (nếu có) không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" formControlName="status" name="status">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Hình ảnh(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+
+                        
+                        <div class="input-group">
+                            <img style="border: 1px dashed #004e96;padding: 5px;" width=200 height=200 [src]="objFile.linkUrl" alt="">
+                            <input type="text" class="form-control" hidden="true">
+                            <div class="input-group-btn">
+                                <span class="btn btn-default" (click)="openModalUpload()">
+                                    <i class="fa fa-file-image-o" aria-hidden="true"></i> Chọn hình ảnh
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3" [disabled]="isLockSave"><i class="fa fa-save"></i>&nbsp;Tạo mới</button>
+                        <button class="btn btn-light" (click)="closeModal()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
     

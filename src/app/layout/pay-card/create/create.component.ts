@@ -20,6 +20,16 @@ export class CreateComponent implements OnInit {
   listNamePrdCode: any = [];
   listNameProduct: any = [];
   optionCurrency: any = { prefix: '', thousands: '.', decimal: ',', align: 'left' };
+  listStatus: any = [
+    {
+      name: 'Active',
+      code: 'A',
+    },
+    {
+      name: 'Deactive',
+      code: 'D',
+    }
+  ];
 
   fileExcel: any = {
     file: File,
@@ -178,7 +188,7 @@ export class CreateComponent implements OnInit {
         if (result.json().code === '00') {
           this.toastr.success('Thêm mới thành công', 'Thành công!');
         } else if (result.json().code === '901') {
-          this.toastr.error('Hình ảnh phôi thẻ đã tồn tại', 'Thất bại!');
+          this.toastr.error('Sản phẩm đã tồn tại, vui lòng kiểm tra lại thông tin!', 'Thất bại!');
         } else {
           this.toastr.error('Lỗi hệ thống', 'Thất bại!');
           setTimeout(() => {
