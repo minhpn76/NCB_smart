@@ -1,5 +1,5 @@
 <div>
-    <app-page-header [heading]="'Danh sách ảnh thẻ'" [url_heading]="'/pay-card'"> </app-page-header>
+    <app-page-header [heading]="'Khai báo tham số sản phẩm thẻ'" [url_heading]="'/pay-card'"> </app-page-header>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group row">
@@ -267,7 +267,7 @@
 
     <div class="row" style="margin-top: 50px">
         <div class="col-md-12 table-responsive">
-            <h5><b>Khai báo tham số hình ảnh/ thẻ</b></h5>
+            <h5><b>Khai báo tham số thẻ</b></h5>
             <h6>Số lượng thẻ tối đa KH có thể mở</h6>
             <table class="table table-striped table-bordered">
                 <thead>
@@ -319,11 +319,11 @@
                             </button>
                         </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td colspan="3">
                             <button class="btn btn-warning btn-small" [disabled]="parCardConfig.creditCardNumber.list.length > 0" (click)="modalCreditCard()"><i class="fa fa-plus"></i> Thêm</button>
                         </td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
 

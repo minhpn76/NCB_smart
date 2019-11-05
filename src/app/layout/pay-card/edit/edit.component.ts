@@ -23,6 +23,8 @@ export class EditComponent implements OnInit {
     path: null,
     name: ''
   };
+  listNameProduct: any = [];
+  listNamePrdCode: any = [];
   optionCurrency: any = { prefix: '', thousands: '.', decimal: ',', align: 'left' };
   selectedFiles: FileList;
   objFile: any = {};
@@ -73,6 +75,10 @@ export class EditComponent implements OnInit {
       this.itemId = params.itemId;
     });
     this.getListData();
+    this.getParamData({
+      page: 0,
+      size: 1000,
+    });
    }
 
   ngOnInit() {
@@ -97,6 +103,38 @@ export class EditComponent implements OnInit {
     });
   }
   get Form() { return this.dataForm.controls; }
+  getParamData(params) {
+    this.isProcessLoad = 1;
+    // xu ly
+    this.listNamePrdCode = [];
+    this.listNameProduct = [];
+
+    this.ncbService.searchPayCard(params).then((result) => {
+      const body = result.json().body.content;
+      body.forEach(element => {
+
+        this.listNamePrdCode.push(element.prdcode);
+        this.listNameProduct.push(element.product);
+
+      });
+      this.listNamePrdCode = this.listNamePrdCode.reduce(function (a, b) {
+        if (a.indexOf(b) === -1) {
+          a.push(b);
+        }
+        return a;
+      }, []);
+      this.listNameProduct = this.listNameProduct.reduce(function (a, b) {
+        if (a.indexOf(b) === -1) {
+          a.push(b);
+        }
+        return a;
+      }, []);
+    }).catch((err) => {
+      this.isProcessLoad = 0;
+      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+    });
+
+  }
   getListData() {
     this.tempListImage = [];
     this.isProcessLoad = 1;

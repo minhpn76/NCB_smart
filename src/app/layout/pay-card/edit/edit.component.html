@@ -1,38 +1,37 @@
 <div>
-    <app-page-header [heading]="'Danh sách hình ảnh thẻ'" [heading_second]="'Sửa hình ảnh'" [url_heading]="'/pay-card'">
+    <app-page-header 
+        [heading]="'Khai báo tham số sản phẩm thẻ'" 
+        [heading_second]="'Sửa tham số sản phẩm thẻ'" 
+        [url_heading]="'/pay-card'">
     </app-page-header>
     <div class="row">
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Sản phẩm thẻ trên HT(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Tên sản phẩm thẻ trên HT(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <input
-                            formControlName="prdcode"
-                            class="form-control col-lg-12"
-                            placeholder="Sản phẩm thẻ trên HT"
-                            [ngClass]="{ 'is-invalid': submitted && Form.prdcode.errors }"
-                        />
+                        <select class="form-control" formControlName="prdcode" name="prdcode">
+                            <option *ngFor="let status of listNamePrdCode" [value]="status" selected="selected">{{ status }}</option>
+                        </select>
                         <div *ngIf="submitted && Form.prdcode.errors" class="invalid-feedback">
-                            <div *ngIf="Form.prdcode.errors.required">Sản phẩm thẻ trên HT là bắt buộc</div>
-                            <div *ngIf="Form.prdcode.hasError('whitespace')">Sản phẩm thẻ trên HT không đúng định dạng</div>
+                            <div *ngIf="Form.prdcode.errors.required">Tên sản phẩm thẻ trên HT là bắt buộc</div>
+                            <div *ngIf="Form.prdcode.hasError('whitespace')">Tên sản phẩm thẻ trên HT không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên sản phẩm(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Tên hiển thị(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <input
-                            formControlName="product"
-                            class="form-control col-lg-12"
-                            placeholder="Tên sản phẩm"
-                            [ngClass]="{ 'is-invalid': submitted && Form.product.errors }"
-                        />
+                        <select class="form-control" formControlName="product" name="product">
+                            <option *ngFor="let status of listNameProduct" [value]="status" selected="selected">{{ status }}</option>
+                        </select>
+            
                         <div *ngIf="submitted && Form.product.errors" class="invalid-feedback">
-                            <div *ngIf="Form.product.errors.required">Tên sản phẩm là bắt buộc</div>
-                            <div *ngIf="Form.product.hasError('whitespace')">Tên sản phẩm không đúng định dạng</div>
+                            <div *ngIf="Form.product.errors.required">Tên hiển thị là bắt buộc</div>
+                            <div *ngIf="Form.product.hasError('whitespace')">Tên hiển thị không đúng định dạng</div>
                         </div>
                     </div>
+
                 </div>
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Hạng thẻ(<span class="text-danger">*</span>):</label>
