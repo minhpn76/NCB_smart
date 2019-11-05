@@ -52,7 +52,7 @@ export class EditComponent implements OnInit {
     this.getTempListPro();
     this.getPrdName();
     this.getConfigTransaction();
-    this.getConfigDetailTransaction('');
+    this.getConfigDetailTransaction('', 1);
   }
 
   ngOnInit() {
@@ -207,13 +207,19 @@ export class EditComponent implements OnInit {
       this.toastr.error('Không thể lấy được dự liệu gói sản phẩm', 'Thất bại!');
     });
   }
-  getConfigDetailTransaction(code) {
+  getConfigDetailTransaction(code, handler) {
     const params = {
       code: 'FUNCTION_TYPE',
       type: code
     };
     this.listTypeId = [];
     // xu ly
+    if (handler === 2) {
+      this.dataForm.patchValue({
+        typeId: '',
+      });
+      this.toastr.warning('Chi tiết loại giao dịch là bắt buộc. Vui lòng chọn lại!', 'Cảnh báo!');
+    }
     this.ncbService.getConfigDetailTransaction(params).then((result) => {
       setTimeout(() => {
         const body = result.json().body;

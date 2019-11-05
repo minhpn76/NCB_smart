@@ -4,6 +4,7 @@ import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from '../../../services/excel.service';
 import { Helper } from '../../../helper';
+import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -27,6 +28,7 @@ export class ListComponent implements OnInit {
   temp: any = {
     loading: false
   };
+  uploadedFiles: any[] = [];
   file_ext = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel';
   file_size: number = 15 * 1024 * 1024;
 
@@ -63,7 +65,8 @@ export class ListComponent implements OnInit {
     public toastr: ToastrService,
     private excelService: ExcelService,
     private modalService: NgbModal,
-    public helper: Helper
+    public helper: Helper,
+    public router: Router
   ) { }
 
   ngOnInit() {
@@ -135,6 +138,11 @@ export class ListComponent implements OnInit {
   cancelAction(event) {
     console.log('huy bo thanh con');
 
+  }
+  onUpload(event) {
+    for(let file of event.files) {
+        this.uploadedFiles.push(file);
+    }
   }
 
   loadPage(page: any) {
@@ -218,19 +226,19 @@ export class ListComponent implements OnInit {
   //   }
   // }
 
-  async onUploadFile(event, call_upload = 1): Promise<void> {
+  onUploadFile(event, call_upload = 1) {
     const fileList: FileList = event.files;
-    try {
-        const check = await this.helper.validateFileImage(event.files[0], this.file_size, this.file_ext);
-        if (check) {
-            if (fileList.length > 0) {
-              this.fileExcel.file = fileList[0];
-              this.fileExcel.name = fileList[0].name;
-            }
-        }
-    } catch (err) {
-        console.log(err);
-    }
+    // try {
+    //     const check = await this.helper.validateFileImage(event.files[0], this.file_size, this.file_ext);
+    //     if (check) {
+    //         if (fileList.length > 0) {
+    //           this.fileExcel.file = fileList[0];
+    //           this.fileExcel.name = fileList[0].name;
+    //         }
+    //     }
+    // } catch (err) {
+    //     console.log(err);
+    // }
   }
   onUploadServer() {
     if (this.fileExcel.file) {
@@ -243,7 +251,15 @@ export class ListComponent implements OnInit {
           } else {
             this.toastr.success('Upload dữ liệu thành công', 'Thành công!');
             this.temp.loading = false;
-            this.emitCloseModal.emit(true);
+            setTimeout(() => {
+              this.fileExcel = {
+                file: File,
+                path: null,
+                name: ''
+              };
+              this.closeModal();
+              this.onSearch(this.re_search);
+            }, 3000);
           }
         } else {
           this.toastr.error(result.message, 'Thất bại!');
@@ -271,6 +287,7 @@ export class ListComponent implements OnInit {
   closeModal() {
       this.modalOp.close();
   }
+
   async modalUploadFile() {
     // tslint:disable-next-line:no-unused-expression
       this.openModal(this.uploadFileElementRef, 'modal-uploadFile', 'sm');

@@ -76,7 +76,7 @@ export class CreateComponent implements OnInit {
       prdCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       feeType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       codeFee: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      taxPercent: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      taxPercent: [''],
       createdUser: [this.userInfo.userName],
       createdTime: [''],
     });

@@ -66,7 +66,7 @@
                         <th scope="col">Số tiền phí thu</th>
                         <th scope="col">Số tiền phí max</th>
                         <th scope="col">Số tiền phí min</th>
-                        <th scope="col">Phần trăm thuế %</th>
+                        <!-- <th scope="col">Phần trăm thuế %</th> -->
                         <th scope="col">Mã phí</th>
                         <th scope="col">Ngừời tạo</th>
                         <th scope="col">Ngày tạo</th>
@@ -104,10 +104,6 @@
                         <td>{{data?.feeAmount}}</td>
                         <td>{{data?.feeMax}}</td>
                         <td>{{data?.feeMin}}</td>
-                        <td>
-                            <span *ngIf="data?.taxPercent !== null">{{data?.taxPercent}}</span>
-                            <span *ngIf="data?.taxPercent === null">0</span>
-                        </td>
                         <td>{{data?.codeFee}}</td>
                         <td>{{data?.createdUser}}</td>
                         <td>{{data?.createdTime | date:'MM.dd.yyyy HH:mm'}}</td>
