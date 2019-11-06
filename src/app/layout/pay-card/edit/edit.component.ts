@@ -50,11 +50,11 @@ export class EditComponent implements OnInit {
   listStatus: any = [
     {
       name: 'Active',
-      code: 'A',
+      code: 'ACTIVE',
     },
     {
       name: 'Deactive',
-      code: 'D',
+      code: 'DEACTIVE',
     }
   ];
 
@@ -283,7 +283,7 @@ export class EditComponent implements OnInit {
         issueFee: body.issueFee !== null ? body.issueFee.toString() : '',
         reissueFee: body.reissueFee !== null ? body.reissueFee.toString() : '',
         repinFee: body.repinFee !== null ? body.repinFee.toString() : '',
-        status: body.status !== null ? body.status : ''
+        status: (body.status === 'D' || body.status === 'DEACTIVE') ? 'DEACTIVE' : 'ACTIVE'
       });
       this.objFile = {
         fileName: body.fileName,
