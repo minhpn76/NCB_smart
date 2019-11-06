@@ -6,6 +6,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Tên hiển thị:</label>
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.product">
+                        <option value="" >Tất cả</option>
                         <option *ngFor="let status of listNameProduct" [value]="status" selected="selected">{{ status }}</option>
                     </select>
                 </div>
@@ -24,6 +25,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Tên sản phẩm trên HT:</label>
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.prdcode">
+                        <option value="" >Tất cả</option>
                         <option *ngFor="let status of listNamePrdCode" [value]="status" selected="selected">{{ status }}</option>
                     </select>
                 </div>
@@ -318,7 +320,7 @@
                                 <i class="fa fa-trash"></i> Xoá
                             </button>
                             &nbsp;
-                            <button class="btn btn-default btn-small" (click)="cancelCreditCard(cd, i)">
+                            <button class="btn btn-default btn-small" [disabled]="indexTempCreditCard != i" (click)="cancelCreditCard(cd, i)">
                                 <i class="fa fa-close"></i> Huỷ
                             </button>
                         </td>
@@ -380,7 +382,7 @@
                                 <i class="fa fa-trash"></i> Xoá
                             </button>
                             &nbsp;
-                            <button class="btn btn-default btn-small" (click)="cancelReasonCard(cd, i)">
+                            <button class="btn btn-default btn-small" [disabled]="indexTempReasonCard != i" (click)="cancelReasonCard(cd, i)">
                                 <i class="fa fa-close"></i> Huỷ
                             </button>
                         </td>
@@ -457,7 +459,7 @@
                                 <i class="fa fa-trash"></i> Xoá
                             </button>
                             &nbsp;
-                            <button class="btn btn-default btn-small" (click)="cancelOtherConfigCard(cd, i)">
+                            <button class="btn btn-default btn-small" [disabled]="indexTempOtherCard != i" (click)="cancelOtherConfigCard(cd, i)">
                                 <i class="fa fa-close"></i> Huỷ
                             </button>
                             

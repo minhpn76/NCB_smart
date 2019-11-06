@@ -191,10 +191,11 @@ export class UserProfileComponent implements OnInit {
           'CIF': element.cifgrp,
           'Tên đăng nhập': element.usrid,
           'Họ và tên': element.usrfname,
-          'CMND/HC': element.datCfmast.idno,
+          'CMND/HC': element.datCfmast ? element.datCfmast.idno : '',
           'Nhóm khách hàng': element.crtusrid,
-          'Gói sản phẩm': element.promotion,
-          'CT ưu đãi': element.promotionName
+          'Gói sản phẩm': element.function !== null ? element.function.prdName : '',
+          'Ưu đãi': element.function !== null ? element.function.promotionName : '',
+          'Tên CT ưu đãi': element.function !== null ? element.function.prodName : ''
         });
       });
       this.excelService.exportAsExcelFile(data, 'list_user');

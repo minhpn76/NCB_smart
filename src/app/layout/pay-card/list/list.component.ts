@@ -169,6 +169,7 @@ export class ListComponent implements OnInit {
     this.listData = [];
     this.ncbService.searchPayCard(params).then((result) => {
       const body = result.json().body.content;
+      console.log('===>', body);
       body.forEach(element => {
 
         this.listNamePrdCode.push(element.prdcode);
