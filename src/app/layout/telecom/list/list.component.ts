@@ -140,7 +140,7 @@ export class ListComponent implements OnInit {
 
   }
   onUpload(event) {
-    for(let file of event.files) {
+    for (const file of event.files) {
         this.uploadedFiles.push(file);
     }
   }
@@ -217,28 +217,21 @@ export class ListComponent implements OnInit {
 
   }
 
-  // onUploadFile(event) {
-  //   const fileList: FileList = event.files;
-  //   if (fileList.length > 0) {
-  //     this.fileExcel.file = fileList[0];
-  //     this.fileExcel.name = fileList[0].name;
-  //     this.fileExcel.size = fileList[0].size;
-  //   }
-  // }
 
-  onUploadFile(event, call_upload = 1) {
+
+  async onUploadFile(event, call_upload = 1) {
     const fileList: FileList = event.files;
-    // try {
-    //     const check = await this.helper.validateFileImage(event.files[0], this.file_size, this.file_ext);
-    //     if (check) {
-    //         if (fileList.length > 0) {
-    //           this.fileExcel.file = fileList[0];
-    //           this.fileExcel.name = fileList[0].name;
-    //         }
-    //     }
-    // } catch (err) {
-    //     console.log(err);
-    // }
+    try {
+        const check = await this.helper.validateFileImage(event.files[0], this.file_size, this.file_ext);
+        if (check) {
+            if (fileList.length > 0) {
+              this.fileExcel.file = fileList[0];
+              this.fileExcel.name = fileList[0].name;
+            }
+        }
+    } catch (err) {
+        console.log(err);
+    }
   }
   onUploadServer() {
     if (this.fileExcel.file) {

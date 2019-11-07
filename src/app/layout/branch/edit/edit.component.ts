@@ -42,10 +42,10 @@ export class EditComponent implements OnInit {
     this.dataForm = this.formBuilder.group({
       compCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       compName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      address: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      dao: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      mcn: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      mp: ['', Validators.compose([Validators.maxLength(13), this.helper.noWhitespaceValidator])]
+      address: [''],
+      dao: ['', this.helper.noWhitespaceValidator],
+      mcn: [''],
+      mp: ['']
     });
     this.getItem(this.departCode);
   }

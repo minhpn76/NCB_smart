@@ -55,7 +55,7 @@ export class EditComponent implements OnInit {
       latitude: [''],
       longitude: [''],
       urlImg: [''],
-      dao: [''],
+      dao: ['', Validators.compose([this.helper.noWhitespaceValidator])],
       status: ''
     });
     this.getItem(this.departCode);
