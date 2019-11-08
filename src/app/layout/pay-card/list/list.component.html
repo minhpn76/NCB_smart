@@ -405,7 +405,7 @@
                         <th scope="col">Giá trị</th>
                         <th scope="col">Mã</th>
                         <th scope="col">Ghi chú</th>
-                        <th scope="col">Thao tác</th>
+                        <th scope="col" style="width: 40%">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -446,7 +446,7 @@
                             />
                             <span style="cursor: pointer;" *ngIf="cd.code !== parCardConfig.otherConfig.editRow">{{ cd.note }}</span>
                         </td>
-                        <td>
+                        <td style="width: 40%">
                             <button
                                 class="btn btn-primary btn-small"
                                 (click)="saveOtherConfig(cd)"
