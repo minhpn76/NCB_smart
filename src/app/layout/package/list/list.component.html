@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Loại chuyển phí:</label>
+                <label for="search" class="col-sm-4 col-form-label">Loại phí:</label>
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.tranType" (change)="keyDownFunction($event)">
                         <option *ngFor="let status of listTranType" [value]="status.code" selected="selected">{{status.name}}</option>
