@@ -51,10 +51,21 @@ export class EditComponent implements OnInit {
       this.itemId = params.itemId;
     });
     this.getItemRole();
+    if (localStorage.getItem('redirect') === 'true') {
+      this.router.navigateByUrl('/decen');
+    }
   }
 
   ngOnInit() {
-
+    this.dataForm = this.formBuilder.group({
+      roleName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      description: [''],
+      status: 'A'
+    });
+  }
+  pageRefresh() {
+    location.reload();
+    localStorage.setItem('redirect', 'true');
   }
 
   getItemRole() {
@@ -104,6 +115,7 @@ export class EditComponent implements OnInit {
           } else {
             this.obj.description = JSON.stringify(this.listRoles);
             this.toastr.success('Cập nhật thành công', 'Thành công!');
+            this.pageRefresh();
             resolve();
           }
         } else {

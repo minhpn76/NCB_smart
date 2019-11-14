@@ -129,7 +129,6 @@ export class ManageUserComponent implements OnInit {
                 size: 1000
             })
             .then(result => {
-                this.listRole.push({ code: '', name: 'Tất cả' });
                 result.json().body.content.forEach(element => {
                     this.listRole.push({
                         code: element.roleId,
