@@ -16,6 +16,7 @@ export class EditComponent implements OnInit {
   dataForm: FormGroup;
   userForm: FormGroup;
   passForm: FormGroup;
+  userResetForm: FormGroup;
   submitted = false;
   listPGD: any = [];
   listBranch: any = [];
@@ -63,6 +64,13 @@ export class EditComponent implements OnInit {
     }, {
       validator: this.helper.MustMatch('newPassword', 're_newPassword')
     });
+    this.userResetForm = this.formBuilder.group({
+      username: [''],
+      password: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+      re_password: ['', Validators.compose([Validators.required, Validators.pattern(/^((?!\s{1,}).)*$/)])],
+    }, {
+      validator: this.helper.MustMatch('password', 're_password')
+    });
     this.getBranchs();
     this.getListRole();
     // this.getAllPGD();
@@ -70,6 +78,7 @@ export class EditComponent implements OnInit {
   get Form() { return this.dataForm.controls; }
   get FormUser() { return this.userForm.controls; }
   get FormPass() { return this.passForm.controls; }
+  get FormResetPass() { return this.userResetForm.controls; }
 
 
   getBranchs() {
@@ -167,6 +176,29 @@ export class EditComponent implements OnInit {
   }
   changeStatus(event) {
     this.statusUser = event.currentTarget.checked === true ? 'A' : 'D';
+  }
+  onSubmitResetPW() {
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.userResetForm.invalid) {
+        return;
+    }
+    const payload = {
+      password: this.userResetForm.value.resetPass
+    };
+    this.ncbService.updateResetPassword(this.dataForm.value.username , payload).then((result) => {
+      if (result.json().code === '00') {
+        this.toastr.success('Thay đổi mật khẩu thành công', 'Thành công!');
+        setTimeout(() => {
+          this.router.navigateByUrl('/user');
+        }, 500);
+      } else {
+        this.toastr.error('Thay đổi mật khẩu thất bại', 'Thất bại!');
+      }
+    }).catch((err) => {
+
+
+    });
   }
   onSubmitPassW() {
     this.submitted = true;

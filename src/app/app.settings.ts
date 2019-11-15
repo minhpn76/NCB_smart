@@ -212,7 +212,17 @@ export class AppSettings {
             isD: false,
             name: 'Banner',
             menu: 'TRA_CUU'
-        }
+        },
+        {
+            code: 'RESET_PASSWORD',
+            name: 'Người dùng',
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            menu: 'QUAN_TRI'
+        },
     ];
     public static getListRoles() {
         const getListRoles = localStorage.getItem('roles') ? JSON.parse(localStorage.getItem('roles')) : '';

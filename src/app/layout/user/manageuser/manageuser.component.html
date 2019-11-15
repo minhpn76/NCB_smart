@@ -126,8 +126,8 @@
                             pattern="{{ user.password }}"
                             [ngClass]="{ 'is-invalid': submitted && Form.re_password.errors }"
                         >
-                        <div *ngIf="Form.re_password.errors" class="invalid-feedback">
-                            <div *ngIf="Form.re_password.errors.required && submitted">Nhập lại mật khẩu là bắt buộc</div>
+                        <div *ngIf="submitted && Form.re_password.errors" class="invalid-feedback">
+                            <div *ngIf="Form.re_password.errors.required">Nhập lại mật khẩu là bắt buộc</div>
                             <div *ngIf="Form.re_password.errors.pattern">Mật khẩu không khớp</div>
                             <div *ngIf="Form.re_password.errors.mustMatch">Mật khẩu không khớp</div>
                             <div *ngIf="Form.re_password.hasError('whitespace')">Mật khẩu không khớp</div>
@@ -166,8 +166,8 @@
                             pattern='^(([^\.@]+([\._][^\._@]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$' 
                             [ngClass]="{ 'is-invalid': submitted && Form.email.errors}"
                         >
-                        <div *ngIf="Form.email.errors" class="invalid-feedback">
-                            <div *ngIf="Form.email.errors.required && submitted ">Email là bắt buộc</div>
+                        <div *ngIf="submitted && Form.email.errors" class="invalid-feedback">
+                            <div *ngIf="Form.email.errors.required ">Email là bắt buộc</div>
                             <div *ngIf="Form.email.errors.pattern">Email không đúng định dạng</div>
                         </div>
                     </div>
@@ -185,7 +185,7 @@
 
                         </select>
                         <div *ngIf="submitted && Form.roleId.errors" class="invalid-feedback">
-                            <div *ngIf="Form.roleId.required">Phân quyền là bắt buộc</div>
+                            <div *ngIf="Form.roleId.errors.required">Phân quyền là bắt buộc</div>
                         </div>
                     </div>
                 </div>

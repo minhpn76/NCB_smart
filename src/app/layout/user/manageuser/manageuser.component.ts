@@ -62,8 +62,6 @@ export class ManageUserComponent implements OnInit {
         this.ncbService
             .getBranchs()
             .then(result => {
-                this.listBranch.push({ code: '', name: 'Tất cả' });
-
                 result.json().body.forEach(element => {
                     this.listBranch.push({
                         code: element.brnCode,
@@ -90,7 +88,6 @@ export class ManageUserComponent implements OnInit {
         this.ncbService
             .getPGD({ brnCode: value })
             .then(result => {
-                this.listPGD.push({ code: '', name: 'Tất cả' });
                 result.json().body.content.forEach(element => {
                     this.listPGD.push({
                         code: element.departCode,
@@ -107,7 +104,6 @@ export class ManageUserComponent implements OnInit {
         this.ncbService
             .getListPGD()
             .then(result => {
-                this.listPGD.push({ code: '', name: 'Tất cả' });
                 result.json().body.forEach(element => {
                     this.listPGD.push({
                         code: element.departCode,

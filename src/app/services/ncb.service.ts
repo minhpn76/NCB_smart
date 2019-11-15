@@ -1006,6 +1006,11 @@ export class NCBService {
     const url = `${API_URL}/param-manager/create/uploadFile`;
     return this.auth.authRequestFile({ url: url, data: formData, method: 'POST' });
   }
+  updateResetPassword(user, data): Promise<any> {
+    const url = `${API_URL}/user/${user}/resetPass`;
+    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
+  }
+
 
 
 }
