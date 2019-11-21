@@ -13,7 +13,8 @@
                         <input
                             formControlName="fileName"
                             class="form-control col-lg-12"
-                            placeholder="Tên hình ảnh thẻ"
+                            placeholqqder="Tên hình ảnh thẻ"
+                            [attr.disabled]="true"
                             [ngClass]="{ 'is-invalid': submitted && Form.fileName.errors }"
                         />
                         <div *ngIf="submitted && Form.fileName.errors" class="invalid-feedback">

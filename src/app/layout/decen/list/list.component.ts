@@ -80,12 +80,20 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.listData.splice(index, 1);
-        Swal.fire(
-          'Đã xoá!',
-          'Dữ liệu đã xoá hoàn toàn.',
-          'success'
-        );
+        this.ncbService.deleteRole(id).then((res) => {
+          if (res.json().code === '00') {
+
+            this.listData.splice(index, 1);
+            Swal.fire(
+              'Đã xoá!',
+              'Dữ liệu đã xoá hoàn toàn.',
+              'success'
+            );
+            this.onSearch(this.re_search);
+          } else {
+            this.toastr.error('Xoá dữ liệu thất bại', 'Thất bại');
+          }
+        });
       // For more information about handling dismissals please visit
       // https://sweetalert2.github.io/#handling-dismissals
       } else if (result.dismiss === Swal.DismissReason.cancel) {

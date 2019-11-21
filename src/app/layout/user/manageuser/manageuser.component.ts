@@ -146,18 +146,24 @@ export class ManageUserComponent implements OnInit {
         this.ncbService
             .createUser(this.dataForm.value)
             .then(result => {
-                if (result.json().code === '00') {
-                    this.toastr.success('Thêm mới thành công', 'Thành công!');
-                    setTimeout(() => {
-                        this.router.navigateByUrl('/user');
-                    }, 500);
-                } else if (result.json().code === '404') {
-                    this.toastr.error('Tài khoản đã tồn tại', 'Thất bại!');
+                if (result.status === 200) {
+                    if (result.json().code === '00') {
+                        this.toastr.success('Thêm mới thành công', 'Thành công!');
+                        setTimeout(() => {
+                            this.router.navigateByUrl('/user');
+                        }, 500);
+                    } else if (result.json().code === '404') {
+                        this.toastr.error('Tài khoản đã tồn tại', 'Thất bại!');
+                    } else {
+                        this.toastr.error('Thêm mới không thành công', 'Thất bại!');
+                    }
                 } else {
                     this.toastr.error('Thêm mới không thành công', 'Thất bại!');
                 }
             })
-            .catch(err => {});
+            .catch(err => {
+                this.toastr.error('Thêm mới không thành công', 'Thất bại!');
+            });
     }
     resetForm() {
         this.router.navigateByUrl('/user');

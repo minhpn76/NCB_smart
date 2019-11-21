@@ -20,6 +20,7 @@ export class ListComponent implements OnInit {
   my_7: any = new Date();
   listPGD: any = [];
   listBranch: any = [];
+  listRole: any = [];
   isSearch: any = false;
   totalSearch: any = 0;
   isProcessLoad: any = 0;
@@ -32,6 +33,7 @@ export class ListComponent implements OnInit {
     transactionCode: '',
     branchCode: '',
     userName: '',
+    roleName: '',
     previous_page: 0
     // fromDate: 0,
     // toDate: 0
@@ -64,6 +66,7 @@ export class ListComponent implements OnInit {
     this.getListData(this.re_search);
     this.getBranchs();
     this.getAllPGD();
+    this.getListRole();
   }
 
   getListData(params) {
@@ -108,7 +111,7 @@ export class ListComponent implements OnInit {
               'Dữ liệu đã xoá hoàn toàn.',
               'success'
             );
-            this.getListData(this.re_search);
+            this.onSearch(this.re_search);
           } else {
             this.toastr.error('Xoá dữ liệu thất bại', 'Thất bại');
           }
@@ -214,6 +217,9 @@ export class ListComponent implements OnInit {
       this.onSearch(this.re_search);
     }
   }
+  onChangeRole() {
+    this.onSearch(this.re_search);
+  }
 
   getBranchs() {
     this.listBranch = [];
@@ -229,6 +235,33 @@ export class ListComponent implements OnInit {
 
     }).catch((err) => {
       this.toastr.error('Không lấy được dữ liệu chi nhánh', 'Thất bại');
+    });
+  }
+  getListRole() {
+    this.listData = [];
+    this.isProcessLoad = 1;
+    // xu ly
+    this.ncbService.searchRoles({
+        roleName: '',
+        status: '',
+        size: 500,
+        page: 1,
+        previous_page: 0
+    }).then((result) => {
+      const body = result.json().body;
+      this.listRole.push({
+        name: 'Tất cả',
+        code: ''
+      });
+      body.content.forEach(element => {
+        this.listRole.push({
+          name: element.roleName,
+          code: element.roleName
+        });
+      });
+    }).catch(err => {
+      this.listRole = [];
+      this.toastr.error('Không lấy được dữ liệu danh sách phân quyền', 'Lỗi hệ thống!');
     });
   }
   async onChangePGD(value) {

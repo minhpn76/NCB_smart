@@ -12,7 +12,7 @@
                     <label for="search" class="col-sm-4 col-form-label">Mã chi nhánh(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <select class="form-control" formControlName="brnCode" name="brnCode" (change)="onChangeComp($event)">
-                            <option *ngFor="let status of listTempComp" [value]="status.code" selected="selected">{{ status.code }}</option>
+                            <option *ngFor="let status of listBranch" [value]="status.code" selected="selected">{{ status.code }}</option>
                         </select>
                         <!-- <input
                             formControlName="brnCode"
@@ -30,7 +30,7 @@
                     <label for="search" class="col-sm-4 col-form-label">Tên chi nhánh(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <select class="form-control" formControlName="branchName" name="brnCode" (change)="onChangeCompC($event)">
-                            <option *ngFor="let status of listTempComp" [value]="status.name" selected="selected">{{ status.name }}</option>
+                            <option *ngFor="let status of listBranch" [value]="status.name" selected="selected">{{ status.name }}</option>
                         </select>
                         <!-- <input
                             formControlName="branchName"

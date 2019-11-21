@@ -44,7 +44,7 @@
                                         <div *ngIf="Form.fullName.errors.required">Họ và tên là bắt buộc</div>
                                         <div *ngIf="Form.fullName.errors.maxlength">Họ và tên quá dài</div>
                                         <div *ngIf="Form.fullName.errors.pattern">Họ và tên không đúng định dạng</div>
-                                        <div *ngIf="Form.fullName.errors.minlength">Họ và tên không đúng định dạng</div>
+                                        <div *ngIf="Form.fullName.errors.minlength">Họ và tên quá 30 ký tự</div>
             
                                     </div>
                                 </div>
@@ -260,9 +260,9 @@
                                     >
                                     <div *ngIf="submitted && FormUser.re_newPassword.errors" class="invalid-feedback">
                                         <div *ngIf="FormUser.re_newPassword.errors.required">Nhập lại mật khẩu mới là bắt buộc</div>
-                                        <div *ngIf="FormUser.re_newPassword.errors.minlength">Mật khẩu mới quá ngắn</div>
-                                        <div *ngIf="FormUser.re_newPassword.errors.mustMatch">Mật khẩu mới không khớp</div>
-                                        <div *ngIf="FormUser.re_newPassword.errors.pattern">Mật khẩu mới không đúng định dạng</div>
+                                        <div *ngIf="FormUser.re_newPassword.errors.minlength">Nhập lại mật khẩu mới quá ngắn</div>
+                                        <div *ngIf="FormUser.re_newPassword.errors.mustMatch">Nhập lại mật khẩu mới không khớp</div>
+                                        <div *ngIf="FormUser.re_newPassword.errors.pattern">Nhập lại mật khẩu mới không đúng định dạng</div>
                                     </div>
                                 </div>
             
@@ -286,7 +286,7 @@
                     <ng-template ngbTabTitle>Cấp lại mật khẩu</ng-template>
                     <ng-template ngbTabContent>
                         <br>
-                        <form [formGroup]="FormResetPass" (ngSubmit)="onSubmitResetPW()">
+                        <form [formGroup]="userResetForm" (ngSubmit)="onSubmitResetPW()">
                             <div class="form-group row">
                                 <label for="search" class="col-sm-4 col-form-label">Tên đăng nhập(<span class="text-danger">*</span>):</label>
                                 <div class="col-sm-7">
@@ -299,6 +299,8 @@
             
                             </div>
 
+                            
+
                             <div class="form-group row">
                                 <label for="search" class="col-sm-4 col-form-label">Mật khẩu mới(<span class="text-danger">*</span>):</label>
                                 <div class="col-sm-7">
@@ -308,12 +310,12 @@
                                         placeholder="Mật khẩu mới"
                                         minlength="8"
                                         type="password"
-                                        [ngClass]="{ 'is-invalid': submitted && FormResetPass.password.errors }"
+                                        [ngClass]="{ 'is-invalid': submitted && FormReset.password.errors }"
                                     >
-                                    <div *ngIf="submitted && FormResetPass.password.errors" class="invalid-feedback">
-                                        <div *ngIf="FormResetPass.password.errors.required">Mật khẩu mới là bắt buộc</div>
-                                        <div *ngIf="FormResetPass.password.errors.minlength">Mật khẩu quá ngắn</div>
-                                        <div *ngIf="FormResetPass.password.errors.pattern">Mật khẩu mới không đúng định dạng</div>
+                                    <div *ngIf="submitted && FormReset.password.errors" class="invalid-feedback">
+                                        <div *ngIf="FormReset.password.errors.required">Mật khẩu mới là bắt buộc</div>
+                                        <div *ngIf="FormReset.password.errors.minlength">Mật khẩu quá ngắn</div>
+                                        <div *ngIf="FormReset.password.errors.pattern">Mật khẩu mới không đúng định dạng</div>
                                     </div>
                                 </div>
             
@@ -327,13 +329,13 @@
                                         placeholder="Nhập lại mật khẩu mới"
                                         type="password"
                                         minlength="8"
-                                        [ngClass]="{ 'is-invalid': submitted && FormResetPass.re_password.errors }"
+                                        [ngClass]="{ 'is-invalid': submitted && FormReset.re_password.errors }"
                                     >
-                                    <div *ngIf="submitted && FormResetPass.re_password.errors" class="invalid-feedback">
-                                        <div *ngIf="FormResetPass.re_password.errors.required">Nhập lại mật khẩu mới là bắt buộc</div>
-                                        <div *ngIf="FormResetPass.re_password.errors.minlength">Mật khẩu mới quá ngắn</div>
-                                        <div *ngIf="FormResetPass.re_password.errors.mustMatch">Mật khẩu mới không khớp</div>
-                                        <div *ngIf="FormResetPass.re_password.errors.pattern">Mật khẩu mới không đúng định dạng</div>
+                                    <div *ngIf="submitted && FormReset.re_password.errors" class="invalid-feedback">
+                                        <div *ngIf="FormReset.re_password.errors.required">Nhập lại mật khẩu mới là bắt buộc</div>
+                                        <div *ngIf="FormReset.re_password.errors.minlength">Nhập lại mật khẩu mới quá ngắn</div>
+                                        <div *ngIf="FormReset.re_password.errors.mustMatch">Nhập lại mật khẩu mới không khớp</div>
+                                        <div *ngIf="FormReset.re_password.errors.pattern">Nhập lại mật khẩu mới không đúng định dạng</div>
                                     </div>
                                 </div>
             

@@ -101,7 +101,7 @@ export class EditComponent implements OnInit {
   ngOnInit() {
     this.getItem(this.itemId);
     this.dataForm = this.formBuilder.group({
-      bannerCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      bannerCode: [''],
       bannerName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       linkImg: [''],
       // linkUrlVn: [''],
@@ -109,9 +109,10 @@ export class EditComponent implements OnInit {
       scheduleStart: [''],
       scheduleEnd: [''],
       oneTimeShow: ['Y'],
-      actionScreen: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      actionScreen: [''],
       status: 'A'
     });
+    this.loadDate();
   }
 
   get Form() { return this.dataForm.controls; }
@@ -184,10 +185,16 @@ export class EditComponent implements OnInit {
 
     });
   }
+  public loadDate(): void {
+    this.my_7.setDate(this.my_7.getDate() - 7);
+    this.mRatesDateS = { year: this.my_7.getFullYear(), month: this.my_7.getMonth() + 1, day: this.my_7.getDate() };
+    this.mRatesDateS_7 = { year: this.my.getFullYear(), month: this.my.getMonth() + 1, day: this.my.getDate() };
+  }
+  tranferDate(params) {
+    return params.year + '/' + params.month + '/' + params.day;
+  }
   onSubmit() {
     this.submitted = true;
-
-    // stop here if form is invalid
     if (this.dataForm.invalid) {
       return;
     }
@@ -240,34 +247,35 @@ export class EditComponent implements OnInit {
       this.tempUrl = body.linkImg;
 
 
-      const stringSplit = body.linkImg.split('/');
+      const stringSplit = body.linkImg !== null ? body.linkImg.split('/') : '' ;
       const temp_fromDate_slipt = body.scheduleStart !== null ? body.scheduleStart.split('/') : null;
+
       const temp_fromDate = {
-        year: parseInt(temp_fromDate_slipt[0]),
-        month: parseInt(temp_fromDate_slipt[1]),
-        day: parseInt(temp_fromDate_slipt[2])
+        year: temp_fromDate_slipt !== null ? parseInt(temp_fromDate_slipt[0]) : (new Date().getFullYear()),
+        month: temp_fromDate_slipt !== null ? parseInt(temp_fromDate_slipt[1]) : (new Date().getMonth()),
+        day: temp_fromDate_slipt !== null ? parseInt(temp_fromDate_slipt[2]) : (new Date().getDate())
       };
 
       const temp_toDate_slipt = body.scheduleEnd !== null ? body.scheduleEnd.split('/') : null;
       const temp_toDate = {
-        year: parseInt(temp_toDate_slipt[0]),
-        month: parseInt(temp_toDate_slipt[1]),
-        day: parseInt(temp_toDate_slipt[2])
+        year: temp_toDate_slipt !== null ? parseInt(temp_toDate_slipt[0]) : (new Date().getFullYear()),
+        month: temp_toDate_slipt !== null ? parseInt(temp_toDate_slipt[1]) : (new Date().getMonth()),
+        day: temp_toDate_slipt !== null ? parseInt(temp_toDate_slipt[2]) : (new Date().getDate())
       };
-      this.tempNameImg = stringSplit.slice(-1)[0];
+      this.tempNameImg = stringSplit !== '' ? stringSplit.slice(-1)[0] : '';
       this.dataForm.patchValue({
         bannerCode: body.bannerCode,
         actionScreen: body.actionScreen,
         bannerName: body.bannerName,
         status: body.status,
         linkImg: body.linkImg,
-        scheduleStart: temp_fromDate !== null ? temp_fromDate : '',
-        scheduleEnd: temp_toDate !== null ? temp_toDate : '',
-        oneTimeShow: body.oneTimeShow,
+        scheduleStart: temp_fromDate ? temp_fromDate : '',
+        scheduleEnd: temp_toDate ? temp_toDate : '',
+        oneTimeShow : body.oneTimeShow,
 
         // linkUrlVn: body.linkUrlVn,
-        linkUrlEn: body.linkUrlEn,
-        fileName: stringSplit.slice(-1)[0]
+        linkUrlEn : body.linkUrlEn,
+        fileName : stringSplit.slice(-1)[0]
       });
     }).catch(err => {
       this.toastr.error('Không lấy được dữ liệu item', 'Thất bại!');

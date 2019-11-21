@@ -14,6 +14,14 @@ import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConf
   providers: [NCBService, ExcelService, Helper]
 })
 export class ListComponent implements OnInit {
+  constructor(
+    private ncbService: NCBService,
+    public toastr: ToastrService,
+    private excelService: ExcelService,
+    private modalService: NgbModal,
+    public helper: Helper,
+    public router: Router
+  ) { }
   isSearch: any = false;
   totalSearch: any = 0;
   isProcessLoad: any = 0;
@@ -60,15 +68,7 @@ export class ListComponent implements OnInit {
       code: 'D',
     }
   ];
-  constructor(
-    private ncbService: NCBService,
-    public toastr: ToastrService,
-    private excelService: ExcelService,
-    private modalService: NgbModal,
-    public helper: Helper,
-    public router: Router
-  ) { }
-
+  asyns;
   ngOnInit() {
     this.getListData(this.re_search);
   }
@@ -230,7 +230,7 @@ export class ListComponent implements OnInit {
             }
         }
     } catch (err) {
-        console.log(err);
+        this.toastr.error('Chọn tệp tin không thành công', 'Thất bại');
     }
   }
   onUploadServer() {
@@ -245,11 +245,6 @@ export class ListComponent implements OnInit {
             this.toastr.success('Upload dữ liệu thành công', 'Thành công!');
             this.temp.loading = false;
             setTimeout(() => {
-              this.fileExcel = {
-                file: File,
-                path: null,
-                name: ''
-              };
               this.closeModal();
               this.onSearch(this.re_search);
             }, 3000);
@@ -277,8 +272,16 @@ export class ListComponent implements OnInit {
     }, (reason) => {
     });
   }
-  closeModal() {
-      this.modalOp.close();
+  async closeModal() {
+    await this.clearFile();
+    this.modalOp.close();
+  }
+  clearFile() {
+    this.fileExcel = {
+      file: File,
+      path: null,
+      name: ''
+    };
   }
 
   async modalUploadFile() {

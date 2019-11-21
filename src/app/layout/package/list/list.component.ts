@@ -296,7 +296,7 @@ export class ListComponent implements OnInit {
   }
   keyDownFunction(event) {
     if (event.keyCode === 13) {
-      this.getListData(this.re_search);
+      this.onSearch(this.re_search);
     }
   }
   changePageSize() {

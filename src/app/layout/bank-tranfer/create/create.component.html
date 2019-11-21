@@ -8,8 +8,7 @@
         <div class="col-md-8">
             <form [formGroup]="provinceForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Mã ngân
-                        hàng chuyển khoản(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Mã ngân hàng chuyển khoản(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="bankCode"
@@ -20,16 +19,13 @@
                             />
                         <div *ngIf="submitted && Form.bankCode.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.bankCode.errors.required">Mã ngân
-                                hàng chuyển khoản là bắt buộc</div>
-                            <div  *ngIf="Form.bankCode.hasError('whitespace')">Mã ngân
-                                hàng chuyển khoản là không hợp lệ</div>
+                            <div *ngIf="Form.bankCode.errors.required">Mã ngân hàng chuyển khoản là bắt buộc</div>
+                            <div  *ngIf="Form.bankCode.hasError('whitespace')">Mã ngân hàng chuyển khoản là không hợp lệ</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên ngân
-                        hàng chuyển khoản(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-4 col-form-label">Tên ngân hàng chuyển khoản(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input
                             formControlName="bankName"
@@ -40,10 +36,8 @@
                             />
                         <div *ngIf="submitted && Form.bankName.errors"
                             class="invalid-feedback">
-                            <div *ngIf="Form.bankName.errors.required">Tên ngân
-                                hàng chuyển khoản là bắt buộc</div>
-                            <div *ngIf="Form.bankName.hasError('whitespace')">Tên ngân
-                                hàng chuyển khoản là không hợp lệ</div>
+                            <div *ngIf="Form.bankName.errors.required">Tên ngân hàng chuyển khoản là bắt buộc</div>
+                            <div *ngIf="Form.bankName.hasError('whitespace')">Tên ngân hàng chuyển khoản là không hợp lệ</div>
                         </div>
                     </div>
                 </div>

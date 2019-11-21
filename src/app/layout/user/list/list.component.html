@@ -21,6 +21,15 @@
                     placeholder="Tên đăng nhập">
                 </div>
             </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Phân quyền:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="re_search.roleName">
+                        <option *ngFor="let item of listRole" [value]="item.code">{{item.name}}</option>
+                    </select>
+                </div>
+                
+            </div>
             <!-- <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Đến ngày:</label>
                 <div class="col-sm-6 input-group">

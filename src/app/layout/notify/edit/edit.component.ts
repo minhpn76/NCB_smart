@@ -104,7 +104,7 @@ export class EditComponent implements OnInit {
       type: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       error: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       msgCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      msg_Code_1: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      msg_Code_1: [''],
       mes_Vn: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       mes_En: [''],
       user_Id: [JSON.stringify(this.userInfo.userId)],

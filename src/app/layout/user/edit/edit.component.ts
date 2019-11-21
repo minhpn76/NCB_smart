@@ -78,7 +78,7 @@ export class EditComponent implements OnInit {
   get Form() { return this.dataForm.controls; }
   get FormUser() { return this.userForm.controls; }
   get FormPass() { return this.passForm.controls; }
-  get FormResetPass() { return this.userResetForm.controls; }
+  get FormReset() { return this.userResetForm.controls; }
 
 
   getBranchs() {
@@ -147,7 +147,7 @@ export class EditComponent implements OnInit {
         });
       });
     }).catch((err) => {
-      this.toastr.error('Không lấy được dự liệu phân quyền!', 'Thất bại!');
+      this.toastr.error('Không lấy được dữ liệu phân quyền!', 'Thất bại!');
     });
   }
   getItem(params) {
@@ -162,6 +162,9 @@ export class EditComponent implements OnInit {
         email: body.email,
         username: body.userName,
         roleId: body.role.roleId
+      });
+      this.userResetForm.patchValue({
+        username: body.userName
       });
       this.userForm.patchValue({
         username: body.userName
@@ -184,7 +187,7 @@ export class EditComponent implements OnInit {
         return;
     }
     const payload = {
-      password: this.userResetForm.value.resetPass
+      password: this.userResetForm.value.password
     };
     this.ncbService.updateResetPassword(this.dataForm.value.username , payload).then((result) => {
       if (result.json().code === '00') {
@@ -263,7 +266,7 @@ export class EditComponent implements OnInit {
       branchCode: this.dataForm.value.branchCode,
       transactionCode: this.dataForm.value.transactionCode,
       username: this.dataForm.value.username,
-      fullName: this.dataForm.value.username,
+      fullName: this.dataForm.value.fullName,
       email: this.dataForm.value.email,
       phone: this.dataForm.value.phone,
       roleId: parseInt(this.dataForm.value.roleId)

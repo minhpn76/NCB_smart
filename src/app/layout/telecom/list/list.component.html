@@ -167,7 +167,7 @@
             <i class="icon-plus"></i>
             Upload nhiều bản ghi
         </h5>
-        <button type="button" class="close" aria-label="Close" (click)="d('Crossclick')">
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -194,8 +194,9 @@
                         auto="true"
                         iconLabel="fa-cloud-upload"
                         chooseLabel="Chọn tệp tin"></p-fileUpload>
-                    <p *ngIf="fileExcel.name" class="m-b-0 text-primary">{{
-                        fileExcel.name }}</p>
+                    <div *ngIf="fileExcel.name">
+                        <span class="m-b-0 text-primary">{{fileExcel.name }} </span>
+                    </div>
                 </div>
             </div>
             <div class="col-md-12 mt-3 text-right">

@@ -21,6 +21,7 @@ export class CreateComponent implements OnInit {
         name: ''
     };
     listTempComp: any = [];
+    listBranch: any = [];
     temp: any = {
         loading: false
     };
@@ -55,12 +56,13 @@ export class CreateComponent implements OnInit {
         public router: Router
     ) {
         this.getListCompName();
+        this.getBranchs();
     }
 
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
-            brnCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            branchName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            brnCode: ['--Chọn giá trị--', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            branchName: ['--Chọn giá trị--', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             departCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             departName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             address: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
@@ -73,6 +75,26 @@ export class CreateComponent implements OnInit {
             status: 'A'
         });
     }
+    getBranchs() {
+        this.listBranch = [];
+        this.ncbService
+            .getBranchs()
+            .then(result => {
+                this.listBranch.push({
+                    code: '--Chọn giá trị--',
+                    name: '--Chọn giá trị--'
+                });
+                result.json().body.forEach(element => {
+                    this.listBranch.push({
+                        code: element.brnCode,
+                        name: element.branchName
+                    });
+                });
+            })
+            .catch(err => {
+                this.toastr.error('Không lấy được dự liệu chi nhánh!', 'Thất bại!');
+            });
+      }
     get Form() {
         return this.dataForm.controls;
     }
@@ -125,13 +147,13 @@ export class CreateComponent implements OnInit {
         });
     }
     onChangeComp(event) {
-        const newArr = this.listTempComp.find(e => e.code === this.dataForm.value.brnCode);
+        const newArr = this.listBranch.find(e => e.code === this.dataForm.value.brnCode);
         this.dataForm.patchValue({
            branchName : newArr.name
        });
     }
     onChangeCompC(event) {
-        const newArr = this.listTempComp.find(e => e.name === this.dataForm.value.branchName);
+        const newArr = this.listBranch.find(e => e.name === this.dataForm.value.branchName);
         this.dataForm.patchValue({
             brnCode : newArr.code
        });

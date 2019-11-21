@@ -722,6 +722,10 @@ export class NCBService {
     const url = `${API_URL}/role/` + value + `/detail`;
     return this.auth.authRequest({ url: url, method: 'GET', application: true });
   }
+  deleteRole(id): Promise<any> {
+    const url = `${API_URL}/role/${id}/delete`;
+    return this.auth.authRequest({ url: url, method: 'DELETE', application: true });
+  }
   // get all PGD
   getListPGD(): Promise<any> {
     const url = `${API_URL}/ncb-branch/depart/activated-list`;
@@ -1008,7 +1012,7 @@ export class NCBService {
   }
   updateResetPassword(user, data): Promise<any> {
     const url = `${API_URL}/user/${user}/resetPass`;
-    return this.auth.authRequest({ url: url, data: data, method: 'PUT', application: true });
+    return this.auth.authRequest({ url: url, params: data, method: 'PUT', application: true });
   }
 
 

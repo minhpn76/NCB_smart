@@ -64,11 +64,13 @@ export class EditComponent implements OnInit {
         setTimeout(() => {
             this.router.navigateByUrl('/branch');
         }, 500);
+      } else if (result.json().code === '920') {
+          this.toastr.error('Dữ liệu DAO đã tồn tại', 'Thất bại!');
       } else {
-          this.toastr.error('Sửa chi nhánh thất bại', 'Thất bại!');
+        this.toastr.error('Sửa chi nhánh thất bại', 'Thất bại!');
       }
     }).catch(err => {
-      this.toastr.error(err.json().desciption, 'Thất bại!');
+      this.toastr.error('Sửa chi nhánh thất bại', 'Thất bại!');
     });
   }
   getItem(params) {

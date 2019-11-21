@@ -272,18 +272,18 @@ export class EditComponent implements OnInit {
   async getItem(params) {
     this.ncbService.detailPromotion({ proCode: params }).then((result) => {
       const body = result.json().body;
-      const temp_fromDate_slipt = body.fromDate.split('/');
+      const temp_fromDate_slipt = body.fromDate ? body.fromDate.split('/') : '';
       const temp_fromDate = {
-        year: parseInt(temp_fromDate_slipt[0]),
-        month: parseInt(temp_fromDate_slipt[1]),
-        day: parseInt(temp_fromDate_slipt[2])
+        year: temp_fromDate_slipt ? parseInt(temp_fromDate_slipt[0]) : (new Date().getFullYear()),
+        month: temp_fromDate_slipt ? parseInt(temp_fromDate_slipt[1]) : (new Date().getMonth()),
+        day: temp_fromDate_slipt ? parseInt(temp_fromDate_slipt[2]) : (new Date().getDate())
       };
 
-      const temp_toDate_slipt = body.toDate.split('/');
+      const temp_toDate_slipt = body.toDate ? body.toDate.split('/') : '';
       const temp_toDate = {
-        year: parseInt(temp_toDate_slipt[0]),
-        month: parseInt(temp_toDate_slipt[1]),
-        day: parseInt(temp_toDate_slipt[2])
+        year: temp_toDate_slipt ? parseInt(temp_toDate_slipt[0]) : (new Date().getFullYear()),
+        month: temp_toDate_slipt ? parseInt(temp_toDate_slipt[1]) : (new Date().getMonth()),
+        day: temp_toDate_slipt ? parseInt(temp_toDate_slipt[2]) : (new Date().getDate())
       };
 
       // change
