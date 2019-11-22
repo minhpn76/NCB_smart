@@ -127,17 +127,17 @@ export class ListComponent implements OnInit {
           if (result.status === 200) {
             if (result.json().code === '00') {
               Swal.fire(
-                'Đã xoá!',
+                'Đã Deactive!',
                 'Dữ liệu đã thay đổi.',
                 'success'
               );
               this.re_search.page = 0;
               this.onSearch(this.re_search);
             } else {
-              this.toastr.error('Xoá thất bại', 'Lỗi hệ thống!');
+              this.toastr.error('Deactive thất bại', 'Lỗi hệ thống!');
             }
           } else {
-            this.toastr.error('Xoá thất bại', 'Lỗi hệ thống!');
+            this.toastr.error('Deactive thất bại', 'Lỗi hệ thống!');
           }
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -157,6 +157,50 @@ export class ListComponent implements OnInit {
       this.getListData(this.re_search);
       this.re_search.page = page;
     }
+  }
+  updateActiveItem(event, index, data) {
+    Swal.fire({
+      title: 'Bạn có chắc chắn thay đổi trạng thái?',
+      text: 'Dữ liệu đã thay đổi trạng thái vẫn có thể sửa lại',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Đồng ý',
+      cancelButtonText: 'Không, trở lại'
+    }).then((result) => {
+      if (result.value) {
+        // tslint:disable-next-line:no-shadowed-variable
+        this.ncbService.updateBankTranfer({
+          bankCode: data.bankCode,
+          bankName: data.bankName,
+          shtname: data.shtname,
+          bin: data.bin,
+          citad_gt: data.citad_gt,
+          citad_tt: data.citad_tt,
+          status: 'A'
+        }).then(result => {
+          if (result.json().code === '00') {
+            Swal.fire(
+              'Đã Active!',
+              'Dữ liệu đã thay đổi.',
+              'success'
+            );
+            this.re_search.page = 0;
+            this.onSearch(this.re_search);
+
+          } else {
+            this.toastr.error('Active thất bại', 'Thất bại!');
+          }
+        }).catch(err => {
+          this.toastr.error(err.json().desciption, 'Thất bại!');
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Huỷ bỏ',
+          'Dữ liệu được bảo toàn :)',
+          'error'
+        );
+      }
+    });
   }
   onSearch(payload) {
     if (payload.bankCode !== '' || payload.status !== '') {

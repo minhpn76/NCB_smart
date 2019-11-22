@@ -63,19 +63,19 @@ export class AuthService {
                     }
                 }
             }
-            this.res = this.http.get(config.url, { headers: headers, params: config.params }).toPromise();
+            this.res = this.http.get(config.url, { headers: headers, params: config.params }).pipe(timeout(20000)).toPromise();
         } else {
             if (config.method === 'POST') {
-                this.res = this.http.post(config.url, config.data, { headers: headers, params: config.params }).toPromise();
+                this.res = this.http.post(config.url, config.data, { headers: headers, params: config.params }).pipe(timeout(20000)).toPromise();
             } else {
                 if (config.method === 'PUT') {
-                    this.res = this.http.put(config.url, config.data, { headers: headers, params: config.params }).toPromise();
+                    this.res = this.http.put(config.url, config.data, { headers: headers, params: config.params }).pipe(timeout(20000)).toPromise();
                 } else {
                     if (config.method === 'DELETE') {
-                        this.res = this.http.delete(config.url, { headers: headers, params: config.params }).toPromise();
+                        this.res = this.http.delete(config.url, { headers: headers, params: config.params }).pipe(timeout(20000)).toPromise();
                     } else {
                         if (config.method === 'PATCH') {
-                            this.res = this.http.patch(config.url, config.data, { headers: headers, params: config.params }).toPromise();
+                            this.res = this.http.patch(config.url, config.data, { headers: headers, params: config.params }).pipe(timeout(20000)).toPromise();
                         }
                     }
                 }
