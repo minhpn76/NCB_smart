@@ -193,6 +193,7 @@ export class UserProfileComponent implements OnInit {
           'Họ và tên': element.usrfname,
           'CMND/HC': element.datCfmast ? element.datCfmast.idno : '',
           'Nhóm khách hàng': element.crtusrid,
+          'Mã gói sản phẩm': element.lm4rm !== null ? element.lm4rm : '',
           'Gói sản phẩm': element.function !== null ? element.function.prdName : '',
           'Ưu đãi': element.function !== null ? element.function.promotionName : '',
           'Tên CT ưu đãi': element.function !== null ? element.function.prodName : ''
