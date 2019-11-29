@@ -132,21 +132,21 @@ export class AuthService {
         }
         this.res.then((result) => {
         }).catch((err) => {
-            // if (err.status === 401) {
-            //     const profile = JSON.parse(localStorage.getItem('profile'));
-            //     if (profile != null) {
-            //         localStorage.clear();
-            //         // get Current URL
-            //         this.currentURL = window.location.href; // this.router.url;
-            //         this.router.navigateByUrl('/login?return_url=' + this.currentURL);
-            //     }
-            // } else {
-            //     if (err.status !== 500 && err.status !== 502 && err.status !== 404) {
-            //         this.toastr.error(this.translate.instant(err.description), 'Lỗi hệ thống!');
-            //     } else {
-            //         this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
-            //     }
-            // }
+            if (err.status === 401) {
+                const profile = JSON.parse(localStorage.getItem('profile'));
+                if (profile != null) {
+                    localStorage.clear();
+                    // get Current URL
+                    this.currentURL = window.location.href; // this.router.url;
+                    this.router.navigateByUrl('/login?return_url=' + this.currentURL);
+                }
+            } else {
+                if (err.status !== 500 && err.status !== 502 && err.status !== 404) {
+                    this.toastr.error(this.translate.instant(err.description), 'Lỗi hệ thống!');
+                } else {
+                    this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+                }
+            }
         });
         return this.res;
     }

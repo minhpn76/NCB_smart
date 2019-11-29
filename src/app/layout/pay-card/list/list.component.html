@@ -72,7 +72,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 table-responsive">
+        <div class="col-md-12 table-responsive Flipped">
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -268,7 +268,7 @@
     </ng-template>
 
     <div class="row" style="margin-top: 50px">
-        <div class="col-md-12 table-responsive">
+        <div class="col-md-12 table-responsive Flipped">
             <h5><b>Khai báo tham số thẻ</b></h5>
             <h6><b>Số lượng thẻ tối đa KH có thể mở</b></h6>
             <table class="table table-striped table-bordered">
@@ -335,143 +335,147 @@
 
             <br />
             <h6><b>Lý do phát hành lại thẻ</b></h6>
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">STT</th>
-                        <th scope="col">Giá trị</th>
-                        <th scope="col">Mã</th>
-                        <th scope="col">Thao tác</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngIf="parCardConfig.reasonCard.isLoad == 1" class="text-center">
-                        <td colspan="4"><i class="fa fa-spin fa-spinner font-30"></i></td>
-                    </tr>
-                    <tr *ngIf="parCardConfig.reasonCard.total == 0 && parCardConfig.reasonCard.isLoad == 0" class="text-center">
-                        <td colspan="4">Không tìm thấy kết quả</td>
-                    </tr>
-                    <tr (click)="editReasonCard(cd, i)" *ngFor="let cd of parCardConfig.reasonCard.list; let i = index">
-                        <td>{{ i + 1 }}</td>
-                        <td>
-                            <input
-                                *ngIf="cd.code === parCardConfig.reasonCard.editRow"
-                                class="form-control"
-                                type="text"
-                                [(ngModel)]="cd.value"
-                            />
-                            <span
-                                style="cursor: pointer;"
-                                *ngIf="cd.code !== parCardConfig.reasonCard.editRow"
-                                >{{ cd.value }}</span
-                            >
-                        </td>
-                        <td>
-                            {{ cd.code }}
-                        </td>
-                        <td>
-                            <button
-                                class="btn btn-primary btn-small"
-                                (click)="saveReasonCard(cd)"
-                                [disabled]="indexTempReasonCard != i"
-                            >
-                                <i class="fa fa-edit"></i> Lưu
-                            </button>
-                            &nbsp;
-                            <button (click)="deleteReasonCard(i, cd.value, cd.code)" class="btn btn-danger btn-small">
-                                <i class="fa fa-trash"></i> Xoá
-                            </button>
-                            &nbsp;
-                            <button class="btn btn-default btn-small" [disabled]="indexTempReasonCard != i" (click)="cancelReasonCard(cd, i)">
-                                <i class="fa fa-close"></i> Huỷ
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <button class="btn btn-warning btn-small" (click)="modalReasonCard()"><i class="fa fa-plus"></i> Thêm</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="col-md-12 table-responsive Flipped">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Giá trị</th>
+                            <th scope="col">Mã</th>
+                            <th scope="col">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="parCardConfig.reasonCard.isLoad == 1" class="text-center">
+                            <td colspan="4"><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        </tr>
+                        <tr *ngIf="parCardConfig.reasonCard.total == 0 && parCardConfig.reasonCard.isLoad == 0" class="text-center">
+                            <td colspan="4">Không tìm thấy kết quả</td>
+                        </tr>
+                        <tr (click)="editReasonCard(cd, i)" *ngFor="let cd of parCardConfig.reasonCard.list; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>
+                                <input
+                                    *ngIf="cd.code === parCardConfig.reasonCard.editRow"
+                                    class="form-control"
+                                    type="text"
+                                    [(ngModel)]="cd.value"
+                                />
+                                <span
+                                    style="cursor: pointer;"
+                                    *ngIf="cd.code !== parCardConfig.reasonCard.editRow"
+                                    >{{ cd.value }}</span
+                                >
+                            </td>
+                            <td>
+                                {{ cd.code }}
+                            </td>
+                            <td>
+                                <button
+                                    class="btn btn-primary btn-small"
+                                    (click)="saveReasonCard(cd)"
+                                    [disabled]="indexTempReasonCard != i"
+                                >
+                                    <i class="fa fa-edit"></i> Lưu
+                                </button>
+                                &nbsp;
+                                <button (click)="deleteReasonCard(i, cd.value, cd.code)" class="btn btn-danger btn-small">
+                                    <i class="fa fa-trash"></i> Xoá
+                                </button>
+                                &nbsp;
+                                <button class="btn btn-default btn-small" [disabled]="indexTempReasonCard != i" (click)="cancelReasonCard(cd, i)">
+                                    <i class="fa fa-close"></i> Huỷ
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <button class="btn btn-warning btn-small" (click)="modalReasonCard()"><i class="fa fa-plus"></i> Thêm</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <br />
             <h6><b>Tham số khác</b></h6>
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">STT</th>
-                        <th scope="col">Tham số</th>
-                        <th scope="col">Giá trị</th>
-                        <th scope="col">Mã</th>
-                        <th scope="col">Ghi chú</th>
-                        <th scope="col" style="width: 40%">Thao tác</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngIf="parCardConfig.otherConfig.isLoad == 1" class="text-center">
-                        <td colspan="6"><i class="fa fa-spin fa-spinner font-30"></i></td>
-                    </tr>
-                    <tr *ngIf="parCardConfig.otherConfig.total == 0 && parCardConfig.otherConfig.isLoad == 0" class="text-center">
-                        <td colspan="6">Không tìm thấy kết quả</td>
-                    </tr>
-                    <tr
-                        style="cursor: pointer;"
-                        *ngFor="let cd of parCardConfig.otherConfig.list; let i = index"
-                        (click)="editOtherConfigCard(cd, i)"
-                    >
-                        <td>{{ i + 1 }}</td>
-                        <td>
-                            {{ cd.param }}
-                        </td>
+            <div class="col-md-12 table-responsive Flipped">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Tham số</th>
+                            <th scope="col">Giá trị</th>
+                            <th scope="col">Mã</th>
+                            <th scope="col">Ghi chú</th>
+                            <th scope="col" style="width: 40%">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="parCardConfig.otherConfig.isLoad == 1" class="text-center">
+                            <td colspan="6"><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        </tr>
+                        <tr *ngIf="parCardConfig.otherConfig.total == 0 && parCardConfig.otherConfig.isLoad == 0" class="text-center">
+                            <td colspan="6">Không tìm thấy kết quả</td>
+                        </tr>
+                        <tr
+                            style="cursor: pointer;"
+                            *ngFor="let cd of parCardConfig.otherConfig.list; let i = index"
+                            (click)="editOtherConfigCard(cd, i)"
+                        >
+                            <td>{{ i + 1 }}</td>
+                            <td>
+                                {{ cd.param }}
+                            </td>
 
-                        <td>
-                            <input
-                                *ngIf="cd.code === parCardConfig.otherConfig.editRow"
-                                class="form-control"
-                                type="text"
-                                [(ngModel)]="cd.value"
-                            />
-                            <span *ngIf="cd.code !== parCardConfig.otherConfig.editRow">{{ cd.value }}</span>
-                        </td>
-                        <td>
-                            {{ cd.code }}
-                        </td>
-                        <td>
-                            <input
-                                *ngIf="cd.code === parCardConfig.otherConfig.editRow"
-                                class="form-control"
-                                type="text"
-                                [(ngModel)]="cd.note"
-                            />
-                            <span style="cursor: pointer;" *ngIf="cd.code !== parCardConfig.otherConfig.editRow">{{ cd.note }}</span>
-                        </td>
-                        <td style="width: 40%">
-                            <button
-                                class="btn btn-primary btn-small"
-                                (click)="saveOtherConfig(cd)"
-                                [disabled]="indexTempOtherCard != i"
-                            >
-                                <i class="fa fa-edit"></i> Lưu
-                            </button>
-                            &nbsp;
-                            <button (click)="deleteOtherConfigCard(i, cd.param, cd.code)" class="btn btn-danger btn-small">
-                                <i class="fa fa-trash"></i> Xoá
-                            </button>
-                            &nbsp;
-                            <button class="btn btn-default btn-small" [disabled]="indexTempOtherCard != i" (click)="cancelOtherConfigCard(cd, i)">
-                                <i class="fa fa-close"></i> Huỷ
-                            </button>
-                            
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="6">
-                            <button class="btn btn-warning btn-small" (click)="modalOtherCard()"><i class="fa fa-plus"></i> Thêm</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            <td>
+                                <input
+                                    *ngIf="cd.code === parCardConfig.otherConfig.editRow"
+                                    class="form-control"
+                                    type="text"
+                                    [(ngModel)]="cd.value"
+                                />
+                                <span *ngIf="cd.code !== parCardConfig.otherConfig.editRow">{{ cd.value }}</span>
+                            </td>
+                            <td>
+                                {{ cd.code }}
+                            </td>
+                            <td>
+                                <input
+                                    *ngIf="cd.code === parCardConfig.otherConfig.editRow"
+                                    class="form-control"
+                                    type="text"
+                                    [(ngModel)]="cd.note"
+                                />
+                                <span style="cursor: pointer;" *ngIf="cd.code !== parCardConfig.otherConfig.editRow">{{ cd.note }}</span>
+                            </td>
+                            <td style="width: 40%">
+                                <button
+                                    class="btn btn-primary btn-small"
+                                    (click)="saveOtherConfig(cd)"
+                                    [disabled]="indexTempOtherCard != i"
+                                >
+                                    <i class="fa fa-edit"></i> Lưu
+                                </button>
+                                &nbsp;
+                                <button (click)="deleteOtherConfigCard(i, cd.param, cd.code)" class="btn btn-danger btn-small">
+                                    <i class="fa fa-trash"></i> Xoá
+                                </button>
+                                &nbsp;
+                                <button class="btn btn-default btn-small" [disabled]="indexTempOtherCard != i" (click)="cancelOtherConfigCard(cd, i)">
+                                    <i class="fa fa-close"></i> Huỷ
+                                </button>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                <button class="btn btn-warning btn-small" (click)="modalOtherCard()"><i class="fa fa-plus"></i> Thêm</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
