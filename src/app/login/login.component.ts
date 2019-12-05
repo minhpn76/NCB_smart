@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
                     if (result.json().body.loginCount === 1) {
                         this.router.navigateByUrl('/user/change-password');
                     } else {
-                        this.router.navigateByUrl('/dashboard');
+                        this.router.navigateByUrl('/user/profile');
                     }
                 }
                 //
@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
                     if (result.json().body.passChange === '0') {
                         this.router.navigateByUrl('/user/change-password');
                     } else {
-                        this.router.navigateByUrl('/dashboard');
+                        this.router.navigateByUrl('/user/profile');
                     }
                 }
                         // this.onLoadAfterLogin(result);
@@ -103,7 +103,7 @@ export class LoginComponent implements OnInit {
             this.router.navigateByUrl(this.page_back);
         } else {
             localStorage.setItem('isLoggedin', 'true');
-            this.router.navigateByUrl('/dashboard');
+            this.router.navigateByUrl('/user/profile');
 
         }
         //
@@ -111,7 +111,7 @@ export class LoginComponent implements OnInit {
             window.location.href = this.return_url;
         } else {
             localStorage.setItem('isLoggedin', 'true');
-            this.router.navigateByUrl('/dashboard');
+            this.router.navigateByUrl('/user/profile');
         }
 
 

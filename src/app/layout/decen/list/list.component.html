@@ -64,9 +64,30 @@
                 <thead>
                     <tr>
                     <th scope="col">STT</th>
-                    <th scope="col">Tên phân quyền</th>
-                    <th scope="col">Mô tả</th>
-                    <th scope="col">Trạng thái</th>
+                    <th scope="col" 
+                        [class.active]="order === 'roleName'"
+                        (click)="setOrder('roleName')"
+                    >
+                        Tên phân quyền
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'description'"
+                        (click)="setOrder('description')"
+                    >
+                        Mô tả
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'status'"
+                        (click)="setOrder('status')"
+                    >
+                        Trạng thái
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
                     <th scope="col">Thao tác</th>
 
                     </tr>
@@ -78,7 +99,7 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan=6>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor ="let data of listData; let i = index">
+                    <tr *ngFor ="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index">
                         
                         <th scope="row">
                             {{ i+1 }}
@@ -93,12 +114,6 @@
                             <a class="mr-2 cursor-pointer text-blue" routerLink="/decen/edit/{{data.roleName}}">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <!-- <span class="mr-2 cursor-pointer text-blue">
-                                <i class="fa fa-lock"></i>
-                            </span> -->
-                            <!-- <span class="mr-2 cursor-pointer text-danger">
-                                <i class="fa fa-unlock-alt"></i>
-                            </span> -->
                             <span class="mr-2 cursor-pointer text-danger">
                                 <i class="fa fa-trash" (click)="deleteItem(1, i, data.roleName)"></i>
                             </span>

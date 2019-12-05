@@ -67,7 +67,7 @@ export class ListComponent implements OnInit {
       this.isProcessLoad = 0;
       this.listData = [];
       this.totalSearch = 0;
-      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+      this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
     });
   }
 

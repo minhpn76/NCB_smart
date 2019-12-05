@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ExcelService } from '../../../services/excel.service';
+import { OrderPipe } from 'ngx-order-pipe';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -54,19 +55,31 @@ export class ListComponent implements OnInit {
       code: 0,
     }
   ];
+  order: string = 'name';
+  reverse: boolean = false;
 
+  sortedCollection: any[];
   constructor(
     private ncbService: NCBService,
     private modalService: NgbModal,
-    private excelService: ExcelService
+    private excelService: ExcelService,
+    private orderPipe: OrderPipe
 
-  ) { }
+  ) { 
+    this.sortedCollection = orderPipe.transform(this.listData, 'name');
+  }
 
   ngOnInit() {
     this.getListFeature(this.search);
 
   }
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
 
+    this.order = value;
+  }
 
   getListFeature(params) {
     this.search.process_load = 1;

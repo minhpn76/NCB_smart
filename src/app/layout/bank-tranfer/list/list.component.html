@@ -55,9 +55,30 @@
                 <thead>
                     <tr>
                     <th scope="col">STT</th>
-                    <th scope="col">Mã ngân hàng chuyển khoản</th>
-                    <th scope="col">Tên ngân hàng chuyển khoản</th>
-                    <th scope="col">Trạng thái</th>
+                    <th scope="col"
+                        [class.active]="order === 'bankCode'"
+                        (click)="setOrder('bankCode')"
+                    >
+                        Mã ngân hàng chuyển khoản
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'bankName'"
+                        (click)="setOrder('bankName')"
+                    >
+                        Tên ngân hàng chuyển khoản
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'status'"
+                        (click)="setOrder('status')"
+                    >
+                        Trạng thái
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
                     <th scope="col">Thao tác</th>
 
                     </tr>
@@ -69,7 +90,7 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan=6>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor ="let data of listData; let i = index">
+                    <tr *ngFor ="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index">
                         
                         <th scope="row">
                             {{i+1}}

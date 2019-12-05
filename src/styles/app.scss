@@ -50,3 +50,18 @@ button:focus {outline:0;}
     -ms-transform:rotateX(180deg); /* IE 9 */
     -webkit-transform:rotateX(180deg); /* Safari and Chrome */
 }
+
+thead th {
+    cursor: pointer;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+thead th span {
+    visibility: hidden;
+}
+thead th.active {
+    color: #000;
+}
+thead th.active span {
+    visibility: visible;
+}

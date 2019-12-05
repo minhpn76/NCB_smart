@@ -144,7 +144,7 @@ export class ListComponent implements OnInit {
       this.isProcessLoad = 0;
       this.listData = [];
       this.totalSearch = 0;
-      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+      this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
     });
   }
   public loadDate(): void {
@@ -259,7 +259,7 @@ export class ListComponent implements OnInit {
         });
       });
     }).catch(err => {
-      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+      this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
     });
   }
   getItem(params): Promise<any> {
@@ -316,14 +316,14 @@ export class ListComponent implements OnInit {
       if (result.json().code === '00') {
         this.toastr.success('Cập nhật log thành công!', 'Thành công');
       } else {
-        this.toastr.error(`Vui lòng thử lại ${result.json().description}', 'Thất bại`);
+        this.toastr.error(`Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ ${result.json().description}', 'Thất bại`);
       }
       setTimeout(() => {
         this.getItem(this.passData.id);
         this.comment = '';
       }, 500);
     }).catch((err) => {
-      this.toastr.error('Vui lòng thử lại', 'Thất bại');
+      this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Thất bại');
     });
   }
   getListService() {

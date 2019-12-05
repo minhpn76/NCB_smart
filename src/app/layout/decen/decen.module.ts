@@ -9,11 +9,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { PageHeaderModule } from '../../shared';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OrderModule } from 'ngx-order-pipe';
+
+
 
 @NgModule({
     imports: [
         CommonModule, DecenRoutingModule, PageHeaderModule, NgbModule,
-        TranslateModule.forChild(), FormsModule, ReactiveFormsModule
+        TranslateModule.forChild(), FormsModule, ReactiveFormsModule,
+        OrderModule
     ],
     declarations: [
         CreateComponent, ListComponent, EditComponent

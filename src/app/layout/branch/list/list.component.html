@@ -56,9 +56,29 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Mã chi nhánh</th>
-                        <th scope="col">Tên chi nhánh</th>
-                        <th scope="col">DAO</th>
+                        <th scope="col"
+                            [class.active]="order === 'compCode'"
+                            (click)="setOrder('compCode')"
+                        >
+                            Mã chi nhánh
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'compName'"
+                            (click)="setOrder('compName')"
+                        >
+                            Tên chi nhánh
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'dao'"
+                            (click)="setOrder('dao')"
+                        >DAO
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
                         <th scope="col">Thao tác</th>
                     </tr>
                 </thead>
@@ -69,7 +89,7 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan="5">Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor="let branch of listData; let i = index">
+                    <tr *ngFor="let branch of listData | orderBy: order:reverse:'case-insensitive'; let i = index">
                         <th scope="row">
                             {{ i + 1 }}
                         </th>
@@ -80,12 +100,6 @@
                             <a class="mr-2 cursor-pointer text-blue" routerLink="/branch/edit/{{ branch.compCode }}">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <!-- <span class="mr-2 cursor-pointer text-blue">
-                                <i class="fa fa-lock"></i>
-                            </span> -->
-                            <!-- <span class="mr-2 cursor-pointer text-danger">
-                                <i class="fa fa-unlock-alt"></i>
-                            </span> -->
                             <span class="mr-2 cursor-pointer text-danger">
                                 <i class="fa fa-trash" (click)="deleteItem(1, i, branch.compCode)"></i>
                             </span>

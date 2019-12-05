@@ -78,8 +78,22 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Mã Banner</th>
-                        <th scope="col">Tên Banner</th>
+                        <th scope="col"
+                            [class.active]="order === 'bannerCode'"
+                            (click)="setOrder('bannerCode')"
+                        >
+                            Mã Banner
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'bannerName'"
+                            (click)="setOrder('bannerName')"
+                        >
+                            Tên Banner
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
                         <th scope="col">Link Image</th>
                         <!-- <th scope="col">Link Url Vn</th> -->
                         <th scope="col">Link Url En</th>
@@ -87,7 +101,14 @@
                         <th scope="col">Ngày giờ hiệu lực</th>
                         <th scope="col">Ngày giờ kết thúc</th>
                         <th scope="col">Phương thức show</th>
-                        <th scope="col">Trạng thái</th>
+                        <th scope="col"
+                            [class.active]="order === 'status'"
+                            (click)="setOrder('status')"
+                        >
+                            Trạng thái
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
                         <th scope="col">Thao tác</th>
                     </tr>
                 </thead>
@@ -98,7 +119,7 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan="11">Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor="let data of listData; let i = index"
+                    <tr *ngFor="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index"
                         (click)="modalShowImage(data?.linkImg)"
                         style="cursor: pointer;"
                     >

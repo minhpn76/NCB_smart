@@ -97,12 +97,12 @@ export class AuthService {
                 if (err.status !== 500 && err.status !== 502 && err.status !== 404) {
                     if (showError === 0) {
                         // tslint:disable-next-line:max-line-length
-                        this.toastr.error(this.translate.instant(err.description ? err.description : err.description), 'Lỗi hệ thống!');
+                        this.toastr.error('Lỗi xảy ra khi xác nhận người dùng hệ thống', 'Lỗi hệ thống!');
                     } else {
-                        this.toastr.error(this.translate.instant(err.description), 'Lỗi hệ thống!');
+                        this.toastr.error('Lỗi xảy ra khi xác nhận người dùng hệ thống', 'Lỗi hệ thống!');
                     }
                 } else {
-                    this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+                    this.toastr.error('Lỗi xảy ra khi xác nhận người dùng hệ thống', 'Lỗi hệ thống!');
                 }
             }
         });
@@ -142,9 +142,9 @@ export class AuthService {
                 }
             } else {
                 if (err.status !== 500 && err.status !== 502 && err.status !== 404) {
-                    this.toastr.error(this.translate.instant(err.description), 'Lỗi hệ thống!');
+                    this.toastr.error('Lỗi xảy ra khi xác nhận người dùng gủi file', 'Lỗi hệ thống!');
                 } else {
-                    this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+                    this.toastr.error('Lỗi xảy ra khi xác nhận người dùng gủi file', 'Lỗi hệ thống!');
                 }
             }
         });

@@ -75,9 +75,26 @@
                 <thead>
                     <tr>
                     <th scope="col">STT</th>
-                    <th scope="col">Mã tính năng</th>
-                    <th scope="col">Tên tính năng</th>
-                    <th scope="col">Trạng thái</th>
+                    <th scope="col"
+                        [class.active]="order === 'code'"
+                        (click)="setOrder('code')"
+                    >Mã tính năng</th>
+                    <th scope="col"
+                        [class.active]="order === 'name'"
+                        (click)="setOrder('name')"
+                    >
+                        Tên tính năng
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'status'"
+                        (click)="setOrder('status')"
+                    >
+                        Trạng thái
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
                     <th scope="col">Thao tác</th>
 
                     </tr>
@@ -89,7 +106,7 @@
                     <tr *ngIf="search.total_items == 0 && search.process_load == 0" class="text-center">
                         <td colspan=5>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor ="let data of listData; let i = index">
+                    <tr *ngFor ="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index">
                         
                         <th scope="row">
                             {{i+1 + (search.page>1?(search.page-1)*search.page_size:0)}}
@@ -109,9 +126,6 @@
                             <span class="mr-2 cursor-pointer text-blue">
                                 <i class="fa fa-lock"></i>
                             </span>
-                            <!-- <span class="mr-2 cursor-pointer text-danger">
-                                <i class="fa fa-unlock-alt"></i>
-                            </span> -->
                             <span class="mr-2 cursor-pointer text-danger">
                                 <i class="fa fa-trash" (click)="deleteItem(1, i)"></i>
                             </span>

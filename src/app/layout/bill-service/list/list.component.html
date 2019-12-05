@@ -72,11 +72,46 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Mã nhà cung cấp TTHD</th>
-                        <th scope="col">Tên nhà cung cấp TTHD</th>
-                        <th scope="col">Mã dịch vụ</th>
-                        <th scope="col">Đối tác</th>
-                        <th scope="col">Trạng thái</th>
+                        <th scope="col"
+                            [class.active]="order === 'providerCode'"
+                            (click)="setOrder('providerCode')"
+                        >
+                            Mã nhà cung cấp TTHD
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'providerName'"
+                            (click)="setOrder('providerName')"
+                        >
+                            Tên nhà cung cấp TTHD
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'serviceCode'"
+                            (click)="setOrder('serviceCode')"
+                        >
+                            Mã dịch vụ
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'partner'"
+                            (click)="setOrder('partner')"
+                        >
+                            Đối tác
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'status'"
+                            (click)="setOrder('status')"
+                        >
+                            Trạng thái
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
                         <th scope="col">Thao tác</th>
                     </tr>
                 </thead>
@@ -89,7 +124,7 @@
                         class="text-center">
                         <td colspan="7">Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor="let data of listData; let i= index">
+                    <tr *ngFor="let data of listData | orderBy: order:reverse:'case-insensitive'; let i= index">
                         <th scope="row">
                             {{ i + 1 }}
                         </th>

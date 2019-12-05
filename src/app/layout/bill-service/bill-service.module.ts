@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PageHeaderModule } from '../../shared';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
             customClass: 'modal-content',
             confirmButtonClass: 'btn btn-primary',
             cancelButtonClass: 'btn'
-        })
+        }),
+        OrderModule
     ],
     declarations: [
         ListComponent, CreateComponent, EditComponent

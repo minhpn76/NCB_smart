@@ -146,7 +146,7 @@ export class CreateComponent implements OnInit {
       });
 
     }).catch(err => {
-      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+      this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
     });
   }
 }

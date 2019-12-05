@@ -11,6 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'primeng/fileupload';
+import { OrderModule } from 'ngx-order-pipe';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { FileUploadModule } from 'primeng/fileupload';
             confirmButtonClass: 'btn btn-primary',
             cancelButtonClass: 'btn'
         }),
-        FileUploadModule
+        FileUploadModule,
+        OrderModule
     ],
     declarations: [
         ListComponent, CreateComponent, EditComponent

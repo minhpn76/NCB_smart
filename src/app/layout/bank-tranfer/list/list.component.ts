@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
-import {ToastrService} from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
+import { OrderPipe } from 'ngx-order-pipe';
 
 
 @Component({
@@ -44,15 +45,31 @@ export class ListComponent implements OnInit {
       code: 'D',
     }
   ];
+  order: string = 'bankName';
+  reverse: boolean = false;
+
+  sortedCollection: any[];
+
 
   constructor(
     private ncbService: NCBService,
     public toastr: ToastrService,
+    private orderPipe: OrderPipe
   ) {
+    this.sortedCollection = orderPipe.transform(this.listData, 'bankName');
   }
 
   ngOnInit() {
     this.getListData(this.re_search);
+    
+  }
+
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+
+    this.order = value;
   }
 
   getListData(params) {
@@ -70,7 +87,7 @@ export class ListComponent implements OnInit {
       this.isProcessLoad = 0;
       this.listData = [];
       this.totalSearch = 0;
-      this.toastr.error('Vui lòng thử lại', 'Lỗi hệ thống!');
+      this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
     });
   }
 

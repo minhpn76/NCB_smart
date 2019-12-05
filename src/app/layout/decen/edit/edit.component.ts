@@ -101,7 +101,7 @@ export class EditComponent implements OnInit {
       this.totalSearch = 0;
       setTimeout(() => {
         this.isProcessLoad = 0;
-        this.toastr.error(`Có lỗi xảy ra ${err.json()}`, 'Vui lòng thử lại!');
+        this.toastr.error(`Có lỗi xảy ra ${err.json()}`, 'Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ!');
       }, 500);
     });
   }
