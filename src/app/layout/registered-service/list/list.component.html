@@ -123,13 +123,55 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Mã yêu cầu</th>
-                        <th scope="col">Họ và tên</th>
-                        <th scope="col">CMND /Hộ chiếu</th>
-                        <th scope="col">Số điện thoại</th>
-                        <th scope="col">Sản phẩm/ Dịch vụ</th>
-                        <th scope="col">CN/ PGD</th>
-                        <th scope="col">Trạng thái</th>
+                        <th scope="col"
+                            [class.active]="order === 'status'"
+                            (click)="setOrder('status')"
+                        >Mã yêu cầu
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'customerName'"
+                            (click)="setOrder('customerName')"
+                        >Họ và tên
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'idCard'"
+                            (click)="setOrder('idCard')"
+                        >CMND /Hộ chiếu
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'phone'"
+                            (click)="setOrder('phone')"
+                        >Số điện thoại
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'service'"
+                            (click)="setOrder('service')"
+                        >Sản phẩm/ Dịch vụ
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'compName'"
+                            (click)="setOrder('compName')"
+                        >CN/ PGD
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'status'"
+                            (click)="setOrder('status')"
+                        >Trạng thái
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
                         <th scope="col">Ngày yêu cầu</th>
                     </tr>
                 </thead>
@@ -141,7 +183,7 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan=10>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor ="let data of listData; let i = index" style="cursor: pointer" (click)="openPopUpRequest(data.id, data)">
+                    <tr *ngFor ="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index" style="cursor: pointer" (click)="openPopUpRequest(data.id, data)">
                         
                         <th scope="row">
                             {{i+1}}

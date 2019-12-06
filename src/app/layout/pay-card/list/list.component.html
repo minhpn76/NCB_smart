@@ -77,12 +77,47 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Tên sản phẩm trên HT</th>
-                        <th scope="col">Tên hiển thị</th>
-                        <th scope="col">Loại sản phẩm</th>
-                        <th scope="col">Hạng thẻ</th>
+                        <th scope="col"
+                            [class.active]="order === 'prdcode'"
+                            (click)="setOrder('prdcode')"
+                        >
+                            Tên sản phẩm trên HT
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'product'"
+                            (click)="setOrder('product')"
+                        >
+                            Tên hiển thị
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'cardtype'"
+                            (click)="setOrder('cardtype')"
+                        >
+                            Loại sản phẩm
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'class_'"
+                            (click)="setOrder('class_')"
+                        >
+                            Hạng thẻ
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
                         <th scope="col">Hình ảnh</th>
-                        <th scope="col">Trạng thái</th>
+                        <th scope="col"
+                            [class.active]="order === 'status'"
+                            (click)="setOrder('status')"
+                        >
+                            Trạng thái
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
                         <th scope="col">Thao tác</th>
                     </tr>
                 </thead>
@@ -93,7 +128,7 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan="8">Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor="let data of listData; let i = index"
+                    <tr *ngFor="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index"
                         style="cursor: pointer;"
                     >
                         <th scope="row" (click)="modalShowImage(data?.linkUrl)">

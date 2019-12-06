@@ -4,6 +4,7 @@ import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from '../../../services/excel.service';
 import { Helper } from '../../../helper';
+import { OrderPipe } from 'ngx-order-pipe';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'register-list',
@@ -95,14 +96,20 @@ export class ListComponent implements OnInit {
   @ViewChild('popupReqest', { static: false }) popupReqestElementRef: ElementRef;
   // public popupReqestElementRef: ElementRef;
   @Output() emitCloseModal = new EventEmitter<any>();
+  order = 'id';
+  reverse = false;
+
+  sortedCollection: any[];
 
   constructor(
     private ncbService: NCBService,
     public toastr: ToastrService,
     private modalService: NgbModal,
     private excelService: ExcelService,
-    public helper: Helper
+    public helper: Helper,
+    private orderPipe: OrderPipe
   ) {
+    this.sortedCollection = orderPipe.transform(this.listData, 'id');
   }
 
   ngOnInit() {
@@ -113,6 +120,13 @@ export class ListComponent implements OnInit {
     this.getListService();
     this.getAllPGD();
     this.getAllTypeService();
+  }
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+
+    this.order = value;
   }
   openModal(content, classLayout = '', type = '') {
       if (type === 'static') {
@@ -220,7 +234,6 @@ export class ListComponent implements OnInit {
     this.passData = {};
     await this.getItem(id);
     this.passData = data;
-    console.log('==this.passData', this.passData);
     this.openModal(this.popupReqestElementRef, 'popup-request', 'static');
   }
   getBranchs() {
@@ -285,7 +298,6 @@ export class ListComponent implements OnInit {
           }
           this.obj_request = body.content;
           this.passData = body.content;
-          console.log('=-xx', this.passData);
           this.listLog = body.content.serviceRegisterLogResDtoList;
           this.isSearchItem = 0;
           this.isSearchCode = 1;

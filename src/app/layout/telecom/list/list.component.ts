@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from '../../../services/excel.service';
 import { Helper } from '../../../helper';
 import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
+import { OrderPipe } from 'ngx-order-pipe';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -14,14 +15,21 @@ import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConf
   providers: [NCBService, ExcelService, Helper]
 })
 export class ListComponent implements OnInit {
+  order = 'code';
+  reverse = false;
+
+  sortedCollection: any[];
   constructor(
     private ncbService: NCBService,
     public toastr: ToastrService,
     private excelService: ExcelService,
     private modalService: NgbModal,
     public helper: Helper,
-    public router: Router
-  ) { }
+    public router: Router,
+    private orderPipe: OrderPipe
+  ) {
+    this.sortedCollection = orderPipe.transform(this.listData, 'code');
+   }
   isSearch: any = false;
   totalSearch: any = 0;
   isProcessLoad: any = 0;
@@ -41,9 +49,9 @@ export class ListComponent implements OnInit {
   file_size: number = 15 * 1024 * 1024;
 
   re_search: any = {
-    paramNo: '',
-    paramName: '',
-    status: '',
+    code: '',
+    name: '',
+    value: '',
     page: 0,
     size: 10,
     previous_page: 0
@@ -68,10 +76,18 @@ export class ListComponent implements OnInit {
       code: 'D',
     }
   ];
-  asyns;
+
   ngOnInit() {
     this.getListData(this.re_search);
   }
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+
+    this.order = value;
+  }
+
 
   getListData(params) {
     this.isProcessLoad = 1;
@@ -109,7 +125,7 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.ncbService.deleteParamCallCenter({ paramNo: code }).then((res) => {
+        this.ncbService.deleteParamCallCenter({ id: code }).then((res) => {
           if (res.json().body === null) {
             this.toastr.error('Không thể xoá được dữ liệu', 'Lỗi!');
             return;
@@ -161,7 +177,7 @@ export class ListComponent implements OnInit {
 
   onSearch(params) {
     // date
-    if (params.paramNo !== '' || params.paramName !== '' || params.status !== '') {
+    if (params.name !== '' || params.value !== '') {
       params.page = 0;
     }
     this.getListData(params);

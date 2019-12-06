@@ -78,15 +78,69 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Mã gói khuyến mại</th>
-                        <th scope="col">Mã gói sản phẩm</th>
-                        <th scope="col">Mã giao dịch</th>
-                        <th scope="col">Loại giao dịch</th>
-                        <th scope="col">Tiền tệ</th>
-                        <th scope="col">Giảm phí khuyến mại</th>
-                        <th scope="col">Tạo bởi</th>
-                        <th scope="col">Ngày tạo</th>
-                        <th scope="col">Trạng thái</th>
+                        <th scope="col"
+                            [class.active]="order === 'proCode'"
+                            (click)="setOrder('proCode')"
+                        >Mã gói khuyến mại
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'prd'"
+                            (click)="setOrder('prd')"
+                        >Mã gói sản phẩm
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'tranType'"
+                            (click)="setOrder('tranType')"
+                        >Mã giao dịch
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'typeId'"
+                            (click)="setOrder('typeId')"
+                        >Loại giao dịch
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'ccy'"
+                            (click)="setOrder('ccy')"
+                        >Tiền tệ
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'percentage'"
+                            (click)="setOrder('percentage')"
+                        >Giảm phí khuyến mại
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'createdBy'"
+                            (click)="setOrder('createdBy')"
+                        >Tạo bởi
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'createdDate'"
+                            (click)="setOrder('createdDate')"
+                        >Ngày tạo
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'status'"
+                            (click)="setOrder('status')"
+                        >Trạng thái
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
                         <th scope="col">Thao tác</th>
                     </tr>
                 </thead>
@@ -97,7 +151,7 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan=11>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor ="let data of listData; let i = index">
+                    <tr *ngFor ="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index">
                         
                         <th scope="row">
                             {{ i+1 }}

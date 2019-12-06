@@ -23,8 +23,7 @@
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.status">
                         <option *ngFor="let status of listStatus"
-                            [value]="status.code" selected="selected">{{
-                            status.name }}</option>
+                            [value]="status.code" selected="selected">{{status.name }}</option>
                     </select>
                 </div>
             </div>

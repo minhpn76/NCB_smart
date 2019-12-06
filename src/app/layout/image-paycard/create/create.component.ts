@@ -99,7 +99,6 @@ export class CreateComponent implements OnInit {
           this.toastr.error(result.json().message, 'Thất bại!');
         } else {
           this.objFile = result.json().body;
-          console.log('==this.objFile', this.objFile);
           this.dataForm.patchValue({
             linkUrl: this.objFile.linkUrl,
           });

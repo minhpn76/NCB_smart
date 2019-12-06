@@ -5,6 +5,7 @@ import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelService } from '../../../services/excel.service';
 import { Helper } from '../../../helper';
+import { OrderPipe } from 'ngx-order-pipe';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -129,15 +130,22 @@ export class ListComponent implements OnInit {
   optionCurrency: any = { prefix: '', thousands: '.', decimal: ',', align: 'left' };
   @Output() emitCloseModal = new EventEmitter<any>();
 
+  order = 'prdName';
+  reverse = false;
+
+  sortedCollection: any[];
+
   constructor(
     private ncbService: NCBService,
     public toastr: ToastrService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private excelService: ExcelService,
-    public helper: Helper
+    public helper: Helper,
+    private orderPipe: OrderPipe
   ) {
     this.userInfo = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : '';
+    this.sortedCollection = orderPipe.transform(this.listData, 'prdName');
   }
 
   ngOnInit() {
@@ -165,6 +173,13 @@ export class ListComponent implements OnInit {
     });
   }
   get Form() { return this.dataForm.controls; }
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+
+    this.order = value;
+  }
 
   tranferDate(params) {
     return params.year + '/' + params.month + '/' + params.day;

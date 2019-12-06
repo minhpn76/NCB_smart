@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
+import { OrderPipe } from 'ngx-order-pipe';
 import { ExcelService } from '../../../services/excel.service';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
@@ -54,11 +55,17 @@ export class ListComponent implements OnInit {
       code: 'D',
     }
   ];
+  order = 'userName';
+  reverse = false;
+
+  sortedCollection: any[];
   constructor(
     private ncbService: NCBService,
     public toastr: ToastrService,
-    private excelService: ExcelService
+    private excelService: ExcelService,
+    private orderPipe: OrderPipe
   ) {
+    this.sortedCollection = orderPipe.transform(this.listData, 'userName');
   }
 
   ngOnInit() {
@@ -67,6 +74,13 @@ export class ListComponent implements OnInit {
     this.getBranchs();
     this.getAllPGD();
     this.getListRole();
+  }
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+
+    this.order = value;
   }
 
   getListData(params) {

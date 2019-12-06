@@ -92,18 +92,94 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Mã chi nhánh</th>
-                        <th scope="col">Tên chi nhánh</th>
-                        <th scope="col">Mã PGD</th>
-                        <th scope="col">Tên PGD</th>
-                        <th scope="col">Địa chỉ</th>
-                        <th scope="col">Số điện thoại</th>
-                        <th scope="col">Fax</th>
-                        <th scope="col">Kinh độ</th>
-                        <th scope="col">Vĩ độ</th>
-                        <th scope="col">Đường dẫn hình ảnh</th>
-                        <th scope="col">Dao</th>
-                        <th scope="col">Trạng thái</th>
+                        <th scope="col"
+                            [class.active]="order === 'brnCode'"
+                            (click)="setOrder('brnCode')"
+                        >Mã chi nhánh
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'brnName'"
+                            (click)="setOrder('brnName')"
+                        >Tên chi nhánh
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'departCode'"
+                            (click)="setOrder('departCode')"
+                        >Mã PGD
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'departName'"
+                            (click)="setOrder('departName')"
+                        >
+                            Tên PGD
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'address'"
+                            (click)="setOrder('address')"
+                        >
+                            Địa chỉ
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'phone'"
+                            (click)="setOrder('phone')"
+                        >
+                            Số điện thoại
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'fax'"
+                            (click)="setOrder('fax')"
+                        >
+                            Fax
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'longitude'"
+                            (click)="setOrder('longitude')"
+                        >
+                            Kinh độ
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'latitude'"
+                            (click)="setOrder('latitude')"
+                        >
+                            Vĩ độ
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col">
+                            Đường dẫn hình ảnh
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'dao'"
+                            (click)="setOrder('dao')"
+                        >
+                            Dao
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'status'"
+                            (click)="setOrder('status')"
+                        >
+                            Trạng thái
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
                         <th scope="col">Thao tác</th>
                     </tr>
                 </thead>
@@ -114,7 +190,7 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan="14">Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor="let branch of listData; let i = index">
+                    <tr *ngFor="let branch of listData | orderBy: order:reverse:'case-insensitive'; let i = index">
                         <th scope="row">
                             {{ i + 1 }}
                         </th>

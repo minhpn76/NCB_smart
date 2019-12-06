@@ -99,7 +99,7 @@ export class EditComponent implements OnInit {
       });
 
     }).catch(err => {
-      console.log('errr===', err.json());
+
       this.toastr.error(err.json().decription, 'Thất bại!');
     });
   }

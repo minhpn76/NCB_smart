@@ -30,8 +30,9 @@ export class CreateComponent implements OnInit {
     this.dataForm = this.formBuilder.group({
       providerCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       // tslint:disable-next-line:max-line-length
-      providerName: ['--Chọn giá trị--', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      serviceCode: ['--Chọn giá trị--', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      providerName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      serviceName: ['--Chọn giá trị--', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      serviceCode: [''],
       partner: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])]
     });
   }
@@ -90,9 +91,9 @@ export class CreateComponent implements OnInit {
     });
   }
   onChangeCompC(event) {
-      const newArr = this.listTempProd.find(e => e.name === this.dataForm.value.providerName);
+      const newArr = this.listTempProd.find(e => e.code === this.dataForm.value.serviceCode);
       this.dataForm.patchValue({
-        serviceCode : newArr.code
+        serviceName : newArr.name
     });
   }
 }

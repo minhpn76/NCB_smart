@@ -44,7 +44,7 @@ export class EditComponent implements OnInit {
     });
     this.dataForm = this.formBuilder.group({
       providerCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      providerName: ['--Chọn giá trị--', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      providerName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       serviceCode: ['--Chọn giá trị--', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       partner: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: ['']
@@ -74,14 +74,14 @@ export class EditComponent implements OnInit {
 
     });
   }
-  onChangeComp(event) {
+  onChangeComp(e) {
     const newArr = this.listTempProd.find(e => e.code === this.dataForm.value.serviceCode);
     this.dataForm.patchValue({
         providerName : newArr.name
     });
   }
   onChangeCompC(event) {
-      const newArr = this.listTempProd.find(e => e.name === this.dataForm.value.providerName);
+    const newArr = this.listTempProd.find(e => e.code === this.dataForm.value.serviceCode);
       this.dataForm.patchValue({
         serviceCode : newArr.code
     });

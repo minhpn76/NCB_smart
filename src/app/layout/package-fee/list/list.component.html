@@ -57,19 +57,94 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Mã gói sản phẩm</th>
-                        <th scope="col">Gói sản phẩm</th>
-                        <th scope="col">Product của tài khoản</th>
+                        <th scope="col"
+                            [class.active]="order === 'grprdId'"
+                            (click)="setOrder('grprdId')"
+                        >
+                            Mã gói sản phẩm
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'prdName'"
+                            (click)="setOrder('prdName')"
+                        >
+                            Gói sản phẩm
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'prdCode'"
+                            (click)="setOrder('prdCode')"
+                        >
+                            Product của tài khoản
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
 
-                        <th scope="col">Loại phí</th>
-                        <th scope="col">Tiền tệ</th>
-                        <th scope="col">Số tiền phí thu</th>
-                        <th scope="col">Số tiền phí max</th>
-                        <th scope="col">Số tiền phí min</th>
+                        <th scope="col"
+                            [class.active]="order === 'feeType'"
+                            (click)="setOrder('feeType')"
+                        >
+                            Loại phí
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'ccy'"
+                            (click)="setOrder('ccy')"
+                        >
+                            Tiền tệ
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'feeAmount'"
+                            (click)="setOrder('feeAmount')"
+                        >
+                            Số tiền phí thu
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'feeMax'"
+                            (click)="setOrder('feeMax')"
+                        >
+                            Số tiền phí max
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'feeMin'"
+                            (click)="setOrder('feeMin')"
+                        >
+                            Số tiền phí min
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
                         <!-- <th scope="col">Phần trăm thuế %</th> -->
-                        <th scope="col">Mã phí</th>
-                        <th scope="col">Ngừời tạo</th>
-                        <th scope="col">Ngày tạo</th>
+                        <th scope="col"
+                            [class.active]="order === 'codeFee'"
+                            (click)="setOrder('codeFee')"
+                        >
+                            Mã phí
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'createdUser'"
+                            (click)="setOrder('createdUser')"
+                        >Ngừời tạo
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'createdTime'"
+                            (click)="setOrder('createdTime')"
+                        >Ngày tạo
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
                         <!-- <th scope="col">Trạng thái</th> -->
                         <th scope="col">Thao tác</th>
 
@@ -83,7 +158,7 @@
                         class="text-center">
                         <td colspan=14>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor="let data of listData; let i= index">
+                    <tr *ngFor="let data of listData | orderBy: order:reverse:'case-insensitive'; let i= index">
 
                         <th scope="row">
                             {{ i+1 }}

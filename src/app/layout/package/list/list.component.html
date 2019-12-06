@@ -87,23 +87,128 @@
                 <thead>
                     <tr>
                     <th scope="col">STT</th>
-                    <th scope="col">Mã gói sản phẩm</th>
-                    <th scope="col">Tên gói sản phẩm</th>
-                    <th scope="col">Hạn mức / ngày</th>
-                    <th scope="col">Hạn mức / faceid</th>
-                    <th scope="col">Hạn mức / finger</th>
+                    <th scope="col"
+                        [class.active]="order === 'prd'"
+                        (click)="setOrder('prd')"
+                    >
+                        Mã gói sản phẩm
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'prdName'"
+                        (click)="setOrder('prdName')"
+                    >
+                        Tên gói sản phẩm
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'limitDaily'"
+                        (click)="setOrder('limitDaily')"
+                    >
+                        Hạn mức / ngày
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'limitFaceid'"
+                        (click)="setOrder('limitFaceid')"
+                    >
+                        Hạn mức / faceid
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'limitFinger'"
+                        (click)="setOrder('limitFinger')"
+                    >
+                        Hạn mức / finger
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
                     <!-- <th scope="col">Loại gói</th> -->
                     <!-- <th scope="col">Tỉ lệ (%)</th> -->
-                    <th scope="col">Loại khách hàng</th>
-                    <th scope="col">Tiền tệ</th>
-                    <th scope="col">Loại giao dịch</th>
-                    <th scope="col">Chi tiết giao dịch</th>
-                    <th scope="col">Số lượng</th>
-                    <th scope="col">Số tiền tối thiểu / giao dịch</th>
-                    <th scope="col">Số tiền tối đa / giao dịch</th>
-                    <th scope="col">Ngừời tạo</th>
-                    <th scope="col">Ngày tạo</th>
-                    <th scope="col">Trạng thái</th>
+                    <th scope="col"
+                        [class.active]="order === 'customerType'"
+                        (click)="setOrder('customerType')"
+                    >
+                        Loại khách hàng
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'ccy'"
+                        (click)="setOrder('ccy')"
+                    >
+                        Tiền tệ
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'tranType'"
+                        (click)="setOrder('tranType')"
+                    >
+                        Loại giao dịch
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'typeId'"
+                        (click)="setOrder('typeId')"
+                    >
+                        Chi tiết giao dịch
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'quantity'"
+                        (click)="setOrder('quantity')"
+                    >
+                        Số lượng
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'min'"
+                        (click)="setOrder('min')"
+                    >
+                        Số tiền tối thiểu / giao dịch
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'max'"
+                        (click)="setOrder('max')"
+                    >
+                        Số tiền tối đa / giao dịch
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'createdBy'"
+                        (click)="setOrder('createdBy')"
+                    >
+                        Ngừời tạo
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'createdDate'"
+                        (click)="setOrder('createdDate')"
+                    >
+                        Ngày tạo
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'status'"
+                        (click)="setOrder('status')"
+                    >
+                        Trạng thái
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
                     <th scope="col">Thao tác</th>
 
                     </tr>
@@ -115,7 +220,7 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan=17>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor ="let data of listData; let i = index">
+                    <tr *ngFor ="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index">
                         
                         <th scope="row"  style="cursor: pointer;">
                             {{ i+1 }}

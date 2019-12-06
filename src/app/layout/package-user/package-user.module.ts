@@ -7,13 +7,15 @@ import { ListComponent } from './list/list.component';
 
 import { PageHeaderModule } from '../../shared';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
     imports: [
         CommonModule, PackageUserRoutingModule, PageHeaderModule, NgbModule,
         TranslateModule.forChild(),
         FormsModule, ReactiveFormsModule,
-        ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
+        ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
+        OrderModule
     ],
     declarations: [
         ListComponent

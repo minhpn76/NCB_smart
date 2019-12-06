@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output } from '
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
+import { OrderPipe } from 'ngx-order-pipe';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -44,18 +45,33 @@ export class ListComponent implements OnInit {
     imageShow: any = '';
     protected modalOp: NgbModalRef;
 
+
     @ViewChild('showImage', { static: false }) showImageElementRef: ElementRef;
 //   public showImageElementRef: ElementRef;
+    order = 'fileName';
+    reverse = false;
+
+    sortedCollection: any[];
 
     constructor(
         private ncbService: NCBService,
         public toastr: ToastrService,
         private modalService: NgbModal,
-    ) { }
+        private orderPipe: OrderPipe
+    ) {
+        this.sortedCollection = orderPipe.transform(this.listData, 'fileName');
+    }
 
     ngOnInit() {
         this.getListData(this.re_search);
     }
+    setOrder(value: string) {
+        if (this.order === value) {
+          this.reverse = !this.reverse;
+        }
+
+        this.order = value;
+      }
 
     getListData(params) {
         this.listData = [];
@@ -90,7 +106,7 @@ export class ListComponent implements OnInit {
         }).then(result => {
             if (result.value) {
                 this.ncbService.deletePaycardImg({ fileName: data }).then((res) => {
-                    // this.listData.splice(index, 1);
+                    this.listData.splice(index, 1);
                     if (res.json().code === '00') {
                         Swal.fire('Đã xoá!', 'Dữ liệu đã xoá hoàn toàn.', 'success');
                         this.onSearch(this.re_search);

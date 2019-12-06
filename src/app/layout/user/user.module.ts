@@ -11,13 +11,15 @@ import { ProfileComponent } from './profile/profile.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PageHeaderModule } from '../../shared';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
     imports: [
         CommonModule, UserManagerRoutingModule, PageHeaderModule, NgbModule,
         TranslateModule.forChild(),
         FormsModule, ReactiveFormsModule,
-        ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
+        ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
+        OrderModule
     ],
     declarations: [
         ChangePasswordComponent, ManageUserComponent, ListComponent, EditComponent,

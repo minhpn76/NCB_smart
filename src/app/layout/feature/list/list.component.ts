@@ -55,8 +55,8 @@ export class ListComponent implements OnInit {
       code: 0,
     }
   ];
-  order: string = 'name';
-  reverse: boolean = false;
+  order = 'name';
+  reverse = false;
 
   sortedCollection: any[];
   constructor(
@@ -65,7 +65,7 @@ export class ListComponent implements OnInit {
     private excelService: ExcelService,
     private orderPipe: OrderPipe
 
-  ) { 
+  ) {
     this.sortedCollection = orderPipe.transform(this.listData, 'name');
   }
 
@@ -159,7 +159,7 @@ export class ListComponent implements OnInit {
   }
   keyDownFunction(event) {
     if (event.keyCode === 13) {
-      console.log('this.search---', this.search.keyword);
+
         // this.getListProvince(this.search);
     }
   }

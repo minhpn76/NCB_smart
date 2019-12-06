@@ -51,11 +51,39 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Tên hình ảnh</th>
-                        <th scope="col">Hình ảnh</th>
-                        <th scope="col">Mô tả</th>
+                        <th scope="col"
+                            [class.active]="order === 'fileName'"
+                            (click)="setOrder('fileName')"
+                        >
+                            Tên hình ảnh
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'linkUrl'"
+                            (click)="setOrder('linkUrl')"
+                        >
+                            Hình ảnh
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'note'"
+                            (click)="setOrder('note')"
+                        >
+                            Mô tả
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
 
-                        <th scope="col">Trạng thái</th>
+                        <th scope="col"
+                            [class.active]="order === 'status'"
+                            (click)="setOrder('status')"
+                        >
+                            Trạng thái
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
                         
                         <th scope="col">Thao tác</th>
                     </tr>
@@ -67,7 +95,7 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan="6">Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor="let data of listData; let i = index"
+                    <tr *ngFor="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index"
                         
                         style="cursor: pointer;"
                     >

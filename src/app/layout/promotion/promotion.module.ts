@@ -11,7 +11,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
-import {MultiSelectModule} from 'primeng/multiselect';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import {MultiSelectModule} from 'primeng/multiselect';
             cancelButtonClass: 'btn'
         }),
         CurrencyMaskModule,
-        MultiSelectModule
+        MultiSelectModule,
+        OrderModule
     ],
     declarations: [
         ListComponent, CreateComponent, EditComponent

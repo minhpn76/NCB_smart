@@ -25,11 +25,9 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.telecomForm = this.formBuilder.group({
-      paramNo: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      paramName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      paramValue: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      note: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      status: 'A'
+      name: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      value: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      description: [''],
     });
   }
   get Form() { return this.telecomForm.controls; }

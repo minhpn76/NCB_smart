@@ -91,14 +91,69 @@
       <thead>
           <tr>
             <th scope="col">STT</th>
-            <th scope="col">Tên đăng nhập</th>
-            <th scope="col">Họ tên</th>
-            <th scope="col">Mã chi nhánh</th>
-            <th scope="col">Email</th>
-            <th scope="col">Mã phòng giao dịch</th>
-            <th>Gói sản phẩm</th>
-            <th>Ưu đãi</th>
-            <th scope="col">Trạng thái</th>
+            <th scope="col"
+                [class.active]="order === 'usrfname'"
+                (click)="setOrder('usrfname')"
+            >
+                Tên đăng nhập
+                <span [hidden]="reverse">▼</span>
+                <span [hidden]="!reverse">▲</span>
+            </th>
+            <th scope="col"
+                [class.active]="order === 'prdName'"
+                (click)="setOrder('prdName')"
+            >
+                Họ tên
+                <span [hidden]="reverse">▼</span>
+                <span [hidden]="!reverse">▲</span>
+
+            </th>
+            <th scope="col"
+                [class.active]="order === 'brncode'"
+                (click)="setOrder('brncode')"
+            >
+                Mã chi nhánh
+                <span [hidden]="reverse">▼</span>
+                <span [hidden]="!reverse">▲</span>
+            </th>
+            <th scope="col"
+                [class.active]="order === 'email'"
+                (click)="setOrder('email')"
+            >
+                Email
+                <span [hidden]="reverse">▼</span>
+                <span [hidden]="!reverse">▲</span>
+            </th>
+            <th scope="col"
+                [class.active]="order === 'officecode'"
+                (click)="setOrder('officecode')"
+            >
+                Mã phòng giao dịch
+                <span [hidden]="reverse">▼</span>
+                <span [hidden]="!reverse">▲</span>
+            </th>
+            <th
+                [class.active]="order === 'function.promotion'"
+                (click)="setOrder('function.promotion')"
+            >Gói sản phẩm
+                <span [hidden]="reverse">▼</span>
+                <span [hidden]="!reverse">▲</span>
+            </th>
+            <th
+                [class.active]="order === 'function.prdName'"
+                (click)="setOrder('function.prdName')"
+            >Ưu đãi
+                <span [hidden]="reverse">▼</span>
+                <span [hidden]="!reverse">▲</span>
+            </th>
+            <th scope="col"
+                [class.active]="order === 'status'"
+                (click)="setOrder('status')"
+            >
+                Trạng thái
+                <span [hidden]="reverse">▼</span>
+                <span [hidden]="!reverse">▲</span>
+            </th>
           </tr>
       </thead>
       <tbody>
@@ -108,7 +163,7 @@
           <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
               <td colspan=10>Không tìm thấy kết quả</td>
           </tr>
-          <tr *ngFor ="let data of listData; let i = index">
+          <tr *ngFor ="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index">
               
               <th scope="row">
                   <!-- {{i+1 + (search.page>1?(search.page-1)*search.size:0)}} -->

@@ -62,13 +62,62 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Nhà cung cấp</th>
-                        <th scope="col">Loại giao dịch</th>
-                        <th scope="col">Mã tin nhắn</th>
-                        <th scope="col">Mã tin nhắn 1</th>
-                        <th scope="col">Tin nhắn Tiếng Việt</th>
-                        <th scope="col">Tin nhắn Tiếng Anh</th>
-                        <th scope="col">Lỗi</th>
+                        <th scope="col"
+                            [class.active]="order === 'provider'"
+                            (click)="setOrder('provider')"
+                        >
+                            Nhà cung cấp
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'type'"
+                            (click)="setOrder('type')"
+                        >
+                            Loại giao dịch
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'msgCode'"
+                            (click)="setOrder('msgCode')"
+                        >
+                            Mã tin nhắn
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'msg_Code_1'"
+                            (click)="setOrder('msg_Code_1')"
+                        >
+                            Mã tin nhắn 1
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'mes_Vn'"
+                            (click)="setOrder('mes_Vn')"
+                        >
+                            Tin nhắn Tiếng Việt
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'mes_En'"
+                            (click)="setOrder('mes_En')"
+                        >
+                            Tin nhắn Tiếng Anh
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'error'"
+                            (click)="setOrder('error')"
+                        >
+                            Lỗi
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
                         <th scope="col">Thao tác</th>
 
                     </tr>
@@ -81,7 +130,7 @@
                         class="text-center">
                         <td colspan=9>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor="let data of listData; let i= index">
+                    <tr *ngFor="let data of listData | orderBy: order:reverse:'case-insensitive'; let i= index">
 
                         <th scope="row">
                             {{ i+1 }}

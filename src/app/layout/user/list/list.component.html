@@ -121,13 +121,55 @@
                 <thead>
                     <tr>
                     <th scope="col">STT</th>
-                    <th scope="col">Tên đăng nhập</th>
-                    <th scope="col">Họ tên</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phân quyền</th>
-                    <th scope="col">Ngày tạo</th>
-                    <th scope="col">Người tạo</th>
-                    <th scope="col">Trạng thái</th>
+                    <th scope="col"
+                        [class.active]="order === 'userName'"
+                        (click)="setOrder('userName')"
+                    >Tên đăng nhập
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'fullName'"
+                        (click)="setOrder('fullName')"
+                    >Họ tên
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'email'"
+                        (click)="setOrder('email')"
+                    >Email
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'role.roleName'"
+                        (click)="setOrder('role.roleName')"
+                    >Phân quyền
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'createdDate'"
+                        (click)="setOrder('createdDate')"
+                    >Ngày tạo
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'updatedBy'"
+                        (click)="setOrder('updatedBy')"
+                    >Người tạo
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'status'"
+                        (click)="setOrder('status')"
+                    >Trạng thái
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
                     <th scope="col">Thao tác</th>
 
                     </tr>
@@ -139,7 +181,7 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan=9>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor ="let data of listData; let i = index">
+                    <tr *ngFor ="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index">
                         <th scope="row">
                             <!-- {{i+1 + (search.page>1?(search.page-1)*search.size:0)}} -->
                             {{i + 1}}

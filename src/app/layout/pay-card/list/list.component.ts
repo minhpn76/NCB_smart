@@ -5,6 +5,7 @@ import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
 import { Helper } from '../../../helper';
 import { Router } from '@angular/router';
+import { OrderPipe } from 'ngx-order-pipe';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -121,6 +122,11 @@ export class ListComponent implements OnInit {
 
   @Output() emitCloseModal = new EventEmitter<any>();
 
+  order = 'prdcode';
+  reverse = false;
+
+  sortedCollection: any[];
+
   constructor(
     private ncbService: NCBService,
     public toastr: ToastrService,
@@ -128,8 +134,9 @@ export class ListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
     public router: Router,
+    private orderPipe: OrderPipe
   ) {
-
+    this.sortedCollection = orderPipe.transform(this.listData, 'prdcode');
   }
 
 
@@ -162,6 +169,13 @@ export class ListComponent implements OnInit {
     });
 
   }
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+
+    this.order = value;
+  }
 
   getParamData(params) {
     this.isProcessLoad = 1;
@@ -169,7 +183,6 @@ export class ListComponent implements OnInit {
     this.listData = [];
     this.ncbService.searchPayCard(params).then((result) => {
       const body = result.json().body.content;
-      console.log('===>', body);
       body.forEach(element => {
 
         this.listNamePrdCode.push(element.prdcode);

@@ -10,7 +10,8 @@ import { PageHeaderModule } from '../../shared';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {FileUploadModule} from 'primeng/fileupload';
+import { FileUploadModule } from 'primeng/fileupload';
+import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
     imports: [
@@ -24,7 +25,8 @@ import {FileUploadModule} from 'primeng/fileupload';
             confirmButtonClass: 'btn btn-primary',
             cancelButtonClass: 'btn'
         }),
-        FileUploadModule
+        FileUploadModule,
+        OrderModule
     ],
     declarations: [
         ListComponent, CreateComponent, EditComponent

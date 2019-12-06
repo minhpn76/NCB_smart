@@ -111,7 +111,7 @@ export class ListComponent implements OnInit {
   }
   keyDownFunction(event) {
     if (event.keyCode === 13) {
-      console.log('this.search---', this.search.keyword);
+
         // this.getListProvince(this.search);
     }
   }

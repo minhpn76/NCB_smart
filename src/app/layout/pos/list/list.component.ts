@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { OrderPipe } from 'ngx-order-pipe';
 
 @Component({
     selector: 'pos-list',
@@ -41,12 +42,29 @@ export class ListComponent implements OnInit {
             code: 'D'
         }
     ];
+    order = 'brnCode';
+    reverse = false;
 
-    constructor(private ncbService: NCBService, private modalService: NgbModal, private toastr: ToastrService) {}
+    sortedCollection: any[];
+    constructor(
+        private ncbService: NCBService,
+        private modalService: NgbModal,
+        private toastr: ToastrService,
+        private orderPipe: OrderPipe
+    ) {
+        this.sortedCollection = orderPipe.transform(this.listData, 'brnCode');
+     }
 
     ngOnInit() {
         this.getListData(this.re_search);
     }
+    setOrder(value: string) {
+        if (this.order === value) {
+          this.reverse = !this.reverse;
+        }
+
+        this.order = value;
+      }
 
     getListData(params) {
         this.isProcessLoad = 1;

@@ -20,7 +20,7 @@ export class EditComponent implements OnInit {
     }
 
   ngOnInit() {
-    console.log('--districtId', this.districtId);
+    // console.log('--districtId', this.districtId);
 
   }
 

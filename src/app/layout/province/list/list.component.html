@@ -65,9 +65,27 @@
                 <thead>
                     <tr>
                     <th scope="col">STT</th>
-                    <th scope="col">Mã Tỉnh/Thành phố</th>
-                    <th scope="col">Tên Tỉnh/Thành phố</th>
-                    <th scope="col">Trạng thái</th>
+                    <th scope="col"
+                        [class.active]="order === 'proId'"
+                        (click)="setOrder('proId')"
+                    >Mã Tỉnh/Thành phố
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'shrtName'"
+                        (click)="setOrder('shrtName')"
+                    >Tên Tỉnh/Thành phố
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
+                    <th scope="col"
+                        [class.active]="order === 'status'"
+                        (click)="setOrder('status')"
+                    >Trạng thái
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span>
+                    </th>
                     <th scope="col">Thao tác</th>
 
                     </tr>
@@ -79,7 +97,7 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan=6>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor ="let province of listData; let i = index">
+                    <tr *ngFor ="let province of listData | orderBy: order:reverse:'case-insensitive'; let i = index">
                         
                         <th scope="row">
                             {{i+1}}

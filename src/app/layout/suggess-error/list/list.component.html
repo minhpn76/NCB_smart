@@ -67,16 +67,76 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Mã nhóm sản phẩm</th>
-                        <th scope="col">Tên nhóm sản phẩm</th>
-                        <th scope="col">Loại</th>
-                        <th scope="col">Số điện thoại</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Tên</th>
-                        <th scope="col">Địa chỉ</th>
-                        <th scope="col">Nội dung</th>
-                        <th scope="col">Thời gian tạo</th>
-                        <th scope="col">Trạng thái</th>
+                        <th scope="col"
+                            [class.active]="order === 'productCode'"
+                            (click)="setOrder('productCode')"
+                        >Mã nhóm sản phẩm
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'productName'"
+                            (click)="setOrder('productName')"
+                        >Tên nhóm sản phẩm
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'type'"
+                            (click)="setOrder('type')"
+                        >Loại
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'phone'"
+                            (click)="setOrder('phone')"
+                        >Số điện thoại
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'email'"
+                            (click)="setOrder('email')"
+                        >Email
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'name'"
+                            (click)="setOrder('name')"
+                        >Tên
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'address'"
+                            (click)="setOrder('address')"
+                        >Địa chỉ
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'description'"
+                            (click)="setOrder('description')"
+                        >Nội dung
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'createdDate'"
+                            (click)="setOrder('createdDate')"
+                        >Thời gian tạo
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'status'"
+                            (click)="setOrder('status')"
+                        >Trạng thái
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
                         <th scope="col">Thao tác</th>
                     </tr>
                 </thead>
@@ -88,7 +148,7 @@
                         class="text-center">
                         <td colspan=12>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor="let data of listData; let i= index">
+                    <tr *ngFor="let data of listData | orderBy: order:reverse:'case-insensitive'; let i= index">
 
                         <th scope="row">
                             {{ i+1 }}

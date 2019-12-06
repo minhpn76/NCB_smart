@@ -57,9 +57,30 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Mã hướng dẫn</th>
-                        <th scope="col">Nội dung</th>
-                        <th scope="col">Trạng thái</th>
+                        <th scope="col"
+                            [class.active]="order === 'serviceId'"
+                            (click)="setOrder('serviceId')"
+                        >
+                            Mã hướng dẫn
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'content'"
+                            (click)="setOrder('content')"
+                        >
+                            Nội dung
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
+                            [class.active]="order === 'status'"
+                            (click)="setOrder('status')"
+                        >
+                            Trạng thái
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
                         <th scope="col">Thao tác</th>
 
                     </tr>
@@ -72,7 +93,7 @@
                         class="text-center">
                         <td colspan=6>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor="let data of listData; let i= index">
+                    <tr *ngFor="let data of listData | orderBy: order:reverse:'case-insensitive'; let i= index">
 
                         <th scope="row">
                             {{ i+1 }}

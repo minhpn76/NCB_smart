@@ -45,11 +45,10 @@ export class EditComponent implements OnInit {
       this.telecomId = params.itemId;
     });
     this.telecomForm = this.formBuilder.group({
-      paramNo: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      paramName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      paramValue: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      note: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      status: 'A'
+      name: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      value: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      description: [''],
+
     });
   }
 
@@ -65,7 +64,13 @@ export class EditComponent implements OnInit {
     if (this.telecomForm.invalid) {
         return;
     }
-    this.ncbService.updateParamCallCenter(this.telecomForm.value).then((result) => {
+    const payload = {
+      id: this.telecomId,
+      name: this.telecomForm.value.name,
+      value: this.telecomForm.value.value,
+      description: this.telecomForm.value.description,
+    };
+    this.ncbService.updateParamCallCenter(payload).then((result) => {
       if (result.json().code === '00') {
         this.toastr.success('Sửa thành công', 'Thành công!');
         setTimeout(() => {
@@ -83,15 +88,13 @@ export class EditComponent implements OnInit {
   }
   getItem(params) {
     this.ncbService.detailParamCallCenter({
-      paramNo: params
+      id: params
     }).then((result) => {
       const body = result.json().body;
       this.telecomForm.patchValue({
-        paramNo: body.paramNo,
-        paramName : body.paramName,
-        paramValue : body.paramValue,
-        note : body.note,
-        status : body.status,
+        name: body.name,
+        value : body.value,
+        description : body.description
       });
     }).catch(err => {
 
