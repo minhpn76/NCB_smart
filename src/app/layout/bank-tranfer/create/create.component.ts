@@ -93,7 +93,7 @@ export class CreateComponent implements OnInit {
     }
   }
   onUploadServer() {
-    console.log('up to server');
+    // console.log('up to server');
     // let data = this.list_couriers.filter(v => v['CourierId'] == this.courierId);
     // let courierName = data[0].Name
 

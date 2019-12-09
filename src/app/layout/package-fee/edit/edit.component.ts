@@ -186,7 +186,6 @@ export class EditComponent implements OnInit {
           value: element.prd
         });
       });
-      console.log('==this.listTempData', this.listTempData);
 
     }).catch(err => {
       this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
