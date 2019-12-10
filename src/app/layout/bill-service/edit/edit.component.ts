@@ -124,7 +124,7 @@ export class EditComponent implements OnInit {
         status: body.status
       });
     }).catch(err => {
-      this.toastr.error(err.json().decription, 'Thất bại!');
+      this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Thất bại!');
     });
   }
   resetForm() {

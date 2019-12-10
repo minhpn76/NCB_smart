@@ -40,7 +40,9 @@ export class AuthService {
     }
 
     authRequest(config, showError = 0): Promise<any> {
-        const param_header = {};
+        const param_header = {
+            'Access-Control-Allow-Origin': '*'
+        };
 
         if (config.is_file === true || config.is_file) {
             param_header['Content-Type'] = 'multipart/form-data; charset=utf-8; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW';
@@ -94,16 +96,16 @@ export class AuthService {
                     this.router.navigateByUrl('/login?return_url=' + this.currentURL);
                 }
             } else {
-                if (err.status !== 500 && err.status !== 502 && err.status !== 404) {
-                    if (showError === 0) {
-                        // tslint:disable-next-line:max-line-length
-                        this.toastr.error('Lỗi xảy ra khi xác nhận người dùng hệ thống', 'Lỗi hệ thống!');
-                    } else {
-                        this.toastr.error('Lỗi xảy ra khi xác nhận người dùng hệ thống', 'Lỗi hệ thống!');
-                    }
-                } else {
-                    this.toastr.error('Lỗi xảy ra khi xác nhận người dùng hệ thống', 'Lỗi hệ thống!');
-                }
+                // if (err.status !== 500 && err.status !== 502 && err.status !== 404) {
+                //     if (showError === 0) {
+                //         // tslint:disable-next-line:max-line-length
+                //         this.toastr.error('Lỗi xảy ra khi xác thực người dùng hệ thống', 'Lỗi hệ thống!');
+                //     } else {
+                //         this.toastr.error('Lỗi xảy ra khi xác thực người dùng hệ thống', 'Lỗi hệ thống!');
+                //     }
+                // } else {
+                //     this.toastr.error('Lỗi xảy ra khi xác thực người dùng hệ thống', 'Lỗi hệ thống!');
+                // }
             }
         });
         return this.res;
