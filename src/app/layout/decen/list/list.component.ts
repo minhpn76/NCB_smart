@@ -41,8 +41,8 @@ export class ListComponent implements OnInit {
     }
   ];
 
-  order: string = 'roleName';
-  reverse: boolean = false;
+  order = 'roleName';
+  reverse = false;
 
   sortedCollection: any[];
 
@@ -96,7 +96,9 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.ncbService.deleteRole(id).then((res) => {
+        this.ncbService.deleteRole({
+          roleName: id
+        }).then((res) => {
           if (res.json().code === '00') {
 
             this.listData.splice(index, 1);

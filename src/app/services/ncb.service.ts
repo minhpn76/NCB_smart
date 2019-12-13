@@ -723,8 +723,8 @@ export class NCBService {
     return this.auth.authRequest({ url: url, method: 'GET', application: true });
   }
   deleteRole(id): Promise<any> {
-    const url = `${API_URL}/role/${id}/delete`;
-    return this.auth.authRequest({ url: url, method: 'DELETE', application: true });
+    const url = `${API_URL}/role/delete`;
+    return this.auth.authRequest({ url: url, params: id,  method: 'DELETE', application: true });
   }
   // get all PGD
   getListPGD(): Promise<any> {

@@ -30,8 +30,7 @@ export class CreateComponent implements OnInit {
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
       provisionName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      provisionLink: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      status: 'A'
+      provisionLink: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])]
     });
   }
   get Form() { return this.dataForm.controls; }
