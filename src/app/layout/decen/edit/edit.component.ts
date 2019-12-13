@@ -28,6 +28,7 @@ export class EditComponent implements OnInit {
     page: 1,
     size: 1000
   };
+  roleName: any;
   isArrayRole = false;
   listRoles: any;
   tempRole: any;
@@ -71,15 +72,10 @@ export class EditComponent implements OnInit {
   getItemRole() {
     this.totalSearch = 0;
     this.isProcessLoad = 1;
-    this.ncbService.searchRoles({
-      roleName: this.itemId,
-      status: 'A',
-      page: 1,
-      size: 1000
-    }).then((result) => {
+    this.ncbService.detailRoles(this.itemId).then((result) => {
       setTimeout(() => {
         this.isProcessLoad = 0;
-        const body = result.json().body.content;
+        const body = result.json().body;
         if (body.length === 0) {
           this.isProcessLoad = 1;
           this.totalSearch = 0;
@@ -88,20 +84,36 @@ export class EditComponent implements OnInit {
           }, 1000);
           return;
         }
-        this.obj = body[0];
+        this.obj = body;
+        this.roleName = this.obj.roleName;
         if (this.obj.description.indexOf('[') > -1) {
-          this.listRoles = JSON.parse(this.obj.description) ? JSON.parse(this.obj.description) : '';
+          if (this.obj.description.indexOf('CRONJOB') > -1) {
+            this.listRoles = JSON.parse(this.obj.description) ? JSON.parse(this.obj.description) : '';
+          } else {
+            const array_temp = JSON.parse(this.obj.description);
+            array_temp.push({
+              code: 'CRONJOB',
+              name: 'Cấu hình Schedule',
+              isAll: false,
+              isC: false,
+              isR: false,
+              isU: false,
+              isD: false,
+              menu: 'THAM_SO'
+            });
+            this.listRoles = array_temp ? array_temp : '';
+          }
         } else {
           this.listRoles = AppSettings.listRoles;
         }
-        this.totalSearch = result.json().body.content.length;
+        this.totalSearch = Object.keys(result.json().body).length;
         }, 3000);
     }).catch((err) => {
       this.isProcessLoad = 1;
       this.totalSearch = 0;
       setTimeout(() => {
         this.isProcessLoad = 0;
-        this.toastr.error(`Có lỗi xảy ra ${err.json()}`, 'Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ!');
+        this.toastr.error(`Có lỗi xảy ra`, 'Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ!');
       }, 500);
     });
   }
@@ -209,7 +221,7 @@ export class EditComponent implements OnInit {
   }
   async onSubmitRole() {
     const payload = {
-      roleName: this.itemId,
+      roleName: this.roleName,
       description: JSON.stringify(this.listRoles),
       status: 'A'
     };

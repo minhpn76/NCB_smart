@@ -144,6 +144,16 @@ export class AppSettings {
             menu: 'THAM_SO'
         },
         {
+            code: 'CRONJOB',
+            name: 'Cấu hình Schedule',
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            menu: 'THAM_SO'
+        },
+        {
             code: 'DIEU_KHOAN',
             name: 'Điều khoản sử dụng',
             isAll: false,

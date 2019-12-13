@@ -140,12 +140,12 @@
                         </td>
                         <td>
                             <a class="mr-2 cursor-pointer text-blue"
-                                routerLink="/bill-service/edit/{{ data.id }}">
+                                routerLink="/bill-service/edit/{{ data.providerCode }}">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <span class="mr-2 cursor-pointer text-danger">
                                 <i class="fa fa-trash" (click)="deleteService(1,
-                                    i, data.id)"></i>
+                                    i, data.providerCode)"></i>
                             </span>
                         </td>
                     </tr>

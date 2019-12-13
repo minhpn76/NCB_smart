@@ -29,6 +29,7 @@
                         <input
                             formControlName="providerCode"
                             class="form-control col-lg-12"
+                            [attr.disabled]="true"
                             placeholder="Mã nhà cung cấp TTHD"
                             [ngClass]="{ 'is-invalid': submitted && Form.providerCode.errors }"
                         />

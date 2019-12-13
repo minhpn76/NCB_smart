@@ -176,6 +176,15 @@
                             <span>Notify (in App)</span>
                         </a>
                     </li>
+                    <li *ngIf="thamso.code === 'CRONJOB' && thamso.isAll ===
+                        true">
+                        <a [routerLink]="['/config-cronjob']"
+                            [routerLinkActive]="['router-link-active']"
+                            class="list-group-item">
+                            <i class="fa fa-calendar"></i>&nbsp;
+                            <span>Cấu hình Schedule</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
         </div>

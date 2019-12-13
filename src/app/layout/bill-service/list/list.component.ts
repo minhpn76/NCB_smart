@@ -39,15 +39,15 @@ export class ListComponent implements OnInit {
   ];
   isProcessLoad: number;
 
-  order: string = 'providerName';
-  reverse: boolean = false;
+  order = 'providerName';
+  reverse = false;
 
   sortedCollection: any[];
   constructor(
     private ncbService: NCBService,
     public toastr: ToastrService,
     private orderPipe: OrderPipe
-  ) { 
+  ) {
     this.sortedCollection = orderPipe.transform(this.listData, 'providerName');
   }
 
@@ -96,7 +96,7 @@ export class ListComponent implements OnInit {
       cancelButtonText: 'Không, trở lại'
     }).then((result) => {
       if (result.value) {
-        this.ncbService.deleteProvider({id: code}).then(() => {
+        this.ncbService.deleteProvider({providerCode: code}).then(() => {
           Swal.fire(
             'Đã xoá!',
             'Dữ liệu đã xoá hoàn toàn.',
