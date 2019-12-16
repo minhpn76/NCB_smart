@@ -29,6 +29,8 @@ export class EditComponent implements OnInit {
     size: 1000
   };
   roleName: any;
+  status: any;
+  briefDescription: any;
   isArrayRole = false;
   listRoles: any;
   tempRole: any;
@@ -61,9 +63,11 @@ export class EditComponent implements OnInit {
     this.dataForm = this.formBuilder.group({
       roleName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       description: [''],
+      briefDescription: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: 'A'
     });
   }
+  get Form() { return this.dataForm.controls; }
   pageRefresh() {
     location.reload();
     localStorage.setItem('redirect', 'true');
@@ -86,6 +90,8 @@ export class EditComponent implements OnInit {
         }
         this.obj = body;
         this.roleName = this.obj.roleName;
+        this.status = this.obj.status;
+        this.briefDescription = this.obj.briefDescription;
         if (this.obj.description.indexOf('[') > -1) {
           if (this.obj.description.indexOf('CRONJOB') > -1) {
             this.listRoles = JSON.parse(this.obj.description) ? JSON.parse(this.obj.description) : '';
@@ -220,10 +226,23 @@ export class EditComponent implements OnInit {
     this.router.navigateByUrl('/decen');
   }
   async onSubmitRole() {
+    if (this.roleName !== '') {
+      this.toastr.error('Tên phân quyền là bắt buộc', 'Có lỗi xảy ra');
+      return;
+    }
+    if (this.briefDescription !== '') {
+      this.toastr.error('Mô tả phân quyền là bắt buộc', 'Có lỗi xảy ra');
+      return;
+    }
+    if (this.status !== '') {
+      this.toastr.error('Trạng thái phân quyền là bắt buộc', 'Có lỗi xảy ra');
+      return;
+    }
     const payload = {
       roleName: this.roleName,
       description: JSON.stringify(this.listRoles),
-      status: 'A'
+      briefDescription: this.briefDescription,
+      status: this.status
     };
     await this.updateRole(payload);
   }

@@ -9,8 +9,33 @@
                 <span>Không tìm thấy kết quả</span>
             </div>
             <div class="col-md-12" *ngIf="totalSearch > 0">
-                <div class="col-md-10 mt-3">
-                    <h5>Phân quyền: <b>{{obj.roleName}}</b></h5>
+                <div class="row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên phân quyền(<span class="text-danger">*</span>):</label>
+                    <div class="col-md-6">
+                        <input
+                            [(ngModel)]="roleName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên phân quyền"
+                        />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <label for="search" class="col-sm-4 col-form-label">Mô tả phân quyền(<span class="text-danger">*</span>):</label>
+                    <div class="col-md-6">
+                        <input
+                            [(ngModel)]="briefDescription"
+                            class="form-control col-lg-12"
+                            placeholder="Mô tả phân quyền"
+                        />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
+                    <div class="col-md-6">
+                        <select class="form-control" [(ngModel)]="status" name="status">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="col-md-12 mt-3 custom-check table-responsive">
                     <table class="table table-bordered">

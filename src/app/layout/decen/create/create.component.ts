@@ -47,6 +47,7 @@ export class CreateComponent implements OnInit {
     this.dataForm = this.formBuilder.group({
       roleName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       description: [''],
+      briefDescription: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: 'A'
     });
   }
@@ -66,6 +67,7 @@ export class CreateComponent implements OnInit {
     const payload = {
       roleName: this.dataForm.value.roleName,
       description: JSON.stringify(this.listRoles),
+      briefDescription: this.dataForm.value.briefDescription,
       status: this.dataForm.value.status
 
     };

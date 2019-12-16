@@ -19,20 +19,21 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <!-- <label for="search" class="col-sm-4 col-form-label">Mô tả(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-8">
-                        <textarea
-                            formControlName="description"
+                    <label for="search" class="col-sm-4 col-form-label">Mô tả phân quyền(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="briefDescription"
                             class="form-control col-lg-12"
-                            placeholder="Mô tả"
-                            [ngClass]="{ 'is-invalid': submitted && Form.description.errors }"
-                        >
-                        </textarea>
-                        <div *ngIf="submitted && Form.description.errors" class="invalid-feedback">
-                            <div *ngIf="Form.description.errors.required">Mô tả là bắt buộc</div>
-                            <div *ngIf="Form.description.hasError('whitespace')">Mô tả không hợp lệ</div>
+                            placeholder="Mô tả phân quyền"
+                            [ngClass]="{ 'is-invalid': submitted && Form.briefDescription.errors }"
+                        />
+                        <div *ngIf="submitted && Form.briefDescription.errors" class="invalid-feedback">
+                            <div *ngIf="Form.briefDescription.hasError('whitespace')">Mô tả phân quyền không hợp lệ</div>
+                            <div *ngIf="Form.briefDescription.errors.required">Mô tả phân quyền là bắt buộc</div>
                         </div>
-                    </div> -->
+                    </div>
+                </div>
+                <div class="form-group row">
                     <div class="col-md-12 mt-3 custom-check table-responsive">
                         <table class="table table-bordered">
                             <tbody>
