@@ -39,42 +39,12 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-10">
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Ngày tạo:</label>
-                    <div class="col-sm-6">
-                        <input class="form-control col-lg-12" itrim type="text" id="search" placeholder="Ngày tạo ">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-10">
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Người Tạo:</label>
-                    <div class="col-sm-6">
-                        <input class="form-control col-lg-12" itrim type="text" id="search" placeholder=" Người Tạo ">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-10">
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Người Cập nhật:</label>
-                    <div class="col-sm-6">
-                        <input class="form-control col-lg-12" itrim type="text" id="search" placeholder=" Người Cập nhật ">
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="form-group row">
         <div class="col-sm-4"></div>
         <div class="col-sm-7">
             <button class="btn btn-success mr-3" >
-                <i class="fa fa-save" ></i>&nbsp;Lưu
+                <i class="fa fa-save" (click)="addForm()" ></i>&nbsp;Lưu
             </button>
             <button class="btn btn-light" (click)="resetForm()">
                 <i class="fa fa-close"></i>&nbsp;Huỷ

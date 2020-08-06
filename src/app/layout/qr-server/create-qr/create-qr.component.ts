@@ -23,8 +23,12 @@ export class CreateQrComponent implements OnInit {
         },
     ];
     resetForm() {
-      alert('Đã thoát');
-      this.router.navigateByUrl('/qr-server');
-  }
+        alert('Đã thoát');
+        this.router.navigateByUrl('/qr-server');
+    }
+    addForm() {
+        alert('Đã lưu');
+        this.router.navigateByUrl('/qr-server');
+    }
     ngOnInit() {}
 }

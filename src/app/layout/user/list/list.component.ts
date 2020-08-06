@@ -188,6 +188,8 @@ export class ListComponent implements OnInit {
     });
     return promise;
   }
+
+  // Xuat file
   async exportExcel() {
     this.arrExport = [];
     this.isProcessLoadExcel = 1;

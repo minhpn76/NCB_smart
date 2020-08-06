@@ -10,7 +10,7 @@ const routes: Routes = [
         children: [
             { path: '', component: ListQrComponent },
             {
-                path: 'edit-qr',
+                path: 'edit',
                 component: EditQrComponent,
             },
             {

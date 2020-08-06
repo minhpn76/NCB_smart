@@ -2,5 +2,54 @@
     <app-page-header [heading]="'Danh mục dịch vụ thanh toán'" [heading_second]="'Chỉnh sửa dịch vụ thanh toán'" [url_heading]="'/qr-server'">
 
     </app-page-header>
-    <p>edit-qr works!</p>
+    <div *ngFor="let data of listData; let i = index">
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">ID:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control col-lg-12" itrim type="text" id="search" value={{data.id}}>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control">
+                            <option>
+                                <span *ngIf="data?.status =='1'" class="badge badge-success">Hiệu lực</span>
+                                <span *ngIf="data?.status == '0'" class="badge badge-danger">Không hiệu lực</span>
+                            </option>
+
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Thể loại:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control col-lg-12" itrim type="text" id="search" value={{data.title}}>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-7">
+            <button class="btn btn-success mr-3" (click)="changed()">
+                <i class="fa fa-save" ></i>&nbsp;Thay đổi
+            </button>
+            <button class="btn btn-light" (click)="resetForm()">
+                <i class="fa fa-close"></i>&nbsp;Huỷ
+            </button>
+        </div>
+    </div>
 </div>
