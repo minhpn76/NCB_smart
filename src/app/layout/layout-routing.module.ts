@@ -36,7 +36,10 @@ const routes: Routes = [
             { path: 'promotion', loadChildren: () => import('./promotion/promotion.module').then(m => m.PromotionModule) },
             { path: 'config-cronjob', loadChildren: () => import('./cronjob/cronjob.module').then(m => m.CronjobModule) },
             { path: 'image-paycard', loadChildren: () => import('./image-paycard/image-paycard.module').then(m => m.ImgPayCardModule) },
-            { path: 'promotion-package', loadChildren: () => import('./promotion-package/link.module').then(m => m.PromotionPGModule) }
+            { path: 'promotion-package', loadChildren: () => import('./promotion-package/link.module').then(m => m.PromotionPGModule) },
+            
+            // create by tiennx
+            {path: 'qr-server', loadChildren: () => import('./qr-server/qr-service.module').then(m => m.QrServiceModule)}
 
         ]
     }

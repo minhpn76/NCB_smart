@@ -24,7 +24,7 @@ import { ActivityhistoryComponent } from './activityhistory/activityhistory.comp
             confirmButtonClass: 'btn btn-primary',
             cancelButtonClass: 'btn'
         }),
-        FormsModule      
+        FormsModule
     ],
     declarations: [
         AccessComponent,
