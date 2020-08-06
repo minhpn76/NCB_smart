@@ -33,6 +33,16 @@
                             <span>Nhóm quyền</span>
                         </a>
                     </li>
+                    <!-- created by tiennx -->
+                    <li *ngIf="item.code === 'DICH_VU' && item.isAll ===
+                    true">
+                    <a [routerLink]="['/qr-server']"
+                        [routerLinkActive]="['router-link-active']"
+                        class="list-group-item">
+                        <i class="fab fa-servicestack"></i>&nbsp;
+                        <span>Dịch vụ</span>
+                    </a>
+                </li>
                 </ul>
             </li>
         </div>

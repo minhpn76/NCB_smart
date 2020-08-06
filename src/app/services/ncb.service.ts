@@ -41,6 +41,7 @@ export class NCBService {
     const url = `${API_URL}/city/getAll`;
     return this.auth.authRequest({ url: url, params: params, method: 'GET' });
   }
+
   /**
    * search city
    *
@@ -1016,5 +1017,34 @@ export class NCBService {
   }
 
 
+// Tiennx
+
+/**
+   *
+   * create,list,update qr-server
+   *
+   */
+  
+  getListQRServer(params): Promise<any> {
+    const url = `${API_URL}/qr-services`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
+    }
+  createQRServer(body): Promise<any> {
+    const url = `${API_URL}/qr-services`;
+    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
+  }
+  updateQRServer(body): Promise<any> {
+    const url = `${API_URL}/qr-services`;
+    return this.auth.authRequest({ url: url, data: body, method: 'PUT', application: true });
+  }
+  dQRServer(body): Promise<any> {
+    const url = `${API_URL}/qr-services`;
+    return this.auth.authRequest({ url: url, params: body, method: 'GET' });
+  }
+  deleteQRServer(body): Promise<any> {
+    const url = `${API_URL}/qr-services`;
+    return this.auth.authRequest({ url: url, params: body, method: 'DELETE' });
+  }
+// end Tiennx
 
 }

@@ -24,7 +24,7 @@ export class ListComponent implements OnInit {
   };
   selectProvine: any;
   listData: any = [];
-  listProvinceName: any = [];
+  listProvinlistDataceName: any = [];
   listPageSize: any = [10, 20, 30, 40, 50];
   listStatus: any = [
     {
