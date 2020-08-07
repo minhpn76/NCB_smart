@@ -1024,7 +1024,7 @@ export class NCBService {
    * create,list,update qr-server
    *
    */
-  
+
   getListQRServer(params): Promise<any> {
     const url = `${API_URL}/qr-services`;
     return this.auth.authRequest({ url: url, params: params, method: 'GET' });
@@ -1033,7 +1033,7 @@ export class NCBService {
     const url = `${API_URL}/qr-services`;
     return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
   }
-  updateQRServer(id: string,body: any): Promise<any> {
+  updateQRServer(id: string, body: any): Promise<any> {
     const url = `${API_URL}/qr-services/${id}`;
     return this.auth.authRequest({ url: url, data: body, method: 'PUT', application: true });
   }
@@ -1044,6 +1044,33 @@ export class NCBService {
   deleteQRServer(itemId): Promise<any> {
     const url = `${API_URL}/qr-services/${itemId}`;
     return this.auth.authRequest({ url: url, method: 'DELETE' });
+  }
+
+  /**
+   *
+   * create,list,update qr-coupons
+   *
+   */
+
+  getListQRCoupon(params): Promise<any> {
+    const url = `${API_URL}/qr-coupons`;
+    return this.auth.authRequest({ url: url, params: params, method: 'GET' });
+    }
+  createQRCoupon(body): Promise<any> {
+    const url = `${API_URL}/qr-coupons`;
+    return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
+  }
+  updateQRCoupon(status: string, body: any): Promise<any> {
+    const url = `${API_URL}/qr-coupons/${status}`;
+    return this.auth.authRequest({ url: url, data: body, method: 'PUT', application: true });
+  }
+  detailQRCoupon(id: string): Promise<any> {
+    const url = `${API_URL}/qr-coupons/${id}`;
+    return this.auth.authRequest({ url: url, method: 'GET' });
+  }
+  deleteQRCoupon(body): Promise<any> {
+    const url = `${API_URL}/qr-coupons`;
+    return this.auth.authRequest({ url: url, params: body, method: 'DELETE' });
   }
 // end Tiennx
 

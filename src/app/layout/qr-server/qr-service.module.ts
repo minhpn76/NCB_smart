@@ -5,7 +5,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CreateQrComponent } from './create-qr/create-qr.component';
 import { EditQrComponent } from './edit-qr/edit-qr.component';
 import { ListQrComponent } from './list-qr/list-qr.component';
-import { PageHeaderComponent } from '../../shared/modules/page-header/page-header.component';
 import { QrServiceRoutingModule } from './qr-service-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PageHeaderModule } from '../../shared';
