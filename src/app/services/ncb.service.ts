@@ -1033,13 +1033,13 @@ export class NCBService {
     const url = `${API_URL}/qr-services`;
     return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
   }
-  updateQRServer(body): Promise<any> {
-    const url = `${API_URL}/qr-services`;
+  updateQRServer(id: string,body: any): Promise<any> {
+    const url = `${API_URL}/qr-services/${id}`;
     return this.auth.authRequest({ url: url, data: body, method: 'PUT', application: true });
   }
-  dQRServer(body): Promise<any> {
-    const url = `${API_URL}/qr-services`;
-    return this.auth.authRequest({ url: url, params: body, method: 'GET' });
+  dQRServer(id: string): Promise<any> {
+    const url = `${API_URL}/qr-services/${id}`;
+    return this.auth.authRequest({ url: url, method: 'GET' });
   }
   deleteQRServer(body): Promise<any> {
     const url = `${API_URL}/qr-services`;

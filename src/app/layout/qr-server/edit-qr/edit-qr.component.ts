@@ -1,52 +1,92 @@
+import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Helper } from '../../../helper';
+import { NCBService } from '../../../services/ncb.service';
 
 @Component({
-  selector: 'app-edit-qr',
+  selector: 'qr-services-edit',
   templateUrl: './edit-qr.component.html',
-  styleUrls: ['./edit-qr.component.scss']
+  styleUrls: ['./edit-qr.component.scss'],
+  providers: [NCBService, Helper]
 })
 export class EditQrComponent implements OnInit {
-
-  constructor(private router: Router) { }
-
-  listData = [
+  dataForm: FormGroup;
+  submitted = false;
+  qrService: any;
+  listStatus: any = [
     {
-        id: '12',
-        title: 'Food',
-        status: '1',
-        createdAt: '20/2/2020',
-        DeleteAt: '20/2/2020',
-        createdBy: 'admin',
-        updatedBy: 'admin',
+      name: 'Active',
+      code: 'A',
     },
-    // {
-    //     id: '11',
-    //     title: 'Gaming',
-    //     status: '1',
-    //     createdAt: '20/2/2020',
-    //     DeleteAt: '20/2/2020',
-    //     createdBy: 'admin',
-    //     updatedBy: 'admin',
-    // },
-    // {
-    //     id: '10',
-    //     title: 'Gaming',
-    //     status: '0',
-    //     createdAt: '20/2/2020',
-    //     DeleteAt: '20/2/2020',
-    //     createdBy: 'admin',
-    //     updatedBy: 'admin',
-    // },
-];
+    {
+      name: 'Deactive',
+      code: 'D',
+    }
+  ];
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    public router: Router,
+    private route: ActivatedRoute,
+    public ncbService: NCBService,
+    private helper: Helper
+  ) { }
+
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.qrService = params.itemId;
+    });
+    this.dataForm = this.formBuilder.group({
+      title: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      serviceType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      status: ['']
+    });
+    this.getItem(this.qrService);
+  }
+  get Form() { return this.dataForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.dataForm.invalid) {
+      return;
+    }
+    const payload = {
+      ...this.dataForm.value
+    };
+    this.ncbService.updateQRServer(this.qrService , payload).then(result => {
+      if (result.json().code === '00') {
+        this.toastr.success('Sửa thành công', 'Thành công!');
+        setTimeout(() => {
+          this.router.navigateByUrl('/qr-services');
+        }, 500);
+      } else {
+        this.toastr.error('Sửa thất bại', 'Thất bại!');
+      }
+    }).catch(err => {
+      this.toastr.error(err.json().desciption, 'Thất bại!');
+    });
+  }
+  getItem(params) {
+    this.ncbService.dQRServer(params).then((result) => {
+      const body = result.json().body;
+      this.dataForm.patchValue({
+        title: body.title,
+        serviceType: body.serviceType,
+        status: body.status
+      });
+    }).catch(err => {
+      this.toastr.error(err.json().decription, 'Thất bại!');
+    });
   }
   resetForm() {
-    alert('Đã thoát');
-    this.router.navigateByUrl('/qr-server');
-  }
-  changed() {
-    alert('Thành công');
-    this.router.navigateByUrl('/qr-server');
+    this.router.navigateByUrl('/qr-services');
   }
 }
+
+
+

@@ -1,54 +1,56 @@
 <div>
-    <app-page-header [heading]="'Danh mục dịch vụ thanh toán'" [heading_second]="'Thêm mới dịch vụ thanh toán'"
-        [url_heading]="'/qr-server'">
-
-    </app-page-header>
-    <div>
-        <div class="row">
-            <div class="col-sm-10">
+    <app-page-header [heading]="'Danh sách dịch vụ thanh toán'"
+        [heading_second]="'Tạo mới
+        dịch vụ thanh toán'" [url_heading]="'/qr-services'"> </app-page-header>
+    <div class="row">
+        <div class="col-md-8">
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">ID:</label>
-                    <div class="col-sm-6">
-                        <input class="form-control col-lg-12" itrim type="text" id="search" placeholder=" ID ">
+                    <label for="search" class="col-sm-4 col-form-label">Mã dịch vụ thanh toán
+                        (<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="serviceType"
+                            class="form-control col-lg-12"
+                            placeholder="Mã dịch vụ thanh toán"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.serviceType.errors }"
+                            />
+                        <div *ngIf="submitted && Form.serviceType.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.serviceType.errors.required">Mã dịch vụ thanh toán là bắt buộc</div>
+                            <div *ngIf="Form.serviceType.hasError('whitespace')">Mã dịch vụ thanh toán không hợp lệ</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-10">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
-                    <div class="col-sm-6">
-                        <select class="form-control">
-                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">
-                                {{status.name}}</option>
-
-                        </select>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-10">
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Thể loại:</label>
-                    <div class="col-sm-6">
-                        <input class="form-control col-lg-12" itrim type="text" id="search" placeholder=" Thể loại ">
+                    <label for="search" class="col-sm-4 col-form-label">Tên dịch vụ thanh toán
+                        (<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="title"
+                            class="form-control col-lg-12"
+                            placeholder="Tên dịch vụ thanh toán"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.title.errors }"
+                            />
+                        <div *ngIf="submitted && Form.title.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.title.errors.required">Tên dịch vụ thanh toán là bắt buộc</div>
+                            <div *ngIf="Form.title.hasError('whitespace')">Tên dịch vụ thanh toán không hợp lệ</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-7">
-            <button class="btn btn-success mr-3" >
-                <i class="fa fa-save" (click)="addForm()" ></i>&nbsp;Lưu
-            </button>
-            <button class="btn btn-light" (click)="resetForm()">
-                <i class="fa fa-close"></i>&nbsp;Huỷ
-            </button>
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3"><i class="fa
+                                fa-save"></i>&nbsp;Lưu lại</button>
+                        <button class="btn btn-light" (click)="resetForm()"><i
+                                class="fa fa-close"></i>&nbsp;Huỷ</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

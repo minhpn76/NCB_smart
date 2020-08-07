@@ -1,13 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
+import { NCBService } from '../../../services/ncb.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-list-qr',
     templateUrl: './list-qr.component.html',
     styleUrls: ['./list-qr.component.scss'],
+    providers: [NCBService]
 })
 export class ListQrComponent implements OnInit {
-    constructor() {}
+    constructor(
+        private ncbService: NCBService,
+        public toastr: ToastrService,
+    ) {
+
+    }
+    search: any = {
+        title: '',
+        status: 'A',
+        size: 10,
+        page: 0,
+        previous_page: 0
+    }
     isProcessLoad: any = 0;
     totalSearch: any = 0;
     order = 'titile';
@@ -31,40 +46,42 @@ export class ListQrComponent implements OnInit {
         },
     ];
 
-    listData = [
-        {
-            id: '12',
-            title: 'Food',
-            status: '1',
-            createdAt: '20/2/2020',
-            DeleteAt: '20/2/2020',
-            createdBy: 'admin',
-            updatedBy: 'admin',
-        },
-        {
-            id: '11',
-            title: 'Gaming',
-            status: '1',
-            createdAt: '20/2/2020',
-            DeleteAt: '20/2/2020',
-            createdBy: 'admin',
-            updatedBy: 'admin',
-        },
-        {
-            id: '10',
-            title: 'Gaming',
-            status: '0',
-            createdAt: '20/2/2020',
-            DeleteAt: '20/2/2020',
-            createdBy: 'admin',
-            updatedBy: 'admin',
-        },
-    ];
+    listData = [];
 
-    onSearch(re_search) {
-        alert(re_search);
+    onSearch(search) {
+        alert(search);
     }
-    ngOnInit() {}
+    ngOnInit() {
+        this.getListData(this.search);
+    }
+
+    getListData (params: any) {
+        this.listData = [];
+        this.isProcessLoad = 1;
+        // xu ly
+        this.ncbService.getListQRServer(params).then((result) => {
+        setTimeout(() => {
+            const body = result.json().body;
+            this.listData = body.content;
+            this.totalSearch = body.totalElements;
+            this.isProcessLoad = 0;
+        }, 300);
+        }).catch(err => {
+        this.isProcessLoad = 0;
+        this.listData = [];
+        this.totalSearch = 0;
+        // this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
+        });
+    }
+    loadPage(page: number) {
+        const page_number = page - 1;
+        if (page_number !== this.search.previous_page) {
+          this.search.page = page_number;
+          this.search.previous_page = page_number;
+          this.getListData(this.search);
+          this.search.page = page;
+        }
+      }
     setOrder(value: string) {
         if (this.order === value) {
             this.reverse = !this.reverse;
@@ -90,7 +107,7 @@ export class ListQrComponent implements OnInit {
                 //             "Dữ liệu đã xoá hoàn toàn.",
                 //             "success"
                 //         );
-                //         this.onSearch(this.re_search);
+                //         this.onSearch(this.search);
                 //     } else {
                 //         this.toastr.error("Xoá dữ liệu thất bại", "Thất bại");
                 //     }

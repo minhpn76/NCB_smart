@@ -39,7 +39,7 @@ const routes: Routes = [
             { path: 'promotion-package', loadChildren: () => import('./promotion-package/link.module').then(m => m.PromotionPGModule) },
             
             // create by tiennx
-            {path: 'qr-server', loadChildren: () => import('./qr-server/qr-service.module').then(m => m.QrServiceModule)}
+            {path: 'qr-services', loadChildren: () => import('./qr-server/qr-service.module').then(m => m.QrServiceModule)}
 
         ]
     }
