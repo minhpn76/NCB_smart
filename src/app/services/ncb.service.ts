@@ -1041,9 +1041,9 @@ export class NCBService {
     const url = `${API_URL}/qr-services/${id}`;
     return this.auth.authRequest({ url: url, method: 'GET' });
   }
-  deleteQRServer(body): Promise<any> {
-    const url = `${API_URL}/qr-services`;
-    return this.auth.authRequest({ url: url, params: body, method: 'DELETE' });
+  deleteQRServer(itemId): Promise<any> {
+    const url = `${API_URL}/qr-services/${itemId}`;
+    return this.auth.authRequest({ url: url, method: 'DELETE' });
   }
 // end Tiennx
 

@@ -12,6 +12,7 @@ export class AppSettings {
     // isR: READ
     // isU: UPDATE
     // isD: DELETE
+    // isA: approved
     public static listRoles = [
         {
             code: 'NGUOI_DUNG',
@@ -21,6 +22,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'QUAN_TRI'
         },
         {
@@ -31,6 +33,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'QUAN_TRI'
         },
         {
@@ -41,6 +44,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'GIAO_DICH'
         },
         {
@@ -51,6 +55,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'GIAO_DICH'
         },
         {
@@ -61,6 +66,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'GIAO_DICH'
         },
         {
@@ -71,6 +77,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'THAM_SO'
         },
         {
@@ -81,6 +88,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'KHACH_HANG'
         },
         {
@@ -91,6 +99,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'KHACH_HANG'
         },
         {
@@ -101,6 +110,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'KHACH_HANG'
         },
         {
@@ -111,6 +121,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'KHACH_HANG'
         },
         {
@@ -121,6 +132,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'KHACH_HANG'
         },
         {
@@ -131,6 +143,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'THAM_SO'
         },
         {
@@ -141,6 +154,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'THAM_SO'
         },
         {
@@ -151,6 +165,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'THAM_SO'
         },
         {
@@ -161,6 +176,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'TRA_CUU'
         },
         {
@@ -170,6 +186,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             name: 'Mạng lưới chi nhánh',
             menu: 'TRA_CUU'
         },
@@ -180,6 +197,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             name: 'Hướng dẫn sử dụng',
             menu: 'TRA_CUU'
         },
@@ -191,6 +209,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'TRA_CUU'
         },
         {
@@ -200,6 +219,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             name: 'Thông tin Q&As',
             menu: 'TRA_CUU'
         },
@@ -210,6 +230,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             name: 'Góp ý - lỗi',
             menu: 'TRA_CUU'
         },
@@ -220,6 +241,7 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             name: 'Banner',
             menu: 'TRA_CUU'
         },
@@ -231,7 +253,30 @@ export class AppSettings {
             isR: false,
             isU: false,
             isD: false,
+            isA: false,
             menu: 'QUAN_TRI'
+        },
+        {
+            code: 'QR_SERVICE',
+            name: 'Dịch vụ thanh toán',
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            isA: false,
+            menu: 'KHACH_HANG'
+        },
+        {
+            code: 'QR_COUPON',
+            name: 'Dịch vụ thanh toán giảm giá',
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            isA: false,
+            menu: 'KHACH_HANG'
         },
     ];
     public static getListRoles() {

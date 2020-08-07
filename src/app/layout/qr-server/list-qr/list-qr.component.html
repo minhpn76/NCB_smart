@@ -9,9 +9,10 @@
                     <label for="search" class="col-sm-4 col-form-label">Tên dịch vụ:</label>
                     <div class="col-sm-6">
                         <input class="form-control col-lg-12"
-                        (keydown)="keyDownFunction($event)"
-                        [(ngModel)]="search.title"
-                         itrim type="text" id="search" placeholder=" Tên dịch vụ ">
+                            (keydown)="keyDownFunction($event)"
+                            itrim type="text" id="search" [(ngModel)]="search.title"
+                            placeholder="Tên dịch vụ"
+                        >
                     </div>
                 </div>
             </div>
@@ -19,7 +20,7 @@
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
                     <div class="col-sm-6">
-                        <select class="form-control" [(ngModel)]="search.status">
+                        <select class="form-control" [(ngModel)]="search.status" (change)="onChangeStatus($event)">
                             <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">
                                 {{status.name}}
                             </option>
@@ -95,15 +96,15 @@
                                 <span *ngIf="data?.status =='A'" class="badge badge-success">Hiệu lực</span>
                                 <span *ngIf="data?.status == 'D'" class="badge badge-danger">Không hiệu lực</span>
                             </td>
-                            <td>{{data.createdAt}}</td>
-                            <td>{{data.createdBy}}</td>
+                            <td>{{helper.formatDate(data.createdAt)}}</td>
+                            <td>{{data.updatedBy}}</td>
                             <td>
                                 <a class="mr-2 cursor-pointer text-blue" routerLink="/qr-services/edit/{{data.id}}">
                                     <i class="fa fa-edit"></i>
                                 </a>
 
                                 <span class="mr-2 cursor-pointer text-danger">
-                                    <i class="fa fa-trash" (click)="deleteItem(1, i, data.title)"></i>
+                                    <i class="fa fa-trash" (click)="deleteItem(1, i, data.id)"></i>
                                 </span>
 
                             </td>

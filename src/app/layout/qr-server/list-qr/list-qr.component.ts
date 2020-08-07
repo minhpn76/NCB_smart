@@ -2,23 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
+import { Helper } from '../../../helper';
 
 @Component({
     selector: 'app-list-qr',
     templateUrl: './list-qr.component.html',
     styleUrls: ['./list-qr.component.scss'],
-    providers: [NCBService]
+    providers: [NCBService, Helper]
 })
 export class ListQrComponent implements OnInit {
     constructor(
         private ncbService: NCBService,
+        public helper: Helper,
         public toastr: ToastrService,
     ) {
 
     }
     search: any = {
         title: '',
-        status: 'A',
+        status: '',
         size: 10,
         page: 0,
         previous_page: 0
@@ -34,11 +36,11 @@ export class ListQrComponent implements OnInit {
     listStatus: any = [
         {
             name: 'Hiệu lực',
-            code: '1',
+            code: 'A',
         },
         {
             name: 'Không hiệu lực',
-            code: '0',
+            code: 'D',
         },
         {
             name: 'Tất cả',
@@ -48,18 +50,6 @@ export class ListQrComponent implements OnInit {
 
     listData = [];
 
-    keyDownFunction(event) {
-        if (event.keyCode === 13) {
-          this.getListData(this.search);
-        }
-      }
-    onSearch(payload) {
-        // payload.page = 0;
-        if (payload.title !== '' || payload.status !== '') {
-          payload.page = 0;
-        }
-        this.getListData(payload);
-      }
     ngOnInit() {
         this.getListData(this.search);
     }
@@ -98,32 +88,62 @@ export class ListQrComponent implements OnInit {
 
         this.order = value;
     }
-
-    deleteItem(event, index, id) {
-        Swal.fire({
-            title: 'Bạn có chắc chắn xoá?',
-            text: 'Dữ liệu đã xoá không thể khôi phục lại',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Đồng ý',
-            cancelButtonText: 'Không, trở lại',
-        }).then((result) => {
-            if (result.value) {
-                this.ncbService.deleteUser(id).then((res) => {
-                    if (res.json().code === '00') {
-                        Swal.fire(
-                            'Đã xoá!',
-                            'Dữ liệu đã xoá hoàn toàn.',
-                            'success'
-                        );
-                        this.onSearch(this.search);
-                    } else {
-                        this.toastr.error('Xoá dữ liệu thất bại', 'Thất bại');
-                    }
-                });
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-                Swal.fire('Huỷ bỏ', 'Dữ liệu được bảo toàn :)', 'error');
-            }
-        });
+    onChangeStatus(event) {
+        this.onSearch(this.search);
     }
+    onSearch(payload) {
+        if (payload.title !== '' || payload.status !== '') {
+            payload.page = 0;
+        } else {
+            payload.page = 0;
+        }
+        this.getListData(payload);
+    }
+    keyDownFunction(event) {
+        if (event.keyCode === 13) {
+            this.onSearch(this.search);
+        }
+    }
+    changePageSize() {
+        this.search.page = 0;
+        this.getListData(this.search);
+    }
+
+    deleteItem(event, index, itemId) {
+        Swal.fire({
+          title: 'Bạn có chắc chắn xoá?',
+          text: 'Dữ liệu đã xoá không thể khôi phục lại',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Đồng ý',
+          cancelButtonText: 'Không, trở lại'
+        }).then((result) => {
+          if (result.value) {
+            this.ncbService.deleteQRServer(itemId).then(res => {
+              if (res.json().code === '00') {
+                // this.listData.splice(index, 1);
+                Swal.fire(
+                  'Đã xoá!',
+                  'Dữ liệu đã xoá hoàn toàn.',
+                  'success'
+                );
+                this.onSearch(this.search);
+              } else {
+                this.toastr.error('Xoá thất bại', 'Thất bại');
+              }
+            }).catch(err => {
+
+            });
+
+          // For more information about handling dismissals please visit
+          // https://sweetalert2.github.io/#handling-dismissals
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire(
+              'Huỷ bỏ',
+              'Dữ liệu được bảo toàn :)',
+              'error'
+            );
+          }
+        });
+      }
 }
