@@ -1,0 +1,79 @@
+<div>
+    <app-page-header [heading]="'Danh mục phiếu ưu đãi'" [heading_second]="'Thêm mới danh mục ưu đãi'"
+        [url_heading]="'/qr-coupon'">
+
+    </app-page-header>
+    <div>
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên ưu đãi:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control col-lg-12" itrim type="text" id="search" placeholder=" Tên ưu đãi:  ">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">
+                                {{status.name}}</option>
+
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control">
+                            <option *ngFor="let desciption of listDesciption" [value]="desciption.code" selected="selected">
+                                {{desciption.name}}</option>
+
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã giảm giá:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control col-lg-12" itrim type="text" id="search" placeholder=" Mã giảm giá: ">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Loại giảm giá:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control col-lg-12" itrim type="text" id="search" placeholder="Loại giảm giá: ">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-7">
+            <button class="btn btn-success mr-3" >
+                <i class="fa fa-save" (click)="addForm()" ></i>&nbsp;Lưu
+            </button>
+            <button class="btn btn-light" (click)="resetForm()">
+                <i class="fa fa-close"></i>&nbsp;Huỷ
+            </button>
+        </div>
+    </div>
+</div>
