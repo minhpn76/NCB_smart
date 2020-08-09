@@ -250,7 +250,7 @@ export class ListComponent implements OnInit {
       });
 
     }).catch((err) => {
-      this.toastr.error('Không lấy được dữ liệu chi nhánh', 'Thất bại');
+      // this.toastr.error('Không lấy được dữ liệu chi nhánh', 'Thất bại');
     });
   }
   getListRole() {
@@ -277,7 +277,7 @@ export class ListComponent implements OnInit {
       });
     }).catch(err => {
       this.listRole = [];
-      this.toastr.error('Không lấy được dữ liệu danh sách phân quyền', 'Lỗi hệ thống!');
+      // this.toastr.error('Không lấy được dữ liệu danh sách phân quyền', 'Lỗi hệ thống!');
     });
   }
   async onChangePGD(value) {
@@ -299,7 +299,7 @@ export class ListComponent implements OnInit {
       });
 
     }).catch((err) => {
-      this.toastr.error('Không lấy được dữ liệu phòng giao dịch', 'Thất bại');
+      // this.toastr.error('Không lấy được dữ liệu phòng giao dịch', 'Thất bại');
     });
   }
   getAllPGD() {
@@ -313,7 +313,7 @@ export class ListComponent implements OnInit {
         });
       });
     }).catch((err) => {
-      this.toastr.error('Không lấy được dữ liệu phòng giao dịch', 'Thất bại');
+      // this.toastr.error('Không lấy được dữ liệu phòng giao dịch', 'Thất bại');
     });
   }
 }

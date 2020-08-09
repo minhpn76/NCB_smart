@@ -1,23 +1,23 @@
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { CreateQrComponent } from './create-qr/create-qr.component';
-import { EditQrComponent } from './edit-qr/edit-qr.component';
-import { ListQrComponent } from './list-qr/list-qr.component';
-import { QrServiceRoutingModule } from './qr-service-routing.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { QrCouponRoutingModule } from './qr-coupon-routing.module';
+import { ListComponent } from './list/list.component';
+import { CreateComponent } from './create/create.component';
+import { EditComponent } from './edit/edit.component';
 import { PageHeaderModule } from '../../shared';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FileUploadModule } from 'primeng/fileupload';
 import { OrderModule } from 'ngx-order-pipe';
 
 
 @NgModule({
-    imports: [
-        CommonModule, QrServiceRoutingModule, PageHeaderModule, NgbModule,
+  declarations: [ListComponent, CreateComponent, EditComponent],
+  imports: [
+    CommonModule, QrCouponRoutingModule, PageHeaderModule, NgbModule,
         FormsModule,
         ReactiveFormsModule,
         TranslateModule.forChild(),
@@ -29,10 +29,6 @@ import { OrderModule } from 'ngx-order-pipe';
         }),
         FileUploadModule,
         OrderModule
-    ],
-    declarations: [
-      CreateQrComponent, ListQrComponent, EditQrComponent
-    ]
+  ]
 })
-export class QrServiceModule {}
-
+export class QrCouponModule { }

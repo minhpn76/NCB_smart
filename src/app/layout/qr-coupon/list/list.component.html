@@ -1,0 +1,148 @@
+<div>
+    <app-page-header [heading]="'Danh mục ưu đãi'">
+
+    </app-page-header>
+    <div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên ưu đãi:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control col-lg-12" (keydown)="keyDownFunction($event)"
+                            [(ngModel)]="search.name" itrim type="text" id="search" placeholder=" Tên ưu đãi ">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" [(ngModel)]="search.status">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">
+                                {{status.name}}
+                            </option>
+
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <!--Button  -->
+            <div class="col-md-12 text-center">
+                <button class="btn btn-primary mr-3" (click)="onSearch(search)">
+                    <i class="fa fa-search"></i>&nbsp;Tìm kiếm
+                </button>
+                <a class="btn btn-warning" [routerLink]="['/qr-coupons/create']">
+                    <i class="fa fa-plus"></i>&nbsp;Thêm mới
+                </a>
+            </div>
+
+        </div>
+
+        <!-- list -->
+        <div class="row">
+            <div class="col-md-12 table-responsive Flipped">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col" [class.active]="order === 'title'" (click)="setOrder('title')">Tên ưu đãi
+                                <!-- <span [hidden]="reverse">▼</span>
+                                <span [hidden]="!reverse">▲</span> -->
+                            </th>
+                            <th scope="col" [class.active]="order === 'title'" (click)="setOrder('title')">Mô tả
+                                <!-- <span [hidden]="reverse">▼</span>
+                                <span [hidden]="!reverse">▲</span> -->
+                            </th>
+                            <th scope="col" [class.active]="order === 'code'" (click)="setOrder('code')">
+                                Mã giảm giá
+                                <span [hidden]="reverse">▼</span>
+                                <span [hidden]="!reverse">▲</span>
+                            </th>
+                            <th scope="col" [class.active]="order === 'objectUserType'"
+                                (click)="setOrder('objectUserType')">
+                                Đối tượng
+                                <!-- <span [hidden]="reverse">▼</span>
+                                <span [hidden]="!reverse">▲</span> -->
+                            </th>
+                            <th scope="col" [class.active]="order === 'discountType'"
+                                (click)="setOrder('discountType')">
+                                Kiểu ưu đãi
+                                <!-- <span [hidden]="reverse">▼</span>
+                                <span [hidden]="!reverse">▲</span> -->
+                            </th>
+
+                            <th scope="col" [class.active]="order === 'status'" (click)="setOrder('status')">Trạng thái
+                                <span [hidden]="reverse">▼</span>
+                                <span [hidden]="!reverse">▲</span>
+                            </th>
+
+                            <th scope="col" [class.active]="order === 'status'" (click)="setOrder('status')"> Tình trạng
+                                <span [hidden]="reverse">▼</span>
+                                <span [hidden]="!reverse">▲</span>
+                            </th>
+
+                            <th scope="col">Thao tác</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngIf="isProcessLoad == 1" class="text-center">
+                            <td colspan=9><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        </tr>
+                        <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
+                            <td colspan=9>Không tìm thấy kết quả</td>
+                        </tr>
+                        <tr *ngFor="let data of listData; let i = index">
+                            <th scope="row">
+                                {{i + 1}}
+                            </th>
+
+                            <td>{{data?.name}}</td>
+                            <td>{{data?.description}}</td>
+                            <td>{{data?.code}}</td>
+                            <td>
+                                <span *ngIf="data?.objectUserType =='1'" class="badge badge-primary">Tất cả</span>
+                                <span *ngIf="data?.objectUserType == '0'" class="badge badge-warning">Giới hạn</span>
+                            </td>
+                            <td>
+                                <span *ngIf="data?.discountType =='1'" class="badge badge-info">phần trăm</span>
+                                <span *ngIf="data?.discountType == '0'" class="badge badge-secondary">Giá tiền</span>
+                            </td>
+                            <td>
+                                <span *ngIf="data?.status =='A'" class="badge badge-success">disable</span>
+                                <span *ngIf="data?.status == 'D'" class="badge badge-danger">enable</span>
+                            </td>
+                            <td>
+                                <span *ngIf="data?.approveStatus =='1'" class="badge badge-success">Chưa phê
+                                    duyệt</span>
+                                <span *ngIf="data?.approveStatus == '0'" class="badge badge-danger">Phê duyệt</span>
+                            </td>
+                            <td>
+                                <a class="mr-2 cursor-pointer text-blue" routerLink="/qr-coupons/edit/{{data.name}}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+
+                                <span class="mr-2 cursor-pointer text-danger">
+                                    <i class="fa fa-trash" (click)="deleteItem(1, i, data.title)"></i>
+                                </span>
+
+                            </td>
+
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <ngb-pagination *ngIf="totalSearch > 0 && totalSearch > search.size" [collectionSize]="totalSearch"
+                    [pageSize]="search.size" [(page)]="search.page" [boundaryLinks]="true" [maxSize]="10"
+                    (pageChange)="loadPage($event)"></ngb-pagination>
+            </div>
+        </div>
+    </div>

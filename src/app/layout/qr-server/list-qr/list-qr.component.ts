@@ -8,7 +8,7 @@ import { Helper } from '../../../helper';
     selector: 'app-list-qr',
     templateUrl: './list-qr.component.html',
     styleUrls: ['./list-qr.component.scss'],
-    providers: [NCBService,Helper]
+    providers: [NCBService, Helper]
 })
 export class ListQrComponent implements OnInit {
     constructor(
@@ -24,7 +24,7 @@ export class ListQrComponent implements OnInit {
         size: 10,
         page: 0,
         previous_page: 0
-    }
+    };
     isProcessLoad: any = 0;
     totalSearch: any = 0;
     order = 'titile';
@@ -89,7 +89,7 @@ export class ListQrComponent implements OnInit {
         this.order = value;
     }
     onChangeStatus(event) {
-        this.onSearch(this.search)
+        this.onSearch(this.search);
     }
     onSearch(payload) {
         if (payload.title !== '' || payload.status !== '') {
@@ -132,9 +132,9 @@ export class ListQrComponent implements OnInit {
                 this.toastr.error('Xoá thất bại', 'Thất bại');
               }
             }).catch(err => {
-    
+
             });
-    
+
           // For more information about handling dismissals please visit
           // https://sweetalert2.github.io/#handling-dismissals
           } else if (result.dismiss === Swal.DismissReason.cancel) {
