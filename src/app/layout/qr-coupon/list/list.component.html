@@ -51,7 +51,7 @@
                                 <!-- <span [hidden]="reverse">▼</span>
                                 <span [hidden]="!reverse">▲</span> -->
                             </th>
-                            <th scope="col" [class.active]="order === 'title'" (click)="setOrder('title')">Mô tả
+                            <th scope="col" [class.active]="order === 'description'" (click)="setOrder('title')">Mô tả
                                 <!-- <span [hidden]="reverse">▼</span>
                                 <span [hidden]="!reverse">▲</span> -->
                             </th>
@@ -62,23 +62,43 @@
                             </th>
                             <th scope="col" [class.active]="order === 'objectUserType'"
                                 (click)="setOrder('objectUserType')">
-                                Đối tượng
+                                Áp dụng ưu đãi
                                 <!-- <span [hidden]="reverse">▼</span>
                                 <span [hidden]="!reverse">▲</span> -->
                             </th>
-                            <th scope="col" [class.active]="order === 'discountType'"
+                            <th scope="col" [class.active]="order === 'discount'"
+                                (click)="setOrder('objectUserType')">
+                                Discount
+                                <!-- <span [hidden]="reverse">▼</span>
+                                <span [hidden]="!reverse">▲</span> -->
+                            </th>
+                            <th scope="col" [class.active]="order === 'service'"
                                 (click)="setOrder('discountType')">
-                                Kiểu ưu đãi
+                                Loại dịch vụ
                                 <!-- <span [hidden]="reverse">▼</span>
                                 <span [hidden]="!reverse">▲</span> -->
                             </th>
-
+                            <th scope="col" [class.active]="order === 'state_date'" (click)="setOrder('status')">Ngày bắt đầu hiệu lực
+                                <span [hidden]="reverse">▼</span>
+                                <span [hidden]="!reverse">▲</span>
+                            </th>
+                            <th scope="col" [class.active]="order === 'end_date'" (click)="setOrder('status')">Ngày hết hiệu lực
+                                <span [hidden]="reverse">▼</span>
+                                <span [hidden]="!reverse">▲</span>
+                            </th>
                             <th scope="col" [class.active]="order === 'status'" (click)="setOrder('status')">Trạng thái
                                 <span [hidden]="reverse">▼</span>
                                 <span [hidden]="!reverse">▲</span>
                             </th>
-
-                            <th scope="col" [class.active]="order === 'status'" (click)="setOrder('status')"> Tình trạng
+                            <th scope="col" [class.active]="order === 'status_approved'" (click)="setOrder('status')">Trạng thái phê duyệt
+                                <span [hidden]="reverse">▼</span>
+                                <span [hidden]="!reverse">▲</span>
+                            </th>
+                            <th scope="col" [class.active]="order === 'create_by'" (click)="setOrder('status')">Người tạo
+                                <span [hidden]="reverse">▼</span>
+                                <span [hidden]="!reverse">▲</span>
+                            </th>
+                            <th scope="col" [class.active]="order === 'update_ate'" (click)="setOrder('status')">Ngày phê duyệt
                                 <span [hidden]="reverse">▼</span>
                                 <span [hidden]="!reverse">▲</span>
                             </th>
@@ -90,10 +110,10 @@
 
                     <tbody>
                         <tr *ngIf="isProcessLoad == 1" class="text-center">
-                            <td colspan=9><i class="fa fa-spin fa-spinner font-30"></i></td>
+                            <td colspan=14><i class="fa fa-spin fa-spinner font-30"></i></td>
                         </tr>
                         <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
-                            <td colspan=9>Không tìm thấy kết quả</td>
+                            <td colspan=14>Không tìm thấy kết quả</td>
                         </tr>
                         <tr *ngFor="let data of listData; let i = index">
                             <th scope="row">
@@ -108,12 +128,21 @@
                                 <span *ngIf="data?.objectUserType == '0'" class="badge badge-warning">Giới hạn</span>
                             </td>
                             <td>
-                                <span *ngIf="data?.discountType =='1'" class="badge badge-info">phần trăm</span>
-                                <span *ngIf="data?.discountType == '0'" class="badge badge-secondary">Giá tiền</span>
+                                <span *ngIf="data?.discountType =='1'" class="badge badge-info">10 %</span>
+                                <span *ngIf="data?.discountType == '0'" class="badge badge-secondary">1.000.000 VND</span>
                             </td>
                             <td>
-                                <span *ngIf="data?.status =='A'" class="badge badge-success">disable</span>
-                                <span *ngIf="data?.status == 'D'" class="badge badge-danger">enable</span>
+                                {{data?.service}}
+                            </td>
+                            <td>
+                                {{data?.state_date}}
+                            </td>
+                            <td>
+                                {{data?.end_date}}
+                            </td>
+                            <td>
+                                <span *ngIf="data?.status =='A'" class="badge badge-success">Kích hoạt</span>
+                                <span *ngIf="data?.status == 'D'" class="badge badge-danger">Chưa kích hoạt</span>
                             </td>
                             <td>
                                 <span *ngIf="data?.approveStatus =='1'" class="badge badge-success">Chưa phê
@@ -121,10 +150,18 @@
                                 <span *ngIf="data?.approveStatus == '0'" class="badge badge-danger">Phê duyệt</span>
                             </td>
                             <td>
+                                {{data?.created_by}}
+                            </td>
+                            <td>
+                                {{data?.updated_at}}
+                            </td>
+                            <td>
                                 <a class="mr-2 cursor-pointer text-blue" routerLink="/qr-coupons/edit/{{data.name}}">
                                     <i class="fa fa-edit"></i>
                                 </a>
-
+                                <span class="mr-2 cursor-pointer text-warning">
+                                    <i class="fa fa-check"></i>
+                                </span>
                                 <span class="mr-2 cursor-pointer text-danger">
                                     <i class="fa fa-trash" (click)="deleteItem(1, i, data.title)"></i>
                                 </span>
