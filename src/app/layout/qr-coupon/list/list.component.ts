@@ -4,6 +4,7 @@ import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
 import { Helper } from '../../../helper';
 import { DebugHelper } from 'protractor/built/debugger';
+import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-list',
@@ -12,19 +13,25 @@ import { DebugHelper } from 'protractor/built/debugger';
     providers: [NCBService, Helper],
 })
 export class ListComponent implements OnInit {
+    mRatesDateS: NgbDateStruct;
+    mRatesDateS_7: NgbDateStruct;
+    my: any = new Date();
+    my_7: any = new Date();
     constructor(
         private ncbService: NCBService,
         public toastr: ToastrService,
         public helper: Helper
-    ) {}
+    ) {
+        this.loadDate();
+    }
     search: any = {
         name: '',
         status: '',
         approveStatus: '',
         discountType: '',
         description: '',
-        startDate: '5/8/2020',
-        endDate: '19/8/2020',
+        startDate: '',
+        endDate: '',
         size: 10,
         page: 0,
         previous_page: 0,
@@ -90,13 +97,23 @@ export class ListComponent implements OnInit {
     ];
 
     listData = [];
+    ngOnInit() {
+        this.getListData(this.search);
+    }
+    public loadDate(): void {
+        this.my_7.setDate(this.my_7.getDate() - 7);
+        this.mRatesDateS = { year: this.my_7.getFullYear(), month: this.my_7.getMonth() + 1, day: this.my_7.getDate() };
+        this.mRatesDateS_7 = { year: this.my.getFullYear(), month: this.my.getMonth() + 1, day: this.my.getDate() };
+        this.search.startDate = this.helper.tranferDate(this.mRatesDateS)
+        this.search.endDate = this.helper.tranferDate(this.mRatesDateS_7)
+      }
 
     keyDownFunction(event) {
         if (event.keyCode === 13) {
             this.getListData(this.search);
         }
     }
-    onSearch(payload) {
+    onSearch(payload) {    
         // payload.page = 0;
         if (
             payload.name !== '' ||
@@ -108,6 +125,8 @@ export class ListComponent implements OnInit {
         ) {
             payload.page = 0;
         }
+        payload.startDate = this.helper.tranferDate(this.mRatesDateS)
+        payload.endDate = this.helper.tranferDate(this.mRatesDateS_7)
         this.getListData(payload);
     }
     onQuickSearch(reponsive) {
@@ -115,10 +134,6 @@ export class ListComponent implements OnInit {
             reponsive.page = 0;
         }
         this.getListData(reponsive);
-    }
-
-    ngOnInit() {
-        this.getListData(this.search);
     }
 
     getListData(params: any) {

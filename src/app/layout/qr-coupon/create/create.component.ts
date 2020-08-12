@@ -20,6 +20,8 @@ export class CreateComponent implements OnInit {
     temp: any = {
         loading: false
     };
+    listQrService: any = []
+    
 
     constructor(
         private formBuilder: FormBuilder,
@@ -29,7 +31,10 @@ export class CreateComponent implements OnInit {
         private helper: Helper,
         public router: Router
 
-    ) { }
+    ) { 
+        this.getQrService()
+    }
+    
 
     objectUserTypes = [
       {
@@ -43,6 +48,10 @@ export class CreateComponent implements OnInit {
     ];
 
     discountTypes = [
+      {
+        code:  '',
+        name: '---Vui lòng chọn giảm giá theo---'
+      },
       {
         name: 'Phần trăm',
         code: '1'
@@ -64,19 +73,47 @@ export class CreateComponent implements OnInit {
             serviceId: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             startDate: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             endDate: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            amount: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            amount: ['', Validators.compose([this.helper.noWhitespaceValidator])],
             paymentMin: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             paymentMax: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             amountMax: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             amountPercentage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             amountPercustomer: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             totalNumberCoupon: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            numberPerCustomer: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             status: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             approveStatus: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
         });
     }
     get Form() { return this.dataForm.controls; }
 
+    getQrService () {
+        this.listQrService = [{
+            code: '',
+            name: '---Vui lòng chọn dịch vụ---'
+        }];
+        // xu ly
+        this.ncbService.getListQRServer({
+            size: 1000,
+            page: 0,
+        }).then((result) => {
+        setTimeout(() => {
+            const body = result.json().body;
+            body.content.map(item => {
+                this.listQrService.push({
+                    code: item.id,
+                    name: item.title
+                });
+            })
+            
+        }, 300);
+        }).catch(err => {
+            this.listQrService = [{
+                code: '',
+                name: '---Vui lòng chọn dịch vụ---'
+            }];
+        });
+    }
     onSubmit() {
         this.submitted = true;
 

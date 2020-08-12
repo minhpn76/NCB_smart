@@ -65,8 +65,8 @@
                     <label for="search" class="col-sm-4 col-form-label">Bắt đầu ưu đãi:</label>
                     <div class="col-sm-6 input-group">
                         <input readonly class="form-control" placeholder="Từ ngày" name="dFS_1" ngbDatepicker
-                        [(ngModel)]="search.startDate" type="date"itrim    
-                        #dFS_1="ngbDatepicker" formControlName="fromDate"  value="2020-08-05" />
+                        [(ngModel)]="mRatesDateS" type="date"itrim    
+                        #dFS_1="ngbDatepicker"/>
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" (click)="dFS_1.toggle()" type="button">
                                 <i class="fa fa-calendar"></i>
@@ -81,9 +81,9 @@
                     <label for="search" class="col-sm-4 col-form-label">Hết ưu đãi:</label>
                     <div class="col-sm-6 input-group">
                         <input readonly class="form-control" placeholder="Đến ngày" name="dTS_1" 
-                        [(ngModel)]="search.endDate" type="date"itrim
+                        [(ngModel)]="mRatesDateS_7" type="date"itrim
                         ngbDatepicker
-                            #dTS_1="ngbDatepicker" formControlName="toDate"  value="2020-08-19"/>
+                            #dTS_1="ngbDatepicker"/>
 
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" (click)="dTS_1.toggle()" type="button">
