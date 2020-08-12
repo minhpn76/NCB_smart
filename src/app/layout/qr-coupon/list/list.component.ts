@@ -23,8 +23,15 @@ export class ListComponent implements OnInit {
         approveStatus: '',
         discountType: '',
         description: '',
-        // startDate: '',
-        // endDate: '',
+        startDate: '5/8/2020',
+        endDate: '19/8/2020',
+        size: 10,
+        page: 0,
+        previous_page: 0,
+    };
+    quicksearch: any = {
+        name: '',
+        description: '',
         size: 10,
         page: 0,
         previous_page: 0,
@@ -103,11 +110,11 @@ export class ListComponent implements OnInit {
         }
         this.getListData(payload);
     }
-    onQuickSearch(payload) {
-        if (payload.name !== '' || payload.description !== '') {
-            payload.page = 0;
+    onQuickSearch(reponsive) {
+        if (reponsive.name !== '' || reponsive.description !== '') {
+            reponsive.page = 0;
         }
-        this.getListData(payload);
+        this.getListData(reponsive);
     }
 
     ngOnInit() {

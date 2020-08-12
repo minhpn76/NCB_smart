@@ -65,7 +65,8 @@
                     <label for="search" class="col-sm-4 col-form-label">Bắt đầu ưu đãi:</label>
                     <div class="col-sm-6 input-group">
                         <input readonly class="form-control" placeholder="Từ ngày" name="dFS_1" ngbDatepicker
-                            #dFS_1="ngbDatepicker" formControlName="fromDate" />
+                        [(ngModel)]="search.startDate" type="date"itrim    
+                        #dFS_1="ngbDatepicker" formControlName="fromDate"  value="2020-08-05" />
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" (click)="dFS_1.toggle()" type="button">
                                 <i class="fa fa-calendar"></i>
@@ -79,8 +80,10 @@
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Hết ưu đãi:</label>
                     <div class="col-sm-6 input-group">
-                        <input readonly class="form-control" placeholder="Đến ngày" name="dTS_1" ngbDatepicker
-                            #dTS_1="ngbDatepicker" formControlName="toDate" />
+                        <input readonly class="form-control" placeholder="Đến ngày" name="dTS_1" 
+                        [(ngModel)]="search.endDate" type="date"itrim
+                        ngbDatepicker
+                            #dTS_1="ngbDatepicker" formControlName="toDate"  value="2020-08-19"/>
 
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" (click)="dTS_1.toggle()" type="button">
@@ -102,16 +105,12 @@
                 </a>
             </div>
 
-            <div class="form-inline d-flex justify-content-center md-form form-sm mt-0"
-                style="margin-left: auto !important;    margin-bottom: 15px; ">
-                <button class="btn btn-primary mr-3" (click)="onQuickSearch(search)" style="margin-left: -75px;">
-                    <i class="fa fa-search"></i>
-                </button>
-                <input class="form-control col-lg-12" style="    margin-left: -14px;"
-                    [(ngModel)]="search.description || search.name" itrim type="text" id="search"
-                    placeholder=" Tìm kiếm ">
-            </div>
-
+            <form class="search" action="">
+                <input class="form-control col-lg-12" type="text" name="search"
+                [(ngModel)]="quicksearch.description||quicksearch.name" itrim type="text" id="search"
+                placeholder=" Tìm kiếm ">
+              <i (click)="onQuickSearch(quicksearch)" class="fa fa-search" ></i>
+            </form>
 
         </div>
 

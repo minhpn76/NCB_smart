@@ -17,6 +17,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 
+
 @NgModule({
     imports: [
         CommonModule,
@@ -33,7 +34,7 @@ import { AuthService } from './services/auth.service';
         AppComponent,
         ItrimDirective,
         InunberDirective,
-        IemailDirective
+        IemailDirective,
     ],
     providers: [
         AuthGuard, AuthService
