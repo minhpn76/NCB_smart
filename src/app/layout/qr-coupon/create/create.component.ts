@@ -31,7 +31,7 @@ export class CreateComponent implements OnInit {
 
     ) { }
 
-    object_user_type = [
+    objectUserTypes = [
       {
         name: 'Tất cả',
         code: '1'
@@ -42,7 +42,7 @@ export class CreateComponent implements OnInit {
       }
     ];
 
-    discount_type = [
+    discountTypes = [
       {
         name: 'Phần trăm',
         code: '1'
@@ -59,18 +59,20 @@ export class CreateComponent implements OnInit {
             name: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             desciption: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             code: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            object_user_type: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            discount_type: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            service_id: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            objectUserType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            discountType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            serviceId: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            startDate: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            endDate: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            amount: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            paymentMin: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            paymentMax: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            amountMax: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            amountPercentage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            amountPercustomer: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            totalNumberCoupon: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             status: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            // amount: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            // paymentMin: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            // paymentMax: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            // amountMax: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            // amountPercentage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            // amountPercustomer: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            // totalNumberCoupon: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            // approveStatus: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            approveStatus: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
         });
     }
     get Form() { return this.dataForm.controls; }

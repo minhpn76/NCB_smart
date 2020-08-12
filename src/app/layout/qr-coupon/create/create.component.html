@@ -1,10 +1,11 @@
 <div>
-    <app-page-header [heading]="'Danh sách ưu đãi'" [heading_second]="'Thêm mới danh sách ưu đãi'" [url_heading]="'/qr-coupons'"> </app-page-header>
+    <app-page-header [heading]="'Danh sách ưu đãi'" [heading_second]="'Thêm mới danh sách ưu đãi'"
+        [url_heading]="'/qr-coupons'"> </app-page-header>
     <div class="row">
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Tên ưu đãi
+                    <label for="create" class="col-sm-4 col-form-label">Tên ưu đãi
                         (<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input formControlName="serviceType" class="form-control col-lg-12" placeholder="Tên ưu đãi"
@@ -43,46 +44,55 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Đối tượng
+                    <label for="create" class="col-sm-4 col-form-label">Đối tượng
                         (<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <select class="form-control">
-                            <option *ngFor="let object of object_user_type" [value]="object.code" selected="selected">
-                                {{ object.name }}</option>
+                            <option *ngFor="let objectUserType of objectUserTypes" [value]="objectUserType.code" selected="selected">
+                                {{ objectUserType.name }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Kiểu ưu đãi
+                    <label for="create" class="col-sm-4 col-form-label">Kiểu ưu đãi
                         (<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <select class="form-control">
-                            <option *ngFor="let type of discount_type" [value]="type.code" selected="selected">
-                                {{ type.name }}</option>
+                            <option *ngFor="let discountType of discountTypes" [value]="discountType.code" selected="selected">
+                                {{ discountType.name }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="example-datetime-local-input" class="col-sm-4 col-form-label">Ngày bắt đầu(<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <input class="form-control" type="datetime-local" value="2020-08-7T13:45:00"
-                            id="example-datetime-local-input">
+                    <label for="create" class="col-sm-4 col-form-label">Bắt đầu ưu đãi:</label>
+                    <div class="col-sm-7 input-group">
+                        <input readonly class="form-control" placeholder="Từ ngày" name="dFS_1" ngbDatepicker
+                            #dFS_1="ngbDatepicker" formControlName="fromDate" />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="dFS_1.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="example-datetime-local-input" class="col-sm-4 col-form-label">Ngày kết thúc 
-                        (<span class="text-danger">*</span>):
-                    </label>
-                    <div class="col-sm-7">
-                        <input class="form-control" type="datetime-local" value="2020-08-7T13:45:00"
-                            id="example-datetime-local-input">
+                    <label for="create" class="col-sm-4 col-form-label">Hết ưu đãi:</label>
+                    <div class="col-sm-7 input-group">
+                        <input readonly class="form-control" placeholder="Đến ngày" name="dTS_1" ngbDatepicker
+                            #dTS_1="ngbDatepicker" formControlName="toDate" />
+
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="dTS_1.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
 
                 <div class="form-group row">
                     <div class="col-sm-4"></div>
-                    <div class="col-sm-7">
+                    <div class="col-sm-8">
                         <button class="btn btn-success mr-3"><i class="fa
                                 fa-save"></i>&nbsp;Lưu lại</button>
                         <button class="btn btn-light" (click)="resetForm()"><i
