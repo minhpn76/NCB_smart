@@ -105,166 +105,180 @@
                 </a>
             </div>
 
-            <form class="search" action="">
+            <!-- <form class="search" action="">
                 <input class="form-control col-lg-12" type="text" name="search"
                 [(ngModel)]="quicksearch.description||quicksearch.name" itrim type="text" id="search"
                 placeholder=" Tìm kiếm ">
               <i (click)="onQuickSearch(quicksearch)" class="fa fa-search" ></i>
-            </form>
+            </form> -->
 
-        </div>
+            <div class="col-auto" style="margin-left: auto;
+            ">
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text" style="background-color: white;"><i
+                                (click)="onQuickSearch(quicksearch)" class="fa fa-search"></i></div>
+                    </div>
+                    <input class="form-control col-lg-12" type="text" name="search"
+                        [(ngModel)]="quicksearch.description||quicksearch.name" itrim type="text" id="search"
+                        placeholder=" Tìm kiếm ">
+                </div>
 
-        <!-- list -->
-        <div class="row">
-            <div class=" table-responsive">
-                <table class="table table-striped table-bordered table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">STT</th>
-                            <th scope="col"[class.active]="order === 'title'"
-                                (click)="setOrder('title')">Tên ưu
-                                đãi
-                                <!-- <span [hidden]="reverse">▼</span>
+            </div>
+
+            <!-- list -->
+            <div class="row" style="overflow:scroll">
+                <div class=" col-md-12 table-responsive">
+                    <table class="table table-striped table-bordered table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">STT</th>
+                                <th scope="col" [class.active]="order === 'title'" (click)="setOrder('title')">Tên ưu
+                                    đãi
+                                    <!-- <span [hidden]="reverse">▼</span>
                                 <span [hidden]="!reverse">▲</span> -->
-                            </th>
-                            <th scope="col" [class.active]="order === 'description'" (click)="setOrder('title')">Mô
-                                tả
-                                <!-- <span [hidden]="reverse">▼</span>
+                                </th>
+                                <th scope="col" [class.active]="order === 'description'" (click)="setOrder('title')">Mô
+                                    tả
+                                    <!-- <span [hidden]="reverse">▼</span>
                                 <span [hidden]="!reverse">▲</span> -->
-                            </th>
-                            <th scope="col" [class.active]="order === 'code'" (click)="setOrder('code')">
-                                Mã giảm giá
-                                <span [hidden]="reverse">▼</span>
-                                <span [hidden]="!reverse">▲</span>
-                            </th>
-                            <th scope="col" [class.active]="order === 'objectUserType'"
-                                (click)="setOrder('objectUserType')">
-                                Áp dụng ưu đãi
-                                <!-- <span [hidden]="reverse">▼</span>
+                                </th>
+                                <th scope="col" [class.active]="order === 'code'" (click)="setOrder('code')">
+                                    Mã giảm giá
+                                    <span [hidden]="reverse">▼</span>
+                                    <span [hidden]="!reverse">▲</span>
+                                </th>
+                                <th scope="col" [class.active]="order === 'objectUserType'"
+                                    (click)="setOrder('objectUserType')">
+                                    Áp dụng ưu đãi
+                                    <!-- <span [hidden]="reverse">▼</span>
                                 <span [hidden]="!reverse">▲</span> -->
-                            </th>
-                            <th scope="col" [class.active]="order === 'discount'" (click)="setOrder('objectUserType')">
-                                Discount
-                                <!-- <span [hidden]="reverse">▼</span>
+                                </th>
+                                <th scope="col" [class.active]="order === 'discount'"
+                                    (click)="setOrder('objectUserType')">
+                                    Discount
+                                    <!-- <span [hidden]="reverse">▼</span>
                                 <span [hidden]="!reverse">▲</span> -->
-                            </th>
-                            <!-- <th scope="col" [class.active]="order === 'service'" (click)="setOrder('discountType')">
+                                </th>
+                                <!-- <th scope="col" [class.active]="order === 'service'" (click)="setOrder('discountType')">
                                 Loại dịch vụ
                             </th> -->
-                            <th scope="col" [class.active]="order === 'state_date'" (click)="setOrder('status')">
-                                Ngày
-                                bắt đầu hiệu lực
-                                <span [hidden]="reverse">▼</span>
-                                <span [hidden]="!reverse">▲</span>
-                            </th>
-                            <th scope="col" [class.active]="order === 'end_date'" (click)="setOrder('status')">Ngày
-                                hết
-                                hiệu lực
-                                <span [hidden]="reverse">▼</span>
-                                <span [hidden]="!reverse">▲</span>
-                            </th>
-                            <th scope="col" [class.active]="order === 'status'" (click)="setOrder('status')">Trạng
-                                thái
-                                <span [hidden]="reverse">▼</span>
-                                <span [hidden]="!reverse">▲</span>
-                            </th>
-                            <th scope="col" [class.active]="order === 'status_approved'" (click)="setOrder('status')">
-                                Trạng thái phê duyệt
-                                <span [hidden]="reverse">▼</span>
-                                <span [hidden]="!reverse">▲</span>
-                            </th>
-                            <th scope="col" [class.active]="order === 'createBy'" (click)="setOrder('status')">Người
-                                tạo
-                                <span [hidden]="reverse">▼</span>
-                                <span [hidden]="!reverse">▲</span>
-                            </th>
-                            <th scope="col" [class.active]="order === 'updateAt'" (click)="setOrder('status')">Ngày
-                                phê
-                                duyệt
-                                <span [hidden]="reverse">▼</span>
-                                <span [hidden]="!reverse">▲</span>
-                            </th>
+                                <th scope="col" [class.active]="order === 'state_date'" (click)="setOrder('status')">
+                                    Ngày
+                                    bắt đầu hiệu lực
+                                    <span [hidden]="reverse">▼</span>
+                                    <span [hidden]="!reverse">▲</span>
+                                </th>
+                                <th scope="col" [class.active]="order === 'end_date'" (click)="setOrder('status')">Ngày
+                                    hết
+                                    hiệu lực
+                                    <span [hidden]="reverse">▼</span>
+                                    <span [hidden]="!reverse">▲</span>
+                                </th>
+                                <th scope="col" [class.active]="order === 'status'" (click)="setOrder('status')">Trạng
+                                    thái
+                                    <span [hidden]="reverse">▼</span>
+                                    <span [hidden]="!reverse">▲</span>
+                                </th>
+                                <th scope="col" [class.active]="order === 'status_approved'"
+                                    (click)="setOrder('status')">
+                                    Trạng thái phê duyệt
+                                    <span [hidden]="reverse">▼</span>
+                                    <span [hidden]="!reverse">▲</span>
+                                </th>
+                                <th scope="col" [class.active]="order === 'createBy'" (click)="setOrder('status')">Người
+                                    tạo
+                                    <span [hidden]="reverse">▼</span>
+                                    <span [hidden]="!reverse">▲</span>
+                                </th>
+                                <th scope="col" [class.active]="order === 'updateAt'" (click)="setOrder('status')">Ngày
+                                    phê
+                                    duyệt
+                                    <span [hidden]="reverse">▼</span>
+                                    <span [hidden]="!reverse">▲</span>
+                                </th>
 
-                            <th scope="col">Thao tác</th>
+                                <th scope="col">Thao tác</th>
 
-                        </tr>
-                    </thead>
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                        <tr *ngIf="isProcessLoad == 1" class="text-center">
-                            <td colspan=14><i class="fa fa-spin fa-spinner font-30"></i></td>
-                        </tr>
-                        <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
-                            <td colspan=14>Không tìm thấy kết quả</td>
-                        </tr>
-                        <tr *ngFor="let data of listData; let i = index">
-                            <th scope="row">
-                                {{i + 1}}
-                            </th>
+                        <tbody>
+                            <tr *ngIf="isProcessLoad == 1" class="text-center">
+                                <td colspan=14><i class="fa fa-spin fa-spinner font-30"></i></td>
+                            </tr>
+                            <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
+                                <td colspan=14>Không tìm thấy kết quả</td>
+                            </tr>
+                            <tr *ngFor="let data of listData; let i = index">
+                                <th scope="row">
+                                    {{i + 1}}
+                                </th>
 
-                            <td>{{data?.name}}</td>
-                            <td>{{data?.description}}</td>
-                            <td>{{data?.code}}</td>
-                            <td>
-                                <span *ngIf="data?.objectUserType =='1'" class="badge badge-primary">Tất cả</span>
-                                <span *ngIf="data?.objectUserType == '0'" class="badge badge-warning">Giới
-                                    hạn</span>
-                            </td>
-                            <td>
-                                <span *ngIf="data?.discountType =='1'" class="badge badge-info">10 %</span>
-                                <span *ngIf="data?.discountType == '0'" class="badge badge-secondary">1.000.000
-                                    VND</span>
-                            </td>
-                            <!-- <td>
+                                <td>{{data?.name}}</td>
+                                <td>{{data?.description}}</td>
+                                <td>{{data?.code}}</td>
+                                <td>
+                                    <span *ngIf="data?.objectUserType =='1'" class="badge badge-primary">Tất cả</span>
+                                    <span *ngIf="data?.objectUserType == '0'" class="badge badge-warning">Giới
+                                        hạn</span>
+                                </td>
+                                <td>
+                                    <span *ngIf="data?.discountType =='1'" class="badge badge-info">10 %</span>
+                                    <span *ngIf="data?.discountType == '0'" class="badge badge-secondary">1.000.000
+                                        VND</span>
+                                </td>
+                                <!-- <td>
                                 {{data?.service}}
                             </td> -->
-                            <td>
-                                {{helper.formatDate(data?.startDate)}}
-                            </td>
-                            <td>
-                                {{helper.formatDate(data?.endDate)}}
-                            </td>
-                            <td>
-                                <span *ngIf="data?.status =='A'" class="badge badge-success">Kích hoạt</span>
-                                <span *ngIf="data?.status == 'D'" class="badge badge-danger">Chưa kích hoạt</span>
-                            </td>
-                            <td>
-                                <span *ngIf="data?.approveStatus =='1'" class="badge badge-success">Chưa phê
-                                    duyệt</span>
-                                <span *ngIf="data?.approveStatus == '0'" class="badge badge-danger">Phê duyệt</span>
-                            </td>
-                            <td>
-                                {{data?.createdBy}}
-                            </td>
-                            <td>
-                                {{data?.updatedAt}}
-                            </td>
-                            <td style="display: flex; border:none">
-                                <a data-toggle="tool-tip" title="Chỉnh sửa" class="mr-2 cursor-pointer text-blue"
-                                    routerLink="/qr-coupons/edit/{{data.name}}">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                                <span data-toggle="tool-tip" title="Phê duyệt" class="mr-2 cursor-pointer text-warning">
-                                    <i class="fa fa-check"></i>
-                                </span>
-                                <span data-toggle="tool-tip" title="Xóa" class="mr-2 cursor-pointer text-danger">
-                                    <i class="fa fa-trash" (click)="deleteItem(1, i, data.title)"></i>
-                                </span>
+                                <td>
+                                    {{helper.formatDate(data?.startDate)}}
+                                </td>
+                                <td>
+                                    {{helper.formatDate(data?.endDate)}}
+                                </td>
+                                <td>
+                                    <span *ngIf="data?.status =='A'" class="badge badge-success">Kích hoạt</span>
+                                    <span *ngIf="data?.status == 'D'" class="badge badge-danger">Chưa kích hoạt</span>
+                                </td>
+                                <td>
+                                    <span *ngIf="data?.approveStatus =='1'" class="badge badge-success">Chưa phê
+                                        duyệt</span>
+                                    <span *ngIf="data?.approveStatus == '0'" class="badge badge-danger">Phê duyệt</span>
+                                </td>
+                                <td>
+                                    {{data?.createdBy}}
+                                </td>
+                                <td>
+                                    {{data?.updatedAt}}
+                                </td>
+                                <td style="display: flex; border:none">
+                                    <a data-toggle="tool-tip" title="Chỉnh sửa" class="mr-2 cursor-pointer text-blue"
+                                        routerLink="/qr-coupons/edit/{{data.name}}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <span data-toggle="tool-tip" title="Phê duyệt"
+                                        class="mr-2 cursor-pointer text-warning">
+                                        <i class="fa fa-check" (click)="approved()"></i>
+                                    </span>
+                                    <span data-toggle="tool-tip" title="Xóa" class="mr-2 cursor-pointer text-danger">
+                                        <i class="fa fa-trash" (click)="deleteItem(1, i, data.title)"></i>
+                                    </span>
 
-                            </td>
+                                </td>
 
 
-                        </tr>
+                            </tr>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <ngb-pagination *ngIf="totalSearch > 0 && totalSearch > search.size" [collectionSize]="totalSearch"
+                        [pageSize]="search.size" [(page)]="search.page" [boundaryLinks]="true" [maxSize]="10"
+                        (pageChange)="loadPage($event)"></ngb-pagination>
+                </div>
             </div>
         </div>
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <ngb-pagination *ngIf="totalSearch > 0 && totalSearch > search.size" [collectionSize]="totalSearch"
-                    [pageSize]="search.size" [(page)]="search.page" [boundaryLinks]="true" [maxSize]="10"
-                    (pageChange)="loadPage($event)"></ngb-pagination>
-            </div>
-        </div>
-    </div>
