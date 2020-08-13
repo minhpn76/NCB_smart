@@ -12,6 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { FileUploadModule } from 'primeng/fileupload';
 import { OrderModule } from 'ngx-order-pipe';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { OrderModule } from 'ngx-order-pipe';
         FormsModule,
         ReactiveFormsModule,
         TranslateModule.forChild(),
+        CurrencyMaskModule,
         SweetAlert2Module.forRoot({
             buttonsStyling: false,
             customClass: 'modal-content',

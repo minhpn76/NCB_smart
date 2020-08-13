@@ -117,11 +117,11 @@
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
                         <div class="input-group-text" style="background-color: white;"><i
-                                (click)="onQuickSearch(quicksearch)" class="fa fa-search"></i></div>
+                                (click)="onSearch(search)" class="fa fa-search"></i></div>
                     </div>
                     <input class="form-control col-lg-12" type="text" name="search"
-                        [(ngModel)]="quicksearch.description||quicksearch.name" itrim type="text" id="search"
-                        placeholder=" Tìm kiếm ">
+                        [(ngModel)]="search.search" itrim type="text" id="search"
+                        placeholder=" Tìm kiếm " (keydown)="keyDownFunctionSearch($event)">
                 </div>
 
             </div>
