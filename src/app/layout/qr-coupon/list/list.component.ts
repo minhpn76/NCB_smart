@@ -201,4 +201,32 @@ export class ListComponent implements OnInit {
             }
         });
     }
+
+
+    approved(event, index, id) {
+        Swal.fire({
+            title: 'Bạn có muốn phê duyệt?',
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Không, trở lại',
+        }).then((result) => {
+            if (result.value) {
+                // this.ncbService.deleteQRCoupon(id).then((res) => {
+                //     if (res.json().code === '00') {
+                //         Swal.fire(
+                //             'Đã phê duyệt!',
+                //             'success'
+                //         );
+                //         this.onSearch(this.search);
+                //     } else {
+                //         this.toastr.error('Không phê duyệt', 'Thất bại');
+                //     }
+                // });
+                alert('thành công ');
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire('Huỷ bỏ', 'Dữ liệu chưa được phê duyệt.', 'error');
+            }
+        });
+    }
 }
