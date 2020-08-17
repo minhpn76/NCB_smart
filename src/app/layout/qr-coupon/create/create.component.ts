@@ -11,12 +11,16 @@ import {
     NgbDatepickerConfig,
     NgbTabChangeEvent,
 } from "@ng-bootstrap/ng-bootstrap";
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+import { ExcelService } from '../../../services/excel.service';
+import { async } from '@angular/core/testing';
 
 @Component({
     selector: "qr-coupons-create",
     templateUrl: "./create.component.html",
     styleUrls: ["./create.component.scss"],
-    providers: [Helper, NCBService],
+    providers: [Helper, NCBService, ExcelService],
 })
 export class CreateComponent implements OnInit {
     mRatesDateS: NgbDateStruct;
@@ -32,6 +36,8 @@ export class CreateComponent implements OnInit {
         path: null,
         name: ''
     };
+    arrayBuffer: any = []
+    filelist: any = []
 
     temp: any = {
         loading: false,
@@ -50,7 +56,8 @@ export class CreateComponent implements OnInit {
         private modalService: NgbModal,
         private ncbService: NCBService,
         private helper: Helper,
-        public router: Router
+        public router: Router,
+        private excelService: ExcelService,
     ) {
         this.getQrService();
         this.loadDate();
@@ -95,7 +102,7 @@ export class CreateComponent implements OnInit {
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
-            desciption: [
+            description: [
                 "",
                 Validators.compose([
                     Validators.required,
@@ -222,7 +229,6 @@ export class CreateComponent implements OnInit {
     }
     onSubmit() {
         this.submitted = true;
-        console.log('=this.dataForm', this.dataForm);
         // stop here if form is invalid
         if (this.dataForm.invalid) {
             return;
@@ -233,18 +239,18 @@ export class CreateComponent implements OnInit {
             code:this.dataForm.value.code,
             objectUserType:this.dataForm.value.objectUserType,
             discountType:this.dataForm.value.discountType,
-            serviceId:this.dataForm.value.user_coupon,
+            serviceId:this.dataForm.value.serviceId,
             startDate:this.helper.tranferDate(this.dataForm.value.startDate),
             endDate:this.helper.tranferDate(this.dataForm.value.endDate),
-            amount:this.dataForm.value.amount,
-            paymentMin:this.dataForm.value.paymentMin,
-            amountMax:this.dataForm.value.amountMax,
-            amountPercentage:this.dataForm.value.amountPercentage,
-            numberPerCustomer:this.dataForm.value.numberPerCustomer,
-            totalNumberCoupon:this.dataForm.value.totalNumberCoupon,
+            amount:+this.dataForm.value.amount,
+            paymentMin:+this.dataForm.value.paymentMin,
+            amountMax:+this.dataForm.value.amountMax,
+            amountPercentage:+this.dataForm.value.amountPercentage,
+            numberPerCustomer:+this.dataForm.value.numberPerCustomer,
+            totalNumberCoupon:+this.dataForm.value.totalNumberCoupon,
             status:this.dataForm.value.status,
             approveStatus:this.dataForm.value.approveStatus,
-            user_coupon: this.dataForm.value.user_coupon
+            userCoupons: this.dataForm.value.user_coupon ? this.dataForm.value.user_coupon : this.filelist
         }
         this.ncbService
             .createQRCoupon(payload)
@@ -272,6 +278,9 @@ export class CreateComponent implements OnInit {
     resetForm() {
         this.router.navigateByUrl("/qr-coupons");
     }
+    closeModal() {
+        this.modalOp.close();
+    }
     onUploadFile(event) {
         const fileList: FileList = event.files;
         if (fileList.length > 0) {
@@ -281,39 +290,26 @@ export class CreateComponent implements OnInit {
         }
       }
       onUploadServer() {
-        console.log('up to server', this.fileExcel.file);
-        // let data = this.list_couriers.filter(v => v['CourierId'] == this.courierId);
-        // let courierName = data[0].Name
-    
-        // if (this.fileExcel.file) {
-        //     this.temp.loading = true
-        //     let file: File = this.fileExcel.file;
-        //     this.journeyService.upFileExcel(file, {
-        //         'courierId': this.courierId,
-        //         'courierName': courierName,
-        //         'email_upload': this.user_email
-        //     }).then((result) => {
-        //         let rep = result.json()
-        //         if (rep.error == true) {
-        //             this.appComponent.toasterTranslate('error', 'TICM_uploadfileloihaythulai');
-        //         } else {
-        //             let dataReponse = {
-        //                 'FileUpload': result.json().data,
-        //                 'CourierId': this.courierId,
-        //                 'courierName': courierName,
-        //                 'email_upload': this.user_email,
-        //                 'Action': 'uploadFile'
-        //             }
-        //             this.change.emit(dataReponse);
-        //             this.appComponent.toastr.success(result.json().messages, 'Oops!');
-        //         }
-        //         this.temp.loading = false
-        //         this.emitCloseModal.emit(true);
-        //     })
-        //         .catch((err) => {
-        //             this.temp.loading = false
-        //             this.appComponent.toastr.warning(this.appComponent.instantTranslate('Toaster_PleaseTryAgain'), 'Oops!');
-        //         });
-        // }
+        if (this.fileExcel.file) {
+            this.temp.loading = true
+            let fileReader = new FileReader();    
+            fileReader.readAsArrayBuffer(this.fileExcel.file);     
+            fileReader.onload = (e) => {    
+                this.arrayBuffer = fileReader.result;    
+                var data = new Uint8Array(this.arrayBuffer);    
+                var arr = new Array();    
+                for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);    
+                var bstr = arr.join("");    
+                var workbook = XLSX.read(bstr, {type:"binary"});    
+                var first_sheet_name = workbook.SheetNames[0];    
+                var worksheet = workbook.Sheets[first_sheet_name];    
+                console.log(XLSX.utils.sheet_to_json(worksheet,{raw:true}));    
+                var arraylist = XLSX.utils.sheet_to_json(worksheet,{raw:true});     
+                this.filelist = arraylist
+                this.dataForm.value.user_coupon = arraylist           
+            }    
+            this.temp.loading = false 
+            this.closeModal()
+        }
       }
 }

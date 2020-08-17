@@ -1060,8 +1060,8 @@ export class NCBService {
     const url = `${API_URL}/qr-coupons`;
     return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
   }
-  updateQRCoupon(status: string, body: any): Promise<any> {
-    const url = `${API_URL}/qr-coupons/${status}`;
+  updateQRCoupon(id: string, body: any): Promise<any> {
+    const url = `${API_URL}/qr-coupons/${id}`;
     return this.auth.authRequest({ url: url, data: body, method: 'PUT', application: true });
   }
   detailQRCoupon(id: string): Promise<any> {

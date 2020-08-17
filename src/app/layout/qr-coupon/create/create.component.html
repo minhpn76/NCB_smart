@@ -40,23 +40,23 @@
                     >
                     <div class="col-sm-7">
                         <input
-                            formControlName="desciption"
+                            formControlName="description"
                             class="form-control col-lg-12"
                             placeholder="Mô tả ưu đãi"
                             [ngClass]="{
                                 'is-invalid':
-                                    submitted && Form.desciption.errors
+                                    submitted && Form.description.errors
                             }"
                         />
                         <div
-                            *ngIf="submitted && Form.desciption.errors"
+                            *ngIf="submitted && Form.description.errors"
                             class="invalid-feedback"
                         >
-                            <div *ngIf="Form.desciption.errors.required">
-                                Tên ưu đãi là bắt buộc
+                            <div *ngIf="Form.description.errors.required">
+                                Mô tả ưu đãi là bắt buộc
                             </div>
-                            <div *ngIf="Form.desciption.hasError('whitespace')">
-                                Tên ưu đãi không hợp lệ
+                            <div *ngIf="Form.description.hasError('whitespace')">
+                                Mô tả ưu đãi không hợp lệ
                             </div>
                         </div>
                     </div>
