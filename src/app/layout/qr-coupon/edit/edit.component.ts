@@ -14,14 +14,14 @@ import { NCBService } from '../../../services/ncb.service';
 export class EditComponent implements OnInit {
   dataForm: FormGroup;
   submitted = false;
-  qrService: any;
+  qrCoupons: any;
   listStatus: any = [
     {
-      name: 'Enable',
+      name: 'Kích hoạt',
       code: 'A',
     },
     {
-      name: 'Disable',
+      name: 'Chưa kích hoạt',
       code: 'D',
     }
   ];
@@ -37,14 +37,14 @@ export class EditComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.qrService = params.itemId;
+      this.qrCoupons = params.itemId;
     });
     this.dataForm = this.formBuilder.group({
-      title: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      serviceType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      name: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      description: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       status: ['']
     });
-    this.getItem(this.qrService);
+    this.getItem(this.qrCoupons);
   }
   get Form() { return this.dataForm.controls; }
 
@@ -58,8 +58,8 @@ export class EditComponent implements OnInit {
     const payload = {
       ...this.dataForm.value
     };
-    this.ncbService.updateQRCoupon(this.qrService , payload).then(result => {
-      if (result.json().code === '00') {
+    this.ncbService.updateQRCoupon(this.qrCoupons , payload).then(result => {
+      if (result.json().status === 'D') {
         this.toastr.success('Sửa thành công', 'Thành công!');
         setTimeout(() => {
           this.router.navigateByUrl('/qr-coupons');
@@ -76,7 +76,7 @@ export class EditComponent implements OnInit {
       const body = result.json().body;
       this.dataForm.patchValue({
         name: body.name,
-        desciption: body.desciption,
+        description: body.description,
         status: body.status
       });
     }).catch(err => {
@@ -87,7 +87,3 @@ export class EditComponent implements OnInit {
     this.router.navigateByUrl('/qr-coupons');
   }
 }
-
-
-
-

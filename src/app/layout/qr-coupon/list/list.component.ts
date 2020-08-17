@@ -110,6 +110,7 @@ export class ListComponent implements OnInit {
     }
     public loadDate(): void {
         this.my_7.setDate(this.my_7.getDate() - 7);
+<<<<<<< Updated upstream
         this.my_14.setDate(this.my.getDate() + 7);
         this.mRatesDateS = {
             year: this.my_7.getFullYear(),
@@ -124,18 +125,30 @@ export class ListComponent implements OnInit {
         this.search.startDate = this.helper.tranferDate(this.mRatesDateS);
         this.search.endDate = this.helper.tranferDate(this.mRatesDateS_7);
     }
+=======
+        this.mRatesDateS = { year: this.my_7.getFullYear(), month: this.my_7.getMonth() + 1, day: this.my_7.getDate() };
+        this.mRatesDateS_7 = { year: this.my.getFullYear(), month: this.my.getMonth() + 1, day: this.my.getDate() };
+        this.search.startDate = this.helper.tranferDate(this.mRatesDateS);
+        this.search.endDate = this.helper.tranferDate(this.mRatesDateS_7);
+      }
+>>>>>>> Stashed changes
 
     keyDownFunction(event) {
         if (event.keyCode === 13) {
             this.getListData(this.search);
         }
     }
+<<<<<<< Updated upstream
     keyDownFunctionSearch(event) {
         if (event.keyCode === 13) {
             this.onSearch(this.search);
         }
     }
     onSearch(payload) {
+=======
+    onSearch(payload) {
+        // payload.page = 0;
+>>>>>>> Stashed changes
         if (
             payload.name !== "" ||
             payload.status !== "" ||

@@ -43,6 +43,10 @@ export class CreateComponent implements OnInit {
         decimal: ",",
         align: "left",
     };
+<<<<<<< Updated upstream
+=======
+    listQrService: any = [ ]
+>>>>>>> Stashed changes
 
     constructor(
         private formBuilder: FormBuilder,
@@ -51,13 +55,20 @@ export class CreateComponent implements OnInit {
         private ncbService: NCBService,
         private helper: Helper,
         public router: Router
+<<<<<<< Updated upstream
     ) {
         this.getQrService();
         this.loadDate();
+=======
+
+    ) {
+        this.getQrService();
+>>>>>>> Stashed changes
     }
 
     objectUserTypes = [
         {
+<<<<<<< Updated upstream
             code: "",
             name: "---Vui lòng chọn đối tượng áp dụng---",
         },
@@ -69,6 +80,19 @@ export class CreateComponent implements OnInit {
             name: "Giới hạn",
             code: "0",
         },
+=======
+            code:  '',
+            name: '---Vui lòng chọn đối tượng được áp dụng---'
+          },
+      {
+        name: 'Tất cả',
+        code: '1'
+      },
+      {
+        name: 'Giới hạn',
+        code: '0'
+      }
+>>>>>>> Stashed changes
     ];
 
     discountTypes = [
@@ -88,6 +112,7 @@ export class CreateComponent implements OnInit {
 
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
+<<<<<<< Updated upstream
             name: [
                 "",
                 Validators.compose([
@@ -172,6 +197,27 @@ export class CreateComponent implements OnInit {
             startDate: [this.mRatesDateS_7],
             endDate:[this.mRatesDateS],
             user_coupon: []
+=======
+            name: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            desciption: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            code: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            objectUserType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            discountType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            serviceId: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            startDate: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            endDate: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            amount: ['', Validators.compose([this.helper.noWhitespaceValidator])],
+            paymentMin: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            paymentMax: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            amountMax: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            amountPercentage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            amountPercustomer: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            totalNumberCoupon: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            numberPerCustomer: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            status: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            approveStatus: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            // user_coupon:[''];
+>>>>>>> Stashed changes
         });
     }
     get Form() {
@@ -200,6 +246,7 @@ export class CreateComponent implements OnInit {
                 size: 1000,
                 page: 0,
             })
+<<<<<<< Updated upstream
             .then((result) => {
                 setTimeout(() => {
                     const body = result.json().body;
@@ -219,7 +266,29 @@ export class CreateComponent implements OnInit {
                     },
                 ];
             });
+=======
+        }, 300);
+        }).catch(err => {
+            this.listQrService = [{
+                code: '',
+                name: '---Vui lòng chọn dịch vụ---'
+            }];
+        });
+>>>>>>> Stashed changes
     }
+    // onUploadExcel () {
+    //     //TODO process excel
+    //     // [
+    //     //     {
+    //     //     "userName": "Nguy",
+    //     //     "userCif": "3457789"
+    //     //     },
+    //     //     {
+    //     //     "userName": "name 7",
+    //     //     "userCif": "45456744"
+    //     //     }
+    //     // ]
+    // }
     onSubmit() {
         this.submitted = true;
         console.log('=this.dataForm', this.dataForm);
