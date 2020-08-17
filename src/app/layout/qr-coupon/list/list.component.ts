@@ -108,8 +108,9 @@ export class ListComponent implements OnInit {
 
     listData = [];
 
-
+// chuyển dữ liệu profile trong localStorage sang dạng json
     profile: any = JSON.parse(localStorage.getItem('profile'));
+    // gọi th roleName ra để xét điều kiện cho nó
     roleName: any = this.profile.role.roleName;
 
     ngOnInit() {
@@ -206,6 +207,7 @@ export class ListComponent implements OnInit {
     }
 
     deleteItem(event, index, itemId) {
+        console.log('del', index, itemId);
         Swal.fire({
             title: 'Bạn có chắc chắn xoá?',
             text: 'Dữ liệu đã xoá không thể khôi phục lại',
@@ -217,7 +219,7 @@ export class ListComponent implements OnInit {
             // nếu truyền  vào value thì sẽ call api và thông báo đã xóa
             if (result.value) {
                 this.ncbService
-                    .deleteQRServer(itemId)
+                    .deleteQRCoupon(itemId)
                     .then((res) => {
                         if (res.json().code === '00') {
                             Swal.fire(
