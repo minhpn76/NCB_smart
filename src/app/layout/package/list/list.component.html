@@ -1,7 +1,5 @@
 <div>
-    <app-page-header 
-        [heading]="'Gói sản phẩm'"
-        [url_heading]="'/package'">
+    <app-page-header [heading]="'Gói sản phẩm'" [url_heading]="'/package'">
     </app-page-header>
     <!-- {{'Admin_function.DS_province' | translate}} -->
     <div class="row">
@@ -9,22 +7,20 @@
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Mã gói sản phẩm:</label>
                 <div class="col-sm-6">
-                    <input class="form-control col-lg-12"
-                    itrim type="text" id="search"
-                    [(ngModel)]="re_search.prd"
-                    (keydown)="keyDownFunction($event)"
-                    placeholder="Mã gói sản phẩm">
+                    <input class="form-control col-lg-12" itrim type="text" id="search" [(ngModel)]="re_search.prd"
+                        (keydown)="keyDownFunction($event)" placeholder="Mã gói sản phẩm">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Loại phí:</label>
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.tranType" (change)="keyDownFunction($event)">
-                        <option *ngFor="let status of listTranType" [value]="status.code" selected="selected">{{status.name}}</option>
+                        <option *ngFor="let status of listTranType" [value]="status.code" selected="selected">
+                            {{status.name}}</option>
 
                     </select>
                 </div>
-                
+
             </div>
         </div>
         <div class="col-md-6">
@@ -32,23 +28,25 @@
                 <label for="search" class="col-sm-4 col-form-label">Kiểu loại:</label>
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.typeId" (change)="keyDownFunction($event)">
-                        <option *ngFor="let status of listTypeId" [value]="status.code" selected="selected">{{status.name}}</option>
+                        <option *ngFor="let status of listTypeId" [value]="status.code" selected="selected">
+                            {{status.name}}</option>
 
                     </select>
                 </div>
-                
+
             </div>
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.status">
-                        <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
+                        <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">
+                            {{status.name}}</option>
 
                     </select>
                 </div>
-                
+
             </div>
-        </div> 
+        </div>
         <div class="col-md-12 text-center">
             <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
                 <i class="fa fa-search"></i>&nbsp;Tìm kiếm
@@ -57,9 +55,8 @@
                 <i class="fa fa-plus"></i>&nbsp;Thêm mới
             </a>
             <button class="btn btn-success" (click)="exportExcel()">
-                <i *ngIf="isProcessLoadExcel === 1"
-                    class="fa fa-spinner font-20"></i>
-                <i  *ngIf="isProcessLoadExcel === 0" class="fa fa-file"></i>&nbsp;Xuất excel
+                <i *ngIf="isProcessLoadExcel === 1" class="fa fa-spinner font-20"></i>
+                <i *ngIf="isProcessLoadExcel === 0" class="fa fa-file"></i>&nbsp;Xuất excel
             </button>
         </div>
     </div>
@@ -67,10 +64,10 @@
         <div class="col-md-8">
             <div class="form-group row">
                 <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
-                    <select class="form-control col-sm-2" [(ngModel)]="re_search.size" (change)="changePageSize()">
-                        <option *ngFor="let page_size of listPageSize" [value]="page_size">{{page_size}}</option>
-                    </select> &nbsp;
-                    <label for="search" class=" col-form-label">Bản ghi</label>  
+                <select class="form-control col-sm-2" [(ngModel)]="re_search.size" (change)="changePageSize()">
+                    <option *ngFor="let page_size of listPageSize" [value]="page_size">{{page_size}}</option>
+                </select> &nbsp;
+                <label for="search" class=" col-form-label">Bản ghi</label>
             </div>
         </div>
         <div class="col-md-4">
@@ -86,130 +83,85 @@
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col"
-                        [class.active]="order === 'prd'"
-                        (click)="setOrder('prd')"
-                    >
-                        Mã gói sản phẩm
-                        <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span>
-                    </th>
-                    <th scope="col"
-                        [class.active]="order === 'prdName'"
-                        (click)="setOrder('prdName')"
-                    >
-                        Tên gói sản phẩm
-                        <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span>
-                    </th>
-                    <th scope="col"
-                        [class.active]="order === 'limitDaily'"
-                        (click)="setOrder('limitDaily')"
-                    >
-                        Hạn mức / ngày
-                        <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span>
-                    </th>
-                    <th scope="col"
-                        [class.active]="order === 'limitFaceid'"
-                        (click)="setOrder('limitFaceid')"
-                    >
-                        Hạn mức / faceid
-                        <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span>
-                    </th>
-                    <th scope="col"
-                        [class.active]="order === 'limitFinger'"
-                        (click)="setOrder('limitFinger')"
-                    >
-                        Hạn mức / finger
-                        <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span>
-                    </th>
-                    <!-- <th scope="col">Loại gói</th> -->
-                    <!-- <th scope="col">Tỉ lệ (%)</th> -->
-                    <th scope="col"
-                        [class.active]="order === 'customerType'"
-                        (click)="setOrder('customerType')"
-                    >
-                        Loại khách hàng
-                        <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span>
-                    </th>
-                    <th scope="col"
-                        [class.active]="order === 'ccy'"
-                        (click)="setOrder('ccy')"
-                    >
-                        Tiền tệ
-                        <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span>
-                    </th>
-                    <th scope="col"
-                        [class.active]="order === 'tranType'"
-                        (click)="setOrder('tranType')"
-                    >
-                        Loại giao dịch
-                        <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span>
-                    </th>
-                    <th scope="col"
-                        [class.active]="order === 'typeId'"
-                        (click)="setOrder('typeId')"
-                    >
-                        Chi tiết giao dịch
-                        <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span>
-                    </th>
-                    <th scope="col"
-                        [class.active]="order === 'quantity'"
-                        (click)="setOrder('quantity')"
-                    >
-                        Số lượng
-                        <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span>
-                    </th>
-                    <th scope="col"
-                        [class.active]="order === 'min'"
-                        (click)="setOrder('min')"
-                    >
-                        Số tiền tối thiểu / giao dịch
-                        <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span>
-                    </th>
-                    <th scope="col"
-                        [class.active]="order === 'max'"
-                        (click)="setOrder('max')"
-                    >
-                        Số tiền tối đa / giao dịch
-                        <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span>
-                    </th>
-                    <th scope="col"
-                        [class.active]="order === 'createdBy'"
-                        (click)="setOrder('createdBy')"
-                    >
-                        Ngừời tạo
-                        <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span>
-                    </th>
-                    <th scope="col"
-                        [class.active]="order === 'createdDate'"
-                        (click)="setOrder('createdDate')"
-                    >
-                        Ngày tạo
-                        <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span>
-                    </th>
-                    <th scope="col"
-                        [class.active]="order === 'status'"
-                        (click)="setOrder('status')"
-                    >
-                        Trạng thái
-                        <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span>
-                    </th>
-                    <th scope="col">Thao tác</th>
+                        <th scope="col">STT</th>
+                        <th scope="col" [class.active]="order === 'prd'" (click)="setOrder('prd')">
+                            Mã gói sản phẩm
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'prdName'" (click)="setOrder('prdName')">
+                            Tên gói sản phẩm
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'limitDaily'" (click)="setOrder('limitDaily')">
+                            Hạn mức / ngày
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'limitFaceid'" (click)="setOrder('limitFaceid')">
+                            Hạn mức / faceid
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'limitFinger'" (click)="setOrder('limitFinger')">
+                            Hạn mức / finger
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <!-- <th scope="col">Loại gói</th> -->
+                        <!-- <th scope="col">Tỉ lệ (%)</th> -->
+                        <th scope="col" [class.active]="order === 'customerType'" (click)="setOrder('customerType')">
+                            Loại khách hàng
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'ccy'" (click)="setOrder('ccy')">
+                            Tiền tệ
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'tranType'" (click)="setOrder('tranType')">
+                            Loại giao dịch
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'typeId'" (click)="setOrder('typeId')">
+                            Chi tiết giao dịch
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'quantity'" (click)="setOrder('quantity')">
+                            Số lượng
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'min'" (click)="setOrder('min')">
+                            Số tiền tối thiểu / giao dịch
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'max'" (click)="setOrder('max')">
+                            Số tiền tối đa / giao dịch
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'createdBy'" (click)="setOrder('createdBy')">
+                            Ngừời tạo
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'createdDate'" (click)="setOrder('createdDate')">
+                            Ngày tạo
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'status'" (click)="setOrder('status')">
+                            Trạng thái
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col">Thao tác</th>
 
                     </tr>
                 </thead>
@@ -220,45 +172,45 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan=17>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor ="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index">
-                        
-                        <th scope="row"  style="cursor: pointer;">
+                    <tr *ngFor="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index">
+
+                        <th scope="row" style="cursor: pointer;">
                             {{ i+1 }}
                         </th>
-                        <td  style="cursor: pointer;">{{data?.prd}}</td>
-                        <td  style="cursor: pointer;">{{data?.prdName}}</td>
-                        <td  style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitDaily)}}</td>
-                        <td  style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitFaceid)}}</td>
-                        <td  style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitFinger)}}</td>
+                        <td style="cursor: pointer;">{{data?.prd}}</td>
+                        <td style="cursor: pointer;">{{data?.prdName}}</td>
+                        <td style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitDaily)}}</td>
+                        <td style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitFaceid)}}</td>
+                        <td style="cursor: pointer;">{{helper.currencyFormatDE(data?.limitFinger)}}</td>
                         <!-- <td>{{data?.prdName}}</td> -->
                         <!-- <td  style="cursor: pointer;">{{data?.percentage}}</td> -->
-                        <td  style="cursor: pointer;">{{data?.customerType}}</td>
-                        
-                        <td  style="cursor: pointer;">{{data?.ccy}}</td>
-                        <td  style="cursor: pointer;">
+                        <td style="cursor: pointer;">{{data?.customerType}}</td>
+
+                        <td style="cursor: pointer;">{{data?.ccy}}</td>
+                        <td style="cursor: pointer;">
                             <span *ngIf="data?.tranType === 'CK'">Chuyển khoản</span>
-                            <span  *ngIf="data?.tranType === 'TK'">Tiết kiệm</span>
-                            <span  *ngIf="data?.tranType === 'TT'">Thanh toán</span>
-                            <span  *ngIf="data?.tranType === 'TOPUP'">Nạp tiền</span>
-                            <span  *ngIf="data?.tranType === 'QLTK'">Phí thường niên</span>
+                            <span *ngIf="data?.tranType === 'TK'">Tiết kiệm</span>
+                            <span *ngIf="data?.tranType === 'TT'">Thanh toán</span>
+                            <span *ngIf="data?.tranType === 'TOPUP'">Nạp tiền</span>
+                            <span *ngIf="data?.tranType === 'QLTK'">Phí thường niên</span>
                         </td>
-                        <td  style="cursor: pointer;">
+                        <td style="cursor: pointer;">
                             <span *ngIf="data?.typeId === 'IBT'">Chuyển khoản LNH</span>
-                            <span  *ngIf="data?.typeId === 'URT'">Chuyển khoản nội bộ</span>
-                            <span  *ngIf="data?.typeId === 'ISL'">CK 247</span>
-                            <span  *ngIf="data?.typeId === 'OW6'">Chuyển tiền vãng lai</span>
-                            <span  *ngIf="data?.typeId === 'BILL'">Thanh toán hóa đơn</span>
-                            <span  *ngIf="data?.typeId === 'TOP'">Nạp tiền điện thoại</span>
+                            <span *ngIf="data?.typeId === 'URT'">Chuyển khoản nội bộ</span>
+                            <span *ngIf="data?.typeId === 'ISL'">CK 247</span>
+                            <span *ngIf="data?.typeId === 'OW6'">Chuyển tiền vãng lai</span>
+                            <span *ngIf="data?.typeId === 'BILL'">Thanh toán hóa đơn</span>
+                            <span *ngIf="data?.typeId === 'TOP'">Nạp tiền điện thoại</span>
                             <span *ngIf="data?.typeId === 'EWL'">Nạp ví điện tử</span>
                             <span *ngIf="data?.typeId === 'IZI'">Nạp tiền vào TK IZI</span>
                         </td>
-                        <td  style="cursor: pointer;">{{data?.quantity}}</td>
-                        <td  style="cursor: pointer;">{{helper.currencyFormatDE(data?.min)}}</td>
-                        <td  style="cursor: pointer;">{{helper.currencyFormatDE(data?.max)}}</td>
-                        <td  style="cursor: pointer;">{{data?.createdBy}}</td>
-                        <td  style="cursor: pointer;">{{data?.createdDate | date:'MM.dd.yyyy HH:mm'}}</td>
-                        
-                        <td  style="cursor: pointer;">
+                        <td style="cursor: pointer;">{{data?.quantity}}</td>
+                        <td style="cursor: pointer;">{{helper.currencyFormatDE(data?.min)}}</td>
+                        <td style="cursor: pointer;">{{helper.currencyFormatDE(data?.max)}}</td>
+                        <td style="cursor: pointer;">{{data?.createdBy}}</td>
+                        <td style="cursor: pointer;">{{data?.createdDate | date:'MM.dd.yyyy HH:mm'}}</td>
+
+                        <td style="cursor: pointer;">
                             <span *ngIf="data?.status === 'A'" class="badge badge-success">Active</span>
                             <span *ngIf="data?.status === 'D'" class="badge badge-danger">Deactive</span>
                         </td>
@@ -269,26 +221,21 @@
                             <span class="mr-2 cursor-pointer text-danger">
                                 <i class="fa fa-trash" (click)="deleteItem(1, i, data.id)"></i>
                             </span>
-                            
+
                         </td>
                     </tr>
-                    
+
                 </tbody>
             </table>
-        </div> 
+        </div>
     </div>
 
     <div class="row mt-3">
         <div class="col-md-12">
 
-            <ngb-pagination
-                *ngIf="totalSearch> 0 && totalSearch > re_search.page"
-                [collectionSize]="totalSearch"
-                [pageSize]="re_search.size"
-                [(page)]="re_search.page" [maxSize]="10" [rotate]="true"
-                [boundaryLinks]="true"
-                (pageChange)="loadPage($event)"
-                >
+            <ngb-pagination *ngIf="totalSearch> 0 && totalSearch > re_search.page" [collectionSize]="totalSearch"
+                [pageSize]="re_search.size" [(page)]="re_search.page" [maxSize]="10" [rotate]="true"
+                [boundaryLinks]="true" (pageChange)="loadPage($event)">
             </ngb-pagination>
         </div>
     </div>
@@ -307,15 +254,10 @@
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Mã gói:</label>
                     <div class="col-sm-6">
-                        <input
-                            [attr.disabled]="true"
-                            formControlName="prd"
-                            class="form-control col-lg-12"
-                            placeholder="Mã gói sản phẩm"
-                            [ngClass]="{ 'is-invalid': submitted &&
+                        <input [attr.disabled]="true" formControlName="prd" class="form-control col-lg-12"
+                            placeholder="Mã gói sản phẩm" [ngClass]="{ 'is-invalid': submitted &&
                             Form.prd.errors }">
-                        <div *ngIf="submitted && Form.prd.errors"
-                            class="invalid-feedback">
+                        <div *ngIf="submitted && Form.prd.errors" class="invalid-feedback">
                             <div *ngIf="Form.prd.errors.required">Mã sản phẩm là bắt buộc</div>
                             <div *ngIf="Form.prd.errors.pattern">Mã sản phẩm không hợp lệ</div>
                         </div>
@@ -324,20 +266,16 @@
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Tên gói sản phẩm:</label>
                     <div class="col-sm-6">
-                        <input
-                            formControlName="prdName"
-                            class="form-control col-lg-12"
-                            placeholder="Tên gói sản phẩm"
+                        <input formControlName="prdName" class="form-control col-lg-12" placeholder="Tên gói sản phẩm"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.prdName.errors }">
-                        <div *ngIf="submitted && Form.prdName.errors"
-                            class="invalid-feedback">
+                        <div *ngIf="submitted && Form.prdName.errors" class="invalid-feedback">
                             <div *ngIf="Form.prdName.errors.required">Tên gói sản phẩm là bắt buộc</div>
                             <div *ngIf="Form.prdName.errors.pattern">Tên gói sản phẩm không hợp lệ</div>
                         </div>
                     </div>
                 </div>
-                
+
                 <ngb-tabset>
                     <ngb-tab>
                         <ng-template ngbTabTitle>Quản lý tính năng</ng-template>
@@ -350,21 +288,30 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="CK" [checked]="this.dataForm.value.tranType ==='CK'">&nbsp;Chuyển khoản</label>
+                                        <label><input type="checkbox" value="CK"
+                                                [checked]="this.dataForm.value.tranType ==='CK'">&nbsp;Chuyển
+                                            khoản</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="TK" [checked]="this.dataForm.value.tranType ==='TK'">&nbsp;Tiết kiệm</label>
+                                        <label><input type="checkbox" value="TK"
+                                                [checked]="this.dataForm.value.tranType ==='TK'">&nbsp;Tiết kiệm</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="TT" [checked]="this.dataForm.value.tranType ==='TT'">&nbsp;Thanh toán</label>
+                                        <label><input type="checkbox" value="TT"
+                                                [checked]="this.dataForm.value.tranType ==='TT'">&nbsp;Thanh
+                                            toán</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="TOPUP" [checked]="this.dataForm.value.tranType ==='TOPUP'">&nbsp;Nạp tiền</label>
+                                        <label><input type="checkbox" value="TOPUP"
+                                                [checked]="this.dataForm.value.tranType ==='TOPUP'">&nbsp;Nạp
+                                            tiền</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="QLTK"  [checked]="this.dataForm.value.tranType ==='QLTK'">&nbsp;Phí thường niên</label>
+                                        <label><input type="checkbox" value="QLTK"
+                                                [checked]="this.dataForm.value.tranType ==='QLTK'">&nbsp;Phí thường
+                                            niên</label>
                                     </div>
-                                </div>            
+                                </div>
                             </div>
                             <div class="row" style="padding-top: 10px;">
                                 <div class="col-md-6">
@@ -374,37 +321,50 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="IBT" [checked]="this.dataForm.value.typeId ==='IBT'">&nbsp;CK liên ngân hàng</label>
+                                        <label><input type="checkbox" value="IBT"
+                                                [checked]="this.dataForm.value.typeId ==='IBT'">&nbsp;CK liên ngân
+                                            hàng</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="URT" [checked]="this.dataForm.value.typeId ==='URT'">&nbsp;CK nội bộ</label>
+                                        <label><input type="checkbox" value="URT"
+                                                [checked]="this.dataForm.value.typeId ==='URT'">&nbsp;CK nội bộ</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="ISL" [checked]="this.dataForm.value.typeId ==='ISL'">&nbsp;CK 247</label>
+                                        <label><input type="checkbox" value="ISL"
+                                                [checked]="this.dataForm.value.typeId ==='ISL'">&nbsp;CK 247</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="OW6" [checked]="this.dataForm.value.typeId ==='OW6'">&nbsp;Chuyển tiền vãng lai</label>
+                                        <label><input type="checkbox" value="OW6"
+                                                [checked]="this.dataForm.value.typeId ==='OW6'">&nbsp;Chuyển tiền vãng
+                                            lai</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="BILL" [checked]="this.dataForm.value.typeId ==='BILL'">&nbsp;Thanh toán hóa đơn
+                                        <label><input type="checkbox" value="BILL"
+                                                [checked]="this.dataForm.value.typeId ==='BILL'">&nbsp;Thanh toán hóa
+                                            đơn
                                         </label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="TOP" [checked]="this.dataForm.value.typeId ==='TOP'">&nbsp;Nạp tiền điện thoại
+                                        <label><input type="checkbox" value="TOP"
+                                                [checked]="this.dataForm.value.typeId ==='TOP'">&nbsp;Nạp tiền điện
+                                            thoại
                                         </label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="EWL" [checked]="this.dataForm.value.typeId ==='EWL'">&nbsp;Nạp ví điện tử
+                                        <label><input type="checkbox" value="EWL"
+                                                [checked]="this.dataForm.value.typeId ==='EWL'">&nbsp;Nạp ví điện tử
                                         </label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="IZI" [checked]="this.dataForm.value.typeId ==='IZI'">&nbsp;Nạp tiền vào tkhoan IZI
+                                        <label><input type="checkbox" value="IZI"
+                                                [checked]="this.dataForm.value.typeId ==='IZI'">&nbsp;Nạp tiền vào
+                                            tkhoan IZI
                                         </label>
                                     </div>
                                 </div>
-                
+
                             </div>
-                            
+
                             <!-- <div class="form-group row">
                                 <label for="search" class="col-sm-4 col-form-label"></label>
                                 <div class="col-sm-6">
@@ -428,59 +388,45 @@
                                     <div id="ck" class="collapse">
                                         <div class="form-group">
                                             <label for="min">Hạn mức tối thiếu/giao dịch:</label>
-                                            <input 
-                                                currencyMask
-                                                [options]='optionCurrency' 
-                                                type="text" class="form-control" formControlName="min" id="min">
+                                            <input currencyMask [options]='optionCurrency' type="text"
+                                                class="form-control" formControlName="min" id="min">
                                             <i>Năm mươi nghìn đồng</i>
                                         </div>
                                         <div class="form-group">
                                             <label for="max">Hạn mức tối đa/giao dịch:</label>
-                                            <input 
-                                                type="text" class="form-control" currencyMask
-                                                [options]='optionCurrency'  id="max"
-                                                formControlName="max"
-                                                >
+                                            <input type="text" class="form-control" currencyMask
+                                                [options]='optionCurrency' id="max" formControlName="max">
                                             <i>Một tỷ đồng</i>
                                         </div>
                                         <div class="form-group">
                                             <label for="limitDaily">Hạn mức tối đa/ngày:</label>
-                                            <input 
-                                                type="text" class="form-control" currencyMask
-                                                [options]='optionCurrency'  id="limitDaily"
-                                                formControlName="limitDaily"
-                                            >
+                                            <input type="text" class="form-control" currencyMask
+                                                [options]='optionCurrency' id="limitDaily" formControlName="limitDaily">
                                             <i>Năm mươi tỷ đồng</i>
                                         </div>
                                         <div class="form-group">
                                             <label for="limitFinger">Hạn mức giao dịch vân tay:</label>
-                                            <input 
-                                                type="text" class="form-control" currencyMask
-                                                [options]='optionCurrency'  id="limitFinger"
-                                                formControlName="limitFinger"
-                                            >
+                                            <input type="text" class="form-control" currencyMask
+                                                [options]='optionCurrency' id="limitFinger"
+                                                formControlName="limitFinger">
                                             <i>Năm mươi nghìn đồng</i>
                                         </div>
                                         <div class="form-group">
                                             <label for="limitFaceid">Hạn mức giao dịch Faceid:</label>
-                                            <input 
-                                                type="text" class="form-control" currencyMask
-                                                [options]='optionCurrency'  id="limitFaceid"
-                                                formControlName="limitFaceid"
-                                            >
+                                            <input type="text" class="form-control" currencyMask
+                                                [options]='optionCurrency' id="limitFaceid"
+                                                formControlName="limitFaceid">
                                             <i>Năm mươi nghìn đồng</i>
                                         </div>
                                         <div class="form-group">
                                             <label for="quantity">Số lần giao dịch:</label>
-                                            <input 
-                                                type="text" class="form-control" id="quantity"
-                                                formControlName="quantity"
-                                            >
+                                            <input type="text" class="form-control" id="quantity"
+                                                formControlName="quantity">
 
                                         </div>
                                     </div>
                                 </div>
-                
+
                             </div>
                             <!-- <div class="row" style="padding-top: 10px;">
                                 <div class="col-md-12">
@@ -519,7 +465,7 @@
                             </div> -->
                         </ng-template>
                     </ngb-tab>
-                    <ngb-tab >
+                    <ngb-tab>
                         <ng-template ngbTabTitle>Quản lý phí dịch vụ</ng-template>
                         <ng-template ngbTabContent>
                             <div class="row" style="padding-top: 30px;">
@@ -530,28 +476,38 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="QLTK" [checked]="this.dataForm.value.feeType ==='QLTK'">&nbsp;Phí thường niên theo tháng</label>
+                                        <label><input type="checkbox" value="QLTK"
+                                                [checked]="this.dataForm.value.feeType ==='QLTK'">&nbsp;Phí thường niên
+                                            theo tháng</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="SMS" [checked]="this.dataForm.value.feeType ==='SMS'">&nbsp;Phí thường niên SMS theo tháng</label>
+                                        <label><input type="checkbox" value="SMS"
+                                                [checked]="this.dataForm.value.feeType ==='SMS'">&nbsp;Phí thường niên
+                                            SMS theo tháng</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="IBT" [checked]="this.dataForm.value.feeType ==='IBT'">&nbsp;CK liên ngân hàng</label>
+                                        <label><input type="checkbox" value="IBT"
+                                                [checked]="this.dataForm.value.feeType ==='IBT'">&nbsp;CK liên ngân
+                                            hàng</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="URT" [checked]="this.dataForm.value.feeType ==='URT'">&nbsp;CK nội bộ</label>
+                                        <label><input type="checkbox" value="URT"
+                                                [checked]="this.dataForm.value.feeType ==='URT'">&nbsp;CK nội bộ</label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="ISL" [checked]="this.dataForm.value.feeType ==='ISL'">&nbsp;CK 247
+                                        <label><input type="checkbox" value="ISL"
+                                                [checked]="this.dataForm.value.feeType ==='ISL'">&nbsp;CK 247
                                         </label>
                                     </div>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="OW6" [checked]="this.dataForm.value.feeType ==='OW6'">&nbsp;Chuyển tiền vãng lai
+                                        <label><input type="checkbox" value="OW6"
+                                                [checked]="this.dataForm.value.feeType ==='OW6'">&nbsp;Chuyển tiền vãng
+                                            lai
                                         </label>
                                     </div>
                                 </div>
-                
-                
+
+
                             </div>
                             <div class="row" style="padding-top: 10px;">
                                 <div class="col-md-6">
@@ -562,30 +518,21 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="feeAmount">Số tiền thu phí:</label>
-                                        <input 
-                                            type="text" class="form-control" currencyMask
-                                            [options]='optionCurrency'  id="feeAmount"
-                                            formControlName="feeAmount"
-                                        >
+                                        <input type="text" class="form-control" currencyMask [options]='optionCurrency'
+                                            id="feeAmount" formControlName="feeAmount">
                                     </div>
                                     <div class="form-group">
                                         <label for="feeMax">Số tiền phí max:</label>
-                                        <input 
-                                            type="text" class="form-control" currencyMask
-                                            [options]='optionCurrency'  id="feeMax"
-                                            formControlName="feeMax"
-                                        >
+                                        <input type="text" class="form-control" currencyMask [options]='optionCurrency'
+                                            id="feeMax" formControlName="feeMax">
                                     </div>
                                     <div class="form-group">
                                         <label for="feeMin">Số tiền phí min:</label>
-                                        <input 
-                                            type="text" class="form-control" currencyMask
-                                            [options]='optionCurrency'  id="feeMin"
-                                            formControlName="feeMin"
-                                        >
+                                        <input type="text" class="form-control" currencyMask [options]='optionCurrency'
+                                            id="feeMin" formControlName="feeMin">
                                     </div>
                                 </div>
-                
+
                             </div>
                             <!-- <div class="row" style="padding-top: 10px;">
                                 <div class="col-md-6">
