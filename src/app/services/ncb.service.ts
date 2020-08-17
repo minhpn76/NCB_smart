@@ -1068,9 +1068,9 @@ export class NCBService {
     const url = `${API_URL}/qr-coupons/${id}`;
     return this.auth.authRequest({ url: url, method: 'GET' });
   }
-  deleteQRCoupon(body): Promise<any> {
-    const url = `${API_URL}/qr-coupons`;
-    return this.auth.authRequest({ url: url, params: body, method: 'DELETE' });
+  deleteQRCoupon(itemId): Promise<any> {
+    const url = `${API_URL}/qr-coupons/${itemId}`;
+    return this.auth.authRequest({ url: url, params: itemId, method: 'DELETE' });
   }
 // end Tiennx
 

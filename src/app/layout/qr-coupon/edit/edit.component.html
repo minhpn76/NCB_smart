@@ -1,42 +1,22 @@
 <div>
-<<<<<<< HEAD
-    <app-page-header [heading]="'Danh sách ưu đãi'"
-        [heading_second]="'Sửa
-        danh sách ưu đãi'" [url_heading]="'/qr-coupons'"> </app-page-header>
-=======
     <app-page-header
         [heading]="'Danh sách dịch vụ thanh toán giảm giá'"
         [heading_second]="'Sửa dịch vụ thanh toán giảm giá'"
         [url_heading]="'/qr-coupons'"
     >
     </app-page-header>
->>>>>>> adcbd3be4e8d4d8dd5239f90808f3e98ed23b860
     <div class="row">
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-<<<<<<< HEAD
-                    <label for="search" class="col-sm-4 col-form-label">Tên ưu đãi
-                        (<span class="text-danger">*</span>):</label>
-=======
                     <label for="create" class="col-sm-5 col-form-label"
                         >Tên ưu đãi (<span class="text-danger">*</span>):</label
                     >
->>>>>>> adcbd3be4e8d4d8dd5239f90808f3e98ed23b860
                     <div class="col-sm-7">
                         <input
                             formControlName="name"
                             class="form-control col-lg-12"
                             placeholder="Tên ưu đãi"
-<<<<<<< HEAD
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.name.errors }"
-                            />
-                        <div *ngIf="submitted && Form.name.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.serviceType.errors.required">Tên ưu đãi là bắt buộc</div>
-                            <div *ngIf="Form.serviceType.hasError('whitespace')">Tên ưu đãi không hợp lệ</div>
-=======
                             [ngClass]="{
                                 'is-invalid': submitted && Form.name.errors
                             }"
@@ -51,27 +31,10 @@
                             <div *ngIf="Form.name.hasError('whitespace')">
                                 Tên ưu đãi không hợp lệ
                             </div>
->>>>>>> adcbd3be4e8d4d8dd5239f90808f3e98ed23b860
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-<<<<<<< HEAD
-                    <label for="search" class="col-sm-4 col-form-label"> Mô tả
-                        (<span class="text-danger">*</span>):</label>
-                    <div class="col-sm-7">
-                        <input
-                            formControlName="desciption"
-                            class="form-control col-lg-12"
-                            placeholder="Mô tả ưu đãi"
-                            [ngClass]="{ 'is-invalid': submitted &&
-                            Form.desciption.errors }"
-                            />
-                        <div *ngIf="submitted && Form.title.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="Form.desciption.errors.required">Mô tả ưu đãi là bắt buộc</div>
-                            <div *ngIf="Form.titldesciptione.hasError('whitespace')">Mô tả ưu đãi không hợp lệ</div>
-=======
                     <label for="search" class="col-sm-5 col-form-label"
                         >Mô tả: (<span class="text-danger">*</span>):</label
                     >
@@ -95,7 +58,6 @@
                             <div *ngIf="Form.description.hasError('whitespace')">
                                 Mô tả đãi không hợp lệ
                             </div>
->>>>>>> adcbd3be4e8d4d8dd5239f90808f3e98ed23b860
                         </div>
                     </div>
                 </div>

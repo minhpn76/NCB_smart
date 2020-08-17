@@ -29,16 +29,6 @@ export class EditComponent implements OnInit {
   my_7: any = new Date();
   dataForm: FormGroup;
   submitted = false;
-<<<<<<< HEAD
-  qrCoupons: any;
-  listStatus: any = [
-    {
-      name: 'Kích hoạt',
-      code: 'A',
-    },
-    {
-      name: 'Chưa kích hoạt',
-=======
   itemId: any;
   private modalOp: NgbModalRef;
 
@@ -60,7 +50,6 @@ export class EditComponent implements OnInit {
     },
     {
       name: 'Deactive',
->>>>>>> adcbd3be4e8d4d8dd5239f90808f3e98ed23b860
       code: 'D',
     }
   ];
@@ -85,11 +74,7 @@ export class EditComponent implements OnInit {
     this.getQrService();
     this.loadDate();
     this.route.params.subscribe(params => {
-<<<<<<< HEAD
-      this.qrCoupons = params.itemId;
-=======
       this.itemId = params.itemId;
->>>>>>> adcbd3be4e8d4d8dd5239f90808f3e98ed23b860
     });
   }
 
@@ -126,13 +111,6 @@ export class EditComponent implements OnInit {
   ngOnInit() {
     this.getItem(this.itemId)
     this.dataForm = this.formBuilder.group({
-<<<<<<< HEAD
-      name: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      description: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      status: ['']
-    });
-    this.getItem(this.qrCoupons);
-=======
       name: [
         "",
         Validators.compose([
@@ -218,7 +196,6 @@ export class EditComponent implements OnInit {
       endDate: [this.mRatesDateS],
       user_coupon: []
     });
->>>>>>> adcbd3be4e8d4d8dd5239f90808f3e98ed23b860
   }
   get Form() {
     return this.dataForm.controls;
@@ -275,18 +252,6 @@ export class EditComponent implements OnInit {
       return;
     }
     const payload = {
-<<<<<<< HEAD
-      ...this.dataForm.value
-    };
-    this.ncbService.updateQRCoupon(this.qrCoupons , payload).then(result => {
-      if (result.json().status === 'D') {
-        this.toastr.success('Sửa thành công', 'Thành công!');
-        setTimeout(() => {
-          this.router.navigateByUrl('/qr-coupons');
-        }, 500);
-      } else {
-        this.toastr.error('Sửa thất bại', 'Thất bại!');
-=======
       name: this.dataForm.value.name,
       description: this.dataForm.value.description,
       code: this.dataForm.value.code,
@@ -360,7 +325,6 @@ export class EditComponent implements OnInit {
         var arraylist = XLSX.utils.sheet_to_json(worksheet, { raw: true });
         this.filelist = arraylist
         this.dataForm.value.user_coupon = arraylist
->>>>>>> adcbd3be4e8d4d8dd5239f90808f3e98ed23b860
       }
       this.temp.loading = false
       this.closeModal()
@@ -385,9 +349,6 @@ export class EditComponent implements OnInit {
       this.dataForm.patchValue({
         name: body.name,
         description: body.description,
-<<<<<<< HEAD
-        status: body.status
-=======
         code: body.code,
         objectUserType: body.objectUserType,
         discountType: body.discountType,
@@ -403,7 +364,6 @@ export class EditComponent implements OnInit {
         status: body.status,
         approveStatus: body.approveStatus,
         user_coupon: body.userCoupons
->>>>>>> adcbd3be4e8d4d8dd5239f90808f3e98ed23b860
       });
     }).catch(err => {
       this.toastr.error('Không lấy được dữ liệu', 'Thất bại');

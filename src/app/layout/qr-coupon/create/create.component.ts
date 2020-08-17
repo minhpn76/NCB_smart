@@ -49,10 +49,6 @@ export class CreateComponent implements OnInit {
         decimal: ",",
         align: "left",
     };
-<<<<<<< Updated upstream
-=======
-    listQrService: any = [ ]
->>>>>>> Stashed changes
 
     constructor(
         private formBuilder: FormBuilder,
@@ -60,26 +56,15 @@ export class CreateComponent implements OnInit {
         private modalService: NgbModal,
         private ncbService: NCBService,
         private helper: Helper,
-<<<<<<< HEAD
-        public router: Router
-<<<<<<< Updated upstream
-=======
         public router: Router,
         private excelService: ExcelService,
->>>>>>> adcbd3be4e8d4d8dd5239f90808f3e98ed23b860
     ) {
         this.getQrService();
         this.loadDate();
-=======
-
-    ) {
-        this.getQrService();
->>>>>>> Stashed changes
     }
 
     objectUserTypes = [
         {
-<<<<<<< Updated upstream
             code: "",
             name: "---Vui lòng chọn đối tượng áp dụng---",
         },
@@ -91,19 +76,6 @@ export class CreateComponent implements OnInit {
             name: "Giới hạn",
             code: "0",
         },
-=======
-            code:  '',
-            name: '---Vui lòng chọn đối tượng được áp dụng---'
-          },
-      {
-        name: 'Tất cả',
-        code: '1'
-      },
-      {
-        name: 'Giới hạn',
-        code: '0'
-      }
->>>>>>> Stashed changes
     ];
 
     discountTypes = [
@@ -123,7 +95,6 @@ export class CreateComponent implements OnInit {
 
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
-<<<<<<< Updated upstream
             name: [
                 "",
                 Validators.compose([
@@ -208,27 +179,6 @@ export class CreateComponent implements OnInit {
             startDate: [this.mRatesDateS_7],
             endDate:[this.mRatesDateS],
             user_coupon: []
-=======
-            name: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            desciption: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            code: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            objectUserType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            discountType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            serviceId: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            startDate: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            endDate: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            amount: ['', Validators.compose([this.helper.noWhitespaceValidator])],
-            paymentMin: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            paymentMax: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            amountMax: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            amountPercentage: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            amountPercustomer: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            totalNumberCoupon: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            numberPerCustomer: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            status: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            approveStatus: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            // user_coupon:[''];
->>>>>>> Stashed changes
         });
     }
     get Form() {
@@ -257,7 +207,6 @@ export class CreateComponent implements OnInit {
                 size: 1000,
                 page: 0,
             })
-<<<<<<< Updated upstream
             .then((result) => {
                 setTimeout(() => {
                     const body = result.json().body;
@@ -277,29 +226,7 @@ export class CreateComponent implements OnInit {
                     },
                 ];
             });
-=======
-        }, 300);
-        }).catch(err => {
-            this.listQrService = [{
-                code: '',
-                name: '---Vui lòng chọn dịch vụ---'
-            }];
-        });
->>>>>>> Stashed changes
     }
-    // onUploadExcel () {
-    //     //TODO process excel
-    //     // [
-    //     //     {
-    //     //     "userName": "Nguy",
-    //     //     "userCif": "3457789"
-    //     //     },
-    //     //     {
-    //     //     "userName": "name 7",
-    //     //     "userCif": "45456744"
-    //     //     }
-    //     // ]
-    // }
     onSubmit() {
         this.submitted = true;
         // stop here if form is invalid
@@ -365,24 +292,24 @@ export class CreateComponent implements OnInit {
       onUploadServer() {
         if (this.fileExcel.file) {
             this.temp.loading = true
-            let fileReader = new FileReader();    
-            fileReader.readAsArrayBuffer(this.fileExcel.file);     
-            fileReader.onload = (e) => {    
-                this.arrayBuffer = fileReader.result;    
-                var data = new Uint8Array(this.arrayBuffer);    
-                var arr = new Array();    
-                for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);    
-                var bstr = arr.join("");    
-                var workbook = XLSX.read(bstr, {type:"binary"});    
-                var first_sheet_name = workbook.SheetNames[0];    
-                var worksheet = workbook.Sheets[first_sheet_name];    
-                console.log(XLSX.utils.sheet_to_json(worksheet,{raw:true}));    
-                var arraylist = XLSX.utils.sheet_to_json(worksheet,{raw:true});     
+            let fileReader = new FileReader();
+            fileReader.readAsArrayBuffer(this.fileExcel.file);
+            fileReader.onload = (e) => {
+                this.arrayBuffer = fileReader.result;
+                var data = new Uint8Array(this.arrayBuffer);
+                var arr = new Array();
+                for(var i = 0; i != data.length; ++i) { arr[i] = String.fromCharCode(data[i]); }
+                var bstr = arr.join("");
+                var workbook = XLSX.read(bstr, {type:"binary"});
+                var first_sheet_name = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[first_sheet_name];
+                console.log(XLSX.utils.sheet_to_json(worksheet,{raw:true}));
+                var arraylist = XLSX.utils.sheet_to_json(worksheet,{raw:true});
                 this.filelist = arraylist
-                this.dataForm.value.user_coupon = arraylist           
-            }    
-            this.temp.loading = false 
-            this.closeModal()
+                this.dataForm.value.user_coupon = arraylist
+            }
+            this.temp.loading = false
+            this.closeModal();
         }
       }
 }
