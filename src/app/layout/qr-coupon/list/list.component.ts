@@ -82,11 +82,11 @@ export class ListComponent implements OnInit {
             code: '',
         },
         {
-            name: 'Chưa phê duyệt',
+            name: 'Phê duyệt',
             code: '1',
         },
         {
-            name: 'Phê duyệt',
+            name: 'Chưa phê duyệt',
             code: '0',
         },
     ];
@@ -107,8 +107,15 @@ export class ListComponent implements OnInit {
     ];
 
     listData = [];
+
+
+    profile: any = JSON.parse(localStorage.getItem('profile'));
+    roleName: any = this.profile.role.roleName;
+
     ngOnInit() {
+        console.log(localStorage.getItem('profile'));
         this.getListData(this.search);
+        console.log('abc', this.profile);
     }
     public loadDate(): void {
         this.my_7.setDate(this.my_7.getDate() - 7);
@@ -152,21 +159,7 @@ export class ListComponent implements OnInit {
         payload.endDate = this.helper.tranferDate(this.mRatesDateS_7);
         this.getListData(payload);
     }
-    // onApproved(payload) {
-    //     if (
-    //         payload.name !== '' ||
-    //         payload.status !== 'Phê duyệt' ||
-    //         payload.approveStatus !== '' ||
-    //         payload.discountType !== '' ||
-    //         payload.startDate !== '' ||
-    //         payload.endDate !== ''
-    //     ) {
-    //         payload.page = 0;
-    //     }
-    //     payload.startDate = this.helper.tranferDate(this.mRatesDateS);
-    //     payload.endDate = this.helper.tranferDate(this.mRatesDateS_7);
-    //     this.getListData(payload);
-    // }
+
     onQuickSearch(reponsive) {
         if (reponsive.name !== '' || reponsive.description !== '') {
             reponsive.page = 0;
@@ -214,56 +207,39 @@ export class ListComponent implements OnInit {
 
     deleteItem(event, index, itemId) {
         Swal.fire({
-          title: 'Bạn có chắc chắn xoá?',
-          text: 'Dữ liệu đã xoá không thể khôi phục lại',
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Đồng ý',
-          cancelButtonText: 'Không, trở lại'
+            title: 'Bạn có chắc chắn xoá?',
+            text: 'Dữ liệu đã xoá không thể khôi phục lại',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Không, trở lại',
         }).then((result) => {
-          if (result.value) {
-            this.ncbService.deleteQRServer(itemId).then(res => {
-              if (res.json().code === '00') {
-                Swal.fire(
-                  'Đã xoá!',
-                  'Dữ liệu đã xoá hoàn toàn.',
-                  'success'
-                );
-                this.onSearch(this.search);
-              } else {
-                this.toastr.error('Xoá thất bại', 'Thất bại');
-              }
-            }).catch(err => {
-
-            });
-
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-            Swal.fire(
-              'Huỷ bỏ',
-              'Dữ liệu được bảo toàn :)',
-              'error'
-            );
-          }
+            // nếu truyền  vào value thì sẽ call api và thông báo đã xóa
+            if (result.value) {
+                this.ncbService
+                    .deleteQRServer(itemId)
+                    .then((res) => {
+                        if (res.json().code === '00') {
+                            Swal.fire(
+                                'Đã xoá!',
+                                'Dữ liệu đã xoá hoàn toàn.',
+                                'success'
+                            );
+                            this.onSearch(this.search);
+                        } else {
+                            this.toastr.error('Xoá thất bại', 'Thất bại');
+                        }
+                    })
+                    .catch((err) => {});
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire('Huỷ bỏ', 'Dữ liệu được bảo toàn', 'error');
+            }
         });
-      }
+    }
 
 
-
-
-    // this.ncbService.updateQRServer(this.qrService , payload).then(result => {
-    //     if (result.json().code === '00') {
-    //       this.toastr.success('Sửa thành công', 'Thành công!');
-    //       setTimeout(() => {
-    //         this.router.navigateByUrl('/qr-services');
-    //       }, 500);
-    //     } else {
-    //       this.toastr.error('Sửa thất bại', 'Thất bại!');
-    //     }
-    //   }).catch(err => {
-    //     this.toastr.error(err.json().desciption, 'Thất bại!');
-    //   });
-    // }
-    approved(event, index, status) {
+    approved(id, approveStatus) {
+        console.log('demo', id, approveStatus);
         Swal.fire({
             title: 'Bạn có muốn phê duyệt?',
             type: 'info',
@@ -271,18 +247,32 @@ export class ListComponent implements OnInit {
             confirmButtonText: 'Đồng ý',
             cancelButtonText: 'Không, trở lại',
         }).then((result) => {
+            console.log('a', result);
             if (result.value) {
-                this.ncbService.updateQRCoupon(status, 1).then((res) => {
-                    if (res.json().code === '00') {
-                        Swal.fire(
-                            'Đã phê duyệt!',
-                            'success'
-                        );
-                        this.router.navigateByUrl('/qr-coupons');
-                    } else {
-                        this.toastr.error('Không phê duyệt', 'Thất bại');
-                    }
-                });
+                this.ncbService
+                    .updateQRCoupon(id, {
+                        approveStatus: '1',
+                    })
+                    .then((res) => {
+                        if (res.json().code === '00') {
+                            Swal.fire({
+                                title: 'Bạn đã phê duyệt thành công',
+                                type: 'success',
+                                confirmButtonText: 'Đồng ý',
+                            }).then(
+                                // nếu bấm đồng ý thì sẽ load lại danh sách
+                                res => {
+                                    if (res.value) {
+                                        // câu lệnh này hiển thị danh sách
+                                        this.onSearch(this.search);
+                                    }
+                                }
+                            );
+
+                        } else {
+                            this.toastr.error('Không phê duyệt', 'Thất bại');
+                        }
+                    });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
                 Swal.fire('Huỷ bỏ', 'Dữ liệu chưa được phê duyệt.', 'error');
             }

@@ -223,9 +223,9 @@
                             <span *ngIf="data?.status == 'D'" class="badge badge-danger">Chưa kích hoạt</span>
                         </td>
                         <td>
-                            <span *ngIf="data?.approveStatus == '1'" class="badge badge-success">Chưa phê
+                            <span *ngIf="data?.approveStatus == '1'" class="badge badge-success">Phê
                                 duyệt</span>
-                            <span *ngIf="data?.approveStatus == '0'" class="badge badge-danger">Phê duyệt</span>
+                            <span *ngIf="data?.approveStatus == '0'" class="badge badge-danger">Chưa phê duyệt</span>
                         </td>
                         <td>
                             {{ data?.createdBy }}
@@ -240,9 +240,9 @@
                                 }}">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <span data-toggle="tool-tip" title="Phê duyệt"
+                            <span *ngIf="roleName == 'ROLE_ADMIN'" data-toggle="tool-tip" title="Phê duyệt"
                                 class="mr-2 cursor-pointer text-warning">
-                                <i class="fa fa-check" (click)="approved()"></i>
+                                <i class="fa fa-check" (click)="approved(data.id,data.approveStatus)"></i>
                             </span>
                             <span data-toggle="tool-tip" title="Xóa" class="mr-2 cursor-pointer text-danger">
                                 <i class="fa fa-trash" (click)="
