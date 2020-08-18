@@ -240,7 +240,7 @@
                                 }}">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <span *ngIf="roleName == 'ROLE_ADMIN'" data-toggle="tool-tip" title="Phê duyệt"
+                            <span *ngIf="objQRCoupon && objQRCoupon.isA === true" data-toggle="tool-tip" title="Phê duyệt"
                                 class="mr-2 cursor-pointer text-warning">
                                 <i class="fa fa-check" (click)="approved(data.id,data.approveStatus)"></i>
                             </span>

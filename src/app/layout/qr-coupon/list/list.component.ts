@@ -108,15 +108,15 @@ export class ListComponent implements OnInit {
 
     listData = [];
 
-// chuyển dữ liệu profile trong localStorage sang dạng json
-    profile: any = JSON.parse(localStorage.getItem('profile'));
-    // gọi th roleName ra để xét điều kiện cho nó
-    roleName: any = this.profile.role.roleName;
-
+    // chuyển dữ liệu profile trong localStorage sang dạng json
+    profile: any = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : null;
+    //TODO find QR_COUPON has isA === true
+    objQRCoupon: any = JSON.parse(this.profile.role.description).find((item) => {
+        return item.code === 'QR_COUPON'
+    })
+    
     ngOnInit() {
-        console.log(localStorage.getItem('profile'));
         this.getListData(this.search);
-        console.log('abc', this.profile);
     }
     public loadDate(): void {
         this.my_7.setDate(this.my_7.getDate() - 7);
