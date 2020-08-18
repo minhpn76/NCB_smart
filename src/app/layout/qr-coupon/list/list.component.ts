@@ -1,21 +1,22 @@
-import { Component, OnInit } from "@angular/core";
-import Swal from "sweetalert2";
-import { NCBService } from "../../../services/ncb.service";
-import { ToastrService } from "ngx-toastr";
-import { Helper } from "../../../helper";
-import { DebugHelper } from "protractor/built/debugger";
+import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+import { NCBService } from '../../../services/ncb.service';
+import { ToastrService } from 'ngx-toastr';
+import { Helper } from '../../../helper';
+import { DebugHelper } from 'protractor/built/debugger';
 import {
     NgbModal,
     NgbModalRef,
     NgbDateStruct,
     NgbDatepickerConfig,
     NgbTabChangeEvent,
-} from "@ng-bootstrap/ng-bootstrap";
+} from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
-    selector: "app-list",
-    templateUrl: "./list.component.html",
-    styleUrls: ["./list.component.scss"],
+    selector: 'app-list',
+    templateUrl: './list.component.html',
+    styleUrls: ['./list.component.scss'],
     providers: [NCBService, Helper],
 })
 export class ListComponent implements OnInit {
@@ -27,33 +28,34 @@ export class ListComponent implements OnInit {
     constructor(
         private ncbService: NCBService,
         public toastr: ToastrService,
-        public helper: Helper
+        public helper: Helper,
+        private router: Router
     ) {
         this.loadDate();
     }
     search: any = {
-        name: "",
-        status: "",
-        approveStatus: "",
-        discountType: "",
-        description: "",
-        startDate: "",
-        endDate: "",
+        name: '',
+        status: '',
+        approveStatus: '',
+        discountType: '',
+        description: '',
+        startDate: '',
+        endDate: '',
         size: 10,
         page: 0,
         previous_page: 0,
-        search: "",
+        search: '',
     };
     quicksearch: any = {
-        name: "",
-        description: "",
+        name: '',
+        description: '',
         size: 10,
         page: 0,
         previous_page: 0,
     };
     isProcessLoad: any = 0;
     totalSearch: any = 0;
-    order = "name";
+    order = 'name';
     listRole: any = [];
     arrExport: any = [];
     reverse = false;
@@ -61,52 +63,60 @@ export class ListComponent implements OnInit {
 
     listStatus: any = [
         {
-            name: "Tất cả",
-            code: "",
+            name: 'Tất cả',
+            code: '',
         },
         {
-            name: "Kích hoạt",
-            code: "A",
+            name: 'Kích hoạt',
+            code: 'A',
         },
         {
-            name: "Chưa kích hoạt",
-            code: "D",
+            name: 'Chưa kích hoạt',
+            code: 'D',
         },
     ];
 
     listStatusApproved: any = [
         {
-            name: "Tất cả",
-            code: "",
+            name: 'Tất cả',
+            code: '',
         },
         {
-            name: "Chưa phê duyệt",
-            code: "1",
+            name: 'Phê duyệt',
+            code: '1',
         },
         {
-            name: "Phê duyệt",
-            code: "0",
+            name: 'Chưa phê duyệt',
+            code: '0',
         },
     ];
 
     listDiscounts: any = [
         {
-            name: "Tất cả",
-            code: "",
+            name: 'Tất cả',
+            code: '',
         },
         {
-            name: "Phần trăm",
-            code: "1",
+            name: 'Phần trăm',
+            code: '1',
         },
         {
-            name: "Giá tiền",
-            code: "0",
+            name: 'Giá tiền',
+            code: '0',
         },
     ];
 
     listData = [];
+
+// chuyển dữ liệu profile trong localStorage sang dạng json
+    profile: any = JSON.parse(localStorage.getItem('profile'));
+    // gọi th roleName ra để xét điều kiện cho nó
+    roleName: any = this.profile.role.roleName;
+
     ngOnInit() {
+        console.log(localStorage.getItem('profile'));
         this.getListData(this.search);
+        console.log('abc', this.profile);
     }
     public loadDate(): void {
         this.my_7.setDate(this.my_7.getDate() - 7);
@@ -137,12 +147,12 @@ export class ListComponent implements OnInit {
     }
     onSearch(payload) {
         if (
-            payload.name !== "" ||
-            payload.status !== "" ||
-            payload.approveStatus !== "" ||
-            payload.discountType !== "" ||
-            payload.startDate !== "" ||
-            payload.endDate !== ""
+            payload.name !== '' ||
+            payload.status !== '' ||
+            payload.approveStatus !== '' ||
+            payload.discountType !== '' ||
+            payload.startDate !== '' ||
+            payload.endDate !== ''
         ) {
             payload.page = 0;
         }
@@ -150,8 +160,9 @@ export class ListComponent implements OnInit {
         payload.endDate = this.helper.tranferDate(this.mRatesDateS_7);
         this.getListData(payload);
     }
+
     onQuickSearch(reponsive) {
-        if (reponsive.name !== "" || reponsive.description !== "") {
+        if (reponsive.name !== '' || reponsive.description !== '') {
             reponsive.page = 0;
         }
         this.getListData(reponsive);
@@ -195,57 +206,77 @@ export class ListComponent implements OnInit {
         this.order = value;
     }
 
-    deleteItem(event, index, id) {
+    deleteItem(event, index, itemId) {
+        console.log('del', index, itemId);
         Swal.fire({
-            title: "Bạn có chắc chắn xoá?",
-            text: "Dữ liệu đã xoá không thể khôi phục lại",
-            type: "warning",
+            title: 'Bạn có chắc chắn xoá?',
+            text: 'Dữ liệu đã xoá không thể khôi phục lại',
+            type: 'warning',
             showCancelButton: true,
-            confirmButtonText: "Đồng ý",
-            cancelButtonText: "Không, trở lại",
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Không, trở lại',
         }).then((result) => {
+            // nếu truyền  vào value thì sẽ call api và thông báo đã xóa
             if (result.value) {
-                this.ncbService.deleteQRCoupon(id).then((res) => {
-                    if (res.json().code === "00") {
-                        Swal.fire(
-                            "Đã xoá!",
-                            "Dữ liệu đã xoá hoàn toàn.",
-                            "success"
-                        );
-                        this.onSearch(this.search);
-                    } else {
-                        this.toastr.error("Xoá dữ liệu thất bại", "Thất bại");
-                    }
-                });
+                this.ncbService
+                    .deleteQRCoupon(itemId)
+                    .then((res) => {
+                        if (res.json().code === '00') {
+                            Swal.fire(
+                                'Đã xoá!',
+                                'Dữ liệu đã xoá hoàn toàn.',
+                                'success'
+                            );
+                            this.onSearch(this.search);
+                        } else {
+                            this.toastr.error('Xoá thất bại', 'Thất bại');
+                        }
+                    })
+                    .catch((err) => {});
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                Swal.fire("Huỷ bỏ", "Dữ liệu được bảo toàn :)", "error");
+                Swal.fire('Huỷ bỏ', 'Dữ liệu được bảo toàn', 'error');
             }
         });
     }
 
-    approved(event, index, id) {
+
+    approved(id, approveStatus) {
+        console.log('demo', id, approveStatus);
         Swal.fire({
-            title: "Bạn có muốn phê duyệt?",
-            type: "info",
+            title: 'Bạn có muốn phê duyệt?',
+            type: 'info',
             showCancelButton: true,
-            confirmButtonText: "Đồng ý",
-            cancelButtonText: "Không, trở lại",
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Không, trở lại',
         }).then((result) => {
+            console.log('a', result);
             if (result.value) {
-                // this.ncbService.deleteQRCoupon(id).then((res) => {
-                //     if (res.json().code === '00') {
-                //         Swal.fire(
-                //             'Đã phê duyệt!',
-                //             'success'
-                //         );
-                //         this.onSearch(this.search);
-                //     } else {
-                //         this.toastr.error('Không phê duyệt', 'Thất bại');
-                //     }
-                // });
-                alert("thành công ");
+                this.ncbService
+                    .updateQRCoupon(id, {
+                        approveStatus: '1',
+                    })
+                    .then((res) => {
+                        if (res.json().code === '00') {
+                            Swal.fire({
+                                title: 'Bạn đã phê duyệt thành công',
+                                type: 'success',
+                                confirmButtonText: 'Đồng ý',
+                            }).then(
+                                // nếu bấm đồng ý thì sẽ load lại danh sách
+                                res => {
+                                    if (res.value) {
+                                        // câu lệnh này hiển thị danh sách
+                                        this.onSearch(this.search);
+                                    }
+                                }
+                            );
+
+                        } else {
+                            this.toastr.error('Không phê duyệt', 'Thất bại');
+                        }
+                    });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                Swal.fire("Huỷ bỏ", "Dữ liệu chưa được phê duyệt.", "error");
+                Swal.fire('Huỷ bỏ', 'Dữ liệu chưa được phê duyệt.', 'error');
             }
         });
     }
