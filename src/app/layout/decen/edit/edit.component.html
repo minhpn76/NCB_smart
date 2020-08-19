@@ -62,7 +62,7 @@
                                             (click)="clickSetRole($event, 1)"
                                             type="checkbox" 
                                         >
-                                        <label class="custom-control-label" style="font-size: 17px" for="add_{{role.code}}">CREATE {{ role.code }}</label>
+                                        <label class="custom-control-label" style="font-size: 17px" for="add_{{role.code}}">TẠO MỚI {{ role.code }}</label>
                                     </div>
                                 </td>
                                 <td>
@@ -74,7 +74,7 @@
                                             (click)="clickSetRole($event, 2)"
                                             [checked]="role.isR"
                                         >
-                                        <label class="custom-control-label" style="font-size: 17px" for="read_{{role.code}}">READ {{ role.code }}</label>
+                                        <label class="custom-control-label" style="font-size: 17px" for="read_{{role.code}}">ĐỌC {{ role.code }}</label>
                                     </div>
                                 </td>
                                 <td>
@@ -86,7 +86,7 @@
                                             (click)="clickSetRole($event, 3)"
                                             [checked]="role.isU"
                                         >
-                                        <label class="custom-control-label" style="font-size: 17px" for="update_{{role.code}}">UPDATE {{ role.code }}</label>
+                                        <label class="custom-control-label" style="font-size: 17px" for="update_{{role.code}}">CẬP NHẬT {{ role.code }}</label>
                                     </div>
                                 </td>
                                 <td>
@@ -98,7 +98,7 @@
                                             (click)="clickSetRole($event, 4)"
                                             [checked]="role.isD"
                                         >
-                                        <label class="custom-control-label" style="font-size: 17px" for="delete_{{role.code}}">DELETE {{ role.code }}</label>
+                                        <label class="custom-control-label" style="font-size: 17px" for="delete_{{role.code}}">XÓA {{ role.code }}</label>
                                     </div>
                                 </td>
                             </tr>
