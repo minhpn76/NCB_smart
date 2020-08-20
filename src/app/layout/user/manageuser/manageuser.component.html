@@ -130,7 +130,7 @@
                             <div *ngIf="Form.re_password.errors.required">Nhập lại mật khẩu là bắt buộc</div>
                             <div *ngIf="Form.re_password.errors.pattern">Mật khẩu không khớp</div>
                             <div *ngIf="Form.re_password.errors.mustMatch">Mật khẩu không khớp</div>
-                            <div *ngIf="Form.re_password.hasError('whitespace')">Mật khẩu không khớp</div>
+                            <div *ngIf="Form.re_password.hasError('whitespace')">Mật khẩu không đúng định dạng</div>
                         </div>
                     </div>
                 </div>
@@ -143,14 +143,16 @@
                             class="form-control col-lg-12"
                             placeholder="Số điện thoại"
                             minlength="10"
+                            maxlength="10"
                             pattern="^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$"
                             [ngClass]="{ 'is-invalid': Form.phone.errors}"
                             
                         >
                         <div *ngIf="submitted && Form.phone.errors" class="invalid-feedback">
                             <div *ngIf="Form.phone.hasError('whitespace')">Số điện thoại không đúng định dạng</div>
-                            <div *ngIf="Form.phone.errors.minlength">Số điện thoại không đúng định dạng</div>
+                            <div *ngIf="Form.phone.errors.minlength">Số điện thoại quá ngắn</div>
                             <div *ngIf="Form.phone.errors.maxlength">Số điện thoại quá dài</div>
+                            <!-- <div *ngIf="Form.phone.errors.pattern">số điện thoại không đúng định dạng</div> -->
                         </div>
                     </div>
                 </div>
@@ -169,6 +171,7 @@
                         <div *ngIf="submitted && Form.email.errors" class="invalid-feedback">
                             <div *ngIf="Form.email.errors.required ">Email là bắt buộc</div>
                             <div *ngIf="Form.email.errors.pattern">Email không đúng định dạng</div>
+                            <div *ngIf="Form.email.hasError('whitespace')">Email không đúng định dạng</div>
                         </div>
                     </div>
                 </div>

@@ -104,17 +104,17 @@
 
                         </td>
                         <td>
-                            <a class="mr-2 cursor-pointer text-blue" routerLink="/bank-tranfer/edit/{{data.bankCode}}">
+                            <a data-toggle="tool-tip" title="Chỉnh sửa" class="mr2- cursor-pointer text-blue" routerLink="/bank-tranfer/edit/{{data.bankCode}}">
                                 <i class="fa fa-edit"></i>
                             </a>
 
-                            <span class="mr-2 cursor-pointer text-warning"  *ngIf="data.status == 'A'">
+                            <span data-toggle="tool-tip" title="Thay đổi trạng thái" class="mr-2 cursor-pointer text-warning"  *ngIf="data.status == 'A'">
                                 <i class="fa fa-recycle" (click)="deActiveItem(1, i, data.bankCode)"></i>
                             </span>
-                            <span class="mr-2 cursor-pointer text-warning"  *ngIf="data.status == 'D'">
+                            <span data-toggle="tool-tip" title="Thay đổi trạng thái" class="mr-2 cursor-pointer text-warning"  *ngIf="data.status == 'D'">
                                 <i class="fa fa-recycle" (click)="updateActiveItem(1, i, data)"></i>
                             </span>
-                            <span class="mr-2 cursor-pointer text-danger">
+                            <span data-toggle="tool-tip" title="Xóa" class="mr-2 cursor-pointer text-danger">
                                 <i class="fa fa-trash" (click)="deleteItem(1, i, data.bankCode)"></i>
                             </span>
                             

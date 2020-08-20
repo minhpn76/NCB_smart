@@ -228,6 +228,7 @@ export class ListComponent implements OnInit {
     return;
   }
 
+  // gán nút enter
   keyDownFunction(event) {
     if (event.keyCode === 13) {
       this.onSearch(this.re_search);
