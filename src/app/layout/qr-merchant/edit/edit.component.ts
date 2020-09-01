@@ -17,7 +17,7 @@ import { ExcelService } from '../../../services/excel.service';
 import { async } from '@angular/core/testing';
 
 @Component({
-  selector: "qr-coupons-edit",
+  selector: "qr-merchants-edit",
   templateUrl: "./edit.component.html",
   styleUrls: ["./edit.component.scss"],
   providers: [Helper, NCBService, ExcelService],
@@ -140,7 +140,7 @@ export class EditComponent implements OnInit {
       });
   }
   resetForm() {
-    this.router.navigateByUrl("/qr-coupons");
+    this.router.navigateByUrl("/qr-merchants");
   }
   closeModal() {
     this.modalOp.close();
