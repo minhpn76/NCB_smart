@@ -41,7 +41,8 @@ const routes: Routes = [
             // create by tiennx
             {path: 'qr-services', loadChildren: () => import('./qr-server/qr-service.module').then(m => m.QrServiceModule)},
 
-            {path: 'qr-coupons', loadChildren: () => import('./qr-coupon/qr-coupon.module').then(m => m.QrCouponModule)}
+            {path: 'qr-coupons', loadChildren: () => import('./qr-coupon/qr-coupon.module').then(m => m.QrCouponModule)},
+            {path: 'qr-merchants', loadChildren: () => import('./qr-merchant/qr-merchant.module').then(m => m.QrMerchantModule)}
         ]
     }
 ];

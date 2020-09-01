@@ -1,0 +1,81 @@
+<div>
+    <app-page-header
+        [heading]="'Danh sách nhà cung cấp thanh toán QR'"
+        [heading_second]="'Sửa nhà cung cấp thanh toán'"
+        [url_heading]="'/qr-merchants'"
+    >
+    </app-page-header>
+    <div class="row">
+        <div class="col-md-8">
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="create" class="col-sm-5 col-form-label"
+                        >Tên nhà cung cấp (<span class="text-danger">*</span>):</label
+                    >
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="name"
+                            class="form-control col-lg-12"
+                            placeholder="Tên nhà cung cấp"
+                            [ngClass]="{
+                                'is-invalid': submitted && Form.name.errors
+                            }"
+                        />
+                        <div
+                            *ngIf="submitted && Form.name.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="Form.name.errors.required">
+                                Tên nhà cung cấp là bắt buộc
+                            </div>
+                            <div *ngIf="Form.name.hasError('whitespace')">
+                                Tên nhà cung cấp không hợp lệ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-5 col-form-label"
+                        >Địa chỉ: (<span class="text-danger">*</span>):</label
+                    >
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="address"
+                            class="form-control col-lg-12"
+                            placeholder="Địa chỉ"
+                            [ngClass]="{
+                                'is-invalid':
+                                    submitted && Form.address.errors
+                            }"
+                        />
+                        <div
+                            *ngIf="submitted && Form.address.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="Form.address.errors.required">
+                                Địa chỉ là bắt buộc
+                            </div>
+                            <div *ngIf="Form.description.hasError('whitespace')">
+                                Địa chỉ không hợp lệ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="form-group row">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3">
+                            <i class="fa fa-save"></i>&nbsp;Lưu lại
+                        </button>
+                        <button class="btn btn-light" (click)="resetForm()">
+                            <i class="fa fa-close"></i>&nbsp;Huỷ
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

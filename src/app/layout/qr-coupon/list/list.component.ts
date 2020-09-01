@@ -227,7 +227,17 @@ export class ListComponent implements OnInit {
                                 'Dữ liệu đã xoá hoàn toàn.',
                                 'success'
                             );
-                            this.onSearch(this.search);
+                            let {page, size, search, previous_page } = this.search;
+                            let tempage: number = 0
+                            if (page > 0){
+                                tempage = page - 1
+                            }
+                            this.onSearch({
+                                page: tempage,
+                                size: size,
+                                search: search,
+                                previous_page: previous_page
+                            });
                         } else {
                             this.toastr.error('Xoá thất bại', 'Thất bại');
                         }

@@ -146,6 +146,14 @@
                             <span>Dịch vụ thanh toán giảm giá</span>
                         </a>
                     </li>
+                    <li *ngIf="khachhang.code === 'QR_MERCHANT' && khachhang.isAll === true">
+                        <a [routerLink]="['/qr-merchants']"
+                            [routerLinkActive]="['router-link-active']"
+                            class="list-group-item">
+                            <i class="fab fa-servicestack"></i>&nbsp;
+                            <span>Nhà cung cấp dịch vụ QR</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
         </div>

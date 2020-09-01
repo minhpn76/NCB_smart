@@ -1,0 +1,134 @@
+<div>
+    <app-page-header [heading]="'Danh sách nhà cung cấp thanh toán QR'"> </app-page-header>
+<div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Tên hoặc địa chỉ cung cấp:</label>
+                <div class="col-sm-6">
+                    <input class="form-control col-lg-12" (keydown)="keyDownFunction($event)"
+                        [(ngModel)]="search.search" itrim type="text" id="search" placeholder="Tên hoặc địa chỉ nhà cung cấp " />
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-12 text-center">
+            <button class="btn btn-primary mr-3" (click)="onSearch(search)">
+                <i class="fa fa-search"></i>&nbsp;Tìm kiếm
+            </button>
+            <a class="btn btn-warning mr-3" [routerLink]="['/qr-merchants/create']">
+                <i class="fa fa-plus"></i>&nbsp;Thêm mới
+            </a>
+            <a class="btn btn-primary" (click)="openModal(uploadMultiFile)">
+                <i class="fa fa-upload"></i>&nbsp;Tải lên danh sách
+            </a>
+        </div>
+    </div>
+    <!-- list -->
+    <div class="row mt-3">
+        <div class="col-md-12 table-responsive Flipped">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">
+                            Tên nhà cung cấp
+                        </th>
+                        <th scope="col">
+                            Địa chỉ nhà cung cấp
+                        </th>
+                        <th scope="col">Thao tác</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngIf="isProcessLoad == 1" class="text-center">
+                        <td colspan="4">
+                            <i class="fa fa-spin fa-spinner font-30"></i>
+                        </td>
+                    </tr>
+                    <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
+                        <td colspan="4">Không tìm thấy kết quả</td>
+                    </tr>
+                    <tr *ngFor="let data of listData; let i = index">
+                        <td scope="row">
+                            {{ i + 1 }}
+                        </td>
+
+                        <td>{{ data?.name }}</td>
+                        <td>{{ data?.address }}</td>
+                        <td>
+                            <a data-toggle="tool-tip" title="Chỉnh sửa" class="mr-2 cursor-pointer text-blue"
+                                routerLink="/qr-merchants/edit/{{
+                                    data.id
+                                }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <span data-toggle="tool-tip" title="Xóa" class="mr-2 cursor-pointer text-danger">
+                                <i class="fa fa-trash" (click)="
+                                        deleteItem(1, i, data.id)
+                                    "></i>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <ngb-pagination *ngIf="totalSearch > 0 && totalSearch > search.size" [collectionSize]="totalSearch"
+                [pageSize]="search.size" [(page)]="search.page" [boundaryLinks]="true" [maxSize]="10"
+                (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>
+<ng-template #uploadMultiFile let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title">
+            <i class="icon-plus"></i>
+            Tải lên danh sách nhà cung cấp dịch vụ
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Crossclick')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Bước 1:</h5>
+                <span>Download template mẫu: <a
+                        href="assets/template-excel/Template_Merchants_Coupon.xlsx"><i>tại
+                            đây</i></a></span>
+            </div>
+            <div class="col-md-12 mt-3">
+                <h5>Bước 2:</h5>
+                <div>
+                    <p-fileUpload
+                        #fubauto
+                        name="Excel"
+                        accept=".csv,.xlsx,.xls"
+                        customUpload="true"
+                        mode="basic"
+                        maxFileSize="1000000"
+                        (uploadHandler)="onUploadFile($event)"
+                        auto="true"
+                        iconLabel="fa-cloud-upload"
+                        chooseLabel="Chọn tệp tin"></p-fileUpload>
+                    <p *ngIf="fileExcel.name" class="m-b-0 text-primary">{{
+                        fileExcel.name }}</p>
+                </div>
+            </div>
+            <div class="col-md-12 mt-3 text-right">
+                <button [disabled]="!fileExcel.name || temp.loading"
+                    (click)="onUploadServer()" class="btn btn-primary"
+                    type="submit">
+                    <i class="fa fa-save"></i> Cập nhật
+                    <i *ngIf="temp.loading" class="fa fa-spin fa-spinner"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>

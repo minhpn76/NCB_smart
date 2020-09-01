@@ -1072,6 +1072,27 @@ export class NCBService {
     const url = `${API_URL}/qr-coupons/${itemId}`;
     return this.auth.authRequest({ url: url, params: itemId, method: 'DELETE' });
   }
-// end Tiennx
+
+//merchants
+getListQRMerchant(params): Promise<any> {
+  const url = `${API_URL}/qr-merchants`;
+  return this.auth.authRequest({ url: url, params: params, method: 'GET' });
+  }
+createQRMerchant(body): Promise<any> {
+  const url = `${API_URL}/qr-merchants`;
+  return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
+}
+updateQRMerchant(id: string, body: any): Promise<any> {
+  const url = `${API_URL}/qr-merchants/${id}`;
+  return this.auth.authRequest({ url: url, data: body, method: 'PUT', application: true });
+}
+detailQRMerchant(id: string): Promise<any> {
+  const url = `${API_URL}/qr-merchants/${id}`;
+  return this.auth.authRequest({ url: url, method: 'GET' });
+}
+deleteQRMerchant(itemId): Promise<any> {
+  const url = `${API_URL}/qr-merchants/${itemId}`;
+  return this.auth.authRequest({ url: url, params: itemId, method: 'DELETE' });
+}
 
 }

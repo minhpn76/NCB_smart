@@ -278,6 +278,18 @@ export class AppSettings {
             isA: false,
             menu: 'KHACH_HANG'
         },
+        {
+            code: 'QR_MERCHANT',
+            name: 'Nhà cung cấp dịch vụ QR',
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            isA: false,
+            menu: 'KHACH_HANG'
+        }
+        
     ];
     public static getListRoles() {
         const getListRoles = localStorage.getItem('roles') ? JSON.parse(localStorage.getItem('roles')) : '';
