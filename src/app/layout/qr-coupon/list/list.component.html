@@ -119,7 +119,7 @@
                             <!-- <span [hidden]="reverse">▼</span>
                         <span [hidden]="!reverse">▲</span> -->
                         </th>
-                        <th scope="col" [class.active]="order === 'description'" (click)="setOrder('title')">
+                        <th scope="col" [class.active]="order === 'description'" (click)="setOrder('description')">
                             Mô tả
                             <!-- <span [hidden]="reverse">▼</span>
                         <span [hidden]="!reverse">▲</span> -->
@@ -136,7 +136,7 @@
                         <span [hidden]="!reverse">▲</span> -->
                         </th>
                         <th scope="col" [class.active]="order === 'discount'"
-                            (click)="setOrder('objectUserType')">
+                            (click)="setOrder('discount')">
                             Discount
                             <!-- <span [hidden]="reverse">▼</span>
                         <span [hidden]="!reverse">▲</span> -->
@@ -144,12 +144,12 @@
                         <!-- <th scope="col" [class.active]="order === 'service'" (click)="setOrder('discountType')">
                         Loại dịch vụ
                     </th> -->
-                        <th scope="col" [class.active]="order === 'state_date'" (click)="setOrder('status')">
+                        <th scope="col" [class.active]="order === 'state_date'" (click)="setOrder('state_date')">
                             Ngày bắt đầu hiệu lực
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th scope="col" [class.active]="order === 'end_date'" (click)="setOrder('status')">
+                        <th scope="col" [class.active]="order === 'end_date'" (click)="setOrder('end_date')">
                             Ngày hết hiệu lực
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
@@ -165,12 +165,12 @@
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th scope="col" [class.active]="order === 'createBy'" (click)="setOrder('status')">
+                        <th scope="col" [class.active]="order === 'createBy'" (click)="setOrder('createBy')">
                             Người tạo
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th scope="col" [class.active]="order === 'updateAt'" (click)="setOrder('status')">
+                        <th scope="col" [class.active]="order === 'updateAt'" (click)="setOrder('updateAt')">
                             Ngày phê duyệt
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
