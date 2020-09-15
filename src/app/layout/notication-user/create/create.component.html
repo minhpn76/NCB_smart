@@ -1,0 +1,459 @@
+<div>
+    <app-page-header
+        [heading]="'Danh sách dịch vụ thanh toán giảm giá'"
+        [heading_second]="'Tạo mới dịch vụ thanh toán giảm giá'"
+        [url_heading]="'/qr-coupons'"
+    >
+    </app-page-header>
+    <div class="row">
+        <div class="col-md-8">
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="create" class="col-sm-5 col-form-label"
+                        >Tên ưu đãi (<span class="text-danger">*</span>):</label
+                    >
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="name"
+                            class="form-control col-lg-12"
+                            placeholder="Tên ưu đãi"
+                            [ngClass]="{
+                                'is-invalid': submitted && Form.name.errors
+                            }"
+                        />
+                        <div
+                            *ngIf="submitted && Form.name.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="Form.name.errors.required">
+                                Tên ưu đãi là bắt buộc
+                            </div>
+                            <div *ngIf="Form.name.hasError('whitespace')">
+                                Tên ưu đãi không hợp lệ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-5 col-form-label"
+                        >Mô tả: (<span class="text-danger">*</span>):</label
+                    >
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="description"
+                            class="form-control col-lg-12"
+                            placeholder="Mô tả ưu đãi"
+                            [ngClass]="{
+                                'is-invalid':
+                                    submitted && Form.description.errors
+                            }"
+                        />
+                        <div
+                            *ngIf="submitted && Form.description.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="Form.description.errors.required">
+                                Mô tả ưu đãi là bắt buộc
+                            </div>
+                            <div *ngIf="Form.description.hasError('whitespace')">
+                                Mô tả ưu đãi không hợp lệ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-5 col-form-label"
+                        >Mã ưu đãi (<span class="text-danger">*</span>):</label
+                    >
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="code"
+                            class="form-control col-lg-12"
+                            placeholder="Mã ưu đãi"
+                            [ngClass]="{
+                                'is-invalid': submitted && Form.code.errors
+                            }"
+                        />
+                        <div
+                            *ngIf="submitted && Form.code.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="Form.code.errors.required">
+                                Mã ưu đãi là bắt buộc
+                            </div>
+                            <div *ngIf="Form.code.hasError('whitespace')">
+                                Mã ưu đãi không hợp lệ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="create" class="col-sm-5 col-form-label"
+                        >Dịch vụ thanh toán (<span class="text-danger">*</span
+                        >):</label
+                    >
+                    <div class="col-sm-7">
+                        <select
+                            formControlName="serviceId"
+                            class="form-control"
+                        >
+                            <option
+                                *ngFor="let item of listQrService"
+                                [value]="item.code"
+                                selected="selected"
+                            >
+                                {{ item.name }}</option
+                            >
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="create" class="col-sm-5 col-form-label"
+                        >Đối tượng (<span class="text-danger">*</span>):</label
+                    >
+                    <div class="col-sm-7">
+                        <select
+                            formControlName="objectUserType"
+                            class="form-control"
+                        >
+                            <option
+                                *ngFor="let objectUserType of objectUserTypes"
+                                [value]="objectUserType.code"
+                                selected="selected"
+                            >
+                                {{ objectUserType.name }}</option
+                            >
+                        </select>
+                    </div>
+                </div>
+
+                <div
+                    class="form-group row"
+                    *ngIf="Form.objectUserType.value === '0'"
+                >
+                    <label for="create" class="col-sm-5 col-form-label"
+                        >Danh sách được áp dụng:</label
+                    >
+                    <div class="col-sm-7">
+                        <a class="btn btn-primary" (click)="openModal(uploadMultiFile)">
+                            <i class="fa fa-upload"></i>&nbsp;Tải lên danh sách
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="create" class="col-sm-5 col-form-label"
+                        >Kiểu ưu đãi giảm giá (<span class="text-danger">*</span
+                        >):</label
+                    >
+                    <div class="col-sm-7">
+                        <select
+                            formControlName="discountType"
+                            class="form-control"
+                        >
+                            <option
+                                *ngFor="let item of discountTypes"
+                                [value]="item.code"
+                                selected="selected"
+                            >
+                                {{ item.name }}</option
+                            >
+                        </select>
+                    </div>
+                </div>
+                <!-- discounttype = 0 -->
+                <div
+                    class="form-group row"
+                    *ngIf="Form.discountType.value === '0'"
+                >
+                    <label for="search" class="col-sm-5 col-form-label"
+                        >Số tiền được giảm giá (VND):</label
+                    >
+                    <div class="col-sm-7">
+                        <input
+                            currencyMask
+                            [options]='optionCurrency' 
+                            formControlName="amount"
+                            class="form-control col-lg-12"
+                            placeholder="Số tiền được giảm giá"
+                            [ngClass]="{
+                                'is-invalid': submitted && Form.amount.errors
+                            }"
+                        />
+                        <div
+                            *ngIf="submitted && Form.amount.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="Form.amount.hasError('whitespace')">
+                                Số tiền được giảm giá không hợp lệ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end -->
+                <!-- discountType = 1  -->
+                <div
+                    class="form-group row"
+                    *ngIf="Form.discountType.value === '1'"
+                >
+                    <label for="search" class="col-sm-5 col-form-label"
+                        >Số tiền tối đa được giảm giá:</label
+                    >
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="amountMax"
+                            currencyMask
+                            [options]='optionCurrency' 
+                            class="form-control col-lg-12"
+                            placeholder="Số tiền tối đa được áp dụng giảm giá"
+                            [ngClass]="{
+                                'is-invalid': submitted && Form.amountMax.errors
+                            }"
+                        />
+                        <div
+                            *ngIf="submitted && Form.amountMax.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="Form.amountMax.hasError('whitespace')">
+                                Số tiền tối đa được áp dụng giảm giá không hợp
+                                lệ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="form-group row"
+                    *ngIf="Form.discountType.value === '1'"
+                >
+                    <label for="search" class="col-sm-5 col-form-label"
+                        >Số phần trăm được giảm giá (%):</label
+                    >
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="amountPercentage"
+                            class="form-control col-lg-12"
+                            placeholder="Số phần trăm được giảm giá"
+                            [ngClass]="{
+                                'is-invalid':
+                                    submitted && Form.amountPercentage.errors
+                            }"
+                        />
+                        <div
+                            *ngIf="submitted && Form.amountPercentage.errors"
+                            class="invalid-feedback"
+                        >
+                            <!-- <div *ngIf="Form.amountPercentage.errors.required">
+                                Số phần trăm được giảm giá là bắt buộc
+                            </div> -->
+                            <div
+                                *ngIf="
+                                    Form.amountPercentage.hasError('whitespace')
+                                "
+                            >
+                                Số phần trăm được giảm giá không hợp lệ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END discountType = 1  -->
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-5 col-form-label"
+                        >Số tiền tối thiểu được giảm giá(<span
+                            class="text-danger"
+                            >*</span
+                        >):</label
+                    >
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="paymentMin"
+                            currencyMask
+                            [options]="optionCurrency"
+                            class="form-control col-lg-12"
+                            placeholder="Số tiền tối thiểu được áp dụng giảm giá"
+                            [ngClass]="{
+                                'is-invalid':
+                                    submitted && Form.paymentMin.errors
+                            }"
+                        />
+                        <div
+                            *ngIf="submitted && Form.paymentMin.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="Form.paymentMin.errors.required">
+                                Số tiền tối thiểu được áp dụng giảm giá là bắt
+                                buộc
+                            </div>
+                            <div *ngIf="Form.paymentMin.hasError('whitespace')">
+                                Số tiền tối thiểu được áp dụng giảm giá không
+                                hợp lệ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-5 col-form-label"
+                        >Số lần sử dụng coupon/ 1 khách hàng:(<span
+                            class="text-danger"
+                            >*</span
+                        >)</label
+                    >
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="numberPerCustomer"
+                            class="form-control col-lg-12"
+                            placeholder="Số lần sử dụng coupon/ 1 khách hàng"
+                            [ngClass]="{
+                                'is-invalid':
+                                    submitted && Form.numberPerCustomer.errors
+                            }"
+                        />
+
+                        <div
+                            *ngIf="submitted && Form.numberPerCustomer.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="Form.numberPerCustomer.errors.required">
+                                Số lần sử dụng coupon/ 1 khách hàng là bắt buộc
+                            </div>
+                            <div
+                                *ngIf="
+                                    Form.numberPerCustomer.hasError(
+                                        'whitespace'
+                                    )
+                                "
+                            >
+                                Số lần sử dụng coupon/ 1 khách hàng không hợp lệ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-5 col-form-label"
+                        >Số lần sử dụng coupon tối đa:(<span class="text-danger"
+                            >*</span
+                        >)</label
+                    >
+                    <div class="col-sm-7">
+                        <input
+                            formControlName="totalNumberCoupon"
+                            class="form-control col-lg-12"
+                            placeholder="Số lần sử dụng coupon tối đa"
+                            [ngClass]="{
+                                'is-invalid':
+                                    submitted && Form.totalNumberCoupon.errors
+                            }"
+                        />
+                        <div
+                            *ngIf="submitted && Form.totalNumberCoupon.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="Form.totalNumberCoupon.errors.required">
+                                Số lần sử dụng coupon tối đa là bắt buộc
+                            </div>
+                            <div
+                                *ngIf="
+                                    Form.totalNumberCoupon.hasError(
+                                        'whitespace'
+                                    )
+                                "
+                            >
+                                Số lần sử dụng coupon tối đa không hợp lệ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-5 col-form-label">Thời gian bắt đầu(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7 input-group">
+                        <input readonly class="form-control" placeholder="Thời gian bắt đầu"
+                            name="dFS" ngbDatepicker #dFS="ngbDatepicker"
+                            formControlName="startDate"
+                            > 
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="dFS.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-5 col-form-label">Thời gian kết thúc(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7 input-group">
+                        <input readonly class="form-control" placeholder="Thời gian kết thúc"
+                            name="dTS" ngbDatepicker #dTS="ngbDatepicker"
+                            formControlName="endDate"
+                            > 
+                        
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="dTS.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3">
+                            <i class="fa fa-save"></i>&nbsp;Lưu lại
+                        </button>
+                        <button class="btn btn-light" (click)="resetForm()">
+                            <i class="fa fa-close"></i>&nbsp;Huỷ
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<ng-template #uploadMultiFile let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title">
+            <i class="icon-plus"></i>
+            Tải lên danh sách người dùng được áp dụng
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Crossclick')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Bước 1:</h5>
+                <span>Download template mẫu: <a
+                        href="assets/template-excel/Template_Users_Coupon.xlsx"><i>tại
+                            đây</i></a></span>
+            </div>
+            <div class="col-md-12 mt-3">
+                <h5>Bước 2:</h5>
+                <div>
+                    <p-fileUpload
+                        #fubauto
+                        name="Excel"
+                        accept=".csv,.xlsx,.xls"
+                        customUpload="true"
+                        mode="basic"
+                        maxFileSize="1000000"
+                        (uploadHandler)="onUploadFile($event)"
+                        auto="true"
+                        iconLabel="fa-cloud-upload"
+                        chooseLabel="Chọn tệp tin"></p-fileUpload>
+                    <p *ngIf="fileExcel.name" class="m-b-0 text-primary">{{
+                        fileExcel.name }}</p>
+                </div>
+            </div>
+            <div class="col-md-12 mt-3 text-right">
+                <button [disabled]="!fileExcel.name || temp.loading"
+                    (click)="onUploadServer()" class="btn btn-primary"
+                    type="submit">
+                    <i class="fa fa-save"></i> Cập nhật
+                    <i *ngIf="temp.loading" class="fa fa-spin fa-spinner"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>

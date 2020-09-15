@@ -37,11 +37,11 @@ export class ProfileComponent implements OnInit {
           this.nameTransaction = nameTransaction[0].departName;
         }
       }).catch((err) => {
-        this.toastr.error('Không lấy được dữ liệu phòng giao dịch', 'Thất bại');
+        // this.toastr.error('Không lấy được dữ liệu phòng giao dịch', 'Thất bại');
         this.nameTransaction = '';
       });
     }).catch((err) => {
-      this.toastr.error('Không lấy được dự liệu chi nhánh!', 'Thất bại!');
+      // this.toastr.error('Không lấy được dự liệu chi nhánh!', 'Thất bại!');
       this.nameBranch = '';
     });
   }

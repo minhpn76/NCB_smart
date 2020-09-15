@@ -42,7 +42,8 @@ const routes: Routes = [
             {path: 'qr-services', loadChildren: () => import('./qr-server/qr-service.module').then(m => m.QrServiceModule)},
 
             {path: 'qr-coupons', loadChildren: () => import('./qr-coupon/qr-coupon.module').then(m => m.QrCouponModule)},
-            {path: 'qr-merchants', loadChildren: () => import('./qr-merchant/qr-merchant.module').then(m => m.QrMerchantModule)}
+            {path: 'qr-merchants', loadChildren: () => import('./qr-merchant/qr-merchant.module').then(m => m.QrMerchantModule)},
+            {path: 'notifications', loadChildren: () => import('./notication-user/notication-user.module').then(m => m.NotificationUserModule)},
         ]
     }
 ];
