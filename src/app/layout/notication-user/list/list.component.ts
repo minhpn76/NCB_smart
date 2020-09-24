@@ -44,7 +44,7 @@ export class ListComponent implements OnInit {
         page: 0,
         previous_page: 0,
     };
-    
+
     isProcessLoad: any = 0;
     totalSearch: any = 0;
     order = 'name';
@@ -60,11 +60,11 @@ export class ListComponent implements OnInit {
         },
         {
             name: 'Kích hoạt',
-            code: 'A',
+            code: '1',
         },
         {
             name: 'Chưa kích hoạt',
-            code: 'D',
+            code: '2',
         },
     ];
     listRepeatValue: any = [
@@ -107,16 +107,16 @@ export class ListComponent implements OnInit {
             name: 'Giới hạn',
             code: '1',
         },
-    ]
-    
+    ];
+
 
 
     listData = [];
 
     // chuyển dữ liệu profile trong localStorage sang dạng json
     profile: any = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : null;
-  
-    
+
+
     ngOnInit() {
         this.getListData(this.search);
     }
@@ -222,10 +222,10 @@ export class ListComponent implements OnInit {
                                 'Dữ liệu đã xoá hoàn toàn.',
                                 'success'
                             );
-                            let {page, size, search, previous_page } = this.search;
-                            let tempage: number = 0
-                            if (page > 0){
-                                tempage = page - 1
+                            const {page, size, search, previous_page } = this.search;
+                            let tempage = 0;
+                            if (page > 0) {
+                                tempage = page - 1;
                             }
                             this.onSearch({
                                 page: tempage,

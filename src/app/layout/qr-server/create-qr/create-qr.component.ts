@@ -45,6 +45,7 @@ export class CreateQrComponent implements OnInit {
 
         // stop here if form is invalid
         if (this.dataForm.invalid) {
+            console.log('demo', this.dataForm);
             return;
         }
         this.ncbService.createQRServer(this.dataForm.value).then((result) => {

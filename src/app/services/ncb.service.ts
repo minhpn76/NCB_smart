@@ -1766,7 +1766,7 @@ export class NCBService {
         });
     }
 
-    //merchants
+    // merchants
     getListQRMerchant(params): Promise<any> {
         const url = `${API_URL}/qr-merchants`;
         return this.auth.authRequest({
@@ -1805,25 +1805,25 @@ export class NCBService {
             method: "DELETE",
         });
     }
-    //Notification user
+    // Notification user
     getListNoticationUser(params): Promise<any> {
       const url = `${API_URL}/notifications`;
       return this.auth.authRequest({ url: url, params: params, method: 'GET' });
       }
     createNoticationUser(body): Promise<any> {
-      const url = `${API_URL}/notification`;
+      const url = `${API_URL}/notifications`;
       return this.auth.authRequest({ url: url, data: body, method: 'POST', application: true });
     }
     updateNoticationUser(id: string, body: any): Promise<any> {
-      const url = `${API_URL}/notification/${id}`;
+      const url = `${API_URL}/notifications/${id}`;
       return this.auth.authRequest({ url: url, data: body, method: 'PUT', application: true });
     }
     detailNoticationUser(id: string): Promise<any> {
-      const url = `${API_URL}/notification/${id}`;
+      const url = `${API_URL}/notifications/${id}`;
       return this.auth.authRequest({ url: url, method: 'GET' });
     }
     deleteNoticationUser(itemId): Promise<any> {
-      const url = `${API_URL}/notification/${itemId}`;
+      const url = `${API_URL}/notifications/${itemId}`;
       return this.auth.authRequest({ url: url, params: itemId, method: 'DELETE' });
     }
 }
