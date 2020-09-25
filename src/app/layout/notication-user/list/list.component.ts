@@ -77,19 +77,19 @@ export class ListComponent implements OnInit {
             code: '0',
         },
         {
-            name: 'Lặp hàng ngày',
+            name: 'Hàng ngày',
             code: '1',
         },
         {
-            name: 'Lặp hàng tuần',
+            name: 'Hàng tuần',
             code: '2',
         },
         {
-            name: 'Lặp hàng tháng',
+            name: 'Hàng tháng',
             code: '3',
         },
         {
-            name: 'Lặp hàng năm',
+            name: 'Hàng năm',
             code: '4',
         },
     ];

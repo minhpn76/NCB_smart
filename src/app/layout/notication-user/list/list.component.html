@@ -20,8 +20,8 @@
                     <label for="search" class="col-sm-4 col-form-label">Kiểu lặp:</label>
                     <div class="col-sm-6">
                         <select class="form-control" [(ngModel)]="search.repeatType">
-                            <option *ngFor="let status of listRepeatValue" [value]="status.code" selected="selected">
-                                {{ status.name }}
+                            <option *ngFor="let repeatType of listRepeatValue" [value]="repeatType.code" selected="selected">
+                                {{ repeatType.name }}
                             </option>
                         </select>
                     </div>
