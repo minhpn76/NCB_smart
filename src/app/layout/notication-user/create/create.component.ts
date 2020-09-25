@@ -76,14 +76,14 @@ export class CreateComponent implements OnInit {
         },
     ];
 
-    discountTypes = [
+    listStatus = [
         {
-            code: '1',
+            code: 'A',
             name: 'active',
         },
         {
             name: 'Deactive',
-            code: '2',
+            code: 'D',
         },
     ];
 
@@ -147,7 +147,7 @@ export class CreateComponent implements OnInit {
                 ]),
             ],
             status: [
-                '1',
+                'A',
                 Validators.compose([this.helper.noWhitespaceValidator]),
             ],
 

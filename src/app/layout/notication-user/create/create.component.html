@@ -110,7 +110,7 @@
                             class="text-danger">(*</span>):</label>
                     <div class="col-sm-7">
                         <select formControlName="status" class="form-control">
-                            <option *ngFor="let status of discountTypes" [value]="status.code" selected="selected">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">
                                 {{ status.name }}</option>
                         </select>
                     </div>

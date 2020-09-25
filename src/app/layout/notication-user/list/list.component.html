@@ -175,8 +175,8 @@
                                 {{ data?.type }}
                             </td>
                             <td>
-                                <span *ngIf="data?.status == '1'" class="badge badge-primary">Active</span>
-                                <span *ngIf="data?.status == '2'" class="badge badge-danger">Deactive</span>
+                                <span *ngIf="data?.status == 'A'" class="badge badge-primary">Active</span>
+                                <span *ngIf="data?.status == 'D'" class="badge badge-danger">Deactive</span>
                             </td>
                             <td>
                                 <a data-toggle="tool-tip" title="Chỉnh sửa" class="mr-2 cursor-pointer text-blue"

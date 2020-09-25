@@ -46,11 +46,11 @@ export class EditComponent implements OnInit {
     listStatus: any = [
         {
             name: 'Active',
-            code: '1',
+            code: 'A',
         },
         {
             name: 'Deactive',
-            code: '2',
+            code: 'D',
         },
     ];
     listRepeatType: any = [
@@ -63,19 +63,19 @@ export class EditComponent implements OnInit {
             code: '0',
         },
         {
-            name: 'Lặp hàng ngày',
+            name: 'Hàng ngày',
             code: '1',
         },
         {
-            name: 'Lặp hàng tuần',
+            name: 'Hàng tuần',
             code: '2',
         },
         {
-            name: 'Lặp hàng tháng',
+            name: 'Hàng tháng',
             code: '3',
         },
         {
-            name: 'Lặp hàng năm',
+            name: 'Hàng năm',
             code: '4',
         },
     ];
@@ -105,7 +105,6 @@ export class EditComponent implements OnInit {
         private route: ActivatedRoute,
         private excelService: ExcelService
     ) {
-        this.getNotifications();
         this.loadDate();
     }
 
@@ -143,7 +142,6 @@ export class EditComponent implements OnInit {
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
-            // repeatValue: [this.mRatesDateS_7],
             objectUserType: [
                 '',
                 Validators.compose([
@@ -151,10 +149,7 @@ export class EditComponent implements OnInit {
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
-            status: ['1'],
-            // startDate: [this.mRatesDateS_7],
-            // endDate: [this.mRatesDateS],
-            user_notifications: [],
+            status: [''],
         });
 
         this.getItem(this.itemId);
@@ -163,7 +158,7 @@ export class EditComponent implements OnInit {
     get Form() {
         return this.dataForm.controls;
     }
-    // tải exexl
+    // modal Danh sách hiện có
     openModal(content) {
         this.modalOp = this.modalNotitfications.open(content);
     }
@@ -181,41 +176,6 @@ export class EditComponent implements OnInit {
             month: this.my.getMonth() + 1,
             day: this.my.getDate(),
         };
-    }
-
-    getNotifications() {
-        this.listRepeatType = [
-            {
-                code: '',
-                name: '---Vui lòng chọn dịch vụ---',
-            },
-        ];
-        // xu ly
-        this.ncbService
-            .getListNoticationUser({
-                size: 1000,
-                page: 0,
-            })
-            .then((result) => {
-                console.log('xu ly', result);
-                setTimeout(() => {
-                    const body = result.json().body.content;
-                    body.map((item) => {
-                        this.listRepeatType.push({
-                            code: item.id,
-                            name: item.description,
-                        });
-                    });
-                }, 300);
-            })
-            .catch((err) => {
-                this.listRepeatType = [
-                    {
-                        code: '',
-                        name: '---Vui lòng chọn dịch vụ---',
-                    },
-                ];
-            });
     }
 
     // truyền đi các thông tin trong danh sách
@@ -312,7 +272,7 @@ export class EditComponent implements OnInit {
         this.ncbService
             .detailNoticationUser(params).then((result) => {
                 console.log('thông báo', params);
-                const body = result.json().body.content;
+                const body = result.json().body;
                 this.dataForm.patchValue({
                     title: body.title,
                     content: body.content,
@@ -320,7 +280,6 @@ export class EditComponent implements OnInit {
                     repeatValue: body.repeatValue,
                     objectUserType: body.objectUserType,
                     status: body.status,
-                    user_notifications: body.userNotifications,
                 });
             })
             .catch((err) => {

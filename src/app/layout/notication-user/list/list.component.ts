@@ -60,11 +60,11 @@ export class ListComponent implements OnInit {
         },
         {
             name: 'Kích hoạt',
-            code: '1',
+            code: 'A',
         },
         {
             name: 'Chưa kích hoạt',
-            code: '2',
+            code: 'D',
         },
     ];
     listRepeatValue: any = [
