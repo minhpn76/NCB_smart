@@ -114,7 +114,7 @@ export class EditComponent implements OnInit {
             this.itemId = params.itemId;
         });
         this.dataForm = this.formBuilder.group({
-            title: [
+            name: [
                 '',
                 Validators.compose([
                     Validators.required,
@@ -135,21 +135,23 @@ export class EditComponent implements OnInit {
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
-            repeatValue: [
-                '',
-                Validators.compose([
-                    Validators.required,
-                    this.helper.noWhitespaceValidator,
-                ]),
-            ],
+            repeatValue: ['', Validators.compose([
+                Validators.required,
+            ]),],
+
             objectUserType: [
                 '',
                 Validators.compose([
                     Validators.required,
-                    this.helper.noWhitespaceValidator,
                 ]),
             ],
-            status: [''],
+            status: [
+                'A'
+            ],
+
+            // createdAt: [this.mRatesDateS_7],
+            // endDate: [this.mRatesDateS],
+            user_notifications: [],
         });
 
         this.getItem(this.itemId);
@@ -165,48 +167,35 @@ export class EditComponent implements OnInit {
 
     // khai báo định dạng ngày tháng
     public loadDate(): void {
-        this.my_7.setDate(this.my_7.getDate() + 7);
         this.mRatesDateS = {
-            year: this.my_7.getFullYear(),
-            month: this.my_7.getMonth() + 1,
-            day: this.my_7.getDate(),
-        };
-        this.mRatesDateS_7 = {
             year: this.my.getFullYear(),
-            month: this.my.getMonth() + 1,
-            day: this.my.getDate(),
-        };
+            month: this.my.getMonth(),
+            day: this.my.getDate()
+        };      
     }
 
     // truyền đi các thông tin trong danh sách
     onSubmit() {
         this.submitted = true;
-        console.log('=this.dataForm', this.dataForm);
-        console.log('=this.filelist', this.filelist);
+  
         // stop here if form is invalid
         if (this.dataForm.invalid) {
-            console.log('demo', this.dataForm);
             return;
         }
         const payload = {
-            title: this.dataForm.value.title,
+            name: this.dataForm.value.name,
             content: this.dataForm.value.content,
             repeatType: this.dataForm.value.repeatType,
+            repeatValue: this.dataForm.value.repeatValue,
             objectUserType: this.dataForm.value.objectUserType,
-            repeatValue: this.helper.tranferDate(
-                this.dataForm.value.repeatValue
-            ),
-            startDate: this.helper.tranferDate(this.dataForm.value.startDate),
-            endDate: this.helper.tranferDate(this.dataForm.value.endDate),
             status: this.dataForm.value.status,
-            // userNotifications: this.dataForm.value.user_notifications
-            //     ? this.dataForm.value.user_notifications
-            //     : this.filelist,
+            userNotifications: this.dataForm.value.user_notifications
+                ? this.dataForm.value.user_notifications
+                : this.filelist,
         };
         this.ncbService
             .updateNoticationUser(this.itemId, payload)
             .then((result) => {
-                console.log('on update', result);
                 if (result.status === 200) {
                     if (result.json().code === '00') {
                         this.toastr.success(
@@ -271,7 +260,6 @@ export class EditComponent implements OnInit {
     getItem(params) {
         this.ncbService
             .detailNoticationUser(params).then((result) => {
-                console.log('thông báo', params);
                 const body = result.json().body;
                 this.dataForm.patchValue({
                     title: body.title,
@@ -279,12 +267,12 @@ export class EditComponent implements OnInit {
                     repeatType: body.repeatType,
                     repeatValue: body.repeatValue,
                     objectUserType: body.objectUserType,
+                    user_notifications: body.userNotifications,
                     status: body.status,
                 });
             })
             .catch((err) => {
                 this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
             });
-        console.log('this.getItem', params);
     }
 }

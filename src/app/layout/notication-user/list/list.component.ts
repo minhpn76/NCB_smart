@@ -60,11 +60,11 @@ export class ListComponent implements OnInit {
         },
         {
             name: 'Kích hoạt',
-            code: 'A',
+            code: '1',
         },
         {
             name: 'Chưa kích hoạt',
-            code: 'D',
+            code: '0',
         },
     ];
     listRepeatValue: any = [
@@ -172,9 +172,16 @@ export class ListComponent implements OnInit {
             .then((result) => {
                 setTimeout(() => {
                     const body = result.json().body;
-                    this.listData = body.content;
-                    this.totalSearch = body.totalElements;
-                    this.isProcessLoad = 0;
+                    if (body) {
+                        this.listData = body.content;
+                        this.totalSearch = body.totalElements;
+                        this.isProcessLoad = 0;
+                    } else {
+                        this.isProcessLoad = 0;
+                        this.listData = [];
+                        this.totalSearch = 0;
+                    }
+                 
                 }, 300);
             })
             .catch((err) => {

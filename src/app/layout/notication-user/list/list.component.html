@@ -125,7 +125,7 @@
                         <span [hidden]="!reverse">▲</span> -->
                             </th>
                             <th scope="col" [class.active]="order === 'type'" (click)="setOrder('type')">
-                                Loại thông báo
+                                Giá trị lặp
                                 <!-- <span [hidden]="reverse">▼</span>
                         <span [hidden]="!reverse">▲</span> -->
                             </th>
@@ -172,7 +172,7 @@
 
                             </td>
                             <td>
-                                {{ data?.type }}
+                                {{ helper.formatFullDateTime(data?.repeatValue, data?.repeatType) }}
                             </td>
                             <td>
                                 <span *ngIf="data?.status == 'A'" class="badge badge-primary">Active</span>

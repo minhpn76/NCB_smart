@@ -169,6 +169,17 @@ export class AppSettings {
             menu: 'THAM_SO'
         },
         {
+            code: 'VERSION_APP',
+            name: 'Version App',
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            isA: false,
+            menu: 'THAM_SO'
+        },
+        {
             code: 'DIEU_KHOAN',
             name: 'Điều khoản sử dụng',
             isAll: false,
