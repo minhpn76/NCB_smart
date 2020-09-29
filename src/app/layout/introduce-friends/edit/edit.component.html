@@ -1,0 +1,87 @@
+<div>
+    <app-page-header [heading]="'Danh mục giới thiệu bạn bè'" [heading_second]="'Sửa danh mục giới thiệu bạn bè'"
+        [url_heading]="'/introduce-friends'">
+    </app-page-header>
+    <div class="row">
+        <div class="col-md-8">
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">
+                        <ng-container *ngTemplateOutlet=""></ng-container>
+                        Name
+                        (<span class="text-danger">*</span>):
+                    </label>
+                    <div class="col-sm-7">
+                        <input formControlName="name" class="form-control col-lg-12" placeholder="Tên ứng dụng"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.serviceType.errors }" disabled/>
+                        <div *ngIf="submitted && Form.serviceType.errors" class="invalid-feedback">
+                            <div *ngIf="Form.serviceType.errors.required">Name là bắt buộc</div>
+                            <div *ngIf="Form.serviceType.hasError('whitespace')">Name không hợp lệ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Value
+                        (<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input formControlName="value" class="form-control col-lg-12" placeholder="value" [ngClass]="{ 'is-invalid': submitted &&
+                            Form.title.errors }" disabled/>
+                        <div *ngIf="submitted && Form.title.errors" class="invalid-feedback">
+                            <div *ngIf="Form.title.errors.required">Value là bắt buộc</div>
+                            <div *ngIf="Form.title.hasError('whitespace')">Value không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="create" class="col-sm-4 col-form-label">Type (<span
+                            class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <select formControlName="type" class="form-control">
+                            <option *ngFor="let item of listType" [value]="item.code" selected="selected">
+                                {{ item.name }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Code
+                        (<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input formControlName="code" class="form-control col-lg-12" placeholder="code" [ngClass]="{ 'is-invalid': submitted &&
+                            Form.title.errors }" disabled />
+                        <div *ngIf="submitted && Form.title.errors" class="invalid-feedback">
+                            <div *ngIf="Form.title.errors.required">Codelà bắt buộc</div>
+                            <div *ngIf="Form.title.hasError('whitespace')">Code không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Description
+                        (<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <input formControlName="description" class="form-control col-lg-12" placeholder="description"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.title.errors }" disabled/>
+                        <div *ngIf="submitted && Form.title.errors" class="invalid-feedback">
+                            <div *ngIf="Form.title.errors.required">Description là bắt buộc</div>
+                            <div *ngIf="Form.title.hasError('whitespace')">Description không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3"><i class="fa
+                                fa-save"></i>&nbsp;Lưu lại</button>
+                        <button class="btn btn-light" (click)="resetForm()"><i
+                                class="fa fa-close"></i>&nbsp;Huỷ</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
