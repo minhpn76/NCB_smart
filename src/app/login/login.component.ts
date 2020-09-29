@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
             } else if (err.status === 402) {
                 this.toastr.error('Tài khoản chưa được active. Vui lòng liên hệ admin!', 'Thất bại!');
             } else if (err.status === 0) {
-                this.toastr.error('Không có kết nối đến máy chủ', 'Thất bại!');
+                this.toastr.error('Không có kết nối đến máy chủ', 'Lỗi Internet!');
             } else {
                 this.toastr.error(err.description, 'Thất bại!');
             }

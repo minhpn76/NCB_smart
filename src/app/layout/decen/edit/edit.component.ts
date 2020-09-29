@@ -41,6 +41,21 @@ export class EditComponent implements OnInit {
     read: null,
     update: null,
   };
+
+  listStatus: any = [
+    {
+      name: 'Tất cả',
+      code: '',
+    },
+    {
+      name: 'Active',
+      code: 'A',
+    },
+    {
+      name: 'Deactive',
+      code: 'D',
+    }
+  ];
   itemId: any;
   constructor(
     private formBuilder: FormBuilder,

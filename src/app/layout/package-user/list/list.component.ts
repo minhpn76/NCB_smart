@@ -161,7 +161,7 @@ export class ListComponent implements OnInit {
       });
 
     }).catch((err) => {
-      this.toastr.error('Không lấy được dữ liệu chi nhánh', 'Thất bại');
+      // this.toastr.error('Không lấy được dữ liệu chi nhánh', 'Thất bại');
     });
   }
   getPGD(value) {

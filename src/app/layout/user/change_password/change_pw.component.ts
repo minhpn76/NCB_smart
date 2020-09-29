@@ -52,10 +52,12 @@ export class ChangePasswordComponent implements OnInit {
     if (this.userForm.invalid) {
         return;
     }
+
+    //những thông tin sẽ được lấy khi thay đổi mật khẩu
     const payload = {
       username: this.userForm.value.username,
       oldPassword: this.userForm.value.oldPassword,
-      newPassword: this.userForm.value.newPassword
+      newPassword: this.userForm.value.newPassword,
     };
     this.ncbService.updatePassword(payload).then((result) => {
       if (result.json().code === '00') {

@@ -62,7 +62,6 @@ export class Helper {
             month = '' + (d.getMonth() + 1),
             day = '' + d.getDate(),
             year = d.getFullYear();
-
         if (month.length < 2) {
             month = '0' + month;
         }
@@ -71,6 +70,63 @@ export class Helper {
         }
 
         return [year, month, day].join('/');
+    }
+
+    getWeekOfMonth(input) {
+        var date = new Date(input);
+        let adjustedDate = date.getDate()+ date.getDay();
+        let prefixes = ['0', '1', '2', '3', '4', '5'];
+        return `Tuần thứ ${(parseInt(prefixes[0 | adjustedDate / 7])+1)}`;
+    }
+
+    formatFullDateTime(date, type) {
+        var days = ['Chủ nhật','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7'];
+        let d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear(),
+            hours = d.getHours() + "",
+            minutes = d.getMinutes() + "",
+            seconds = d.getSeconds() + "",
+            t = d.getDay() - 1;
+
+
+        if (month.length < 2) {
+            month = '0' + month;
+        }
+        if (day.length < 2) {
+            day = '0' + day;
+        }
+
+        if (hours.length < 2) {
+            hours = '0' + hours;
+        }
+        if (minutes.length < 2) {
+            minutes = '0' + minutes;
+        }
+        if (seconds.length < 2) {
+            seconds = '0' + seconds;
+        }
+
+        let dateTime = [year, month, day].join('/');
+        let time = [hours, minutes, seconds].join(':')
+        if (type === '0') {
+            return [dateTime, time].join(' ');
+        }
+        if (type === '1') {
+            return time
+        }
+        if (type === '2') {
+            return `${days[t]} ${time}`
+        }
+        if (type === '3') {
+            return `${this.getWeekOfMonth(date)} ${time}`
+        }
+        if (type === '4'){
+            return dateTime
+        }
+        
+        return [dateTime, time].join(' ');
     }
     toFormData<T>( formValue: T ) {
         const formData = new FormData();

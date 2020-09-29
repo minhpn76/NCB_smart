@@ -13,6 +13,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { FileUploadModule } from 'primeng/fileupload';
 import { OrderModule } from 'ngx-order-pipe';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
         ReactiveFormsModule,
         TranslateModule.forChild(),
         CurrencyMaskModule,
+        CKEditorModule,
         SweetAlert2Module.forRoot({
             buttonsStyling: false,
             customClass: 'modal-content',
