@@ -15,6 +15,9 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { ExcelService } from '../../../services/excel.service';
 import { async } from '@angular/core/testing';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters';
+import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials';
 
 @Component({
     selector: 'notifications-create',
@@ -23,6 +26,7 @@ import { async } from '@angular/core/testing';
     providers: [Helper, NCBService, ExcelService],
 })
 export class CreateComponent implements OnInit {
+    public Editor = ClassicEditor;
     mRatesDateS: NgbDateStruct;
     mRatesDateS_7: NgbDateStruct;
     my: any = new Date();
@@ -79,7 +83,7 @@ export class CreateComponent implements OnInit {
     listStatus = [
         {
             code: 'A',
-            name: 'active',
+            name: 'Active',
         },
         {
             name: 'Deactive',
@@ -114,6 +118,8 @@ export class CreateComponent implements OnInit {
         },
     ];
 
+
+
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
             name: [
@@ -137,19 +143,20 @@ export class CreateComponent implements OnInit {
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
-            repeatValue: [this.mRatesDateS_7],
+            repeatValue: ['', Validators.compose([
+                Validators.required,
+            ]),],
 
             objectUserType: [
                 '',
                 Validators.compose([
                     Validators.required,
-                    this.helper.noWhitespaceValidator,
                 ]),
             ],
             status: [
-                'A',
-                Validators.compose([this.helper.noWhitespaceValidator]),
+                'A'
             ],
+            type: '2',
 
             // createdAt: [this.mRatesDateS_7],
             // endDate: [this.mRatesDateS],
@@ -164,17 +171,12 @@ export class CreateComponent implements OnInit {
     }
 
     public loadDate(): void {
-        this.my_7.setDate(this.my_7.getDate() + 7);
+        // this.my_7.setDate(this.my_7.getDate() + 7);
         this.mRatesDateS = {
-            year: this.my_7.getFullYear(),
-            month: this.my_7.getMonth() + 1,
-            day: this.my_7.getDate(),
-        };
-        this.mRatesDateS_7 = {
             year: this.my.getFullYear(),
-            month: this.my.getMonth() + 1,
-            day: this.my.getDate(),
-        };
+            month: this.my.getMonth(),
+            day: this.my.getDate()
+        };      
     }
 
     getNotifications() {
@@ -227,7 +229,9 @@ export class CreateComponent implements OnInit {
             userNotifications: this.dataForm.value.user_notifications
                 ? this.dataForm.value.user_notifications
                 : this.filelist,
+            type: '2',
         };
+        console.log('=payload', payload);
         this.ncbService
             .createNoticationUser(payload)
             .then((result) => {
