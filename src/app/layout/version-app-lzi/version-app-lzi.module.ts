@@ -7,6 +7,8 @@ import { ListComponent } from './list/list.component';
 import { EditComponent } from './edit/edit.component';
 import { PageHeaderModule } from '../../shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -16,6 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     VersionAppLziRoutingModule,
     FormsModule,
+    NgbModule,
+    HttpClientModule,
     ReactiveFormsModule
   ]
 })
