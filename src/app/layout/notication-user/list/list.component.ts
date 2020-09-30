@@ -34,7 +34,7 @@ export class ListComponent implements OnInit {
         this.loadDate();
     }
     search: any = {
-        search: '',
+        // search: '',
         status: '',
         repeatType: '',
         objectUserType: '',
@@ -60,11 +60,11 @@ export class ListComponent implements OnInit {
         },
         {
             name: 'Kích hoạt',
-            code: '1',
+            code: 'A',
         },
         {
             name: 'Chưa kích hoạt',
-            code: '0',
+            code: 'D',
         },
     ];
     listRepeatValue: any = [
@@ -94,7 +94,7 @@ export class ListComponent implements OnInit {
         },
     ];
 
-    listObjectUserType: any = [
+    ObjectUserTypes: any = [
         {
             name: 'Tất cả',
             code: '',
@@ -147,9 +147,10 @@ export class ListComponent implements OnInit {
             this.onSearch(this.search);
         }
     }
+
     onSearch(payload) {
         if (
-            payload.search !== '' ||
+            // payload.search !== '' ||
             payload.status !== '' ||
             payload.repeatType !== '' ||
             payload.objectUserType !== '' ||
@@ -161,6 +162,7 @@ export class ListComponent implements OnInit {
         payload.formDate = this.helper.tranferDate(this.mRatesDateS);
         payload.startDate = this.helper.tranferDate(this.mRatesDateS_7);
         this.getListData(payload);
+        console.log('test', payload);
     }
 
     getListData(params: any) {
@@ -181,7 +183,7 @@ export class ListComponent implements OnInit {
                         this.listData = [];
                         this.totalSearch = 0;
                     }
-                 
+
                 }, 300);
             })
             .catch((err) => {
@@ -223,12 +225,14 @@ export class ListComponent implements OnInit {
                 this.ncbService
                     .deleteNoticationUser(itemId)
                     .then((res) => {
+                        console.log('test', res);
                         if (res.json().code === '00') {
                             Swal.fire(
                                 'Đã xoá!',
                                 'Dữ liệu đã xoá hoàn toàn.',
                                 'success'
                             );
+
                             const {page, size, search, previous_page } = this.search;
                             let tempage = 0;
                             if (page > 0) {

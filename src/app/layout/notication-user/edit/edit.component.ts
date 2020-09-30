@@ -45,15 +45,15 @@ export class EditComponent implements OnInit {
     };
     listStatus: any = [
         {
-            name: 'Active',
+            name: 'Kích hoạt',
             code: 'A',
         },
         {
-            name: 'Deactive',
+            name: 'Chưa kích hoạt',
             code: 'D',
         },
     ];
-    listRepeatType: any = [
+    listNotifications: any = [
         {
             name: 'Tất cả',
             code: '',
@@ -80,7 +80,7 @@ export class EditComponent implements OnInit {
         },
     ];
 
-    listObjectUserType: any = [
+    objectUserTypes: any = [
         {
             name: '---Vui lòng chọn đối tượng---',
             code: '',
@@ -114,7 +114,7 @@ export class EditComponent implements OnInit {
             this.itemId = params.itemId;
         });
         this.dataForm = this.formBuilder.group({
-            name: [
+            title: [
                 '',
                 Validators.compose([
                     Validators.required,
@@ -137,7 +137,7 @@ export class EditComponent implements OnInit {
             ],
             repeatValue: ['', Validators.compose([
                 Validators.required,
-            ]),],
+            ]), ],
 
             objectUserType: [
                 '',
@@ -146,7 +146,7 @@ export class EditComponent implements OnInit {
                 ]),
             ],
             status: [
-                'A'
+                ''
             ],
 
             // createdAt: [this.mRatesDateS_7],
@@ -171,19 +171,19 @@ export class EditComponent implements OnInit {
             year: this.my.getFullYear(),
             month: this.my.getMonth(),
             day: this.my.getDate()
-        };      
+        };
     }
 
     // truyền đi các thông tin trong danh sách
     onSubmit() {
         this.submitted = true;
-  
+
         // stop here if form is invalid
         if (this.dataForm.invalid) {
             return;
         }
         const payload = {
-            name: this.dataForm.value.name,
+            title: this.dataForm.value.title,
             content: this.dataForm.value.content,
             repeatType: this.dataForm.value.repeatType,
             repeatValue: this.dataForm.value.repeatValue,

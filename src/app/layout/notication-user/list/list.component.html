@@ -19,7 +19,7 @@
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Kiểu lặp:</label>
                     <div class="col-sm-6">
-                        <select class="form-control" [(ngModel)]="search.repeatType">
+                        <select class="form-control" [(ngModel)]="search.repeatType" y>
                             <option *ngFor="let repeatType of listRepeatValue" [value]="repeatType.code" selected="selected">
                                 {{ repeatType.name }}
                             </option>
@@ -32,7 +32,7 @@
                     <label for="search" class="col-sm-4 col-form-label">Đối tượng áp dụng:</label>
                     <div class="col-sm-6">
                         <select class="form-control" [(ngModel)]="search.objectUserType">
-                            <option *ngFor="let objectUserType of listObjectUserType" [value]="objectUserType.code" selected="selected">
+                            <option *ngFor="let objectUserType of ObjectUserTypes" [value]="objectUserType.code" selected="selected">
                                 {{ objectUserType.name }}
                             </option>
                         </select>
@@ -175,8 +175,8 @@
                                 {{ helper.formatFullDateTime(data?.repeatValue, data?.repeatType) }}
                             </td>
                             <td>
-                                <span *ngIf="data?.status == 'A'" class="badge badge-primary">Active</span>
-                                <span *ngIf="data?.status == 'D'" class="badge badge-danger">Deactive</span>
+                                <span *ngIf="data?.status == 'A'" class="badge badge-primary">Kích hoạt</span>
+                                <span *ngIf="data?.status == 'D'" class="badge badge-danger">Chưa kích hoạt</span>
                             </td>
                             <td>
                                 <a data-toggle="tool-tip" title="Chỉnh sửa" class="mr-2 cursor-pointer text-blue"

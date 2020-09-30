@@ -82,11 +82,15 @@ export class CreateComponent implements OnInit {
 
     listStatus = [
         {
-            code: 'A',
-            name: 'Active',
+            code: '',
+            name: '---Vui lòng chọn trạng thái---',
         },
         {
-            name: 'Deactive',
+            code: 'A',
+            name: 'Kích hoạt',
+        },
+        {
+            name: 'Chưa kích hoạt',
             code: 'D',
         },
     ];
@@ -118,11 +122,9 @@ export class CreateComponent implements OnInit {
         },
     ];
 
-
-
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
-            name: [
+            title: [
                 '',
                 Validators.compose([
                     Validators.required,
@@ -143,19 +145,10 @@ export class CreateComponent implements OnInit {
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
-            repeatValue: ['', Validators.compose([
-                Validators.required,
-            ]),],
+            repeatValue: ['', Validators.compose([Validators.required])],
 
-            objectUserType: [
-                '',
-                Validators.compose([
-                    Validators.required,
-                ]),
-            ],
-            status: [
-                'A'
-            ],
+            objectUserType: ['', Validators.compose([Validators.required])],
+            status: [''],
             type: '2',
 
             // createdAt: [this.mRatesDateS_7],
@@ -175,8 +168,8 @@ export class CreateComponent implements OnInit {
         this.mRatesDateS = {
             year: this.my.getFullYear(),
             month: this.my.getMonth(),
-            day: this.my.getDate()
-        };      
+            day: this.my.getDate(),
+        };
     }
 
     getNotifications() {
@@ -220,7 +213,7 @@ export class CreateComponent implements OnInit {
             return;
         }
         const payload = {
-            name: this.dataForm.value.name,
+            title: this.dataForm.value.title,
             content: this.dataForm.value.content,
             repeatType: this.dataForm.value.repeatType,
             repeatValue: this.dataForm.value.repeatValue,
