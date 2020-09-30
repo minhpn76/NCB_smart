@@ -173,6 +173,7 @@
                             <span [hidden]="!reverse">▲</span>
                         </th>
                         <th scope="col">Ngày yêu cầu</th>
+                        <th scope="col">Người xử lý</th>
                     </tr>
                 </thead>
                 
@@ -201,6 +202,7 @@
                             <span class="badge badge-danger" *ngIf="data?.status === 'CLOSED'" >CLOSED</span>
                         </td>
                         <td>{{data?.requestDate}}</td>
+                        <td>{{data?.userId}}</td>
                         <!-- <td>
                             <a class="mr-2 cursor-pointer text-blue" routerLink="/registered-service/edit/{{data.id}}">
                                 <i class="fa fa-edit"></i>

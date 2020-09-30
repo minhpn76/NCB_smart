@@ -139,6 +139,20 @@
                             <span>Nhà cung cấp dịch vụ QR</span>
                         </a>
                     </li>
+                    <li *ngIf="khachhang.code === 'INVITE' && khachhang.isAll === true">
+                        <a [routerLink]="['/invite-friends']" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item">
+                            <i class="fa fa-users"></i>&nbsp;
+                            <span>Giới thiệu bạn bè</span>
+                        </a>
+                    </li>
+                    <li *ngIf="khachhang.code === 'NOTIFY_U' && khachhang.isAll === true">
+                        <a [routerLink]="['/notifications']" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item">
+                            <i class="fa fa-archive"></i>&nbsp;
+                            <span>Thông báo người dùng</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
         </div>
@@ -188,7 +202,7 @@
                         </a>
                     </li>
                     <!-- version-app-lzi -->
-                    <li *ngIf="thamso.code === 'VERSION' && thamso.isAll ===
+                    <li *ngIf="thamso.code === 'VERSION_APP' && thamso.isAll ===
                         true">
                         <a [routerLink]="['/version-app-lzi']" [routerLinkActive]="['router-link-active']"
                             class="list-group-item">

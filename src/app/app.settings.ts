@@ -311,6 +311,29 @@ export class AppSettings {
             isA: false,
             menu: "KHACH_HANG",
         },
+        
+        {
+            code: "INVITE_FRIENDS",
+            name: "Giới thiệu bạn bè",
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            isA: false,
+            menu: "KHACH_HANG",
+        },
+        {
+            code: "NOTIFY_USER",
+            name: "Thông báo người dùng",
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            isA: false,
+            menu: "KHACH_HANG",
+        },
     ];
     public static getListRoles() {
         const getListRoles = localStorage.getItem("roles")
