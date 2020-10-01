@@ -19,7 +19,7 @@ import { NCBService } from '../../../services/ncb.service';
 export class EditComponent implements OnInit {
     dataForm: FormGroup;
     submitted = false;
-    itemCode: any;
+    // itemCode: any;
     filelist: any = [];
     versionAppService: any;
     constructor(
@@ -123,8 +123,9 @@ export class EditComponent implements OnInit {
                 : this.filelist,
         };
         this.ncbService
-            .updateVersionApp(this.itemCode, payload)
+            .updateVersionApp(this.versionAppService, payload)
             .then((result) => {
+                console.log('demo', this.versionAppService);
                 if (result.status === 200) {
 
                     console.log('tét', result);
@@ -139,7 +140,7 @@ export class EditComponent implements OnInit {
                     } else if (result.json().code === '909') {
                         this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
                     } else {
-                        this.toastr.error('Thêm mới thất bại', 'Thất bại!');
+                        this.toastr.error('Sửa thất bại', 'Thất bại!');
                     }
                 }
             })
