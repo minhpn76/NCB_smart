@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { Helper } from '../../../helper';
 import { NCBService } from '../../../services/ncb.service';
+import { listTypes } from '../code';
 
 @Component({
     selector: 'app-list',
@@ -18,6 +19,7 @@ export class ListComponent implements OnInit {
     my: any = new Date();
     my_7: any = new Date();
     my_14: any = new Date();
+    listTypes: any = [...listTypes];
     constructor(
         private ncbService: NCBService,
         private toastr: ToastrService,
