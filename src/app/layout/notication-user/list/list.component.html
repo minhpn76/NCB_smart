@@ -159,6 +159,7 @@
                             <td>{{ data?.title }}</td>
                             <td>{{ data?.content }}</td>
                             <td>
+
                                 <span *ngIf="data?.repeatType == '0'" class="badge badge-primary">Chỉ một lần</span>
                                 <span *ngIf="data?.repeatType == '1'" class="badge badge-warning">Hàng ngày</span>
                                 <span *ngIf="data?.repeatType == '2'" class="badge badge-danger">Hàng tuần</span>

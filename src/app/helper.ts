@@ -114,7 +114,7 @@ export class Helper {
             return [dateTime, time].join(' ');
         }
         if (type === '1') {
-            return time;
+            return date;
         }
         if (type === '2') {
             return `${days[t]} ${time}`;

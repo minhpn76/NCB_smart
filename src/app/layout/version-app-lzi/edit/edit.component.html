@@ -27,7 +27,7 @@
                         (<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input formControlName="value" class="form-control col-lg-12" placeholder="Giá trị" [ngClass]="{ 'is-invalid': submitted &&
-                            Form.value.errors }" disabled/>
+                            Form.value.errors }"/>
                         <div *ngIf="submitted && Form.value.errors" class="invalid-feedback">
                             <div *ngIf="Form.value.errors.required">Giá trị là bắt buộc</div>
                             <div *ngIf="Form.value.hasError('whitespace')">Giá trị không hợp lệ</div>
@@ -51,12 +51,26 @@
                     <label for="search" class="col-sm-4 col-form-label">Thể loại
                         (<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <input formControlName="type" class="form-control col-lg-12" placeholder="Thể loại" [ngClass]="{ 'is-invalid': submitted &&
-                            Form.type.errors }" disabled />
+                        <!-- <input formControlName="type" class="form-control col-lg-12" placeholder="Thể loại" [ngClass]="{ 'is-invalid': submitted &&
+                            Form.type.errors }" />
                         <div *ngIf="submitted && Form.type.errors" class="invalid-feedback">
                             <div *ngIf="Form.type.errors.required">Thể loại là bắt buộc</div>
                             <div *ngIf="Form.type.hasError('whitespace')">Thể loại không hợp lệ</div>
-                        </div>
+                        </div> -->
+                        <select
+                            formControlName="type"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted &&
+                            Form.type.errors }"
+                        >
+                            <option
+                                *ngFor="let item of listTypes"
+                                [value]="item.code"
+                                selected="selected"
+                            >
+                                {{ item.name }}</option
+                            >
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -64,7 +78,7 @@
                         (<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input formControlName="sort" class="form-control col-lg-12" placeholder="Sắp xếp" [ngClass]="{ 'is-invalid': submitted &&
-                            Form.sort.errors }" disabled />
+                            Form.sort.errors }" />
                         <div *ngIf="submitted && Form.sort.errors" class="invalid-feedback">
                             <div *ngIf="Form.sort.errors.required">Sắp xếplà bắt buộc</div>
                             <div *ngIf="Form.sort.hasError('whitespace')">Sắp xếp không hợp lệ</div>
@@ -74,15 +88,15 @@
 
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Mô tả
-                        (<span class="text-danger">*</span>):</label>
+                    :</label>
                     <div class="col-sm-7">
                         <input formControlName="description" class="form-control col-lg-12" placeholder="Mô tả"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.description.errors }" />
-                        <div *ngIf="submitted && Form.description.errors" class="invalid-feedback">
+                        <!-- <div *ngIf="submitted && Form.description.errors" class="invalid-feedback">
                             <div *ngIf="Form.description.errors.required">Mô tả là bắt buộc</div>
                             <div *ngIf="Form.description.hasError('whitespace')">Mô tả không hợp lệ</div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 

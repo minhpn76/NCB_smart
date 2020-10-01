@@ -12,6 +12,7 @@ import {
     NgbTabChangeEvent,
 } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { listNotify } from '../code';
 
 @Component({
     selector: 'app-list',
@@ -67,32 +68,7 @@ export class ListComponent implements OnInit {
             code: 'D',
         },
     ];
-    listRepeatValue: any = [
-        {
-            name: 'Tất cả',
-            code: '',
-        },
-        {
-            name: 'Chỉ một lần',
-            code: '0',
-        },
-        {
-            name: 'Hàng ngày',
-            code: '1',
-        },
-        {
-            name: 'Hàng tuần',
-            code: '2',
-        },
-        {
-            name: 'Hàng tháng',
-            code: '3',
-        },
-        {
-            name: 'Hàng năm',
-            code: '4',
-        },
-    ];
+    listRepeatValue: any = [...listNotify];
 
     ObjectUserTypes: any = [
         {
@@ -238,7 +214,7 @@ export class ListComponent implements OnInit {
                             if (page > 0) {
                                 tempage = page - 1;
                             }
-                            this.onSearch({
+                            this.getListData({
                                 page: tempage,
                                 size: size,
                                 search: search,

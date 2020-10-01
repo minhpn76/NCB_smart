@@ -15,6 +15,7 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { ExcelService } from '../../../services/excel.service';
 import { async } from '@angular/core/testing';
+import { listNotify } from '../code';
 
 @Component({
     selector: 'notifications-edit',
@@ -53,32 +54,7 @@ export class EditComponent implements OnInit {
             code: 'D',
         },
     ];
-    listNotifications: any = [
-        {
-            name: 'Tất cả',
-            code: '',
-        },
-        {
-            name: 'Chỉ một lần',
-            code: '0',
-        },
-        {
-            name: 'Hàng ngày',
-            code: '1',
-        },
-        {
-            name: 'Hàng tuần',
-            code: '2',
-        },
-        {
-            name: 'Hàng tháng',
-            code: '3',
-        },
-        {
-            name: 'Hàng năm',
-            code: '4',
-        },
-    ];
+    listRepeatType: any = [...listNotify];
 
     objectUserTypes: any = [
         {
@@ -183,7 +159,7 @@ export class EditComponent implements OnInit {
             return;
         }
         const payload = {
-            title: this.dataForm.value.title,
+            title: this.dataForm.value.name,
             content: this.dataForm.value.content,
             repeatType: this.dataForm.value.repeatType,
             repeatValue: this.dataForm.value.repeatValue,
@@ -262,7 +238,7 @@ export class EditComponent implements OnInit {
             .detailNoticationUser(params).then((result) => {
                 const body = result.json().body;
                 this.dataForm.patchValue({
-                    title: body.title,
+                    name: body.title,
                     content: body.content,
                     repeatType: body.repeatType,
                     repeatValue: body.repeatValue,

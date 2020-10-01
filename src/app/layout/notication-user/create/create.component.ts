@@ -18,7 +18,7 @@ import { async } from '@angular/core/testing';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters';
 import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials';
-
+import {listNotify} from '../code'
 @Component({
     selector: 'notifications-create',
     templateUrl: './create.component.html',
@@ -72,11 +72,11 @@ export class CreateComponent implements OnInit {
         },
         {
             name: 'Tất cả',
-            code: '1',
+            code: '0',
         },
         {
             name: 'Giới hạn',
-            code: '0',
+            code: '1',
         },
     ];
 
@@ -95,32 +95,7 @@ export class CreateComponent implements OnInit {
         },
     ];
 
-    listNotifications: any = [
-        {
-            code: '',
-            name: '---Vui lòng chọn cách thức lặp---',
-        },
-        {
-            code: '0',
-            name: 'Chỉ gửi 1 lần',
-        },
-        {
-            code: '1',
-            name: 'Lặp lại hằng ngày',
-        },
-        {
-            code: '2',
-            name: 'Lặp lại hàng tuần',
-        },
-        {
-            code: '3',
-            name: ' Lặp lại hàng tháng',
-        },
-        {
-            code: '4',
-            name: 'Lặp lại hàng năm',
-        },
-    ];
+    listNotifications: any = [...listNotify];
 
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
@@ -209,11 +184,10 @@ export class CreateComponent implements OnInit {
         this.submitted = true;
         // stop here if form is invalid
         if (this.dataForm.invalid) {
-            console.log('demo', this.dataForm);
             return;
         }
         const payload = {
-            title: this.dataForm.value.title,
+            title: this.dataForm.value.name,
             content: this.dataForm.value.content,
             repeatType: this.dataForm.value.repeatType,
             repeatValue: this.dataForm.value.repeatValue,
@@ -224,7 +198,7 @@ export class CreateComponent implements OnInit {
                 : this.filelist,
             type: '2',
         };
-        console.log('=payload', payload);
+
         this.ncbService
             .createNoticationUser(payload)
             .then((result) => {
@@ -239,6 +213,8 @@ export class CreateComponent implements OnInit {
                         }, 500);
                     } else if (result.json().code === '909') {
                         this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
+                    } else if (result.json().code === '1001') {
+                        this.toastr.error(`Người dùng ${result.json().description} không tồn tại trong hệ thống`, 'Thất bại!');
                     } else {
                         this.toastr.error('Thêm mới thất bại', 'Thất bại!');
                     }
