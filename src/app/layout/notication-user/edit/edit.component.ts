@@ -238,7 +238,7 @@ export class EditComponent implements OnInit {
             .detailNoticationUser(params).then((result) => {
                 const body = result.json().body;
                 this.dataForm.patchValue({
-                    title: body.title,
+                    name: body.title,
                     content: body.content,
                     repeatType: body.repeatType,
                     repeatValue: body.repeatValue,
