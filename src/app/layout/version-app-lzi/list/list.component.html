@@ -1,14 +1,14 @@
 <div>
     <app-page-header [heading]="'Danh mục phân loại ứng dụng'"> </app-page-header>
-    
-    <div>
+
+    <!-- <div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Tên ưu đãi:</label>
                     <div class="col-sm-6">
-                        <input class="form-control col-lg-12" (keydown)="keyDownFunction($event)"
-                             itrim type="text" id="search" placeholder=" Tên ưu đãi " />
+                        <input class="form-control col-lg-12" (keydown)="keyDownFunction($event)" itrim type="text"
+                            id="search" placeholder=" Tên ưu đãi " />
                     </div>
                 </div>
             </div>
@@ -24,26 +24,25 @@
                     </div>
                 </div>
             </div>
-    
+
             <div class="col-md-6">
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Type:</label>
                     <div class="col-sm-6">
                         <select class="form-control">
-                            <option *ngFor="let type of listType" [value]="type.code"
-                                selected="selected">
+                            <option *ngFor="let type of listType" [value]="type.code" selected="selected">
                                 {{ type.name }}
                             </option>
                         </select>
                     </div>
                 </div>
             </div>
-    
+
             <div class="col-md-6">
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Trạng thái phê duyệt:</label>
                     <div class="col-sm-6">
-                        <select class="form-control" >
+                        <select class="form-control">
                             <option *ngFor="let approveStatus of listStatusApproved" [value]="approveStatus.code"
                                 selected="selected">
                                 {{ approveStatus.name }}
@@ -52,9 +51,9 @@
                     </div>
                 </div>
             </div>
-    
-            
-    
+
+
+
 
         </div>
         <div class="row mt-3">
@@ -67,20 +66,28 @@
                 </a>
             </div>
         </div>
-        <div class="row mt-3">
-            <div class="col-auto" style="margin-left: auto;">
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text" style="background-color: white;">
-                            <i (click)="onSearch(search)" class="fa fa-search"></i>
-                        </div>
+    </div> -->
+    <!-- <div class="row mt-3">
+        <div class="col-auto" style="margin-left: auto;">
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text" style="background-color: white;">
+                        <i (click)="onSearch(search)" class="fa fa-search"></i>
                     </div>
-                    <input class="form-control col-lg-12" type="text" name="search" itrim
-                        type="text" id="search" placeholder=" Tìm kiếm " (keydown)="keyDownFunctionSearch($event)" />
                 </div>
+                <input class="form-control col-lg-12" type="text" name="search" itrim type="text" id="search"
+                    placeholder=" Tìm kiếm " (keydown)="keyDownFunctionSearch($event)" />
             </div>
         </div>
-    
+        <div class="col-auto" style="margin-left: auto;">
+            <div class="col-md-12 mb-2">
+                <a class="btn btn-warning" [routerLink]="['/version-app-lzi/create']">
+                    <i class="fa fa-plus"></i>&nbsp;Thêm mới
+                </a>
+            </div>
+        </div>
+    </div> -->
+
     <!-- list -->
     <div class="row mt-3">
         <div class="col-md-12 table-responsive Flipped">
@@ -88,42 +95,38 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col" [class.active]="order === 'title'" (click)="setOrder('title')">
-                            Code
-                            <span [hidden]="reverse">▼</span>
-                            <span [hidden]="!reverse">▲</span>
-                        </th>
-                        <th scope="col" [class.active]="order === 'description'" (click)="setOrder('description')">
-                            Value
-                            <span [hidden]="reverse">▼</span>
-                            <span [hidden]="!reverse">▲</span>
-                        </th>
                         <th scope="col" [class.active]="order === 'code'" (click)="setOrder('code')">
-                            Name
+                            Mã
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th scope="col" [class.active]="order === 'objectUserType'"
-                            (click)="setOrder('objectUserType')">
-                            Type
+                        <th scope="col" [class.active]="order === 'value'" (click)="setOrder('value')">
+                            Giá trị
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th scope="col" [class.active]="order === 'discount'" (click)="setOrder('discount')">
-                            Sort
+                        <th scope="col" [class.active]="order === 'name'" (click)="setOrder('name')">
+                            Tên
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <!-- <th scope="col" [class.active]="order === 'service'" (click)="setOrder('discountType')">
-                        Loại dịch vụ
-                    </th> -->
-
-                        <th scope="col" [class.active]="order === 'status_approved'" (click)="setOrder('status')">
-                            Description
+                        <th scope="col" [class.active]="order === 'type'"
+                            (click)="setOrder('type')">
+                            Thể loại
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'sort'" (click)="setOrder('sort')">
+                            Sắp xếp
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'description'">
+                            Mô tả
                             <!-- <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span> -->
                         </th>
-                        <th scope="col" style="padding: 27px;">Thao tác</th>
+                        <th scope="col">Thao tác</th>
                     </tr>
                 </thead>
 
@@ -132,8 +135,8 @@
                         <td colspan="14">
                             <i class="fa fa-spin fa-spinner font-30"></i>
                         </td>
-                    </tr> -->
-                    <!-- <tr  class="text-center">
+                    </tr>
+                    <tr  class="text-center">
                         <td colspan="14">Không tìm thấy kết quả</td>
                     </tr> -->
                     <tr *ngFor="let data of listData; let i = index">
@@ -149,15 +152,14 @@
                         <td>{{ data?.description }}</td>
                         <td>
                             <a data-toggle="tool-tip" title="Chỉnh sửa" class="mr-2 cursor-pointer text-blue"
-                                routerLink="/version-app-lzi/edit">
+                                routerLink="/version-app-lzi/edit/{{data.code}}">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <span data-toggle="tool-tip" title="Phê duyệt" class="mr-2 cursor-pointer text-warning">
-                                <!-- <i class="fa fa-check" (click)="approved(data.id,data.approveStatus)"></i> -->
                             </span>
                             <span data-toggle="tool-tip" title="Xóa" class="mr-2 cursor-pointer text-danger">
                                 <i class="fa fa-trash" (click)="
-                                        deleteItem(1, i, data.id)
+                                        deleteItem(1, i, data.code)
                                     "></i>
                             </span>
                         </td>
