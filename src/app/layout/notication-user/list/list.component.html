@@ -168,10 +168,10 @@
                                 <span *ngIf="data?.repeatType == '3'" class="badge badge-info">Hàng tháng</span>
                                 <span *ngIf="data?.repeatType == '4'" class="badge badge-default">Hàng năm</span>
                             </td>
-                            <td (click)="openModal(openViewList)">
-                                <button *ngIf="data?.objectUserType == '0'" class="badge badge-primary">Tất cả người
-                                    dùng</button>
-                                <button *ngIf="data?.objectUserType == '1'" class="badge badge-warning">Giới hạn</button>
+                            <td>
+                                <span *ngIf="data?.objectUserType == '0'" class="badge badge-primary">Tất cả người
+                                    dùng</span>
+                                <span *ngIf="data?.objectUserType == '1'" class="badge badge-warning">Giới hạn</span>
 
                             </td>
                             <td>
@@ -193,6 +193,10 @@
                                     <i class="fa fa-trash" (click)="
                                         deleteItem(1, i, data.id)
                                     "></i>
+                                </span>
+
+                                <span *ngIf="data?.objectUserType == '1'" data-toggle="tool-tip" title="Chi tiết" class="mr-2 cursor-pointer text-warning">
+                                    <i class="fa fa-recycle" (click)="openModal(openViewList)"></i>
                                 </span>
                             </td>
                         </tr>
