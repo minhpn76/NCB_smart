@@ -13,7 +13,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { listNotify } from '../code';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-list',
@@ -23,7 +23,8 @@ import { FormGroup } from '@angular/forms';
 })
 export class ListComponent implements OnInit {
     constructor(
-        private modalService: NgbModal,
+        private formBuilder: FormBuilder,
+        private modalNotitfications: NgbModal,
         private ncbService: NCBService,
         public toastr: ToastrService,
         public helper: Helper,
@@ -31,9 +32,8 @@ export class ListComponent implements OnInit {
     ) {
         this.loadDate();
     }
-    get Form() {
-        return this.dataForm.controls;
-    }
+
+    userNotifications: [];
     mRatesDateS: NgbDateStruct;
     mRatesDateS_7: NgbDateStruct;
     my: any = new Date();
@@ -58,6 +58,7 @@ export class ListComponent implements OnInit {
     order = 'name';
     listRole: any = [];
     arrExport: any = [];
+    listQrService: any = [];
     reverse = false;
     isProcessLoadExcel: any = 0;
 
@@ -98,14 +99,11 @@ export class ListComponent implements OnInit {
         ? JSON.parse(localStorage.getItem('profile'))
         : null;
 
-    openModal(content) {
-        this.modalOp = this.modalService.open(content);
-      }
-
     ngOnInit() {
         this.getListData(this.search);
-
-        console.log('data', this.search);
+        this.dataForm = this.formBuilder.group({
+            user_notifications: []
+          });
     }
     public loadDate(): void {
         this.my_7.setDate(this.my_7.getDate() - 7);
@@ -179,6 +177,21 @@ export class ListComponent implements OnInit {
                 // this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
             });
     }
+    get Form() {
+        return this.dataForm.controls;
+    }
+    getItem(params) {
+        this.ncbService.detailNoticationUser(params).then((result) => {
+            const body = result.json().body;
+            this.dataForm.patchValue({
+                user_notifications: body.userNotifications
+            });
+            }).catch(err => {
+            this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
+            });
+
+    }
+
     loadPage(page: number) {
         const page_number = page - 1;
         if (page_number !== this.search.previous_page) {
@@ -246,7 +259,8 @@ export class ListComponent implements OnInit {
         });
     }
 
-    popup() {
-        alert('demo');
+    openModal(userName) {
+        console.log('test', userName);
+        this.modalOp = this.modalNotitfications.open(userName);
     }
 }

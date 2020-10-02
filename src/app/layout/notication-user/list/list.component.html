@@ -153,7 +153,7 @@
                         <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                             <td colspan="8">Không tìm thấy kết quả</td>
                         </tr>
-                        <tr *ngFor="let data of listData; let i = index" (click)="popup()">
+                        <tr *ngFor="let data of listData; let i = index">
                             <td scope="row">
                                 {{ i + 1 }}
                             </td>
@@ -168,10 +168,10 @@
                                 <span *ngIf="data?.repeatType == '3'" class="badge badge-info">Hàng tháng</span>
                                 <span *ngIf="data?.repeatType == '4'" class="badge badge-default">Hàng năm</span>
                             </td>
-                            <td>
-                                <span *ngIf="data?.objectUserType == '0'" class="badge badge-primary">Tất cả người
-                                    dùng</span>
-                                <span *ngIf="data?.objectUserType == '1'" class="badge badge-warning">Giới hạn</span>
+                            <td (click)="openModal(openViewList)">
+                                <button *ngIf="data?.objectUserType == '0'" class="badge badge-primary">Tất cả người
+                                    dùng</button>
+                                <button *ngIf="data?.objectUserType == '1'" class="badge badge-warning">Giới hạn</button>
 
                             </td>
                             <td>
@@ -213,7 +213,7 @@
     <div class="modal-header">
         <h5 class="modal-title">
             <i class="icon-plus"></i>
-            Danh sách người dùng đang được áp dụng
+            Danh sách người dùng
         </h5>
         <button type="button" class="close" aria-label="Close" (click)="d('Crossclick')">
             <span aria-hidden="true">&times;</span>
@@ -227,16 +227,13 @@
                         <tr>
                             <th scope="col">STT</th>
                             <th scope="col">Họ và tên</th>
-                            <!-- <th scope="col">Cif</th> -->
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of Form.user_notifications.value; let i = index">
                             <td>{{i + 1}}</td>
                             <td>{{data?.userName}}</td>
-                            <!-- <td>{{data?.userCif}}</td> -->
                         </tr>
-
                     </tbody>
                 </table>
             </div>

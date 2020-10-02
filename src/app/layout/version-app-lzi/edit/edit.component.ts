@@ -23,7 +23,7 @@ export class EditComponent implements OnInit {
     // itemCode: any;
     filelist: any = [];
     versionAppService: any;
-    listTypes: any = [...listTypes]
+    listTypes: any = [...listTypes];
     constructor(
         private formBuilder: FormBuilder,
         private ncbService: NCBService,
