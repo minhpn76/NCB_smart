@@ -13,6 +13,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { listNotify } from '../code';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-list',
@@ -21,12 +22,8 @@ import { listNotify } from '../code';
     providers: [NCBService, Helper],
 })
 export class ListComponent implements OnInit {
-    mRatesDateS: NgbDateStruct;
-    mRatesDateS_7: NgbDateStruct;
-    my: any = new Date();
-    my_7: any = new Date();
-    my_14: any = new Date();
     constructor(
+        private modalService: NgbModal,
         private ncbService: NCBService,
         public toastr: ToastrService,
         public helper: Helper,
@@ -34,6 +31,16 @@ export class ListComponent implements OnInit {
     ) {
         this.loadDate();
     }
+    get Form() {
+        return this.dataForm.controls;
+    }
+    mRatesDateS: NgbDateStruct;
+    mRatesDateS_7: NgbDateStruct;
+    my: any = new Date();
+    my_7: any = new Date();
+    my_14: any = new Date();
+    dataForm: FormGroup;
+    private modalOp: NgbModalRef;
     search: any = {
         // search: '',
         status: '',
@@ -85,16 +92,20 @@ export class ListComponent implements OnInit {
         },
     ];
 
-
-
     listData = [];
-
     // chuyển dữ liệu profile trong localStorage sang dạng json
-    profile: any = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : null;
+    profile: any = JSON.parse(localStorage.getItem('profile'))
+        ? JSON.parse(localStorage.getItem('profile'))
+        : null;
 
+    openModal(content) {
+        this.modalOp = this.modalService.open(content);
+      }
 
     ngOnInit() {
         this.getListData(this.search);
+
+        console.log('data', this.search);
     }
     public loadDate(): void {
         this.my_7.setDate(this.my_7.getDate() - 7);
@@ -159,7 +170,6 @@ export class ListComponent implements OnInit {
                         this.listData = [];
                         this.totalSearch = 0;
                     }
-
                 }, 300);
             })
             .catch((err) => {
@@ -209,7 +219,12 @@ export class ListComponent implements OnInit {
                                 'success'
                             );
 
-                            const {page, size, search, previous_page } = this.search;
+                            const {
+                                page,
+                                size,
+                                search,
+                                previous_page,
+                            } = this.search;
                             let tempage = 0;
                             if (page > 0) {
                                 tempage = page - 1;
@@ -218,7 +233,7 @@ export class ListComponent implements OnInit {
                                 page: tempage,
                                 size: size,
                                 search: search,
-                                previous_page: previous_page
+                                previous_page: previous_page,
                             });
                         } else {
                             this.toastr.error('Xoá thất bại', 'Thất bại');
@@ -231,4 +246,7 @@ export class ListComponent implements OnInit {
         });
     }
 
+    popup() {
+        alert('demo');
+    }
 }
