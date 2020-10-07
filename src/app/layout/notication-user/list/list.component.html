@@ -196,7 +196,7 @@
                                 </span>
 
                                 <span *ngIf="data?.objectUserType == '1'" data-toggle="tool-tip" title="Chi tiết" class="mr-2 cursor-pointer text-warning">
-                                    <i class="fa fa-recycle" (click)="openModal(openViewList)"></i>
+                                    <i class="fa fa-recycle" (click)="openModal(openViewList);getItem(data.id)"></i>
                                 </span>
                             </td>
                         </tr>
@@ -234,7 +234,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let data of Form.user_notifications.value; let i = index">
+                        <tr *ngIf="listUserForNotify.length === 0" class="text-center">
+                            <td colspan=2><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        </tr>
+                        <tr *ngIf="listUserForNotify.length === 0">
+                           <td colspan="2" style="text-align:center">Không tìm thấy kết quả</td>
+                        </tr>
+                        <tr *ngFor="let data of listUserForNotify; let i = index">
                             <td>{{i + 1}}</td>
                             <td>{{data?.userName}}</td>
                         </tr>

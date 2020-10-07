@@ -61,7 +61,7 @@ export class ListComponent implements OnInit {
     listQrService: any = [];
     reverse = false;
     isProcessLoadExcel: any = 0;
-
+    listUserForNotify: any = [];
     listStatus: any = [
         {
             name: 'Tất cả',
@@ -102,8 +102,8 @@ export class ListComponent implements OnInit {
     ngOnInit() {
         this.getListData(this.search);
         this.dataForm = this.formBuilder.group({
-            user_notifications: []
-          });
+            user_notifications: [],
+        });
     }
     public loadDate(): void {
         this.my_7.setDate(this.my_7.getDate() - 7);
@@ -180,16 +180,22 @@ export class ListComponent implements OnInit {
     get Form() {
         return this.dataForm.controls;
     }
-    getItem(params) {
-        this.ncbService.detailNoticationUser(params).then((result) => {
-            const body = result.json().body;
-            this.dataForm.patchValue({
-                user_notifications: body.userNotifications
-            });
-            }).catch(err => {
-            this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
-            });
 
+    // Xu ly ViewList
+    getItem(params) {
+        this.ncbService
+            .detailNoticationUser(params)
+            .then((result) => {
+                const body = result.json().body.userNotifications;
+                console.log('1212', body);
+                this.listUserForNotify = body;
+                // this.dataForm.patchValue({
+                //     user_notifications: body,
+                // });
+            })
+            .catch((err) => {
+                this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
+            });
     }
 
     loadPage(page: number) {
@@ -259,8 +265,8 @@ export class ListComponent implements OnInit {
         });
     }
 
-    openModal(userName) {
-        console.log('test', userName);
-        this.modalOp = this.modalNotitfications.open(userName);
+    openModal(user_notifications) {
+        this.modalOp = this.modalNotitfications.open(user_notifications);
+        console.log('test', this.modalOp);
     }
 }
