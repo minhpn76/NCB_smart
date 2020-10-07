@@ -10,25 +10,25 @@
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
                     <label for="create" class="col-sm-5 col-form-label"
-                        >Tiêu đề (<span class="text-danger">*</span>):</label
+                        >Tên thông báo (<span class="text-danger">*</span>):</label
                     >
                     <div class="col-sm-7">
                         <input
-                            formControlName="name"
+                            formControlName="title"
                             class="form-control col-lg-12"
-                            placeholder="Tiêu đề"
+                            placeholder="Tên thông báo"
                             [ngClass]="{
-                                'is-invalid': submitted && Form.name?.errors
+                                'is-invalid': submitted && Form.title?.errors
                             }"
                         />
                         <div
-                            *ngIf="submitted && Form.name?.errors"
+                            *ngIf="submitted && Form.title?.errors"
                             class="invalid-feedback"
                         >
-                            <div *ngIf="Form.name?.errors?.required">
+                            <div *ngIf="Form.title?.errors?.required">
                                 Tiêu đề là bắt buộc
                             </div>
-                            <div *ngIf="Form.name.hasError('whitespace')">
+                            <div *ngIf="Form.title.hasError('whitespace')">
                                 Tiêu đề không hợp lệ
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                     >
                     <div class="col-sm-7">
                         <!-- <ckeditor [editor]="Editor" formControlName="content" data=""></ckeditor> -->
-                        <textarea
+                        <!-- <textarea
                             formControlName="content"
                             class="form-control col-lg-12"
                             placeholder="Nội dung"
@@ -58,7 +58,8 @@
                             <div *ngIf="Form.content.hasError('whitespace')">
                                 Nội dung không hợp lệ
                             </div>
-                        </div>
+                        </div> -->
+                        <angular-editor formControlName="content" [config]="editorConfig"></angular-editor>
                     </div>
                 </div>
 
@@ -268,7 +269,7 @@
                     </div>
                 </div>
 
-                <!-- <div class="form-group row">
+                <div class="form-group row">
                     <label for="create" class="col-sm-5 col-form-label">Trạng thái<span
                             class="text-danger">(*</span>):</label>
                     <div class="col-sm-7">
@@ -277,7 +278,7 @@
                                 {{ status.name }}</option>
                         </select>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="form-group row">
                     <div class="col-sm-5"></div>

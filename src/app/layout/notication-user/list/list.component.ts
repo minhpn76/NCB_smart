@@ -13,6 +13,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { listNotify } from '../code';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-list',
@@ -21,12 +22,9 @@ import { listNotify } from '../code';
     providers: [NCBService, Helper],
 })
 export class ListComponent implements OnInit {
-    mRatesDateS: NgbDateStruct;
-    mRatesDateS_7: NgbDateStruct;
-    my: any = new Date();
-    my_7: any = new Date();
-    my_14: any = new Date();
     constructor(
+        private formBuilder: FormBuilder,
+        private modalNotitfications: NgbModal,
         private ncbService: NCBService,
         public toastr: ToastrService,
         public helper: Helper,
@@ -34,8 +32,17 @@ export class ListComponent implements OnInit {
     ) {
         this.loadDate();
     }
+
+    userNotifications: [];
+    mRatesDateS: NgbDateStruct;
+    mRatesDateS_7: NgbDateStruct;
+    my: any = new Date();
+    my_7: any = new Date();
+    my_14: any = new Date();
+    dataForm: FormGroup;
+    private modalOp: NgbModalRef;
     search: any = {
-        search: '',
+        // search: '',
         status: '',
         repeatType: '',
         objectUserType: '',
@@ -51,9 +58,10 @@ export class ListComponent implements OnInit {
     order = 'name';
     listRole: any = [];
     arrExport: any = [];
+    listQrService: any = [];
     reverse = false;
     isProcessLoadExcel: any = 0;
-
+    listUserForNotify: any = [];
     listStatus: any = [
         {
             name: 'Tất cả',
@@ -61,16 +69,16 @@ export class ListComponent implements OnInit {
         },
         {
             name: 'Kích hoạt',
-            code: '1',
+            code: 'A',
         },
         {
             name: 'Chưa kích hoạt',
-            code: '0',
+            code: 'D',
         },
     ];
     listRepeatValue: any = [...listNotify];
 
-    listObjectUserType: any = [
+    ObjectUserTypes: any = [
         {
             name: 'Tất cả',
             code: '',
@@ -85,16 +93,17 @@ export class ListComponent implements OnInit {
         },
     ];
 
-
-
     listData = [];
-
     // chuyển dữ liệu profile trong localStorage sang dạng json
-    profile: any = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : null;
-
+    profile: any = JSON.parse(localStorage.getItem('profile'))
+        ? JSON.parse(localStorage.getItem('profile'))
+        : null;
 
     ngOnInit() {
         this.getListData(this.search);
+        this.dataForm = this.formBuilder.group({
+            user_notifications: [],
+        });
     }
     public loadDate(): void {
         this.my_7.setDate(this.my_7.getDate() - 7);
@@ -123,9 +132,10 @@ export class ListComponent implements OnInit {
             this.onSearch(this.search);
         }
     }
+
     onSearch(payload) {
         if (
-            payload.search !== '' ||
+            // payload.search !== '' ||
             payload.status !== '' ||
             payload.repeatType !== '' ||
             payload.objectUserType !== '' ||
@@ -137,6 +147,7 @@ export class ListComponent implements OnInit {
         payload.formDate = this.helper.tranferDate(this.mRatesDateS);
         payload.startDate = this.helper.tranferDate(this.mRatesDateS_7);
         this.getListData(payload);
+        console.log('test', payload);
     }
 
     getListData(params: any) {
@@ -157,7 +168,6 @@ export class ListComponent implements OnInit {
                         this.listData = [];
                         this.totalSearch = 0;
                     }
-                 
                 }, 300);
             })
             .catch((err) => {
@@ -167,6 +177,27 @@ export class ListComponent implements OnInit {
                 // this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
             });
     }
+    get Form() {
+        return this.dataForm.controls;
+    }
+
+    // Xu ly ViewList
+    getItem(params) {
+        this.ncbService
+            .detailNoticationUser(params)
+            .then((result) => {
+                const body = result.json().body.userNotifications;
+                console.log('1212', body);
+                this.listUserForNotify = body;
+                // this.dataForm.patchValue({
+                //     user_notifications: body,
+                // });
+            })
+            .catch((err) => {
+                this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
+            });
+    }
+
     loadPage(page: number) {
         const page_number = page - 1;
         if (page_number !== this.search.previous_page) {
@@ -199,13 +230,20 @@ export class ListComponent implements OnInit {
                 this.ncbService
                     .deleteNoticationUser(itemId)
                     .then((res) => {
+                        console.log('test', res);
                         if (res.json().code === '00') {
                             Swal.fire(
                                 'Đã xoá!',
                                 'Dữ liệu đã xoá hoàn toàn.',
                                 'success'
                             );
-                            const {page, size, search, previous_page } = this.search;
+
+                            const {
+                                page,
+                                size,
+                                search,
+                                previous_page,
+                            } = this.search;
                             let tempage = 0;
                             if (page > 0) {
                                 tempage = page - 1;
@@ -214,7 +252,7 @@ export class ListComponent implements OnInit {
                                 page: tempage,
                                 size: size,
                                 search: search,
-                                previous_page: previous_page
+                                previous_page: previous_page,
                             });
                         } else {
                             this.toastr.error('Xoá thất bại', 'Thất bại');
@@ -227,4 +265,8 @@ export class ListComponent implements OnInit {
         });
     }
 
+    openModal(user_notifications) {
+        this.modalOp = this.modalNotitfications.open(user_notifications);
+        console.log('test', this.modalOp);
+    }
 }

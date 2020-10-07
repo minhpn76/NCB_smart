@@ -19,8 +19,9 @@
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Kiểu lặp:</label>
                     <div class="col-sm-6">
-                        <select class="form-control" [(ngModel)]="search.repeatType">
-                            <option *ngFor="let repeatType of listRepeatValue" [value]="repeatType.code" selected="selected">
+                        <select class="form-control" [(ngModel)]="search.repeatType" y>
+                            <option *ngFor="let repeatType of listRepeatValue" [value]="repeatType.code"
+                                selected="selected">
                                 {{ repeatType.name }}
                             </option>
                         </select>
@@ -32,7 +33,8 @@
                     <label for="search" class="col-sm-4 col-form-label">Đối tượng áp dụng:</label>
                     <div class="col-sm-6">
                         <select class="form-control" [(ngModel)]="search.objectUserType">
-                            <option *ngFor="let objectUserType of listObjectUserType" [value]="objectUserType.code" selected="selected">
+                            <option *ngFor="let objectUserType of ObjectUserTypes" [value]="objectUserType.code"
+                                selected="selected">
                                 {{ objectUserType.name }}
                             </option>
                         </select>
@@ -176,8 +178,8 @@
                                 {{ helper.formatFullDateTime(data?.repeatValue, data?.repeatType) }}
                             </td>
                             <td>
-                                <span *ngIf="data?.status == 'A'" class="badge badge-primary">Active</span>
-                                <span *ngIf="data?.status == 'D'" class="badge badge-danger">Deactive</span>
+                                <span *ngIf="data?.status == 'A'" class="badge badge-primary">Kích hoạt</span>
+                                <span *ngIf="data?.status == 'D'" class="badge badge-danger">Chưa kích hoạt</span>
                             </td>
                             <td>
                                 <a data-toggle="tool-tip" title="Chỉnh sửa" class="mr-2 cursor-pointer text-blue"
@@ -191,6 +193,10 @@
                                     <i class="fa fa-trash" (click)="
                                         deleteItem(1, i, data.id)
                                     "></i>
+                                </span>
+
+                                <span *ngIf="data?.objectUserType == '1'" data-toggle="tool-tip" title="Chi tiết" class="mr-2 cursor-pointer text-warning">
+                                    <i class="fa fa-recycle" (click)="openModal(openViewList);getItem(data.id)"></i>
                                 </span>
                             </td>
                         </tr>
@@ -206,3 +212,41 @@
             </div>
         </div>
     </div>
+</div>
+<ng-template #openViewList let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title">
+            <i class="icon-plus"></i>
+            Danh sách người dùng
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Crossclick')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped table-bordered table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Họ và tên</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="listUserForNotify.length === 0" class="text-center">
+                            <td colspan=2><i class="fa fa-spin fa-spinner font-30"></i></td>
+                        </tr>
+                        <tr *ngIf="listUserForNotify.length === 0">
+                           <td colspan="2" style="text-align:center">Không tìm thấy kết quả</td>
+                        </tr>
+                        <tr *ngFor="let data of listUserForNotify; let i = index">
+                            <td>{{i + 1}}</td>
+                            <td>{{data?.userName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</ng-template>

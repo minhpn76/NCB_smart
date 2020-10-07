@@ -18,7 +18,8 @@ import { async } from '@angular/core/testing';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters';
 import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials';
-import {listNotify} from '../code'
+import { listNotify } from '../code';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 @Component({
     selector: 'notifications-create',
     templateUrl: './create.component.html',
@@ -52,6 +53,76 @@ export class CreateComponent implements OnInit {
         align: 'left',
     };
 
+    // editor
+    editorConfig: AngularEditorConfig = {
+        editable: true,
+        spellcheck: true,
+        height: 'auto',
+        minHeight: '0',
+        maxHeight: 'auto',
+        width: 'auto',
+        minWidth: '0',
+        translate: 'yes',
+        enableToolbar: true,
+        showToolbar: true,
+        placeholder: 'Nội dung...',
+        defaultParagraphSeparator: '',
+        defaultFontName: '',
+        defaultFontSize: '',
+        fonts: [
+            { class: 'arial', name: 'Arial' },
+            { class: 'times-new-roman', name: 'Times New Roman' },
+            { class: 'calibri', name: 'Calibri' },
+            { class: 'comic-sans-ms', name: 'Comic Sans MS' },
+        ],
+        customClasses: [
+            {
+                name: 'quote',
+                class: 'quote',
+            },
+            {
+                name: 'redText',
+                class: 'redText',
+            },
+            {
+                name: 'titleText',
+                class: 'titleText',
+                tag: 'h1',
+            },
+        ],
+        uploadUrl: 'v1/image',
+        uploadWithCredentials: false,
+        sanitize: true,
+        toolbarPosition: 'top',
+        toolbarHiddenButtons: [['bold', 'italic'], ['fontSize']],
+    };
+    toolbarHiddenButtons: [
+        [
+            'undo',
+            'redo',
+            'bold',
+            'italic',
+            'underline',
+            'justifyLeft',
+            'justifyCenter',
+            'justifyRight',
+            'justifyFull',
+            'indent',
+            'outdent',
+            'insertUnorderedList',
+            'insertOrderedList',
+            'heading',
+            'fontName'
+        ],
+        [
+            'fontSize',
+            'textColor',
+            'backgroundColor',
+            'removeFormat',
+            'toggleEditorMode'
+        ]
+    ];
+
     constructor(
         private formBuilder: FormBuilder,
         private toastr: ToastrService,
@@ -82,22 +153,24 @@ export class CreateComponent implements OnInit {
 
     listStatus = [
         {
-            code: 'A',
-            name: 'Active',
+            code: '',
+            name: '---Vui lòng chọn trạng thái---',
         },
         {
-            name: 'Deactive',
+            code: 'A',
+            name: 'Kích hoạt',
+        },
+        {
+            name: 'Chưa kích hoạt',
             code: 'D',
         },
     ];
 
     listNotifications: any = [...listNotify];
 
-
-
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
-            name: [
+            title: [
                 '',
                 Validators.compose([
                     Validators.required,
@@ -118,19 +191,10 @@ export class CreateComponent implements OnInit {
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
-            repeatValue: ['', Validators.compose([
-                Validators.required,
-            ]),],
+            repeatValue: ['', Validators.compose([Validators.required])],
 
-            objectUserType: [
-                '',
-                Validators.compose([
-                    Validators.required,
-                ]),
-            ],
-            status: [
-                'A'
-            ],
+            objectUserType: ['', Validators.compose([Validators.required])],
+            status: [''],
             type: '2',
 
             // createdAt: [this.mRatesDateS_7],
@@ -150,8 +214,8 @@ export class CreateComponent implements OnInit {
         this.mRatesDateS = {
             year: this.my.getFullYear(),
             month: this.my.getMonth(),
-            day: this.my.getDate()
-        };      
+            day: this.my.getDate(),
+        };
     }
 
     getNotifications() {
@@ -221,7 +285,12 @@ export class CreateComponent implements OnInit {
                     } else if (result.json().code === '909') {
                         this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
                     } else if (result.json().code === '1001') {
-                        this.toastr.error(`Người dùng ${result.json().description} không tồn tại trong hệ thống`, 'Thất bại!');
+                        this.toastr.error(
+                            `Người dùng ${
+                                result.json().description
+                            } không tồn tại trong hệ thống`,
+                            'Thất bại!'
+                        );
                     } else {
                         this.toastr.error('Thêm mới thất bại', 'Thất bại!');
                     }
