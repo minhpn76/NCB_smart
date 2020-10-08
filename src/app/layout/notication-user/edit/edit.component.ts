@@ -15,6 +15,7 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { ExcelService } from '../../../services/excel.service';
 import { async } from '@angular/core/testing';
+import { listNotify } from '../code';
 
 @Component({
     selector: 'notifications-edit',
@@ -45,42 +46,17 @@ export class EditComponent implements OnInit {
     };
     listStatus: any = [
         {
-            name: 'Active',
+            name: 'Kích hoạt',
             code: 'A',
         },
         {
-            name: 'Deactive',
+            name: 'Chưa kích hoạt',
             code: 'D',
         },
     ];
-    listRepeatType: any = [
-        {
-            name: 'Tất cả',
-            code: '',
-        },
-        {
-            name: 'Chỉ một lần',
-            code: '0',
-        },
-        {
-            name: 'Hàng ngày',
-            code: '1',
-        },
-        {
-            name: 'Hàng tuần',
-            code: '2',
-        },
-        {
-            name: 'Hàng tháng',
-            code: '3',
-        },
-        {
-            name: 'Hàng năm',
-            code: '4',
-        },
-    ];
+    listRepeatType: any = [...listNotify];
 
-    listObjectUserType: any = [
+    objectUserTypes: any = [
         {
             name: '---Vui lòng chọn đối tượng---',
             code: '',
@@ -114,7 +90,7 @@ export class EditComponent implements OnInit {
             this.itemId = params.itemId;
         });
         this.dataForm = this.formBuilder.group({
-            name: [
+            title: [
                 '',
                 Validators.compose([
                     Validators.required,
@@ -137,7 +113,7 @@ export class EditComponent implements OnInit {
             ],
             repeatValue: ['', Validators.compose([
                 Validators.required,
-            ]),],
+            ]), ],
 
             objectUserType: [
                 '',
@@ -146,7 +122,7 @@ export class EditComponent implements OnInit {
                 ]),
             ],
             status: [
-                'A'
+                ''
             ],
 
             // createdAt: [this.mRatesDateS_7],
@@ -171,19 +147,19 @@ export class EditComponent implements OnInit {
             year: this.my.getFullYear(),
             month: this.my.getMonth(),
             day: this.my.getDate()
-        };      
+        };
     }
 
     // truyền đi các thông tin trong danh sách
     onSubmit() {
         this.submitted = true;
-  
+
         // stop here if form is invalid
         if (this.dataForm.invalid) {
             return;
         }
         const payload = {
-            name: this.dataForm.value.name,
+            title: this.dataForm.value.name,
             content: this.dataForm.value.content,
             repeatType: this.dataForm.value.repeatType,
             repeatValue: this.dataForm.value.repeatValue,
@@ -262,7 +238,7 @@ export class EditComponent implements OnInit {
             .detailNoticationUser(params).then((result) => {
                 const body = result.json().body;
                 this.dataForm.patchValue({
-                    title: body.title,
+                    name: body.title,
                     content: body.content,
                     repeatType: body.repeatType,
                     repeatValue: body.repeatValue,

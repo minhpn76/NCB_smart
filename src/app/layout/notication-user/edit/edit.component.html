@@ -7,26 +7,26 @@
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
                     <label for="create" class="col-sm-5 col-form-label"
-                        >Tiêu đề (<span class="text-danger">*</span>):</label
+                        >Tên thông báo (<span class="text-danger">*</span>):</label
                     >
                     <div class="col-sm-7">
                         <input
-                            formControlName="name"
+                            formControlName="title"
                             class="form-control col-lg-12"
-                            placeholder="Tiêu đề"
+                            placeholder="Tên thông báo"
                             [ngClass]="{
-                                'is-invalid': submitted && Form.name?.errors
+                                'is-invalid': submitted && Form.title?.errors
                             }"
                         />
                         <div
-                            *ngIf="submitted && Form.name?.errors"
+                            *ngIf="submitted && Form.title?.errors"
                             class="invalid-feedback"
                         >
-                            <div *ngIf="Form.name?.errors?.required">
-                                Tiêu đề là bắt buộc
+                            <div *ngIf="Form.title?.errors?.required">
+                                Tên thông báo là bắt buộc
                             </div>
-                            <div *ngIf="Form.name.hasError('whitespace')">
-                                Tiêu đề không hợp lệ
+                            <div *ngIf="Form.title.hasError('whitespace')">
+                                Tên thông báo không hợp lệ
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                             }"
                         >
                             <option
-                                *ngFor="let i of listNotifications"
+                                *ngFor="let i of listRepeatType"
                                 [value]="i.code"
                                 selected="selected"
                             >
@@ -212,8 +212,7 @@
                         </div>
                     </div>
                    
-                </div>
-               
+                </div> 
 
                 <div class="form-group row">
                     <label for="create" class="col-sm-5 col-form-label"
@@ -265,16 +264,16 @@
                     </div>
                 </div>
 
-                <!-- <div class="form-group row">
+                <div class="form-group row">
                     <label for="create" class="col-sm-5 col-form-label">Trạng thái<span
                             class="text-danger">(*</span>):</label>
                     <div class="col-sm-7">
-                        <select formControlName="status" class="form-control">
+                        <select formControlName="status" class="form-control" disabled>
                             <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">
                                 {{ status.name }}</option>
                         </select>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="form-group row">
                     <div class="col-sm-5"></div>

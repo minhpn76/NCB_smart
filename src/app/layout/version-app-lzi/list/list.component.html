@@ -147,7 +147,11 @@
                         <td>{{ data?.code }}</td>
                         <td>{{ data?.value }}</td>
                         <td>{{ data?.name }}</td>
-                        <td>{{ data?.type }}</td>
+                        <td>
+                            <span *ngFor="let item of listTypes">
+                                <span *ngIf="item.code === data.type"> {{item.name}}</span>
+                            </span>
+                        </td>
                         <td>{{ data?.sort }}</td>
                         <td>{{ data?.description }}</td>
                         <td>

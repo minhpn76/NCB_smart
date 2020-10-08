@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Helper } from '../../../helper';
 import { NCBService } from '../../../services/ncb.service';
+import {listTypes} from '../code';
 
 @Component({
     selector: 'app-edit',
@@ -22,6 +23,7 @@ export class EditComponent implements OnInit {
     // itemCode: any;
     filelist: any = [];
     versionAppService: any;
+    listTypes: any = [...listTypes];
     constructor(
         private formBuilder: FormBuilder,
         private ncbService: NCBService,
@@ -73,10 +75,6 @@ export class EditComponent implements OnInit {
             ],
             description: [
                 '',
-                Validators.compose([
-                    Validators.required,
-                    this.helper.noWhitespaceValidator,
-                ]),
             ],
         });
         this.getItem(this.versionAppService);
