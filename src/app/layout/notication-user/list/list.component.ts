@@ -183,6 +183,7 @@ export class ListComponent implements OnInit {
 
     // Xu ly ViewList
     getItem(params) {
+        this.isProcessLoad = 1;
         this.ncbService
             .detailNoticationUser(params)
             .then((result) => {
@@ -192,6 +193,7 @@ export class ListComponent implements OnInit {
                 // this.dataForm.patchValue({
                 //     user_notifications: body,
                 // });
+                this.isProcessLoad = 0;
             })
             .catch((err) => {
                 this.toastr.error('Không lấy được dữ liệu', 'Thất bại');

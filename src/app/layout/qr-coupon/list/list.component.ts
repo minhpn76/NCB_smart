@@ -110,11 +110,11 @@ export class ListComponent implements OnInit {
 
     // chuyển dữ liệu profile trong localStorage sang dạng json
     profile: any = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : null;
-    //TODO find QR_COUPON has isA === true
+    // TODO find QR_COUPON has isA === true
     objQRCoupon: any = JSON.parse(this.profile.role.description).find((item) => {
         return item.code === 'QR_COUPON'
     })
-    
+
     ngOnInit() {
         this.getListData(this.search);
     }
@@ -227,10 +227,10 @@ export class ListComponent implements OnInit {
                                 'Dữ liệu đã xoá hoàn toàn.',
                                 'success'
                             );
-                            let {page, size, search, previous_page } = this.search;
-                            let tempage: number = 0
-                            if (page > 0){
-                                tempage = page - 1
+                            const {page, size, search, previous_page } = this.search;
+                            let tempage = 0;
+                            if (page > 0) {
+                                tempage = page - 1;
                             }
                             this.onSearch({
                                 page: tempage,
