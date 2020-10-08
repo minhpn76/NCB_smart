@@ -1,11 +1,11 @@
 {
   "/NCB-smart/*": {
-      "target": "http://192.168.53.103:8082/",
+      "target": "http://192.168.53.127:443/",
       "secure": false,
       "logLevel": "debug",
       "changeOrigin": true,
       "pathRewrite": {
-          "^/NCB-smart": "http://192.168.53.103:8082/NCB-smart"
+          "^/NCB-smart": "http://192.168.53.127:443/NCB-smart"
       }
   }
 }

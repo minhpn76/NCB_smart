@@ -35,7 +35,8 @@ export class CreateQrComponent implements OnInit {
         this.dataForm = this.formBuilder.group({
             title: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             serviceType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            status: ['A']
+            status: ['1'],
+            // createdBy: ['admin'],
         });
     }
     get Form() { return this.dataForm.controls; }
@@ -49,6 +50,7 @@ export class CreateQrComponent implements OnInit {
             return;
         }
         this.ncbService.createQRServer(this.dataForm.value).then((result) => {
+            console.log('tes', result);
             if (result.status === 200) {
                 if (result.json().code === '00') {
                     this.toastr.success('Thêm mới thành công', 'Thành công!');
