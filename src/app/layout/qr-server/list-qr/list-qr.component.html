@@ -93,8 +93,8 @@
                             <td>{{data?.title}}</td>
                             <td>{{data?.serviceType}}</td>
                             <td>
-                                <span *ngIf="data?.status =='A'" class="badge badge-success">Hiệu lực</span>
-                                <span *ngIf="data?.status == 'D'" class="badge badge-danger">Không hiệu lực</span>
+                                <span *ngIf="data?.status =='1'" class="badge badge-success">Hiệu lực</span>
+                                <span *ngIf="data?.status == '0'" class="badge badge-danger">Không hiệu lực</span>
                             </td>
                             <td>{{helper.formatDate(data.createdAt)}}</td>
                             <td>{{data.updatedBy}}</td>
