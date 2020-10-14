@@ -6,24 +6,24 @@ body {
     background: #07051a;
 }
 
-form{
+form {
     position: relative;
     top: 50%;
     left: 90%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     transition: all 1s;
     width: 30px;
     height: 30px;
     background: white;
     box-sizing: border-box;
     border-radius: 25px;
-    border: 2px solid #E9ECEF;
+    border: 2px solid #e9ecef;
     padding: 5px;
-    input{
+    input {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;;
+        width: 100%;
         height: 26px;
         line-height: 30px;
         outline: 0;
@@ -33,8 +33,8 @@ form{
         border-radius: 20px;
         padding: 0 20px;
     }
-    
-    .fa{
+
+    .fa {
         box-sizing: border-box;
         padding: 7px;
         width: 31.5px;
@@ -48,19 +48,24 @@ form{
         // font-size: 1.2em;
         transition: all 1s;
     }
-    
 }
 
+tbody {
+    tr:hover {
+        background-color: #f2f2f2;
+        cursor: pointer;
+    }
+}
 
-form:hover{
+form:hover {
     width: 200px;
     cursor: pointer;
 }
 
-form:hover input{
+form:hover input {
     display: block;
 }
 
-form:hover .fa{
+form:hover .fa {
     color: black;
 }

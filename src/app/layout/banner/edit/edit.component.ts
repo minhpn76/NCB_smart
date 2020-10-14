@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { NCBService } from '../../../services/ncb.service';
 import { AppSettings } from '../../../app.settings';
 import { Helper } from '../../../helper';
+import {listCodeBanner} from '../code';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbDatepickerConfig, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -28,32 +29,7 @@ export class EditComponent implements OnInit {
   isLockSave = false;
   isEdit = true;
   editData: any = {};
-  listBanner: any = [
-    {
-      code: 'HOME_POPUP',
-      name: 'Hiển thị popup ở HOME'
-    },
-    {
-      code: 'HOME_BANNER',
-      name: 'BANNER ở màn hình home'
-    },
-    {
-      code: 'TOPUP_BANNER',
-      name: 'BANNER ở màn hình nạp tiền'
-    },
-    {
-      code: 'PAY_BANNER',
-      name: 'BANNER ở màn hình thanh toán dịch vụ'
-    },
-    {
-      code: 'CARD_BANNER',
-      name: 'BANNER ở màn hình dịch vụ thẻ'
-    },
-    {
-      code: 'FLASH',
-      name: 'FLASH'
-    }
-  ];
+  listBanner: any = [...listCodeBanner];
   listShow: any = [
     {
       code: 'Y',

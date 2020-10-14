@@ -1,0 +1,175 @@
+<div>
+    <app-page-header [heading]="'Danh mục phân loại ứng dụng'"> </app-page-header>
+
+    <!-- <div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên ưu đãi:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control col-lg-12" (keydown)="keyDownFunction($event)" itrim type="text"
+                            id="search" placeholder=" Tên ưu đãi " />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">
+                                {{ status.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Type:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control">
+                            <option *ngFor="let type of listType" [value]="type.code" selected="selected">
+                                {{ type.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái phê duyệt:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control">
+                            <option *ngFor="let approveStatus of listStatusApproved" [value]="approveStatus.code"
+                                selected="selected">
+                                {{ approveStatus.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12 text-center">
+                <button class="btn btn-primary mr-3" (click)="onSearch(search)">
+                    <i class="fa fa-search"></i>&nbsp;Tìm kiếm
+                </button>
+                <a class="btn btn-warning" [routerLink]="['/version-app-lzi/create']">
+                    <i class="fa fa-plus"></i>&nbsp;Thêm mới
+                </a>
+            </div>
+        </div>
+    </div> -->
+    <!-- <div class="row mt-3">
+        <div class="col-auto" style="margin-left: auto;">
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text" style="background-color: white;">
+                        <i (click)="onSearch(search)" class="fa fa-search"></i>
+                    </div>
+                </div>
+                <input class="form-control col-lg-12" type="text" name="search" itrim type="text" id="search"
+                    placeholder=" Tìm kiếm " (keydown)="keyDownFunctionSearch($event)" />
+            </div>
+        </div>
+        <div class="col-auto" style="margin-left: auto;">
+            <div class="col-md-12 mb-2">
+                <a class="btn btn-warning" [routerLink]="['/version-app-lzi/create']">
+                    <i class="fa fa-plus"></i>&nbsp;Thêm mới
+                </a>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- list -->
+    <div class="row mt-3">
+        <div class="col-md-12 table-responsive Flipped">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col" [class.active]="order === 'code'" (click)="setOrder('code')">
+                            Mã
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'value'" (click)="setOrder('value')">
+                            Giá trị
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'name'" (click)="setOrder('name')">
+                            Tên
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'type'"
+                            (click)="setOrder('type')">
+                            Thể loại
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'sort'" (click)="setOrder('sort')">
+                            Sắp xếp
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col" [class.active]="order === 'description'">
+                            Mô tả
+                            <!-- <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span> -->
+                        </th>
+                        <th scope="col">Thao tác</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <!-- <tr  class="text-center">
+                        <td colspan="14">
+                            <i class="fa fa-spin fa-spinner font-30"></i>
+                        </td>
+                    </tr>
+                    <tr  class="text-center">
+                        <td colspan="14">Không tìm thấy kết quả</td>
+                    </tr> -->
+                    <tr *ngFor="let data of listData; let i = index">
+                        <td scope="row">
+                            {{ i + 1 }}
+                        </td>
+
+                        <td>{{ data?.code }}</td>
+                        <td>{{ data?.value }}</td>
+                        <td>{{ data?.name }}</td>
+                        <td>
+                            <span *ngFor="let item of listTypes">
+                                <span *ngIf="item.code === data.type"> {{item.name}}</span>
+                            </span>
+                        </td>
+                        <td>{{ data?.sort }}</td>
+                        <td>{{ data?.description }}</td>
+                        <td>
+                            <a data-toggle="tool-tip" title="Chỉnh sửa" class="mr-2 cursor-pointer text-blue"
+                                routerLink="/version-app-lzi/edit/{{data.code}}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <span data-toggle="tool-tip" title="Phê duyệt" class="mr-2 cursor-pointer text-warning">
+                            </span>
+                            <span data-toggle="tool-tip" title="Xóa" class="mr-2 cursor-pointer text-danger">
+                                <i class="fa fa-trash" (click)="
+                                        deleteItem(1, i, data.code)
+                                    "></i>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>

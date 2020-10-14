@@ -14,6 +14,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { OrderModule } from 'ngx-order-pipe';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
   imports: [
     CommonModule, NotificationUserRoutingModule, PageHeaderModule, NgbModule,
         FormsModule,
+        AngularEditorModule,
         ReactiveFormsModule,
         TranslateModule.forChild(),
         CurrencyMaskModule,

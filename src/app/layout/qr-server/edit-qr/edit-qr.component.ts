@@ -17,12 +17,12 @@ export class EditQrComponent implements OnInit {
   qrService: any;
   listStatus: any = [
     {
-      name: 'Active',
-      code: 'A',
+      name: 'Hiệu lực',
+      code: '1',
     },
     {
-      name: 'Deactive',
-      code: 'D',
+      name: 'Không hiệu lực',
+      code: '0',
     }
   ];
 

@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
 import { OrderPipe } from 'ngx-order-pipe';
+import {listCodeBanner} from '../code'
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -16,36 +17,7 @@ export class ListComponent implements OnInit {
     isSearch: any = false;
     isProcessLoad: any = 0;
     totalSearch: any = 0;
-    listBanner: any = [
-        {
-            code: '',
-            name: 'Tất cả'
-        },
-        {
-          code: 'HOME_POPUP',
-          name: 'Hiển thị popup ở HOME'
-        },
-        {
-          code: 'HOME_BANNER',
-          name: 'BANNER ở màn hình home'
-        },
-        {
-          code: 'TOPUP_BANNER',
-          name: 'BANNER ở màn hình nạp tiền'
-        },
-        {
-          code: 'PAY_BANNER',
-          name: 'BANNER ở màn hình thanh toán dịch vụ'
-        },
-        {
-          code: 'CARD_BANNER',
-          name: 'BANNER ở màn hình dịch vụ thẻ'
-        },
-        {
-          code: 'FLASH',
-          name: 'FLASH'
-        }
-      ];
+    listBanner: any = [{code: '',name: 'Tất cả'}, ...listCodeBanner];
     re_search = {
         bannerCode: '',
         bannerName: '',
@@ -152,9 +124,7 @@ export class ListComponent implements OnInit {
             }
         });
     }
-    cancelAction(event) {
-        console.log('huy bo thanh con');
-    }
+
     loadPage(page: number) {
       const page_number = page - 1;
       if (page_number !== this.re_search.previous_page) {

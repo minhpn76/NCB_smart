@@ -73,21 +73,21 @@ export class Helper {
     }
 
     getWeekOfMonth(input) {
-        var date = new Date(input);
-        let adjustedDate = date.getDate()+ date.getDay();
-        let prefixes = ['0', '1', '2', '3', '4', '5'];
-        return `Tuần thứ ${(parseInt(prefixes[0 | adjustedDate / 7])+1)}`;
+        const date = new Date(input);
+        const adjustedDate = date.getDate() + date.getDay();
+        const prefixes = ['0', '1', '2', '3', '4', '5'];
+        return `Tuần thứ ${(parseInt(prefixes[0 | adjustedDate / 7]) + 1)}`;
     }
 
     formatFullDateTime(date, type) {
-        var days = ['Chủ nhật','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7'];
+        const days = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
         let d = new Date(date),
             month = '' + (d.getMonth() + 1),
             day = '' + d.getDate(),
             year = d.getFullYear(),
-            hours = d.getHours() + "",
-            minutes = d.getMinutes() + "",
-            seconds = d.getSeconds() + "",
+            hours = d.getHours() + '',
+            minutes = d.getMinutes() + '',
+            seconds = d.getSeconds() + '',
             t = d.getDay() - 1;
 
 
@@ -108,24 +108,24 @@ export class Helper {
             seconds = '0' + seconds;
         }
 
-        let dateTime = [year, month, day].join('/');
-        let time = [hours, minutes, seconds].join(':')
+        const dateTime = [year, month, day].join('/');
+        const time = [hours, minutes, seconds].join(':');
         if (type === '0') {
             return [dateTime, time].join(' ');
         }
         if (type === '1') {
-            return time
+            return date;
         }
         if (type === '2') {
-            return `${days[t]} ${time}`
+            return `${days[t]} ${time}`;
         }
         if (type === '3') {
-            return `${this.getWeekOfMonth(date)} ${time}`
+            return `${this.getWeekOfMonth(date)} ${time}`;
         }
-        if (type === '4'){
-            return dateTime
+        if (type === '4') {
+            return dateTime;
         }
-        
+
         return [dateTime, time].join(' ');
     }
     toFormData<T>( formValue: T ) {
