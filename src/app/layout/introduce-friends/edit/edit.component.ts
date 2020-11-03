@@ -1,22 +1,73 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { NCBService } from "../../../services/ncb.service";
+import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
+import { ToastrService } from "ngx-toastr";
+import { Helper } from "../../../helper";
 
 @Component({
     selector: 'app-edit',
     templateUrl: './edit.component.html',
     styleUrls: ['./edit.component.scss'],
+    providers: [NCBService, Helper]
 })
 export class EditComponent implements OnInit {
     dataForm: FormGroup;
     submitted = false;
+    itemId: any;
     constructor(
-        privateformBuilder: FormBuilder,
-        // private ncbService: NCBService,
+        private formBuilder: FormBuilder,
+        private ncbService: NCBService,
         private toastr: ToastrService,
-        private router: Router
-    ) {}
+        private router: Router,
+        private helper: Helper,
+        private route: ActivatedRoute,
+    ) {
+        this.route.params.subscribe(params => {
+            console.log('=params', params);
+            this.itemId = parseInt(params.itemId);
+        });
+        this.dataForm = this.formBuilder.group({
+            title: [
+                "",
+                Validators.compose([
+                    Validators.required,
+                    this.helper.noWhitespaceValidator,
+                ]),
+            ],
+            instruction: [
+                "",
+                Validators.compose([
+                    Validators.required,
+                    this.helper.noWhitespaceValidator,
+                ]),
+            ],
+            urlPromotion: [
+                "",
+                Validators.compose([
+                    Validators.required,
+                    this.helper.noWhitespaceValidator,
+                ]),
+            ],
+            urlBanner: [
+                "",
+                Validators.compose([
+                    Validators.required,
+                    this.helper.noWhitespaceValidator,
+                ]),
+            ],
+            objectUserType: [
+                ""
+            ],
+            provider: [
+                "",
+                Validators.compose([
+                    Validators.required,
+                    this.helper.noWhitespaceValidator,
+                ]),
+            ]
+        });
+    }
 
     listType = [
         {
@@ -34,51 +85,58 @@ export class EditComponent implements OnInit {
     ];
 
     ngOnInit() {
-        this.dataForm = new FormGroup({
-            name: new FormControl(),
-            value: new FormControl(),
-            type: new FormControl(),
-            description: new FormControl(),
-            code: new FormControl(),
-        });
+        this.getItem({id: this.itemId});
+
+    }
+    getItem(params) {
+        this.ncbService.detailConfigFriend(params).then((result) => {
+            const body = result.json().body;
+            this.dataForm.patchValue({
+                title: body.title,
+                instruction: body.instruction,
+                objectUserType: body.objectUserType,
+                urlPromotion: body.urlPromotion,
+                urlBanner: body.urlBanner,
+                provider: body.provider,
+            });
+            }).catch(err => {
+
+            });
     }
     get Form() {
         return this.dataForm.controls;
     }
     onSubmit() {
-        alert('thành công');
-        this.router.navigateByUrl('/introduce-friends');
-        // this.submitted = true;
+        this.submitted = true;
 
-        // // stop here if form is invalid
-        // if (this.dataForm.invalid) {
-        //     console.log('demo', this.dataForm);
-        //     return;
-        // }
-        // this.ncbService
-        //     .createQRServer(this.dataForm.value)
-        //     .then((result) => {
-        //         if (result.status === 200) {
-        //             if (result.json().code === '00') {
-        //                 this.toastr.success(
-        //                     'Thêm mới thành công',
-        //                     'Thành công!'
-        //                 );
-        //                 setTimeout(() => {
-        //                     this.router.navigateByUrl('/qr-services');
-        //                 }, 500);
-        //             } else if (result.json().code === '909') {
-        //                 this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
-        //             } else {
-        //                 this.toastr.error('Thêm mới thất bại', 'Thất bại!');
-        //             }
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         this.toastr.error(err.json().description, 'Thất bại!');
-        //     });
+        // stop here if form is invalid
+        if (this.dataForm.invalid) {
+            return;
+        }
+        this.ncbService
+            .updateConfigFriend(this.itemId, this.dataForm.value)
+            .then((result) => {
+                if (result.status === 200) {
+                    if (result.json().code === '00') {
+                        this.toastr.success(
+                            'Cập nhật thành công',
+                            'Thành công!'
+                        );
+                        setTimeout(() => {
+                            this.router.navigateByUrl('/invite-friends');
+                        }, 500);
+                    } else if (result.json().code === '909') {
+                        this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
+                    } else {
+                        this.toastr.error('Thêm mới thất bại', 'Thất bại!');
+                    }
+                }
+            })
+            .catch((err) => {
+                this.toastr.error(err.json().description, 'Thất bại!');
+            });
     }
     resetForm() {
-        this.router.navigateByUrl('/introduce-friends');
+        this.router.navigateByUrl('/invite-friends');
     }
 }

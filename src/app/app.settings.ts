@@ -60,7 +60,7 @@ export class AppSettings {
         },
         {
             code: "NHA_CC_DICH_VU",
-            name: "Nhà cung cấp dịch vụ",
+            name: "NCC dịch vụ",
             isAll: false,
             isC: false,
             isR: false,
@@ -104,7 +104,7 @@ export class AppSettings {
         },
         {
             code: "DV_KH_DK",
-            name: "Dịch vụ khách hàng đăng ký",
+            name: "DVKH đăng ký",
             isAll: false,
             isC: false,
             isR: false,
@@ -180,17 +180,6 @@ export class AppSettings {
             menu: 'THAM_SO'
         },
         {
-            code: 'DIEU_KHOAN',
-            name: 'Điều khoản sử dụng',
-            isAll: false,
-            isC: false,
-            isR: false,
-            isU: false,
-            isD: false,
-            isA: false,
-            menu: "THAM_SO",
-        },
-        {
             code: "DIEU_KHOAN",
             name: "Điều khoản sử dụng",
             isAll: false,
@@ -209,7 +198,7 @@ export class AppSettings {
             isU: false,
             isD: false,
             isA: false,
-            name: "Mạng lưới chi nhánh",
+            name: "DS chi nhánh",
             menu: "TRA_CUU",
         },
         {
@@ -242,7 +231,7 @@ export class AppSettings {
             isU: false,
             isD: false,
             isA: false,
-            name: "Thông tin Q&As",
+            name: "Q&As",
             menu: "TRA_CUU",
         },
         {
@@ -280,7 +269,7 @@ export class AppSettings {
         },
         {
             code: "QR_SERVICE",
-            name: "Dịch vụ thanh toán",
+            name: "DV thanh toán",
             isAll: false,
             isC: false,
             isR: false,
@@ -291,7 +280,7 @@ export class AppSettings {
         },
         {
             code: "QR_COUPON",
-            name: "Dịch vụ thanh toán giảm giá",
+            name: "DVTT giảm giá",
             isAll: false,
             isC: false,
             isR: false,
@@ -302,7 +291,7 @@ export class AppSettings {
         },
         {
             code: "QR_MERCHANT",
-            name: "Nhà cung cấp dịch vụ QR",
+            name: "NCC dịch vụ QR",
             isAll: false,
             isC: false,
             isR: false,
@@ -311,7 +300,7 @@ export class AppSettings {
             isA: false,
             menu: "KHACH_HANG",
         },
-        
+
         {
             code: "INVITE_FRIENDS",
             name: "Giới thiệu bạn bè",

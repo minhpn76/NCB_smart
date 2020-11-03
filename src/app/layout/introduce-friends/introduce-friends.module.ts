@@ -7,6 +7,7 @@ import { ListComponent } from './list/list.component';
 import { EditComponent } from './edit/edit.component';
 import { PageHeaderModule } from '../../shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    IntroduceFriendsRoutingModule
+    IntroduceFriendsRoutingModule,
+    NgbModule
   ]
 })
 export class IntroduceFriendsModule { }
