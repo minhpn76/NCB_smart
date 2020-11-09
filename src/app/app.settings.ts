@@ -302,7 +302,7 @@ export class AppSettings {
         },
 
         {
-            code: "INVITE_FRIENDS",
+            code: "INVITE",
             name: "Giới thiệu bạn bè",
             isAll: false,
             isC: false,
