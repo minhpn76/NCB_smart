@@ -70,13 +70,7 @@ export class CreateComponent implements OnInit {
             objectUserType: [
                 ""
             ],
-            provider: [
-                "",
-                Validators.compose([
-                    Validators.required,
-                    this.helper.noWhitespaceValidator,
-                ]),
-            ]
+            provider: ''
         });
     }
     get Form() {

@@ -1933,4 +1933,100 @@ export class NCBService {
             method: "GET",
         });
     }
+    //referal code partner
+    getListReferalCodePartner(params): Promise<any> {
+        const url = `${API_URL}/referral-code-partners`;
+        return this.auth.authRequest({
+            url: url,
+            params: params,
+            method: "GET",
+        });
+    }
+    createReferalCodePartner(body): Promise<any> {
+        const url = `${API_URL}/referral-code-partners`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: "POST",
+            application: true,
+        });
+    }
+    updateReferalCodePartner(code: string, body: any): Promise<any> {
+        const url = `${API_URL}/referral-code-partners/${code}`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: "PUT",
+            application: true,
+        });
+    }
+    detailReferalCodePartner(code: any): Promise<any> {
+        const {id} = code;
+        const url = `${API_URL}/referral-code-partners/${id}`;
+        return this.auth.authRequest({ url: url, method: "GET" });
+    }
+    deleteReferalCodePartner(itemCode): Promise<any> {
+        const {id} = itemCode;
+        const url = `${API_URL}/referral-code-partners/${id}`;
+        return this.auth.authRequest({
+            url: url,
+            method: "DELETE",
+        });
+    }
+    //promotion detail
+    getListPromotionDetail(params): Promise<any> {
+        const url = `${API_URL}/promotion-details`;
+        return this.auth.authRequest({
+            url: url,
+            params: params,
+            method: "GET",
+        });
+    }
+    createPromotionDetail(body): Promise<any> {
+        const url = `${API_URL}/promotion-details`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: "POST",
+            application: true,
+        });
+    }
+    updatePromotionDetail(code: string, body: any): Promise<any> {
+        const url = `${API_URL}/promotion-details/${code}`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: "PUT",
+            application: true,
+        });
+    }
+    detailPromotionDetail(code: any): Promise<any> {
+        const {id} = code;
+        const url = `${API_URL}/promotion-details/${id}`;
+        return this.auth.authRequest({ url: url, method: "GET" });
+    }
+    deletePromotionDetail(itemCode): Promise<any> {
+        const {id} = itemCode;
+        const url = `${API_URL}/promotion-details/${id}`;
+        return this.auth.authRequest({
+            url: url,
+            method: "DELETE",
+        });
+    }
+    //find promotion
+    getPromotionByPromotionCode(params): Promise<any> {
+        const url = `${API_URL}/promotion-details/promotion-code/${params}`;
+        return this.auth.authRequest({
+            url: url,
+            method: "GET",
+        });
+    }
+    getReferalPartnerByPromotionCode(params): Promise<any> {
+        const url = `${API_URL}/referral-code-partners/partner-code/${params}`;
+        return this.auth.authRequest({
+            url: url,
+            method: "GET",
+        });
+    }
+
 }

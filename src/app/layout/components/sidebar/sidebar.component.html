@@ -153,6 +153,13 @@
                             <span>Thông báo người dùng</span>
                         </a>
                     </li>
+                    <li *ngIf="khachhang.code === 'P_PROMO' && khachhang.isAll === true">
+                        <a [routerLink]="['/partner-promotion']" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item">
+                            <i class="fa fa-archive"></i>&nbsp;
+                            <span>Đối tác tham gia ưu đãi</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
         </div>

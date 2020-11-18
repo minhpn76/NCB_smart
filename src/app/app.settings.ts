@@ -49,7 +49,7 @@ export class AppSettings {
         },
         {
             code: "NGH_CHUYEN_KHOAN",
-            name: "Ngân hàng chuyển khoản",
+            name: "Ngân hàng CK",
             isAll: false,
             isC: false,
             isR: false,
@@ -93,7 +93,7 @@ export class AppSettings {
         },
         {
             code: "GOI_KH_SU_DUNG",
-            name: "Gói khách hàng sử dụng",
+            name: "Gói KH sử dụng",
             isAll: false,
             isC: false,
             isR: false,
@@ -115,7 +115,7 @@ export class AppSettings {
         },
         {
             code: "KHUYEN_MAI",
-            name: "Khuyến mãi, ưu đãi",
+            name: "KM, ưu đãi",
             isAll: false,
             isC: false,
             isR: false,
@@ -126,7 +126,7 @@ export class AppSettings {
         },
         {
             code: "TT_KH",
-            name: "Thông tin khách hàng",
+            name: "TT khách hàng",
             isAll: false,
             isC: false,
             isR: false,
@@ -181,7 +181,7 @@ export class AppSettings {
         },
         {
             code: "DIEU_KHOAN",
-            name: "Điều khoản sử dụng",
+            name: "DK sử dụng",
             isAll: false,
             isC: false,
             isR: false,
@@ -209,7 +209,7 @@ export class AppSettings {
             isU: false,
             isD: false,
             isA: false,
-            name: "Hướng dẫn sử dụng",
+            name: "HD sử dụng",
             menu: "TRA_CUU",
         },
         {
@@ -303,7 +303,7 @@ export class AppSettings {
 
         {
             code: "INVITE",
-            name: "Giới thiệu bạn bè",
+            name: "GT bạn bè",
             isAll: false,
             isC: false,
             isR: false,
@@ -314,7 +314,18 @@ export class AppSettings {
         },
         {
             code: "NOTIFY_USER",
-            name: "Thông báo người dùng",
+            name: "TB người dùng",
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            isA: false,
+            menu: "KHACH_HANG",
+        },
+        {
+            code: "P_PROMO",
+            name: "DTTG ưu đãi",
             isAll: false,
             isC: false,
             isR: false,

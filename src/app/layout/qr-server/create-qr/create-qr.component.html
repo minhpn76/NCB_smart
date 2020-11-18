@@ -19,6 +19,7 @@
                         <div *ngIf="submitted && Form.serviceType.errors"
                             class="invalid-feedback">
                             <div *ngIf="Form.serviceType.errors.required">Mã dịch vụ thanh toán là bắt buộc</div>
+                            <div *ngIf="Form.serviceType.errors.maxlength">Mã dịch vụ vượt quá 4 ký tự</div>
                             <div *ngIf="Form.serviceType.hasError('whitespace')">Mã dịch vụ thanh toán không hợp lệ</div>
                         </div>
                     </div>

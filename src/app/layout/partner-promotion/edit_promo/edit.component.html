@@ -1,0 +1,149 @@
+<div>
+    <app-page-header
+        [heading]="'Chi tiết chương trình'"
+        [heading_second]="'Cập nhật chương trình'"
+        [url_heading]="'/partner-promotion'"
+    >
+    </app-page-header>
+    <div class="row">
+        <div class="col-md-8">
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label"
+                        >Tên chương trình(<span class="text-danger">*</span
+                        >):</label
+                    >
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="promotionName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên chương trình"
+                            [ngClass]="{
+                                'is-invalid':
+                                    submitted && Form.promotionName.errors
+                            }"
+                        />
+                        <div
+                            *ngIf="submitted && Form.promotionName.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="Form.promotionName.errors.required">
+                                Tên chương trình là bắt buộc
+                            </div>
+                            <div
+                                *ngIf="
+                                    Form.promotionName.hasError('whitespace')
+                                "
+                            >
+                                Tên chương trình không đúng định dạng
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label"
+                        >Mã chương trình(<span class="text-danger">*</span
+                        >):</label
+                    >
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="promotionCode"
+                            class="form-control col-lg-12"
+                            placeholder="Mã chương trình"
+                            [ngClass]="{
+                                'is-invalid':
+                                    submitted && Form.promotionCode.errors
+                            }"
+                        />
+
+                        <div
+                            *ngIf="submitted && Form.promotionCode.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="Form.promotionCode.errors.maxlength">
+                                Mã chương trình lớn hơn 5 ký tự
+                            </div>
+                            <div *ngIf="Form.promotionCode.errors.required">
+                                Mã chương trình là bắt buộc
+                            </div>
+                            <div
+                                *ngIf="
+                                    Form.promotionCode.hasError('whitespace')
+                                "
+                            >
+                                Mã chương trình định dạng
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label"
+                        >Mã đối tác tham gia(<span class="text-danger">*</span
+                        >):</label
+                    >
+                    <div class="col-sm-8">
+                        <select
+                            class="form-control"
+                            formControlName="referPartnerCode"
+                            name="referPartnerCode"
+                        >
+                            <option
+                                *ngFor="let ref of listPartnerAll"
+                                [value]="ref.value"
+                                selected="selected"
+                            >
+                                {{ ref.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div
+                        *ngIf="submitted && Form.referPartnerCode.errors"
+                        class="invalid-feedback"
+                    >
+                        <div *ngIf="Form.referPartnerCode.errors.required">
+                            Mã đối tác tham gia là bắt buộc
+                        </div>
+                        <!-- <div
+                            *ngIf="Form.referPartnerCode.hasError('whitespace')"
+                        >
+                            Mã đối tác tham gia định dạng
+                        </div> -->
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label"
+                        >Trạng thái(<span class="text-danger">*</span
+                        >):</label
+                    >
+                    <div class="col-sm-8">
+                        <select
+                            class="form-control"
+                            formControlName="status"
+                            name="status"
+                        >
+                            <option
+                                *ngFor="let status of listStatus"
+                                [value]="status.code"
+                                selected="selected"
+                            >
+                                {{ status.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3">
+                            <i class="fa fa-save"></i>&nbsp;Lưu lại
+                        </button>
+                        <button class="btn btn-light" (click)="resetForm()">
+                            <i class="fa fa-close"></i>&nbsp;Huỷ
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

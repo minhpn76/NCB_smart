@@ -34,7 +34,7 @@ export class CreateQrComponent implements OnInit {
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
             title: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            serviceType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            serviceType: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator, Validators.maxLength(4)])],
             status: ['1'],
             // createdBy: ['admin'],
         });

@@ -45,17 +45,24 @@ export class ListComponent implements OnInit {
         },
     ];
 
+    search_config: any = {
+        size: 10,
+        page: 0,
+    }
+
 
     search: any = {
         rootCif: '',
         targetCif: '',
         start: '',
         end: '',
-        status: ''
+        status: '',
+        page: 0,
+        size: 10
     }
 
     ngOnInit() {
-        this.getListData({});
+        this.getListData(this.search_config);
         let tempPayloadNCC: any = {...this.search}
         if (!tempPayloadNCC.status) {
             delete tempPayloadNCC['status']
@@ -92,6 +99,16 @@ export class ListComponent implements OnInit {
                 //   this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
             });
     }
+    loadPage(page: number) {
+        const page_number = page - 1;
+
+        if (page_number !== this.search_config.previous_page) {
+          this.search_config.page = page_number;
+          this.search_config.previous_page = page_number;
+          this.getListData(this.search_config);
+          this.search_config.page = page;
+        }
+      }
     tranferDate(params) {
         const tempMonth = (params.month < 10 ? '0' : '') + params.month;
         const tempDay = (params.day < 10 ? '0' : '') + params.day;
@@ -122,14 +139,32 @@ export class ListComponent implements OnInit {
                 //   this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
             });
     }
+    loadPageNCC(page: number) {
+        const page_number = page - 1;
+
+        if (page_number !== this.search.previous_page) {
+          this.search.page = page_number;
+          this.search.previous_page = page_number;
+          this.getListNCC(this.search);
+          this.search.page = page;
+        }
+      }
     onSearch(payload) {
         if (payload.rootCif !== '' || payload.targetCif !== '' || payload.status !== '') {
             payload.page = 0;
         }
-        if (!payload.status) {
-            delete payload['status']
+        // if (!payload.status) {
+        //     delete payload['status']
+        // }
+        const temp : any = {
+            rootCif: payload.rootCif,
+            targetCif: payload.targetCif,
+            fromDate: payload.fromDate,
+            toDate: payload.referParttoDatenerCode,
+            page: payload.page,
+            size: payload.size
         }
-        this.getListNCC(payload);
+        this.getListNCC(temp);
     }
 
     deleteItem(event, index, id) {

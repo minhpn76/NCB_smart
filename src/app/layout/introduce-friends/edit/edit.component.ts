@@ -24,7 +24,6 @@ export class EditComponent implements OnInit {
         private route: ActivatedRoute,
     ) {
         this.route.params.subscribe(params => {
-            console.log('=params', params);
             this.itemId = parseInt(params.itemId);
         });
         this.dataForm = this.formBuilder.group({
@@ -59,13 +58,7 @@ export class EditComponent implements OnInit {
             objectUserType: [
                 ""
             ],
-            provider: [
-                "",
-                Validators.compose([
-                    Validators.required,
-                    this.helper.noWhitespaceValidator,
-                ]),
-            ]
+            provider: ''
         });
     }
 

@@ -174,6 +174,10 @@ export class CreateComponent implements OnInit {
   tranferDate(params) {
     return params.year + '/' + params.month + '/' + params.day;
   }
+
+  tranferDateMinus(params) {
+    return params.year + '-' + params.month + '-' + params.day;
+  }
   public loadDate(): void {
     this.my_7_1.setDate(this.my_7_1.getDate() - 7);
 
@@ -183,21 +187,26 @@ export class CreateComponent implements OnInit {
   }
   onSubmit() {
     this.submitted = true;
-    if (this.mRatesDateS_7_1 !== undefined && this.mRatesDateS_1 !== undefined) {
-      this.dataForm.value.toDate = this.tranferDate(this.mRatesDateS_7_1);
-      this.dataForm.value.fromDate = this.tranferDate(this.mRatesDateS_1);
-    }
+    // if (this.mRatesDateS_7_1 !== undefined && this.mRatesDateS_1 !== undefined) {
+    //   this.dataForm.value.toDate = this.tranferDate(this.mRatesDateS_7_1);
+    //   this.dataForm.value.fromDate = this.tranferDate(this.mRatesDateS_1);
+    // }
 
     // stop here if form is invalid
     if (this.dataForm.invalid) {
       return;
     }
+    if (new Date(this.tranferDateMinus(this.dataForm.value.fromDate)) > new Date(this.tranferDateMinus(this.dataForm.value.toDate))) {
+      this.toastr.error('Ngày bắt đầu phải nhỏ hơn ngày kết thúc', 'Thất bại!');
+      return;
+    }
+
     const payload = {
       proCode: this.dataForm.value.proCode,
       proName: this.dataForm.value.proName,
       proDes: this.dataForm.value.proDes,
-      fromDate: this.dataForm.value.fromDate,
-      toDate: this.dataForm.value.toDate,
+      fromDate: this.helper.tranferDate(this.dataForm.value.fromDate),
+      toDate: this.helper.tranferDate(this.dataForm.value.toDate),
       createdBy: this.dataForm.value.createdBy,
       // createdDate: this.dataForm.value.createdDate,
       status: this.dataForm.value.status

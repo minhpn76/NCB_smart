@@ -1,0 +1,486 @@
+<div>
+    <app-page-header [heading]="'Đối tác tham gia ưu đãi'">
+    </app-page-header>
+    <ngb-tabset (tabChange)="beforeChange($event)" #ctdTabset="ngbTabset" [activeId]="tabId">
+        <ngb-tab id="partner-promotion">
+            <ng-template ngbTabTitle>Đối tác tham gia</ng-template>
+            <ng-template ngbTabContent>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="search" class="col-sm-4 col-form-label"
+                                >Từ ngày:</label
+                            >
+                            <div class="col-sm-6 input-group">
+                                <input
+                                    readonly
+                                    class="form-control"
+                                    placeholder="Từ ngày"
+                                    [(ngModel)]="mRatesDateS_1"
+                                    name="dFS"
+                                    ngbDatepicker
+                                    #dFS="ngbDatepicker"
+                                />
+                                <!-- (ngModelChange)="getOrder(search); -->
+                                <!-- [(ngModel)]="mRatesDateS" -->
+                                <div class="input-group-append">
+                                    <button
+                                        class="btn btn-outline-secondary"
+                                        (click)="dFS.toggle()"
+                                        type="button"
+                                    >
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="search" class="col-sm-4 col-form-label"
+                                >Đến ngày:</label
+                            >
+                            <div class="col-sm-6 input-group">
+                                <input
+                                    readonly
+                                    class="form-control"
+                                    placeholder="Đến ngày"
+                                    name="dTS"
+                                    [(ngModel)]="mRatesDateS_7_1"
+                                    ngbDatepicker
+                                    #dTS="ngbDatepicker"
+                                />
+                                <!-- (ngModelChange)="getOrder(search); -->
+                                <!-- [(ngModel)]="mRatesDateS" -->
+                                <div class="input-group-append">
+                                    <button
+                                        class="btn btn-outline-secondary"
+                                        (click)="dTS.toggle()"
+                                        type="button"
+                                    >
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center mt-3">
+                        <button class="btn btn-primary mr-3" (click)="onSearch_1(search_config)">
+                            <i class="fa fa-search"></i>&nbsp;Tìm kiếm
+                        </button>
+                        <a
+                            class="mr-2 cursor-pointer btn btn-warning"
+                            routerLink="/partner-promotion/create"
+                        >
+                            <i class="fa fa-plus"></i>
+                            Tạo mới
+                        </a>
+                    </div>
+                    <div class="col-md-12 table-responsive Flipped">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">STT</th>
+                                    <th
+                                        scope="col"
+                                        [class.active]="order === 'partnerName'"
+                                        (click)="setOrder('partnerName')"
+                                    >
+                                        Tên đối tác
+                                        <span [hidden]="reverse">▼</span>
+                                        <span [hidden]="!reverse">▲</span>
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        [class.active]="order === 'partnerCode'"
+                                        (click)="setOrder('partnerCode')"
+                                    >
+                                        Mã đối tác
+                                        <span [hidden]="reverse">▼</span>
+                                        <span [hidden]="!reverse">▲</span>
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        [class.active]="
+                                            order === 'createdAt'
+                                        "
+                                        (click)="setOrder('createdAt')"
+                                    >
+                                        Ngày tạo
+                                        <span [hidden]="reverse">▼</span>
+                                        <span [hidden]="!reverse">▲</span>
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        [class.active]="order === 'createdBy'"
+                                        (click)="setOrder('createdBy')"
+                                    >
+                                        Người tạo
+                                        <span [hidden]="reverse">▼</span>
+                                        <span [hidden]="!reverse">▲</span>
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        [class.active]="
+                                            order === 'updatedAt'
+                                        "
+                                        (click)="setOrder('updatedAt')"
+                                    >
+                                        Ngày cập nhật
+                                        <span [hidden]="reverse">▼</span>
+                                        <span [hidden]="!reverse">▲</span>
+                                    </th>
+                                    <!-- <th
+                                        scope="col"
+                                        [class.active]="order === 'provider'"
+                                        (click)="setOrder('provider')"
+                                    >
+                                        Nhà cung cấp
+                                        <span [hidden]="reverse">▼</span>
+                                        <span [hidden]="!reverse">▲</span>
+                                    </th> -->
+
+                                    <th
+                                        scope="col"
+                                        [class.active]="order === 'updatedBy'"
+                                        (click)="setOrder('updatedBy')"
+                                    >
+                                        Người cập nhật
+                                    </th>
+                                    <th scope="col" style="padding: 27px">
+                                        Thao tác
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr
+                                    *ngIf="isProcessLoad == 1"
+                                    class="text-center"
+                                >
+                                    <td colspan="8">
+                                        <i
+                                            class="fa fa-spin fa-spinner font-30"
+                                        ></i>
+                                    </td>
+                                </tr>
+                                <tr
+                                    *ngIf="
+                                        totalSearch == 0 && isProcessLoad == 0
+                                    "
+                                    class="text-center"
+                                >
+                                    <td colspan="8">Không tìm thấy kết quả</td>
+                                </tr>
+                                <tr
+                                    *ngFor="let data of listData; let i = index"
+                                >
+                                    <td scope="row">
+                                        {{ i + 1 }}
+                                    </td>
+
+                                    <td>{{ data?.partnerName }}</td>
+                                    <td>{{ data?.partnerCode }}</td>
+                                    <td>{{ helper.formatDateSplit(data?.createdAt) }}</td>
+                                    <td>{{ data?.createdBy }}</td>
+                                    <td>{{ helper.formatDateSplit(data?.updatedAt) }}</td>
+                                    <!-- <td>{{ data?.provider }}</td> -->
+                                    <td>
+                                        {{ data?.updatedBy }}
+                                    </td>
+                                    <td>
+                                        <a
+                                            data-toggle="tool-tip"
+                                            title="Chỉnh sửa"
+                                            class="mr-2 cursor-pointer text-blue"
+                                            routerLink="/partner-promotion/edit/{{
+                                                data.id
+                                            }}"
+                                        >
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <span
+                                            data-toggle="tool-tip"
+                                            title="Xóa"
+                                            class="mr-2 cursor-pointer text-danger"
+                                        >
+                                            <i
+                                                class="fa fa-trash"
+                                                (click)="
+                                                    deleteItem(1, i, data.id)
+                                                "
+                                            ></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+
+                        <ngb-pagination *ngIf="totalSearch> 0 && totalSearch > search_config.size" [collectionSize]="totalSearch"
+                            [pageSize]="search_config.size" [(page)]="search_config.page" [maxSize]="10" [rotate]="true"
+                            [boundaryLinks]="true" (pageChange)="loadPage($event)">
+                        </ngb-pagination>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab id="detail-promotion">
+            <ng-template ngbTabTitle>Chi tiết chương trình</ng-template>
+            <ng-template ngbTabContent>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="search" class="col-sm-4 col-form-label"
+                                >Đối tác tham gia</label
+                            >
+                            <div class="col-sm-6">
+                                <select class="form-control" [(ngModel)]="search.referPartnerCode" name="referPartnerCode">
+                                    <option *ngFor="let ref of listPartnerAll" [value]="ref.value" selected="selected">{{ ref.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="search" class="col-sm-4 col-form-label"
+                                >Từ ngày:</label
+                            >
+                            <div class="col-sm-6 input-group">
+                                <input
+                                    readonly
+                                    class="form-control"
+                                    placeholder="Từ ngày"
+                                    [(ngModel)]="mRatesDateS"
+                                    name="dFS"
+                                    ngbDatepicker
+                                    #dFS="ngbDatepicker"
+                                />
+                                <!-- (ngModelChange)="getOrder(search); -->
+                                <!-- [(ngModel)]="mRatesDateS" -->
+                                <div class="input-group-append">
+                                    <button
+                                        class="btn btn-outline-secondary"
+                                        (click)="dFS.toggle()"
+                                        type="button"
+                                    >
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="search" class="col-sm-4 col-form-label"
+                                >Đến ngày:</label
+                            >
+                            <div class="col-sm-6 input-group">
+                                <input
+                                    readonly
+                                    class="form-control"
+                                    placeholder="Đến ngày"
+                                    name="dTS"
+                                    [(ngModel)]="mRatesDateS_7"
+                                    ngbDatepicker
+                                    #dTS="ngbDatepicker"
+                                />
+                                <!-- (ngModelChange)="getOrder(search); -->
+                                <!-- [(ngModel)]="mRatesDateS" -->
+                                <div class="input-group-append">
+                                    <button
+                                        class="btn btn-outline-secondary"
+                                        (click)="dTS.toggle()"
+                                        type="button"
+                                    >
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" [(ngModel)]="search.status" name="status">
+                                    <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12 text-center">
+                        <button
+                            class="btn btn-primary mr-3"
+                            (click)="onSearch(search)"
+                        >
+                            <i class="fa fa-search"></i>&nbsp;Tìm kiếm
+                        </button>
+                        <a
+                            class="mr-2 cursor-pointer btn btn-warning"
+                            routerLink="/partner-promotion/create-promo"
+                        >
+                            <i class="fa fa-plus"></i>
+                            Tạo mới
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12 table-responsive Flipped">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">STT</th>
+                                    <th
+                                        scope="col"
+                                        [class.active]="order === 'promotionName'"
+                                        (click)="setOrder('promotionName')"
+                                    >
+                                        Tên chương trình
+                                        <span [hidden]="reverse">▼</span>
+                                        <span [hidden]="!reverse">▲</span>
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        [class.active]="order === 'promotionCode'"
+                                        (click)="setOrder('promotionCode')"
+                                    >
+                                        Mã chương trình
+                                        <span [hidden]="reverse">▼</span>
+                                        <span [hidden]="!reverse">▲</span>
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        [class.active]="order === 'referPartnerCode'"
+                                        (click)="setOrder('referPartnerCode')"
+                                    >
+                                        Đối tác
+                                        <span [hidden]="reverse">▼</span>
+                                        <span [hidden]="!reverse">▲</span>
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        [class.active]="
+                                            order === 'status'
+                                        "
+                                        (click)="setOrder('status')"
+                                    >
+                                        Trạng thái
+                                        <span [hidden]="reverse">▼</span>
+                                        <span [hidden]="!reverse">▲</span>
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        [class.active]="order === 'createdAt'"
+                                        (click)="setOrder('createdAt')"
+                                    >
+                                        Ngày tạo
+                                        <span [hidden]="reverse">▼</span>
+                                        <span [hidden]="!reverse">▲</span>
+                                    </th>
+                                    <th scope="col" [class.active]="order === 'createdBy'" (click)="setOrder('createdBy')">
+                                        Người tạo
+                                        <span [hidden]="reverse">▼</span>
+                                        <span [hidden]="!reverse">▲</span>
+                                    </th>
+                                    <th scope="col" style="padding: 27px">
+                                        Thao tác
+                                    </th>
+
+
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr
+                                    *ngIf="isProcessLoadNCC == 1"
+                                    class="text-center"
+                                >
+                                    <td colspan="9">
+                                        <i
+                                            class="fa fa-spin fa-spinner font-30"
+                                        ></i>
+                                    </td>
+                                </tr>
+                                <tr
+                                    *ngIf="
+                                        totalSearchNCC == 0 &&
+                                        isProcessLoadNCC == 0
+                                    "
+                                    class="text-center"
+                                >
+                                    <td colspan="9">Không tìm thấy kết quả</td>
+                                </tr>
+                                <tr
+                                    *ngFor="
+                                        let data of listDataNCC;
+                                        let i = index
+                                    "
+                                >
+                                    <td scope="row">
+                                        {{ i + 1 }}
+                                    </td>
+
+                                    <td>{{ data?.promotionName }}</td>
+                                    <td>{{ data?.promotionCode }}</td>
+                                    <td>{{ findNameConfig(data?.referPartnerCode)  }}</td>
+                                    <td>
+                                        <span class="badge badge-info" *ngIf="data.status === '1'">Đang chờ phê duyệt</span>
+                                        <span class="badge badge-success" *ngIf="data.status === '0'">Phê duyệt & Có hiệu lực</span>
+                                        <span class="badge badge-warning" *ngIf="data.status === '2'">Phê duyệt & Admin vô hiệu hoá</span>
+                                    </td>
+                                    <td>{{ helper.formatDateSplit(data?.createdAt) }}</td>
+                                    <td>{{ data?.createdBy }}</td>
+                                    <td>
+                                        <a
+                                            data-toggle="tool-tip"
+                                            title="Chỉnh sửa"
+                                            class="mr-2 cursor-pointer text-blue"
+                                            routerLink="/partner-promotion/edit-promo/{{
+                                                data.id
+                                            }}"
+                                        >
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <span
+                                            data-toggle="tool-tip"
+                                            title="Xóa"
+                                            class="mr-2 cursor-pointer text-danger"
+                                        >
+                                            <i
+                                                class="fa fa-trash"
+                                                (click)="
+                                                    deleteItemPromo(1, i, data.id)
+                                                "
+                                            ></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+
+                        <ngb-pagination *ngIf="totalSearchNCC> 0 && totalSearchNCC > search.size" [collectionSize]="totalSearchNCC"
+                            [pageSize]="search.size" [(page)]="search.page" [maxSize]="10" [rotate]="true"
+                            [boundaryLinks]="true" (pageChange)="loadPageNCC($event)">
+                        </ngb-pagination>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+</div>

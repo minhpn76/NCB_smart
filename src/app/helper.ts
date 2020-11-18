@@ -72,6 +72,10 @@ export class Helper {
         return [year, month, day].join('/');
     }
 
+    formatDateSplit (date) {
+        if (!date) return ''
+        return date.split('.')[0]
+    }
     getWeekOfMonth(input) {
         const date = new Date(input);
         const adjustedDate = date.getDate() + date.getDay();

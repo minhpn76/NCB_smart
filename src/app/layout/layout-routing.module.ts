@@ -45,7 +45,8 @@ const routes: Routes = [
             {path: 'qr-merchants', loadChildren: () => import('./qr-merchant/qr-merchant.module').then(m => m.QrMerchantModule)},
             {path: 'notifications', loadChildren: () => import('./notication-user/notication-user.module').then(m => m.NotificationUserModule)},
             {path: 'version-app-lzi', loadChildren: () => import('./version-app-lzi/version-app-lzi.module').then(m => m.VersionAppLziModule)},
-            {path: 'invite-friends', loadChildren: () => import('./introduce-friends/introduce-friends.module').then(m => m.IntroduceFriendsModule)}
+            {path: 'invite-friends', loadChildren: () => import('./introduce-friends/introduce-friends.module').then(m => m.IntroduceFriendsModule)},
+            {path: 'partner-promotion', loadChildren: () => import('./partner-promotion/partner-promotion.module').then(m => m.PartnerPromotionModule)}
         ]
     }
 ];
