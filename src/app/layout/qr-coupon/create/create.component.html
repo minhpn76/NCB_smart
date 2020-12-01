@@ -101,7 +101,8 @@
                 </div>
                 <!-- discounttype = 0 -->
                 <div class="form-group row" *ngIf="Form.discountType.value === '0'">
-                    <label for="search" class="col-sm-5 col-form-label">Số tiền được giảm giá (VND):</label>
+                    <label for="search" class="col-sm-5 col-form-label">Số tiền được giảm giá (VND) (<span class="text-danger">*</span
+                        >):</label>
                     <div class="col-sm-7">
                         <input currencyMask [options]='optionCurrency' formControlName="amount"
                             class="form-control col-lg-12" placeholder="Số tiền được giảm giá" [ngClass]="{
@@ -117,7 +118,8 @@
                 <!-- end -->
                 <!-- discountType = 1  -->
                 <div class="form-group row" *ngIf="Form.discountType.value === '1'">
-                    <label for="search" class="col-sm-5 col-form-label">Số tiền tối đa được giảm giá:</label>
+                    <label for="search" class="col-sm-5 col-form-label">Số tiền tối đa được giảm giá (<span class="text-danger">*</span
+                        >):</label>
                     <div class="col-sm-7">
                         <input formControlName="amountMax" currencyMask [options]='optionCurrency'
                             class="form-control col-lg-12" placeholder="Số tiền tối đa được áp dụng giảm giá" [ngClass]="{
