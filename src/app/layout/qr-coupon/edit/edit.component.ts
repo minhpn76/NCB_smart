@@ -245,8 +245,6 @@ export class EditComponent implements OnInit {
   }
   onSubmit() {
     this.submitted = true;
-    console.log('=this.dataForm', this.dataForm);
-    console.log('=this.filelist', this.filelist);
     // stop here if form is invalid
     if (this.dataForm.invalid) {
       return;

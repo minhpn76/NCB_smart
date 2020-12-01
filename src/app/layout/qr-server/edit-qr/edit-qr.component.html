@@ -15,6 +15,7 @@
                             placeholder="Mã dịch vụ thanh toán"
                             [ngClass]="{ 'is-invalid': submitted &&
                             Form.serviceType.errors }"
+                            readonly
                             />
                         <div *ngIf="submitted && Form.serviceType.errors"
                             class="invalid-feedback">
