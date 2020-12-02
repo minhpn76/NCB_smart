@@ -45,13 +45,17 @@ export class EditComponent implements OnInit {
   };
   listStatus: any = [
     {
-      name: 'Active',
-      code: 'A',
+        name: 'Tất cả',
+        code: '',
     },
     {
-      name: 'Deactive',
-      code: 'D',
-    }
+        name: 'Có hiệu lực',
+        code: '1',
+    },
+    {
+        name: 'Không hiệu lực',
+        code: '0',
+    },
   ];
   listQrService: any = [];
   optionCurrency: any = {
@@ -243,10 +247,18 @@ export class EditComponent implements OnInit {
         ];
       });
   }
+  tranferDateMinus(params) {
+    return params.year + '-' + params.month + '-' + params.day;
+  }
   onSubmit() {
     this.submitted = true;
     // stop here if form is invalid
     if (this.dataForm.invalid) {
+      return;
+    }
+
+    if (new Date(this.tranferDateMinus(this.dataForm.value.startDate)) > new Date(this.tranferDateMinus(this.dataForm.value.endDate))) {
+      this.toastr.error('Ngày bắt đầu phải nhỏ hơn ngày kết thúc', 'Thất bại!');
       return;
     }
     const payload = {
@@ -274,7 +286,7 @@ export class EditComponent implements OnInit {
         if (result.status === 200) {
           if (result.json().code === "00") {
             this.toastr.success(
-              "Thêm mới thành công",
+              "Cập nhật thành công",
               "Thành công!"
             );
             setTimeout(() => {
@@ -283,7 +295,7 @@ export class EditComponent implements OnInit {
           } else if (result.json().code === "909") {
             this.toastr.error("Dữ liệu đã tồn tại", "Thất bại!");
           } else {
-            this.toastr.error("Thêm mới thất bại", "Thất bại!");
+            this.toastr.error("Cập nhật thất bại", "Thất bại!");
           }
         }
       })

@@ -51,6 +51,7 @@ export class CreateComponent implements OnInit {
                 Validators.compose([
                     Validators.required,
                     Validators.maxLength(5),
+                    Validators.minLength(5),
                     this.helper.noWhitespaceValidator,
                 ]),
             ]

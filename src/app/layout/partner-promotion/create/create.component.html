@@ -54,6 +54,7 @@
                             class="invalid-feedback"
                         >
                             <div *ngIf="Form.partnerCode.errors.maxlength">Mã đối tác lớn hơn 5 ký tự</div>
+                            <div *ngIf="Form.partnerCode.errors.minlength">Mã đối tác không được nhỏ hơn 5 ký tự</div>
                             <div *ngIf="Form.partnerCode.errors.required">
                                 Mã đối tác là bắt buộc
                             </div>

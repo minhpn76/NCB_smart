@@ -67,12 +67,12 @@ export class ListComponent implements OnInit {
             code: '',
         },
         {
-            name: 'Kích hoạt',
-            code: 'A',
+            name: 'Có hiệu lực',
+            code: '1',
         },
         {
-            name: 'Chưa kích hoạt',
-            code: 'D',
+            name: 'Không hiệu lực',
+            code: '0',
         },
     ];
 
@@ -82,11 +82,11 @@ export class ListComponent implements OnInit {
             code: '',
         },
         {
-            name: 'Phê duyệt',
+            name: 'Đã phê duyệt',
             code: '1',
         },
         {
-            name: 'Chưa phê duyệt',
+            name: 'Chờ phê duyệt',
             code: '0',
         },
     ];
@@ -251,7 +251,7 @@ export class ListComponent implements OnInit {
 
 
     approved(id, approveStatus) {
-        console.log('demo', id, approveStatus);
+
         Swal.fire({
             title: 'Bạn có muốn phê duyệt?',
             type: 'info',

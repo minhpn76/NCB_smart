@@ -168,7 +168,7 @@ export class CreateComponent implements OnInit {
                 ]),
             ],
             status: [
-                'A',
+                '0',
                 Validators.compose([this.helper.noWhitespaceValidator]),
             ],
             approveStatus: [
@@ -227,11 +227,17 @@ export class CreateComponent implements OnInit {
                 ];
             });
     }
+    tranferDateMinus(params) {
+        return params.year + '-' + params.month + '-' + params.day;
+    }
     onSubmit() {
         this.submitted = true;
         // stop here if form is invalid
         if (this.dataForm.invalid) {
-            console.log('demo', this.dataForm);
+            return;
+        }
+        if (new Date(this.tranferDateMinus(this.dataForm.value.startDate)) > new Date(this.tranferDateMinus(this.dataForm.value.endDate))) {
+            this.toastr.error('Ngày bắt đầu phải nhỏ hơn ngày kết thúc', 'Thất bại!');
             return;
         }
         const payload = {

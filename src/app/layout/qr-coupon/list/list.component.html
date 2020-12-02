@@ -219,13 +219,13 @@
                             {{ helper.formatDate(data?.endDate) }}
                         </td>
                         <td>
-                            <span *ngIf="data?.status == 'A'" class="badge badge-success">Kích hoạt</span>
-                            <span *ngIf="data?.status == 'D'" class="badge badge-danger">Chưa kích hoạt</span>
+                            <span *ngIf="data?.status == '1'" class="badge badge-success">Có hiệu lực</span>
+                            <span *ngIf="data?.status == '0'" class="badge badge-danger">Không hiệu lực</span>
                         </td>
                         <td>
-                            <span *ngIf="data?.approveStatus == '1'" class="badge badge-success">Phê
+                            <span *ngIf="data?.approveStatus == '1'" class="badge badge-success">Đã phê
                                 duyệt</span>
-                            <span *ngIf="data?.approveStatus == '0'" class="badge badge-danger">Chưa phê duyệt</span>
+                            <span *ngIf="data?.approveStatus == '0'" class="badge badge-danger">Chờ phê duyệt</span>
                         </td>
                         <td>
                             {{ data?.createdBy }}

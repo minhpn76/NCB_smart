@@ -402,7 +402,7 @@
                 <div class="form-group row">
                     <label for="search" class="col-sm-5 col-form-label">Trạng thái:</label>
                     <div class="col-sm-7">
-                        <select class="form-control" formControlName="status" name="status">
+                        <select class="form-control" aria-readonly="true" formControlName="status" name="status">
                             <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
                         </select>
                     </div>
