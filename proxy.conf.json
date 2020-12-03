@@ -5,7 +5,8 @@
       "logLevel": "debug",
       "changeOrigin": true,
       "pathRewrite": {
-          "^/NCB-smart": "http://10.1.62.31:443/NCB-smart"
+          // "^/NCB-smart": "http://10.1.62.31:443/NCB-smart"
+          "^/NCB-smart":"http://192.168.53.127:443/NCB-smart"
       }
   }
 }

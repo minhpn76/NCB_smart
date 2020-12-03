@@ -112,8 +112,8 @@ export class ListComponent implements OnInit {
     profile: any = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : null;
     // TODO find QR_COUPON has isA === true
     objQRCoupon: any = JSON.parse(this.profile.role.description).find((item) => {
-        return item.code === 'QR_COUPON'
-    })
+        return item.code === 'QR_COUPON';
+    });
 
     ngOnInit() {
         this.getListData(this.search);
@@ -259,10 +259,10 @@ export class ListComponent implements OnInit {
             confirmButtonText: 'Đồng ý',
             cancelButtonText: 'Không, trở lại',
         }).then((result) => {
-            console.log('a', result);
             if (result.value) {
                 this.ncbService
                     .updateQRCoupon(id, {
+                        objectUserType: '',
                         approveStatus: '1',
                     })
                     .then((res) => {
