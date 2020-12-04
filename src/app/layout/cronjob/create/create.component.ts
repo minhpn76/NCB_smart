@@ -14,6 +14,8 @@ import { CronOptions } from 'cron-editor/cron-editor';
   styleUrls: ['./create.component.scss'],
   providers: [NCBService, Helper],
   encapsulation: ViewEncapsulation.Native
+  // encapsulation: ViewEncapsulation.None
+  // encapsulation: ViewEncapsulation.ShadowDom
 })
 export class CreateComponent implements OnInit {
   dataForm: FormGroup;
