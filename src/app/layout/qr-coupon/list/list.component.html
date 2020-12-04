@@ -93,7 +93,7 @@
             </a>
         </div>
     </div>
-    <div class="row mt-3">
+    <!-- <div class="row mt-3">
         <div class="col-auto" style="margin-left: auto;">
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
@@ -105,7 +105,7 @@
                     type="text" id="search" placeholder=" Tìm kiếm " (keydown)="keyDownFunctionSearch($event)" />
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- list -->
     <div class="row mt-3">
@@ -145,12 +145,12 @@
                         Loại dịch vụ
                     </th> -->
                         <th scope="col" [class.active]="order === 'state_date'" (click)="setOrder('state_date')">
-                            Ngày bắt đầu hiệu lực
+                            Ngày hiệu lực
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
                         <th scope="col" [class.active]="order === 'end_date'" (click)="setOrder('end_date')">
-                            Ngày hết hiệu lực
+                            Ngày kết thúc
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
