@@ -79,6 +79,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" formControlName="status" name="status">
+                            <option *ngFor="let data of listStatus" [value]="data.code" selected="selected">{{data.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.status.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="Form.status.errors.required">Trạng thái là bắt buộc</div>
+                        </div>
+                    </div>
+
+                </div>
                 <!-- <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Type(<span
                             class="text-danger">*</span>):</label>

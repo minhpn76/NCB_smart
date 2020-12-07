@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { NCBService } from "../../../services/ncb.service";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NCBService } from '../../../services/ncb.service';
 import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
-import { ToastrService } from "ngx-toastr";
-import { Helper } from "../../../helper";
+import { ToastrService } from 'ngx-toastr';
+import { Helper } from '../../../helper';
 
 @Component({
     selector: 'app-edit',
@@ -28,40 +28,51 @@ export class EditComponent implements OnInit {
         });
         this.dataForm = this.formBuilder.group({
             title: [
-                "",
+                '',
                 Validators.compose([
                     Validators.required,
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
             instruction: [
-                "",
+                '',
                 Validators.compose([
                     Validators.required,
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
             urlPromotion: [
-                "",
+                '',
                 Validators.compose([
                     Validators.required,
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
             urlBanner: [
-                "",
+                '',
                 Validators.compose([
                     Validators.required,
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
             objectUserType: [
-                ""
+                ''
             ],
-            provider: ''
+            provider: '',
+            status: '1'
         });
     }
 
+    listStatus = [
+        {
+            code: '1',
+            name: 'Hiệu lực'
+        },
+        {
+            code: '0',
+            name: 'Hết hiệu lực'
+        }
+    ];
     listType = [
         {
             code: '',

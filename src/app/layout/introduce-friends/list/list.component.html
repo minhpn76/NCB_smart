@@ -58,17 +58,17 @@
                                         <span [hidden]="reverse">▼</span>
                                         <span [hidden]="!reverse">▲</span>
                                     </th>
-                                    <!-- <th
+                                    <th
                                         scope="col"
                                         [class.active]="
                                             order === 'objectUserType'
                                         "
                                         (click)="setOrder('objectUserType')"
                                     >
-                                        Type
+                                        Trạng thái
                                         <span [hidden]="reverse">▼</span>
                                         <span [hidden]="!reverse">▲</span>
-                                    </th> -->
+                                    </th>
 
                                     <th
                                         scope="col"
@@ -113,12 +113,17 @@
                                     <td>{{ data?.instruction }}</td>
                                     <td>{{ data?.urlPromotion }}</td>
                                     <td>{{ data?.urlBanner }}</td>
-                                    <!-- <td>{{ data?.objectUserType }}</td> -->
+                                    <td>
+                                        <span class="badge badge-success"
+                                        *ngIf="data?.status === '1'">Hiệu lực</span>
+                                    <span class="badge badge-danger"
+                                        *ngIf="data?.status === '0'">Hết hiệu lực</span>
+                                    </td>
                                     <td>
                                         {{ helper.formatDate(data?.createdAt) }}
                                     </td>
                                     <td>
-                                        <a
+                                        <a *ngIf="data?.status == '1'"
                                             data-toggle="tool-tip"
                                             title="Chỉnh sửa"
                                             class="mr-2 cursor-pointer text-blue"
@@ -126,8 +131,9 @@
                                                 data.id
                                             }}"
                                         >
-                                            <i class="fa fa-edit"></i>
+                                        <i class="fa fa-edit"></i>
                                         </a>
+                                        <a *ngIf="data?.status == '0'" class="mr-2 text-gray" style="cursor: not-allowed;"> <i class="fa fa-edit"></i></a>
                                         <span
                                             data-toggle="tool-tip"
                                             title="Phê duyệt"
