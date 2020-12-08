@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ToastrService } from "ngx-toastr";
-import { Helper } from "../../../helper";
-import { NCBService } from "../../../services/ncb.service";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Helper } from '../../../helper';
+import { NCBService } from '../../../services/ncb.service';
 import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import {
   NgbModal,
@@ -10,16 +10,16 @@ import {
   NgbDateStruct,
   NgbDatepickerConfig,
   NgbTabChangeEvent,
-} from "@ng-bootstrap/ng-bootstrap";
+} from '@ng-bootstrap/ng-bootstrap';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { ExcelService } from '../../../services/excel.service';
 import { async } from '@angular/core/testing';
 
 @Component({
-  selector: "qr-coupons-edit",
-  templateUrl: "./edit.component.html",
-  styleUrls: ["./edit.component.scss"],
+  selector: 'qr-coupons-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.scss'],
   providers: [Helper, NCBService, ExcelService],
 })
 export class EditComponent implements OnInit {
@@ -37,8 +37,8 @@ export class EditComponent implements OnInit {
     path: null,
     name: ''
   };
-  arrayBuffer: any = []
-  filelist: any = []
+  arrayBuffer: any = [];
+  filelist: any = [];
 
   temp: any = {
     loading: false,
@@ -59,10 +59,10 @@ export class EditComponent implements OnInit {
   ];
   listQrService: any = [];
   optionCurrency: any = {
-    prefix: "",
-    thousands: ".",
-    decimal: ",",
-    align: "left",
+    prefix: '',
+    thousands: '.',
+    decimal: ',',
+    align: 'left',
   };
 
   constructor(
@@ -84,74 +84,74 @@ export class EditComponent implements OnInit {
 
   objectUserTypes = [
     {
-      code: "",
-      name: "---Vui lòng chọn đối tượng áp dụng---",
+      code: '',
+      name: '---Vui lòng chọn đối tượng áp dụng---',
     },
     {
-      name: "Tất cả",
-      code: "1",
+      name: 'Tất cả',
+      code: '1',
     },
     {
-      name: "Giới hạn",
-      code: "0",
+      name: 'Giới hạn',
+      code: '0',
     },
   ];
 
   discountTypes = [
     {
-      code: "",
-      name: "---Vui lòng chọn giảm giá theo---",
+      code: '',
+      name: '---Vui lòng chọn giảm giá theo---',
     },
     {
-      name: "Phần trăm",
-      code: "1",
+      name: 'Phần trăm',
+      code: '1',
     },
     {
-      name: "Giá tiền",
-      code: "0",
+      name: 'Giá tiền',
+      code: '0',
     },
   ];
 
   ngOnInit() {
-    this.getItem(this.itemId)
+    this.getItem(this.itemId);
     this.dataForm = this.formBuilder.group({
       name: [
-        "",
+        '',
         Validators.compose([
           Validators.required,
           this.helper.noWhitespaceValidator,
         ]),
       ],
       description: [
-        "",
+        '',
         Validators.compose([
           Validators.required,
           this.helper.noWhitespaceValidator,
         ]),
       ],
       code: [
-        "",
+        '',
         Validators.compose([
           Validators.required,
           this.helper.noWhitespaceValidator,
         ]),
       ],
       objectUserType: [
-        "",
+        '',
         Validators.compose([
           Validators.required,
           this.helper.noWhitespaceValidator,
         ]),
       ],
       discountType: [
-        "",
+        '',
         Validators.compose([
           Validators.required,
           this.helper.noWhitespaceValidator,
         ]),
       ],
       serviceId: [
-        "",
+        '',
         Validators.compose([
           Validators.required,
           this.helper.noWhitespaceValidator,
@@ -170,29 +170,29 @@ export class EditComponent implements OnInit {
         Validators.compose([this.helper.noWhitespaceValidator]),
       ],
       amountPercentage: [
-        "",
+        '',
         Validators.compose([this.helper.noWhitespaceValidator]),
       ],
       totalNumberCoupon: [
-        "",
+        '',
         Validators.compose([
           Validators.required,
           this.helper.noWhitespaceValidator,
         ]),
       ],
       numberPerCustomer: [
-        "",
+        '',
         Validators.compose([
           Validators.required,
           this.helper.noWhitespaceValidator,
         ]),
       ],
       status: [
-        "A",
+        'A',
         Validators.compose([this.helper.noWhitespaceValidator]),
       ],
       approveStatus: [
-        "0",
+        '0',
         Validators.compose([this.helper.noWhitespaceValidator]),
       ],
 
@@ -217,8 +217,8 @@ export class EditComponent implements OnInit {
   getQrService() {
     this.listQrService = [
       {
-        code: "",
-        name: "---Vui lòng chọn dịch vụ---",
+        code: '',
+        name: '---Vui lòng chọn dịch vụ---',
       },
     ];
     // xu ly
@@ -241,8 +241,8 @@ export class EditComponent implements OnInit {
       .catch((err) => {
         this.listQrService = [
           {
-            code: "",
-            name: "---Vui lòng chọn dịch vụ---",
+            code: '',
+            name: '---Vui lòng chọn dịch vụ---',
           },
         ];
       });
@@ -279,32 +279,32 @@ export class EditComponent implements OnInit {
       status: this.dataForm.value.status,
       approveStatus: this.dataForm.value.approveStatus,
       userCoupons: this.dataForm.value.user_coupon ? this.dataForm.value.user_coupon : this.filelist
-    }
+    };
     this.ncbService
       .updateQRCoupon(this.itemId, payload)
       .then((result) => {
         if (result.status === 200) {
-          if (result.json().code === "00") {
+          if (result.json().code === '00') {
             this.toastr.success(
-              "Cập nhật thành công",
-              "Thành công!"
+              'Cập nhật thành công',
+              'Thành công!'
             );
             setTimeout(() => {
-              this.router.navigateByUrl("/qr-coupons");
+              this.router.navigateByUrl('/qr-coupons');
             }, 500);
-          } else if (result.json().code === "909") {
-            this.toastr.error("Dữ liệu đã tồn tại", "Thất bại!");
+          } else if (result.json().code === '909') {
+            this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
           } else {
-            this.toastr.error("Cập nhật thất bại", "Thất bại!");
+            this.toastr.error('Cập nhật thất bại', 'Thất bại!');
           }
         }
       })
       .catch((err) => {
-        this.toastr.error(err.json().description, "Thất bại!");
+        this.toastr.error(err.json().description, 'Thất bại!');
       });
   }
   resetForm() {
-    this.router.navigateByUrl("/qr-coupons");
+    this.router.navigateByUrl('/qr-coupons');
   }
   closeModal() {
     this.modalOp.close();
@@ -319,25 +319,25 @@ export class EditComponent implements OnInit {
   }
   onUploadServer() {
     if (this.fileExcel.file) {
-      this.temp.loading = true
-      let fileReader = new FileReader();
+      this.temp.loading = true;
+      const fileReader = new FileReader();
       fileReader.readAsArrayBuffer(this.fileExcel.file);
       fileReader.onload = (e) => {
         this.arrayBuffer = fileReader.result;
-        var data = new Uint8Array(this.arrayBuffer);
-        var arr = new Array();
-        for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-        var bstr = arr.join("");
-        var workbook = XLSX.read(bstr, { type: "binary" });
-        var first_sheet_name = workbook.SheetNames[0];
-        var worksheet = workbook.Sheets[first_sheet_name];
+        const data = new Uint8Array(this.arrayBuffer);
+        const arr = new Array();
+        for (let i = 0; i !== data.length; ++i) { arr[i] = String.fromCharCode(data[i]); }
+        const bstr = arr.join('');
+        const workbook = XLSX.read(bstr, { type: 'binary' });
+        const first_sheet_name = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[first_sheet_name];
         console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }));
-        var arraylist = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-        this.filelist = arraylist
-        this.dataForm.value.user_coupon = arraylist
-      }
-      this.temp.loading = false
-      this.closeModal()
+        const arraylist = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+        this.filelist = arraylist;
+        this.dataForm.value.user_coupon = arraylist;
+      };
+      this.temp.loading = false;
+      this.closeModal();
     }
   }
   getItem(params) {
