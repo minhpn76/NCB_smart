@@ -120,7 +120,8 @@
                                         *ngIf="data?.status === '0'">Hết hiệu lực</span>
                                     </td>
                                     <td>
-                                        {{ helper.formatDate(data?.createdAt) }}
+                                        <!-- {{ helper.formatDate(data?.createdAt) }} -->
+                                        {{helper.formatFullDateTime(data?.createdAt)}}
                                     </td>
                                     <td>
                                         <a *ngIf="data?.status == '1'"
@@ -425,7 +426,8 @@
                                         <span class="badge badge-success" *ngIf="data.status === '1'">Thành công</span>
                                         <span class="badge badge-danger" *ngIf="data.status === '0'">Thất bại</span>
                                     </td>
-                                    <td>{{ helper.formatDate(data?.createdAt) }}</td>
+                                    <!-- <td>{{ helper.formatDate(data?.createdAt) }}</td> -->
+                                    <td>{{ helper.formatFullDateTime(data?.createdAt) }}</td>
                                     <td>{{ data?.createdBy }}</td>
                                 </tr>
                             </tbody>
