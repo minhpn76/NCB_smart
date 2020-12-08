@@ -227,21 +227,48 @@ export class ListComponent implements OnInit {
     }
 
     onSearch(payload) {
-        if ( payload.referPartnerCode !== '' || payload.status !== '') {
+        if ( payload.referPartnerCode !== '' && payload.status !== '') {
             payload.page = 0;
+            const temp: any = {
+                referPartnerCode: payload.referPartnerCode,
+                fromDate: payload.fromDate,
+                toDate: payload.referParttoDatenerCode,
+                page: payload.page,
+                size: payload.size,
+                status: payload.status,
+            };
+            this.getListNCC(temp);
+            console.log('status', temp);
+        } else if (payload.status === '' &&  payload.referPartnerCode !== '') {
+            const tempCode: any = {
+                referPartnerCode: payload.referPartnerCode,
+                fromDate: payload.fromDate,
+                toDate: payload.referParttoDatenerCode,
+                page: payload.page,
+                size: payload.size,
+            };
+            this.getListNCC(tempCode);
+            console.log('list', tempCode);
+        } else if ( payload.referPartnerCode === '' && payload.status !== '') {
+            const tempS: any = {
+                referPartnerCode: payload.referPartnerCode,
+                fromDate: payload.fromDate,
+                toDate: payload.referParttoDatenerCode,
+                page: payload.page,
+                size: payload.size,
+                status: payload.status,
+            };
+            this.getListNCC(tempS);
+
+        } else {
+            this.getListNCC(this.listDataNCC);
         }
+
         // if (!payload.status) {
         //     delete payload['status']
         // }
-        const temp: any = {
-            referPartnerCode: payload.referPartnerCode,
-            fromDate: payload.fromDate,
-            toDate: payload.referParttoDatenerCode,
-            page: payload.page,
-            size: payload.size
-        };
-        this.getListNCC(temp);
-        console.log(temp);
+
+
 
     }
 
