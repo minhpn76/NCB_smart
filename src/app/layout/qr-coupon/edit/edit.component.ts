@@ -216,16 +216,17 @@ export class EditComponent implements OnInit {
 
   getQrService() {
     this.listQrService = [
-      {
-        code: '',
-        name: '---Vui lòng chọn dịch vụ---',
-      },
+      // {
+      //   code: '',
+      //   name: '---Vui lòng chọn dịch vụ---',
+      // },
     ];
     // xu ly
     this.ncbService
       .getListQRServer({
         size: 1000,
         page: 0,
+        status: '1'
       })
       .then((result) => {
         setTimeout(() => {
