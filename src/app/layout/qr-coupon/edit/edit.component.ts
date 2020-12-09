@@ -216,16 +216,17 @@ export class EditComponent implements OnInit {
 
   getQrService() {
     this.listQrService = [
-      {
-        code: '',
-        name: '---Vui lòng chọn dịch vụ---',
-      },
+      // {
+      //   code: '',
+      //   name: '---Vui lòng chọn dịch vụ---',
+      // },
     ];
     // xu ly
     this.ncbService
       .getListQRServer({
         size: 1000,
         page: 0,
+        status: '1'
       })
       .then((result) => {
         setTimeout(() => {
@@ -343,13 +344,13 @@ export class EditComponent implements OnInit {
   getItem(params) {
     this.ncbService.detailQRCoupon(params).then((result) => {
       const body = result.json().body;
-      const temp_startDate_slipt = body.startDate !== null ? body.startDate.split('-') : null;
+      const temp_startDate_slipt = body.startDate !== null ? body.startDate.split('/') : null;
       const temp_startDate = {
         year: temp_startDate_slipt !== null ? parseInt(temp_startDate_slipt[0]) : (new Date().getFullYear()),
         month: temp_startDate_slipt !== null ? parseInt(temp_startDate_slipt[1]) : (new Date().getMonth()),
         day: temp_startDate_slipt !== null ? parseInt(temp_startDate_slipt[2]) : (new Date().getDate())
       };
-      const temp_endDate_slipt = body.endDate !== null ? body.endDate.split('-') : null;
+      const temp_endDate_slipt = body.endDate !== null ? body.endDate.split('/') : null;
 
       const temp_endDate = {
         year: temp_endDate_slipt !== null ? parseInt(temp_endDate_slipt[0]) : (new Date().getFullYear()),
