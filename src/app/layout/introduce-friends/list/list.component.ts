@@ -52,8 +52,8 @@ export class ListComponent implements OnInit {
 
 
     search: any = {
-        rootCif: '',
-        targetCif: '',
+        rootUserCif: '',
+        targetUserCif: '',
         start: '',
         end: '',
         status: '',
@@ -149,10 +149,79 @@ export class ListComponent implements OnInit {
           this.search.page = page;
         }
       }
+
+    keyDownFunction(event) {
+        if (event.keyCode === 13) {
+          this.onSearch(this.search);
+        }
+    }
     onSearch(payload) {
-        if (payload.rootCif !== '' || payload.targetCif !== '' || payload.status !== '') {
+        if (payload.rootUserCif !== '' && payload.targetUserCif !== '' && payload.status !== '') {
             payload.page = 0;
             this.getListNCC(payload);
+        } else if (payload.rootUserCif !== '' && payload.targetUserCif === '' && payload.status === '') {
+            payload.page = 0;
+            const temp: any = {
+                    rootUserCif: payload.rootUserCif,
+                    fromDate: payload.fromDate,
+                    toDate: payload.referParttoDatenerCode,
+                    page: payload.page,
+                    size: payload.size
+                };
+                this.getListNCC(temp);
+        } else if (payload.rootUserCif === '' && payload.targetUserCif !== '' && payload.status === '') {
+            payload.page = 0;
+            const temps: any = {
+                    targetUserCif: payload.targetUserCif,
+                    fromDate: payload.fromDate,
+                    toDate: payload.referParttoDatenerCode,
+                    page: payload.page,
+                    size: payload.size
+                };
+                this.getListNCC(temps);
+        } else if (payload.rootUserCif === '' && payload.targetUserCif === '' && payload.status !== '') {
+            payload.page = 0;
+            const tempsr: any = {
+                    status: payload.status,
+                    fromDate: payload.fromDate,
+                    toDate: payload.referParttoDatenerCode,
+                    page: payload.page,
+                    size: payload.size
+                };
+                this.getListNCC(tempsr);
+        } else if (payload.rootUserCif !== '' && payload.targetUserCif === '' && payload.status !== '') {
+            payload.page = 0;
+            const tempsr: any = {
+                    rootCif: payload.rootUserCif,
+                    status: payload.status,
+                    fromDate: payload.fromDate,
+                    toDate: payload.referParttoDatenerCode,
+                    page: payload.page,
+                    size: payload.size
+                };
+                this.getListNCC(tempsr);
+        } else if (payload.rootUserCif !== '' && payload.targetUserCif !== '' && payload.status === '') {
+            payload.page = 0;
+            const tempCT: any = {
+                    targetUserCif: payload.targetUserCif,
+                    rootUserCif: payload.rootUserCif,
+                    fromDate: payload.fromDate,
+                    toDate: payload.referParttoDatenerCode,
+                    page: payload.page,
+                    size: payload.size
+                };
+                this.getListNCC(tempCT);
+        } else if (payload.rootUserCif === '' && payload.targetUserCif !== '' && payload.status !== '') {
+            payload.page = 0;
+            const tempCT: any = {
+                    targetUserCif: payload.targetUserCif,
+                    status: payload.status,
+                    fromDate: payload.fromDate,
+                    toDate: payload.referParttoDatenerCode,
+                    page: payload.page,
+                    size: payload.size
+                };
+                this.getListNCC(tempCT);
         } else {
             this.getListNCC(this.listDataNCC);
         }
