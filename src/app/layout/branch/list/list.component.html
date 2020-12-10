@@ -93,15 +93,19 @@
                         <th scope="row">
                             {{ i + 1 }}
                         </th>
-                        <td>{{ branch.compCode }}</td>
+                        <td>{{ branch.key.compCode }}</td>
                         <td>{{ branch.compName }}</td>
                         <td>{{ branch.dao }}</td>
                         <td>
-                            <a class="mr-2 cursor-pointer text-blue" routerLink="/branch/edit/{{ branch.compCode }}">
+                            <a class="mr-2 cursor-pointer text-blue" href="javascript:void(0)" (click)="matchParamDetail({
+                                compCode: branch.key.compCode,
+                                mp: branch.key.mp,
+                                mcn: branch.key.mcn
+                            })">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <span class="mr-2 cursor-pointer text-danger">
-                                <i class="fa fa-trash" (click)="deleteItem(1, i, branch.compCode)"></i>
+                                <i class="fa fa-trash" (click)="deleteItem(1, i, branch.key.compCode,branch.key.mp,branch.key.mcn)"></i>
                             </span>
                         </td>
                     </tr>

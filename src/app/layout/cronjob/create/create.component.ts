@@ -13,8 +13,8 @@ import { CronOptions } from 'cron-editor/cron-editor';
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
   providers: [NCBService, Helper],
-  encapsulation: ViewEncapsulation.Native
-  // encapsulation: ViewEncapsulation.None
+  // encapsulation: ViewEncapsulation.Native
+  encapsulation: ViewEncapsulation.None
   // encapsulation: ViewEncapsulation.ShadowDom
 })
 export class CreateComponent implements OnInit {

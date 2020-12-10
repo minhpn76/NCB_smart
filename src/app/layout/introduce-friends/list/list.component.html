@@ -124,7 +124,7 @@
                                         {{helper.formatFullDateTime(data?.createdAt)}}
                                     </td>
                                     <td>
-                                        <a  *ngIf="data?.status === '1'"
+                                        <a
                                             data-toggle="tool-tip"
                                             title="Chỉnh sửa"
                                             class="mr-2 cursor-pointer text-blue"
@@ -134,7 +134,7 @@
                                         >
                                         <i class="fa fa-edit"></i>
                                         </a>
-                                        <a  *ngIf="data?.status === '0'"
+                                        <!-- <a  *ngIf="data?.status === '0'"
                                             data-toggle="tool-tip"
                                             title="Chỉnh sửa"
                                             class="mr-2 cursor-pointer text-blue"
@@ -143,7 +143,7 @@
                                             }}"
                                         >
                                         <i class="fa fa-edit"></i>
-                                        </a>
+                                        </a> -->
                                         <!-- <a *ngIf="data?.status == '0'" class="mr-2 text-gray" style="cursor: not-allowed;"> <i class="fa fa-edit"></i></a> -->
                                         <span
                                             data-toggle="tool-tip"

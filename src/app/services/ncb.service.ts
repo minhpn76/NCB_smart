@@ -1224,11 +1224,13 @@ export class NCBService {
             method: 'GET',
         });
     }
-    detailCompany(params): Promise<any> {
-        const url = `${API_URL}/company/detail`;
+    detailCompany(params: any): Promise<any> {
+        const {compCode, mp, mcn} = params;
+        const tempParam = `compCode=${compCode}&mp=${mp}&mcn=${mcn}`;
+        const url = `${API_URL}/company/detail?${tempParam}`;
         return this.auth.authRequest({
             url: url,
-            params: params,
+            params: {},
             method: 'GET',
         });
     }
