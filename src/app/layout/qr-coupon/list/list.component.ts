@@ -67,12 +67,12 @@ export class ListComponent implements OnInit {
             code: '',
         },
         {
-            name: 'Kích hoạt',
-            code: 'A',
+            name: 'Có hiệu lực',
+            code: '1',
         },
         {
-            name: 'Chưa kích hoạt',
-            code: 'D',
+            name: 'Không hiệu lực',
+            code: '0',
         },
     ];
 
@@ -82,11 +82,11 @@ export class ListComponent implements OnInit {
             code: '',
         },
         {
-            name: 'Phê duyệt',
+            name: 'Đã phê duyệt',
             code: '1',
         },
         {
-            name: 'Chưa phê duyệt',
+            name: 'Chờ phê duyệt',
             code: '0',
         },
     ];
@@ -112,8 +112,8 @@ export class ListComponent implements OnInit {
     profile: any = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : null;
     // TODO find QR_COUPON has isA === true
     objQRCoupon: any = JSON.parse(this.profile.role.description).find((item) => {
-        return item.code === 'QR_COUPON'
-    })
+        return item.code === 'QR_COUPON';
+    });
 
     ngOnInit() {
         this.getListData(this.search);
@@ -251,7 +251,7 @@ export class ListComponent implements OnInit {
 
 
     approved(id, approveStatus) {
-        console.log('demo', id, approveStatus);
+
         Swal.fire({
             title: 'Bạn có muốn phê duyệt?',
             type: 'info',
@@ -259,10 +259,10 @@ export class ListComponent implements OnInit {
             confirmButtonText: 'Đồng ý',
             cancelButtonText: 'Không, trở lại',
         }).then((result) => {
-            console.log('a', result);
             if (result.value) {
                 this.ncbService
                     .updateQRCoupon(id, {
+                        objectUserType: '',
                         approveStatus: '1',
                     })
                     .then((res) => {

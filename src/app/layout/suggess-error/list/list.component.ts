@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
 import { OrderPipe } from 'ngx-order-pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'suggess-errors-list',
@@ -11,6 +12,7 @@ import { OrderPipe } from 'ngx-order-pipe';
   providers: [NCBService]
 })
 export class ListComponent implements OnInit {
+  private router: Router;
   search_keyword: any = '';
   isSearch: any = false;
   isProcessLoad: any = 0;
@@ -116,6 +118,7 @@ export class ListComponent implements OnInit {
             'Dữ liệu đã xoá hoàn toàn.',
             'success'
           );
+          setTimeout(() => {this.router.navigateByUrl('/suggesstions-error'); }, 500);
         });
         // For more information about handling dismissals please visit
         // https://sweetalert2.github.io/#handling-dismissals

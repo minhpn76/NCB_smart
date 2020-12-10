@@ -93,7 +93,7 @@
             </a>
         </div>
     </div>
-    <div class="row mt-3">
+    <!-- <div class="row mt-3">
         <div class="col-auto" style="margin-left: auto;">
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
@@ -105,7 +105,7 @@
                     type="text" id="search" placeholder=" Tìm kiếm " (keydown)="keyDownFunctionSearch($event)" />
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- list -->
     <div class="row mt-3">
@@ -145,12 +145,12 @@
                         Loại dịch vụ
                     </th> -->
                         <th scope="col" [class.active]="order === 'state_date'" (click)="setOrder('state_date')">
-                            Ngày bắt đầu hiệu lực
+                            Ngày hiệu lực
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
                         <th scope="col" [class.active]="order === 'end_date'" (click)="setOrder('end_date')">
-                            Ngày hết hiệu lực
+                            Ngày kết thúc
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
@@ -219,13 +219,13 @@
                             {{ helper.formatDate(data?.endDate) }}
                         </td>
                         <td>
-                            <span *ngIf="data?.status == 'A'" class="badge badge-success">Kích hoạt</span>
-                            <span *ngIf="data?.status == 'D'" class="badge badge-danger">Chưa kích hoạt</span>
+                            <span *ngIf="data?.status == '1'" class="badge badge-success">Có hiệu lực</span>
+                            <span *ngIf="data?.status == '0'" class="badge badge-danger">Không hiệu lực</span>
                         </td>
                         <td>
-                            <span *ngIf="data?.approveStatus == '1'" class="badge badge-success">Phê
+                            <span *ngIf="data?.approveStatus == '1'" class="badge badge-success">Đã phê
                                 duyệt</span>
-                            <span *ngIf="data?.approveStatus == '0'" class="badge badge-danger">Chưa phê duyệt</span>
+                            <span *ngIf="data?.approveStatus == '0'" class="badge badge-danger">Chờ phê duyệt</span>
                         </td>
                         <td>
                             {{ data?.createdBy }}

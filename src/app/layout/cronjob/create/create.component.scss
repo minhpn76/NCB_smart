@@ -20,6 +20,14 @@ summary {
 	display: block
 }
 
+select.form-control:not([size]):not([multiple]) {
+	height: calc(2.25rem + 10px);
+	margin: 0 5px;
+}
+.btn-success:hover{
+	border-color: transparent !important;
+}
+
 audio,
 canvas,
 progress,

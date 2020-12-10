@@ -4,6 +4,7 @@ import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { OrderPipe } from 'ngx-order-pipe';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'pos-list',
@@ -13,6 +14,7 @@ import { OrderPipe } from 'ngx-order-pipe';
 })
 export class ListComponent implements OnInit {
     private modalOp: NgbModalRef;
+    private router: Router;
     search_keyword: any = '';
     re_search: any = {
         brnCode: '',
@@ -105,6 +107,7 @@ export class ListComponent implements OnInit {
                       'Dữ liệu đã xoá hoàn toàn.',
                       'success'
                     );
+                    setTimeout(() => {this.router.navigateByUrl('/transaction-room'); }, 500);
                   });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
                 Swal.fire('Huỷ bỏ', 'Dữ liệu được bảo toàn :)', 'error');

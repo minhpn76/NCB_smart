@@ -187,6 +187,9 @@ export class CreateComponent implements OnInit {
       if (result.status === 200) {
         if (result.json().code === '00') {
           this.toastr.success('Thêm mới thành công', 'Thành công!');
+          setTimeout(() => {
+            this.router.navigateByUrl('/pay-card');
+          }, 500);
         } else if (result.json().code === '901') {
           this.toastr.error('Sản phẩm đã tồn tại, vui lòng kiểm tra lại thông tin!', 'Thất bại!');
         } else {

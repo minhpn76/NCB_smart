@@ -36,8 +36,8 @@ export class CreateComponent implements OnInit {
         path: null,
         name: ''
     };
-    arrayBuffer: any = []
-    filelist: any = []
+    arrayBuffer: any = [];
+    filelist: any = [];
 
     temp: any = {
         loading: false,
@@ -168,7 +168,7 @@ export class CreateComponent implements OnInit {
                 ]),
             ],
             status: [
-                'A',
+                '',
                 Validators.compose([this.helper.noWhitespaceValidator]),
             ],
             approveStatus: [
@@ -177,7 +177,7 @@ export class CreateComponent implements OnInit {
             ],
 
             startDate: [this.mRatesDateS_7],
-            endDate:[this.mRatesDateS],
+            endDate: [this.mRatesDateS],
             user_coupon: []
         });
     }
@@ -206,6 +206,7 @@ export class CreateComponent implements OnInit {
             .getListQRServer({
                 size: 1000,
                 page: 0,
+                status: '1',
             })
             .then((result) => {
                 setTimeout(() => {
@@ -227,32 +228,38 @@ export class CreateComponent implements OnInit {
                 ];
             });
     }
+    tranferDateMinus(params) {
+        return params.year + '-' + params.month + '-' + params.day;
+    }
     onSubmit() {
         this.submitted = true;
         // stop here if form is invalid
         if (this.dataForm.invalid) {
-            console.log('demo', this.dataForm);
+            return;
+        }
+        if (new Date(this.tranferDateMinus(this.dataForm.value.startDate)) > new Date(this.tranferDateMinus(this.dataForm.value.endDate))) {
+            this.toastr.error('Ngày bắt đầu phải nhỏ hơn ngày kết thúc', 'Thất bại!');
             return;
         }
         const payload = {
-            name:this.dataForm.value.name,
-            description:this.dataForm.value.description,
-            code:this.dataForm.value.code,
-            objectUserType:this.dataForm.value.objectUserType,
-            discountType:this.dataForm.value.discountType,
-            serviceId:this.dataForm.value.serviceId,
-            startDate:this.helper.tranferDate(this.dataForm.value.startDate),
-            endDate:this.helper.tranferDate(this.dataForm.value.endDate),
-            amount:+this.dataForm.value.amount,
-            paymentMin:+this.dataForm.value.paymentMin,
-            amountMax:+this.dataForm.value.amountMax,
-            amountPercentage:+this.dataForm.value.amountPercentage,
-            numberPerCustomer:+this.dataForm.value.numberPerCustomer,
-            totalNumberCoupon:+this.dataForm.value.totalNumberCoupon,
-            status:this.dataForm.value.status,
-            approveStatus:this.dataForm.value.approveStatus,
+            name: this.dataForm.value.name,
+            description: this.dataForm.value.description,
+            code: this.dataForm.value.code,
+            objectUserType: this.dataForm.value.objectUserType,
+            discountType: this.dataForm.value.discountType,
+            serviceId: this.dataForm.value.serviceId,
+            startDate: this.helper.tranferDate(this.dataForm.value.startDate),
+            endDate: this.helper.tranferDate(this.dataForm.value.endDate),
+            amount: +this.dataForm.value.amount,
+            paymentMin: +this.dataForm.value.paymentMin,
+            amountMax: +this.dataForm.value.amountMax,
+            amountPercentage: +this.dataForm.value.amountPercentage,
+            numberPerCustomer: +this.dataForm.value.numberPerCustomer,
+            totalNumberCoupon: +this.dataForm.value.totalNumberCoupon,
+            status: this.dataForm.value.status,
+            approveStatus: this.dataForm.value.approveStatus,
             userCoupons: this.dataForm.value.user_coupon ? this.dataForm.value.user_coupon : this.filelist
-        }
+        };
         this.ncbService
             .createQRCoupon(payload)
             .then((result) => {
@@ -299,7 +306,7 @@ export class CreateComponent implements OnInit {
                 this.arrayBuffer = fileReader.result;
                 const data = new Uint8Array(this.arrayBuffer);
                 const arr = new Array();
-                for(let i = 0; i !== data.length; ++i) { arr[i] = String.fromCharCode(data[i]); }
+                for (let i = 0; i !== data.length; ++i) { arr[i] = String.fromCharCode(data[i]); }
                 const bstr = arr.join('');
                 const workbook = XLSX.read(bstr, {type: 'binary'});
                 const first_sheet_name = workbook.SheetNames[0];
