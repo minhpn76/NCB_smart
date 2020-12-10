@@ -114,7 +114,7 @@ export class EditComponent implements OnInit {
     });
   }
   getItem(params) {
-    this.ncbService.detailProvider({ providerCode: params }).then((result) => {
+    this.ncbService.detailProvider({ key: params }).then((result) => {
       const body = result.json().body;
       this.dataForm.patchValue({
         providerCode: body.providerCode,

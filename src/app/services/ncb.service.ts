@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { AppSettings } from "../app.settings";
-import { AuthService } from "../services/auth.service";
-import "rxjs/add/operator/toPromise";
-import { environment } from "../../environments/environment.prod";
+import { Injectable } from '@angular/core';
+import { AppSettings } from '../app.settings';
+import { AuthService } from '../services/auth.service';
+import 'rxjs/add/operator/toPromise';
+import { environment } from '../../environments/environment.prod';
 const API_URL = environment.apiUrl;
 
 @Injectable()
@@ -14,7 +14,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     getListTransaction(params): Promise<any> {
@@ -22,19 +22,19 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     getListRole(): Promise<any> {
         const url = `${API_URL}/role/get-roles`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
     searchUser(params): Promise<any> {
         const url = `${API_URL}/user/searchUser`;
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     getListUser(params): Promise<any> {
@@ -42,7 +42,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     createUser(data): Promise<any> {
@@ -50,7 +50,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -59,7 +59,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
 
@@ -75,7 +75,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -92,7 +92,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -101,20 +101,20 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
     detailProvince(body): Promise<any> {
         const url = `${API_URL}/city/detail`;
-        return this.auth.authRequest({ url: url, params: body, method: "GET" });
+        return this.auth.authRequest({ url: url, params: body, method: 'GET' });
     }
     deleteProvince(body): Promise<any> {
         const url = `${API_URL}/city/delete`;
         return this.auth.authRequest({
             url: url,
             params: body,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
     /**
@@ -125,7 +125,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     createBankTranfer(body): Promise<any> {
@@ -133,7 +133,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -142,7 +142,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     updateBankTranfer(data): Promise<any> {
@@ -150,7 +150,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -159,7 +159,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
     deActiveBankTranfer(params): Promise<any> {
@@ -167,7 +167,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
     getListProvider(params): Promise<any> {
@@ -175,7 +175,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     searchProvider(params): Promise<any> {
@@ -183,7 +183,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     /**
@@ -199,7 +199,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -216,7 +216,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -225,7 +225,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     updateProvider(data): Promise<any> {
@@ -233,7 +233,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -242,7 +242,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
     searchBranch(params): Promise<any> {
@@ -250,7 +250,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     detailBranch(params): Promise<any> {
@@ -258,7 +258,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     updateBranch(data): Promise<any> {
@@ -266,7 +266,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -275,7 +275,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
     // quan ly anh the
@@ -284,7 +284,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     createPayCard(body): Promise<any> {
@@ -292,7 +292,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -301,7 +301,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -310,13 +310,13 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: body,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
     // @param prdcode
     detailPayCard(body): Promise<any> {
         const url = `${API_URL}/par-card/detail`;
-        return this.auth.authRequest({ url: url, params: body, method: "GET" });
+        return this.auth.authRequest({ url: url, params: body, method: 'GET' });
     }
     // goi san pham khach hang su dung
     searchPackageUser(params): Promise<any> {
@@ -324,7 +324,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -334,7 +334,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     // tham so tong dai
@@ -351,7 +351,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -367,7 +367,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "DELETE",
+            method: 'DELETE',
             application: true,
         });
     }
@@ -383,7 +383,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -399,7 +399,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -415,7 +415,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -433,7 +433,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -449,7 +449,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -465,7 +465,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -481,7 +481,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
 
@@ -497,7 +497,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
     /**
@@ -514,7 +514,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -530,7 +530,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -546,7 +546,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -562,7 +562,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
 
@@ -578,7 +578,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
     /**
@@ -595,7 +595,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -609,12 +609,12 @@ export class NCBService {
      *
      */
     detailNcbGuide(data): Promise<any> {
-        console.log("XASDAS");
+        console.log('XASDAS');
         const url = `${API_URL}/ncb-guideline/detail`;
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -631,7 +631,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -648,7 +648,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -665,7 +665,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "DELETE",
+            method: 'DELETE',
             application: true,
         });
     }
@@ -682,7 +682,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -699,7 +699,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -716,7 +716,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -733,7 +733,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -750,7 +750,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "DELETE",
+            method: 'DELETE',
             application: true,
         });
     }
@@ -767,7 +767,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -784,7 +784,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -801,7 +801,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -818,7 +818,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -835,7 +835,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "DELETE",
+            method: 'DELETE',
             application: true,
         });
     }
@@ -853,7 +853,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -870,7 +870,7 @@ export class NCBService {
         const url = `${API_URL}/service-register/${id}/detail`;
         return this.auth.authRequest({
             url: url,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -888,7 +888,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PATCH",
+            method: 'PATCH',
             application: true,
         });
     }
@@ -905,7 +905,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -922,7 +922,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -939,7 +939,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -956,7 +956,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -973,7 +973,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "DELETE",
+            method: 'DELETE',
             application: true,
         });
     }
@@ -981,7 +981,7 @@ export class NCBService {
         const url = `${API_URL}/user/${data}/detail`;
         return this.auth.authRequest({
             url: url,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -990,7 +990,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PATCH",
+            method: 'PATCH',
             application: true,
         });
     }
@@ -999,7 +999,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PATCH",
+            method: 'PATCH',
             application: true,
         });
     }
@@ -1007,7 +1007,7 @@ export class NCBService {
         const url = `${API_URL}/user/${id}/delete`;
         return this.auth.authRequest({
             url: url,
-            method: "DELETE",
+            method: 'DELETE',
             application: true,
         });
     }
@@ -1016,26 +1016,26 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PATCH",
+            method: 'PATCH',
             application: true,
         });
     }
     getBranchs(): Promise<any> {
-        const link = "/ncb-branch/branch/activated-list";
+        const link = '/ncb-branch/branch/activated-list';
         const url = `${API_URL}${link}`;
         return this.auth.authRequest({
             url: url,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
     getPGD(data): Promise<any> {
-        const link = "/ncb-branch/search";
+        const link = '/ncb-branch/search';
         const url = `${API_URL}${link}`;
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1045,7 +1045,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1055,13 +1055,13 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
     detailNotify(data): Promise<any> {
         const url = `${API_URL}/notify/detail`;
-        return this.auth.authRequest({ url: url, params: data, method: "GET" });
+        return this.auth.authRequest({ url: url, params: data, method: 'GET' });
     }
     // provider, type, error, msg_Code
     updateNotify(data): Promise<any> {
@@ -1069,7 +1069,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -1078,7 +1078,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "DELETE",
+            method: 'DELETE',
             application: true,
         });
     }
@@ -1088,7 +1088,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1098,7 +1098,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1108,7 +1108,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PATCH",
+            method: 'PATCH',
             application: true,
         });
     }
@@ -1116,7 +1116,7 @@ export class NCBService {
         const url = `${API_URL}/role/` + value + `/detail`;
         return this.auth.authRequest({
             url: url,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1125,7 +1125,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: id,
-            method: "DELETE",
+            method: 'DELETE',
             application: true,
         });
     }
@@ -1134,7 +1134,7 @@ export class NCBService {
         const url = `${API_URL}/ncb-branch/depart/activated-list`;
         return this.auth.authRequest({
             url: url,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1144,7 +1144,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1153,7 +1153,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1162,7 +1162,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -1171,7 +1171,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: value,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1180,30 +1180,30 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: value,
-            method: "DELETE",
+            method: 'DELETE',
             application: true,
         });
     }
     // up file parcard
     uploadFilePayCard(file): Promise<any> {
         const formData: FormData = new FormData();
-        formData.append("img", file, file.name);
+        formData.append('img', file, file.name);
         const url = `${API_URL}/img/uploadFile`;
         return this.auth.authRequestFile({
             url: url,
             data: formData,
-            method: "POST",
+            method: 'POST',
         });
     }
     upFileExcel(file, params): Promise<any> {
         const formData: FormData = new FormData();
-        formData.append("File", file, file.name);
+        formData.append('File', file, file.name);
         const url = `${API_URL}/telecom/uploadFile`;
         return this.auth.authRequestFile({
             url: url,
             data: formData,
             params: params,
-            method: "POST",
+            method: 'POST',
         });
     }
     // delete file
@@ -1212,7 +1212,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: payload,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
     // danh muc chi nhanh
@@ -1221,15 +1221,17 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
-    detailCompany(params): Promise<any> {
-        const url = `${API_URL}/company/detail`;
+    detailCompany(params: any): Promise<any> {
+        const {compCode, mp, mcn} = params;
+        const tempParam = `compCode=${compCode}&mp=${mp}&mcn=${mcn}`;
+        const url = `${API_URL}/company/detail?${tempParam}`;
         return this.auth.authRequest({
             url: url,
-            params: params,
-            method: "GET",
+            params: {},
+            method: 'GET',
         });
     }
     updateCompany(data): Promise<any> {
@@ -1237,7 +1239,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -1246,7 +1248,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
     createCompany(body): Promise<any> {
@@ -1254,7 +1256,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1265,7 +1267,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1275,7 +1277,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: body,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1284,7 +1286,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: body,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1293,7 +1295,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -1302,19 +1304,19 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: body,
-            method: "DELETE",
+            method: 'DELETE',
             application: true,
         });
     }
     // banner
     uploadFileBanner(file): Promise<any> {
         const formData: FormData = new FormData();
-        formData.append("img", file, file.name);
+        formData.append('img', file, file.name);
         const url = `${API_URL}/img/banner/uploadFile`;
         return this.auth.authRequestFile({
             url: url,
             data: formData,
-            method: "POST",
+            method: 'POST',
         });
     }
     deleteFileBanner(payload) {
@@ -1322,29 +1324,29 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: payload,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
     getListPrdName() {
         const url = `${API_URL}/function/getAllPrdName`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
     getListServiceRegister() {
         const url = `${API_URL}/service-register/get-all-service`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
 
     // so luong the kh dc mo
     getCreditCardNumber() {
         const url = `${API_URL}/par-config/get-credit-card-number`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
     createCreditNumber(data) {
         const url = `${API_URL}/par-config/create-credit-card-number`;
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1353,7 +1355,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1362,7 +1364,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "PATCH",
+            method: 'PATCH',
             application: true,
         });
     }
@@ -1371,21 +1373,21 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: body,
-            method: "DELETE",
+            method: 'DELETE',
             application: true,
         });
     }
 
     getReissueCardReason() {
         const url = `${API_URL}/par-config/get-reissue-card-reason`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
     createReissueCardReason(data) {
         const url = `${API_URL}/par-config/modify-reissue-card-reason`;
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1394,7 +1396,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1408,21 +1410,21 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: body,
-            method: "DELETE",
+            method: 'DELETE',
             application: true,
         });
     }
 
     getOtherConfig() {
         const url = `${API_URL}/par-config/get-other-param-config`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
     createOtherConfigCard(data) {
         const url = `${API_URL}/par-config/modify-other-param-config`;
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1432,7 +1434,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1446,7 +1448,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: body,
-            method: "DELETE",
+            method: 'DELETE',
             application: true,
         });
     }
@@ -1454,7 +1456,7 @@ export class NCBService {
         const url = `${API_URL}/function/getPopup`;
         return this.auth.authRequest({
             url: url,
-            method: "GET",
+            method: 'GET',
             params: body,
             application: true,
         });
@@ -1463,7 +1465,7 @@ export class NCBService {
         const url = `${API_URL}/ncb-branch/branch/list-comp-codename`;
         return this.auth.authRequest({
             url: url,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1471,7 +1473,7 @@ export class NCBService {
         const url = `${API_URL}/provider/list-service-code`;
         return this.auth.authRequest({
             url: url,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1481,7 +1483,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1491,7 +1493,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1501,7 +1503,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1510,7 +1512,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1519,7 +1521,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -1528,7 +1530,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: value,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1537,7 +1539,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: value,
-            method: "DELETE",
+            method: 'DELETE',
             application: true,
         });
     }
@@ -1547,7 +1549,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1556,7 +1558,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1565,7 +1567,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -1574,7 +1576,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: value,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1583,7 +1585,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: value,
-            method: "DELETE",
+            method: 'DELETE',
             application: true,
         });
     }
@@ -1592,7 +1594,7 @@ export class NCBService {
         const url = `${API_URL}/service-register/depart/type-list`;
         return this.auth.authRequest({
             url: url,
-            method: "GET",
+            method: 'GET',
             application: true,
         });
     }
@@ -1603,7 +1605,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     detailPromotionPackage(params): Promise<any> {
@@ -1611,7 +1613,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     updatePromotionPackage(data): Promise<any> {
@@ -1619,7 +1621,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -1628,7 +1630,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
     createPromotionPackage(body): Promise<any> {
@@ -1636,36 +1638,36 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
 
     getAllProCode(): Promise<any> {
         const url = `${API_URL}/promotions/add-function/getAllProCode`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
     getAllProdName(): Promise<any> {
         const url = `${API_URL}/function/getAllPrdAndPrdName`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
     createConfigCronjob(body): Promise<any> {
         const url = `${API_URL}/config-cronjob/saveOrUpdate`;
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
     uploadFileTelecom(file): Promise<any> {
         const formData: FormData = new FormData();
-        formData.append("file", file, file.name);
+        formData.append('file', file, file.name);
         const url = `${API_URL}/param-manager/create/uploadFile`;
         return this.auth.authRequestFile({
             url: url,
             data: formData,
-            method: "POST",
+            method: 'POST',
         });
     }
     updateResetPassword(user, data): Promise<any> {
@@ -1673,7 +1675,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: data,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
@@ -1691,7 +1693,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     createQRServer(body): Promise<any> {
@@ -1699,7 +1701,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1708,17 +1710,17 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
     dQRServer(id: string): Promise<any> {
         const url = `${API_URL}/qr-services/${id}`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
     deleteQRServer(itemId): Promise<any> {
         const url = `${API_URL}/qr-services/${itemId}`;
-        return this.auth.authRequest({ url: url, method: "DELETE" });
+        return this.auth.authRequest({ url: url, method: 'DELETE' });
     }
 
     /**
@@ -1732,7 +1734,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     createQRCoupon(body): Promise<any> {
@@ -1740,7 +1742,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1749,20 +1751,20 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
     detailQRCoupon(id: string): Promise<any> {
         const url = `${API_URL}/qr-coupons/${id}`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
     deleteQRCoupon(itemId): Promise<any> {
         const url = `${API_URL}/qr-coupons/${itemId}`;
         return this.auth.authRequest({
             url: url,
             params: itemId,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
 
@@ -1772,7 +1774,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     createQRMerchant(body): Promise<any> {
@@ -1780,7 +1782,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1789,20 +1791,20 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
     detailQRMerchant(id: string): Promise<any> {
         const url = `${API_URL}/qr-merchants/${id}`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
     deleteQRMerchant(itemId): Promise<any> {
         const url = `${API_URL}/qr-merchants/${itemId}`;
         return this.auth.authRequest({
             url: url,
             params: itemId,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
     // Notification user
@@ -1811,7 +1813,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     createNoticationUser(body): Promise<any> {
@@ -1819,7 +1821,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1828,20 +1830,20 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
     detailNoticationUser(id: string): Promise<any> {
         const url = `${API_URL}/notifications/${id}`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
     deleteNoticationUser(itemId): Promise<any> {
         const url = `${API_URL}/notifications/${itemId}`;
         return this.auth.authRequest({
             url: url,
             params: itemId,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
 
@@ -1851,7 +1853,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     createVersionApp(body): Promise<any> {
@@ -1859,7 +1861,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1868,30 +1870,30 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
     detailVersionApp(code: string): Promise<any> {
         const url = `${API_URL}/version-app/${code}`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
     deleteVersionApp(itemCode): Promise<any> {
         const url = `${API_URL}/version-app/${itemCode}`;
         return this.auth.authRequest({
             url: url,
             params: itemCode,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
-    //invite friend config
+    // invite friend config
     // Version_app
     getListConfigFriend(params): Promise<any> {
         const url = `${API_URL}/refer-friend`;
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     createConfigFriend(body): Promise<any> {
@@ -1899,7 +1901,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1908,21 +1910,21 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
     detailConfigFriend(code: any): Promise<any> {
         const {id} = code;
         const url = `${API_URL}/refer-friend/${id}`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
     deleteConfigFriend(itemCode): Promise<any> {
         const {id} = itemCode;
         const url = `${API_URL}/refer-friend/${id}`;
         return this.auth.authRequest({
             url: url,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
     getListFriends(params): Promise<any> {
@@ -1930,16 +1932,16 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
-    //referal code partner
+    // referal code partner
     getListReferalCodePartner(params): Promise<any> {
         const url = `${API_URL}/referral-code-partners`;
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     createReferalCodePartner(body): Promise<any> {
@@ -1947,7 +1949,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1956,30 +1958,30 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
     detailReferalCodePartner(code: any): Promise<any> {
         const {id} = code;
         const url = `${API_URL}/referral-code-partners/${id}`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
     deleteReferalCodePartner(itemCode): Promise<any> {
         const {id} = itemCode;
         const url = `${API_URL}/referral-code-partners/${id}`;
         return this.auth.authRequest({
             url: url,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
-    //promotion detail
+    // promotion detail
     getListPromotionDetail(params): Promise<any> {
         const url = `${API_URL}/promotion-details`;
         return this.auth.authRequest({
             url: url,
             params: params,
-            method: "GET",
+            method: 'GET',
         });
     }
     createPromotionDetail(body): Promise<any> {
@@ -1987,7 +1989,7 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "POST",
+            method: 'POST',
             application: true,
         });
     }
@@ -1996,36 +1998,36 @@ export class NCBService {
         return this.auth.authRequest({
             url: url,
             data: body,
-            method: "PUT",
+            method: 'PUT',
             application: true,
         });
     }
     detailPromotionDetail(code: any): Promise<any> {
         const {id} = code;
         const url = `${API_URL}/promotion-details/${id}`;
-        return this.auth.authRequest({ url: url, method: "GET" });
+        return this.auth.authRequest({ url: url, method: 'GET' });
     }
     deletePromotionDetail(itemCode): Promise<any> {
         const {id} = itemCode;
         const url = `${API_URL}/promotion-details/${id}`;
         return this.auth.authRequest({
             url: url,
-            method: "DELETE",
+            method: 'DELETE',
         });
     }
-    //find promotion
+    // find promotion
     getPromotionByPromotionCode(params): Promise<any> {
         const url = `${API_URL}/promotion-details/promotion-code/${params}`;
         return this.auth.authRequest({
             url: url,
-            method: "GET",
+            method: 'GET',
         });
     }
     getReferalPartnerByPromotionCode(params): Promise<any> {
         const url = `${API_URL}/referral-code-partners/partner-code/${params}`;
         return this.auth.authRequest({
             url: url,
-            method: "GET",
+            method: 'GET',
         });
     }
 
