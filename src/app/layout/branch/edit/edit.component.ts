@@ -46,6 +46,7 @@ export class EditComponent implements OnInit {
       dao: ['', this.helper.noWhitespaceValidator],
       mcn: [''],
       mp: [''],
+      address: ['']
     });
     console.log(233, this.dataForm);
 
@@ -83,7 +84,7 @@ export class EditComponent implements OnInit {
       this.dataForm.patchValue({
         compCode: body.key.compCode,
         compName: body.compName,
-        // address: body.address,
+        address: body.address,
         mcn: body.key.mcn,
         dao: body.dao,
         mp: body.key.mp

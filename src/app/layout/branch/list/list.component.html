@@ -72,6 +72,14 @@
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
+                        <!-- <th scope="col"
+                            [class.active]="order === 'compName'"
+                            (click)="setOrder('compName')"
+                        >
+                            Địa chỉ
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th> -->
                         <th scope="col"
                             [class.active]="order === 'dao'"
                             (click)="setOrder('dao')"
@@ -95,6 +103,7 @@
                         </th>
                         <td>{{ branch.key.compCode }}</td>
                         <td>{{ branch.compName }}</td>
+                        <!-- <td>{{ branch.address }}</td> -->
                         <td>{{ branch.dao }}</td>
                         <td>
                             <a class="mr-2 cursor-pointer text-blue" href="javascript:void(0)" (click)="matchParamDetail({
@@ -113,9 +122,9 @@
             </table>
         </div>
     </div>
-
-    <div class="row mt-3">
-        <div class="col-md-12">
+    <div>
+        <div class="row mt-3">
+            <div class="col-md-12">
             <ngb-pagination
                 *ngIf="totalSearch > 0 && totalSearch > re_search.size"
                 [collectionSize]="totalSearch"

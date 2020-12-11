@@ -45,8 +45,8 @@ export class ListComponent implements OnInit {
       code: 'D',
     }
   ];
-  order: string = 'bankName';
-  reverse: boolean = false;
+  order = 'bankName';
+  reverse = false;
 
   sortedCollection: any[];
 
@@ -61,7 +61,7 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.getListData(this.re_search);
-    
+
   }
 
   setOrder(value: string) {
