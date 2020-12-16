@@ -32,7 +32,7 @@ export class ListComponent implements OnInit {
     service: '',
     status: '',
     size: 10,
-    page: 1,
+    page: 0,
     previous_page: 0,
     fromDate: '',
     toDate: ''

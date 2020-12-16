@@ -1755,6 +1755,16 @@ export class NCBService {
             application: true,
         });
     }
+    approvedQRCoupon( id: string, params): Promise<any> {
+        const url = `${API_URL}/qr-coupons/${id}`;
+        return this.auth.authRequest({
+            url: url,
+            params: params,
+            method: 'PATCH',
+            application: true,
+        });
+    }
+
     detailQRCoupon(id: string): Promise<any> {
         const url = `${API_URL}/qr-coupons/${id}`;
         return this.auth.authRequest({ url: url, method: 'GET' });
