@@ -240,15 +240,15 @@
                                 }}">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <span *ngIf="objQRCoupon && objQRCoupon.isA === true" data-toggle="tool-tip" title="Phê duyệt"
-                                class="mr-2 cursor-pointer text-warning">
-                                <i class="fa fa-check" (click)="approved(data.id,data.approveStatus)"></i>
-                            </span>
                             <span data-toggle="tool-tip" title="Xóa" class="mr-2 cursor-pointer text-danger">
                                 <i class="fa fa-trash" (click)="
                                         deleteItem(1, i, data.id)
                                     "></i>
                             </span>
+                            <span *ngIf="objQRCoupon && objQRCoupon.isA === true && data.approveStatus ==='0'" data-toggle="tool-tip" title="Phê duyệt"
+                            class="mr-2 cursor-pointer text-warning">
+                            <i class="fa fa-check" (click)="approved(data.id)"></i>
+                        </span>
                         </td>
                     </tr>
                 </tbody>
