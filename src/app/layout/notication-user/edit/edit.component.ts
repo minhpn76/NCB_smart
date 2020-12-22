@@ -275,7 +275,7 @@ export class EditComponent implements OnInit {
             .then((result) => {
                 const body = result.json().body;
                 this.dataForm.patchValue({
-                    name: body.title,
+                    title: body.title,
                     content: body.content,
                     repeatType: body.repeatType,
                     repeatValue: body.repeatValue,
