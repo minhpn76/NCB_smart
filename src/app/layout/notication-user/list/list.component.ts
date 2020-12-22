@@ -239,23 +239,26 @@ export class ListComponent implements OnInit {
                                 'Dữ liệu đã xoá hoàn toàn.',
                                 'success'
                             );
+                            setTimeout(() => {
+                                this.getListData(this.search);
+                            }, 300);
 
-                            const {
-                                page,
-                                size,
-                                search,
-                                previous_page,
-                            } = this.search;
-                            let tempage = 0;
-                            if (page > 0) {
-                                tempage = page - 1;
-                            }
-                            this.getListData({
-                                page: tempage,
-                                size: size,
-                                search: search,
-                                previous_page: previous_page,
-                            });
+                            // const {
+                            //     page,
+                            //     size,
+                            //     search,
+                            //     previous_page,
+                            // } = this.search;
+                            // let tempage = 0;
+                            // if (page > 0) {
+                            //     tempage = page - 1;
+                            // }
+                            // this.getListData({
+                            //     page: tempage,
+                            //     size: size,
+                            //     search: search,
+                            //     previous_page: previous_page,
+                            // });
                         } else {
                             this.toastr.error('Xoá thất bại', 'Thất bại');
                         }

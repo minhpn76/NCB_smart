@@ -146,10 +146,10 @@
                             <span>Giới thiệu bạn bè</span>
                         </a>
                     </li>
-                    <li *ngIf="khachhang.code === 'NOTIFY_U' && khachhang.isAll === true">
+                    <li *ngIf="khachhang.code === 'NOTIFY_USER' && khachhang.isAll === true">
                         <a [routerLink]="['/notifications']" [routerLinkActive]="['router-link-active']"
                             class="list-group-item">
-                            <i class="fa fa-archive"></i>&nbsp;
+                            <i class="fa fa-bell"></i>&nbsp;
                             <span>Thông báo người dùng</span>
                         </a>
                     </li>
