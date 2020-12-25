@@ -31,11 +31,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="form-group row">
+                <div class="form-group row">
                     <label for="search" class="col-sm-5 col-form-label"
                         >Nội dung: (<span class="text-danger">*</span>):</label
                     >
-                    <div class="col-sm-7"> -->
+                    <div class="col-sm-7">
                         <!-- <ckeditor [editor]="Editor" formControlName="content" data=""></ckeditor> -->
                         <!-- <textarea
                             formControlName="content"
@@ -45,7 +45,7 @@
                                 'is-invalid': submitted && Form.content.errors
                             }"
                         ></textarea> -->
-                        <!-- <angular-editor formControlName="content" [config]="editorConfig"></angular-editor>
+                        <angular-editor formControlName="content" [config]="editorConfig"></angular-editor>
                         <div
                             *ngIf="submitted && Form.content.errors"
                             class="invalid-feedback"
@@ -58,8 +58,10 @@
                             </div>
                         </div>
                     </div>
-                </div> -->
-                <div class="form-group row">
+                </div>
+
+
+                <!-- <div class="form-group row">
                     <label for="search" class="col-sm-5 col-form-label">Nội dung(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <ckeditor [editor]="Editor" formControlName="content"></ckeditor>
@@ -69,7 +71,7 @@
                             <div *ngIf="Form.content.hasError('whitespace')">Nội dung không hợp lệ</div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="form-group row">
                     <label for="create" class="col-sm-5 col-form-label"
