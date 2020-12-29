@@ -239,10 +239,10 @@ export class ListComponent implements OnInit {
                                 'Dữ liệu đã xoá hoàn toàn.',
                                 'success'
                             );
-                            setTimeout(() => {
-                                this.getListData(this.search);
-                            }, 300);
-
+                            // setTimeout(() => {
+                            //     this.getListData(this.search);
+                            // }, 300);
+                            this.onSearch(this.search);
                             // const {
                             //     page,
                             //     size,
