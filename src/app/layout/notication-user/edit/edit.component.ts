@@ -13,6 +13,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import * as FileSaver from 'file-saver';
 // import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import * as XLSX from 'xlsx';
 import { ExcelService } from '../../../services/excel.service';
 import { async } from '@angular/core/testing';
@@ -27,6 +28,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 })
 export class EditComponent implements OnInit {
     // public Editor = ClassicEditor;
+    public Editor = DecoupledEditor;
     mRatesDateS: NgbDateStruct;
     mRatesDateS_7: NgbDateStruct;
     my: any = new Date();
@@ -74,48 +76,48 @@ export class EditComponent implements OnInit {
         },
     ];
 
-    editorConfig: AngularEditorConfig = {
-        editable: true,
-        spellcheck: true,
-        height: 'auto',
-        minHeight: '0',
-        maxHeight: 'auto',
-        width: 'auto',
-        minWidth: '0',
-        translate: 'yes',
-        enableToolbar: true,
-        showToolbar: true,
-        placeholder: 'Nội dung...',
-        defaultParagraphSeparator: '',
-        defaultFontName: '',
-        defaultFontSize: '',
-        fonts: [
-            { class: 'arial', name: 'Arial' },
-            { class: 'times-new-roman', name: 'Times New Roman' },
-            { class: 'calibri', name: 'Calibri' },
-            { class: 'comic-sans-ms', name: 'Comic Sans MS' },
-        ],
-        customClasses: [
-            {
-                name: 'quote',
-                class: 'quote',
-            },
-            {
-                name: 'redText',
-                class: 'redText',
-            },
-            {
-                name: 'titleText',
-                class: 'titleText',
-                tag: 'h1',
-            },
-        ],
-        uploadUrl: 'v1/image',
-        uploadWithCredentials: false,
-        sanitize: true,
-        toolbarPosition: 'top',
-        toolbarHiddenButtons: [['bold', 'italic'], ['fontSize']],
-    };
+    // editorConfig: AngularEditorConfig = {
+    //     editable: true,
+    //     spellcheck: true,
+    //     height: 'auto',
+    //     minHeight: '0',
+    //     maxHeight: 'auto',
+    //     width: 'auto',
+    //     minWidth: '0',
+    //     translate: 'yes',
+    //     enableToolbar: true,
+    //     showToolbar: true,
+    //     placeholder: 'Nội dung...',
+    //     defaultParagraphSeparator: '',
+    //     defaultFontName: '',
+    //     defaultFontSize: '',
+    //     fonts: [
+    //         { class: 'arial', name: 'Arial' },
+    //         { class: 'times-new-roman', name: 'Times New Roman' },
+    //         { class: 'calibri', name: 'Calibri' },
+    //         { class: 'comic-sans-ms', name: 'Comic Sans MS' },
+    //     ],
+    //     customClasses: [
+    //         {
+    //             name: 'quote',
+    //             class: 'quote',
+    //         },
+    //         {
+    //             name: 'redText',
+    //             class: 'redText',
+    //         },
+    //         {
+    //             name: 'titleText',
+    //             class: 'titleText',
+    //             tag: 'h1',
+    //         },
+    //     ],
+    //     uploadUrl: 'v1/image',
+    //     uploadWithCredentials: false,
+    //     sanitize: true,
+    //     toolbarPosition: 'top',
+    //     toolbarHiddenButtons: [['bold', 'italic'], ['fontSize']],
+    // };
     constructor(
         private formBuilder: FormBuilder,
         private toastr: ToastrService,
@@ -128,6 +130,26 @@ export class EditComponent implements OnInit {
     ) {
         this.loadDate();
     }
+    public onReady( editor ) {
+        editor.ui.view.editable.element.parentElement.insertBefore(
+            editor.ui.view.toolbar.element,
+            editor.ui.view.editable.element
+        );
+    }
+
+    hslToHex(h, s, l) {
+        l /= 100;
+        const a = (s * Math.min(l, 1 - l)) / 100;
+        const f = (n) => {
+            const k = (n + h / 30) % 12;
+            const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+            return Math.round(255 * color)
+                .toString(16)
+                .padStart(2, '0'); // convert to Hex and prefix "0" if needed
+        };
+        return `#${f(0)}${f(8)}${f(4)}`;
+    }
+
 
     ngOnInit() {
         // Hiển thị

@@ -28,20 +28,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Đối tượng áp dụng:</label>
-                    <div class="col-sm-6">
-                        <select class="form-control" [(ngModel)]="search.objectUserType">
-                            <option *ngFor="let objectUserType of ObjectUserTypes" [value]="objectUserType.code"
-                                selected="selected">
-                                {{ objectUserType.name }}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
 
             <div class="col-md-6">
                 <div class="form-group row">
@@ -63,14 +49,31 @@
                     <div class="col-sm-6 input-group">
                         <input readonly class="form-control" placeholder="Từ ngày" name="dTS_1" ngbDatepicker
                             [(ngModel)]="mRatesDateS_7" type="date" itrim #dTS_1="ngbDatepicker" />
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" (click)="dTS_1.toggle()" type="button">
-                                    <i class="fa fa-calendar"></i>
-                                </button>
-                            </div>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="dTS_1.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Đối tượng áp dụng:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" [(ngModel)]="search.objectUserType">
+                            <option *ngFor="let objectUserType of ObjectUserTypes" [value]="objectUserType.code"
+                                selected="selected">
+                                {{ objectUserType.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+
 
 
         </div>
@@ -162,8 +165,7 @@
                             <td>{{ data?.title }}</td>
                             <!-- <td>{{ data?.content }}</td> -->
                             <td>
-                                <div 
-                                    style='width:100%; min-height:50px; z-index:4; visibility: visible; overflow: auto;'
+                                <div style='width:100%; min-height:50px; z-index:4; visibility: visible; overflow: auto;'
                                     [innerHTML]="data?.content">
                                 </div>
                             </td>
@@ -202,7 +204,8 @@
                                     "></i>
                                 </span>
 
-                                <span *ngIf="data?.objectUserType == '1'" data-toggle="tool-tip" title="Chi tiết" class="mr-2 cursor-pointer text-warning">
+                                <span *ngIf="data?.objectUserType == '1'" data-toggle="tool-tip" title="Chi tiết"
+                                    class="mr-2 cursor-pointer text-warning">
                                     <i class="fa fa-recycle" (click)="openModal(openViewList);getItem(data.id)"></i>
                                 </span>
                             </td>
@@ -247,7 +250,7 @@
                             </td>
                         </tr>
                         <tr *ngIf="listUserForNotify.length === 0">
-                           <td colspan="2" style="text-align:center">Không tìm thấy kết quả</td>
+                            <td colspan="2" style="text-align:center">Không tìm thấy kết quả</td>
                         </tr>
                         <tr *ngFor="let data of listUserForNotify; let i = index">
                             <td>{{i + 1}}</td>

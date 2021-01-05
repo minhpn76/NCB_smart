@@ -16,6 +16,7 @@ import * as XLSX from 'xlsx';
 import { ExcelService } from '../../../services/excel.service';
 import { async } from '@angular/core/testing';
 // import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters';
 import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials';
 import { listNotify } from '../code';
@@ -27,6 +28,24 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
     providers: [Helper, NCBService, ExcelService],
 })
 export class CreateComponent implements OnInit {
+
+    constructor(
+        private formBuilder: FormBuilder,
+        private toastr: ToastrService,
+        private modalService: NgbModal,
+        private ncbService: NCBService,
+        private helper: Helper,
+        public router: Router,
+        private excelService: ExcelService
+    ) {
+        // this.getNotifications();
+        this.loadDate();
+        // this.hslToHex();
+    }
+    get Form() {
+        return this.dataForm.controls;
+    }
+    public Editor = DecoupledEditor;
     // public Editor = ClassicEditor;
     mRatesDateS: NgbDateStruct;
     mRatesDateS_7: NgbDateStruct;
@@ -54,87 +73,74 @@ export class CreateComponent implements OnInit {
     };
 
     // editor
-    editorConfig: AngularEditorConfig = {
-        editable: true,
-        spellcheck: true,
-        height: '150px',
-        minHeight: '0',
-        maxHeight: 'auto',
-        width: 'auto',
-        minWidth: '0',
-        translate: 'yes',
-        enableToolbar: true,
-        showToolbar: true,
-        placeholder: 'Nội dung...',
-        defaultParagraphSeparator: '',
-        defaultFontName: '',
-        defaultFontSize: '',
-        fonts: [
-            { class: 'arial', name: 'Arial' },
-            { class: 'times-new-roman', name: 'Times New Roman' },
-            { class: 'calibri', name: 'Calibri' },
-            { class: 'comic-sans-ms', name: 'Comic Sans MS' },
-        ],
-        customClasses: [
-            {
-                name: 'quote',
-                class: 'quote',
-            },
-            {
-                name: 'redText',
-                class: 'redText',
-            },
-            {
-                name: 'titleText',
-                class: 'titleText',
-                tag: 'h1',
-            },
-        ],
-        uploadUrl: 'v1/image',
-        uploadWithCredentials: false,
-        sanitize: true,
-        toolbarPosition: 'top',
-        toolbarHiddenButtons: [['bold', 'italic'], ['fontSize']],
-    };
-    toolbarHiddenButtons: [
-        [
-            'undo',
-            'redo',
-            'bold',
-            'italic',
-            'underline',
-            'justifyLeft',
-            'justifyCenter',
-            'justifyRight',
-            'justifyFull',
-            'indent',
-            'outdent',
-            'insertUnorderedList',
-            'insertOrderedList',
-            'heading',
-            'fontName'
-        ],
-        [
-            'fontSize',
-            'textColor',
-            'backgroundColor',
-            'removeFormat',
-            'toggleEditorMode'
-        ]
-    ];
-
-    constructor(
-        private formBuilder: FormBuilder,
-        private toastr: ToastrService,
-        private modalService: NgbModal,
-        private ncbService: NCBService,
-        private helper: Helper,
-        public router: Router,
-        private excelService: ExcelService
-    ) {
-        // this.getNotifications();
-        this.loadDate();
-    }
+    // editorConfig: AngularEditorConfig = {
+    //     editable: true,
+    //     spellcheck: true,
+    //     height: '150px',
+    //     minHeight: '0',
+    //     maxHeight: 'auto',
+    //     width: 'auto',
+    //     minWidth: '0',
+    //     translate: 'yes',
+    //     enableToolbar: true,
+    //     showToolbar: true,
+    //     placeholder: 'Nội dung...',
+    //     defaultParagraphSeparator: '',
+    //     defaultFontName: '',
+    //     defaultFontSize: '',
+    //     fonts: [
+    //         { class: 'arial', name: 'Arial' },
+    //         { class: 'times-new-roman', name: 'Times New Roman' },
+    //         { class: 'calibri', name: 'Calibri' },
+    //         { class: 'comic-sans-ms', name: 'Comic Sans MS' },
+    //     ],
+    //     customClasses: [
+    //         {
+    //             name: 'quote',
+    //             class: 'quote',
+    //         },
+    //         {
+    //             name: 'redText',
+    //             class: 'redText',
+    //         },
+    //         {
+    //             name: 'titleText',
+    //             class: 'titleText',
+    //             tag: 'h1',
+    //         },
+    //     ],
+    //     uploadUrl: 'v1/image',
+    //     uploadWithCredentials: false,
+    //     sanitize: true,
+    //     toolbarPosition: 'top',
+    //     toolbarHiddenButtons: [['bold', 'italic'], ['fontSize']],
+    // };
+    // toolbarHiddenButtons: [
+    //     [
+    //         'undo',
+    //         'redo',
+    //         'bold',
+    //         'italic',
+    //         'underline',
+    //         'justifyLeft',
+    //         'justifyCenter',
+    //         'justifyRight',
+    //         'justifyFull',
+    //         'indent',
+    //         'outdent',
+    //         'insertUnorderedList',
+    //         'insertOrderedList',
+    //         'heading',
+    //         'fontName'
+    //     ],
+    //     [
+    //         'fontSize',
+    //         'textColor',
+    //         'backgroundColor',
+    //         'removeFormat',
+    //         'toggleEditorMode'
+    //     ]
+    // ];
 
     objectUserTypes = [
         {
@@ -167,6 +173,25 @@ export class CreateComponent implements OnInit {
     ];
 
     listNotifications: any = [...listNotify];
+    public onReady( editor ) {
+        editor.ui.view.editable.element.parentElement.insertBefore(
+            editor.ui.view.toolbar.element,
+            editor.ui.view.editable.element
+        );
+    }
+
+    public hslToHex(h, s, l) {
+        l /= 100;
+        const a = (s * Math.min(l, 1 - l)) / 100;
+        const f = (n) => {
+            const k = (n + h / 30) % 12;
+            const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+            return Math.round(255 * color)
+                .toString(16)
+                .padStart(2, '0'); // convert to Hex and prefix "0" if needed
+        };
+        return `#${f(0)}${f(8)}${f(4)}`;
+    }
 
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
@@ -201,9 +226,6 @@ export class CreateComponent implements OnInit {
             // endDate: [this.mRatesDateS],
             user_notifications: [],
         });
-    }
-    get Form() {
-        return this.dataForm.controls;
     }
     openModal(content) {
         this.modalOp = this.modalService.open(content);
