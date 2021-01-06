@@ -50,6 +50,7 @@ export class ListComponent implements OnInit {
         objectUserType: '',
         fromDate: '',
         toDate: '',
+        repeatValue: '',
         size: 10,
         page: 0,
         previous_page: 0,

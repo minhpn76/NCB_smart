@@ -4,6 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Helper } from '../../../helper';
 import { NCBService } from '../../../services/ncb.service';
 import { Router } from '@angular/router';
+import EasyImage from '@ckeditor/ckeditor5-easy-image/src/easyimage';
+
 import {
     NgbModal,
     NgbModalRef,
@@ -133,13 +135,14 @@ export class CreateComponent implements OnInit {
                 ]),
             ],
             repeatValue: ['', Validators.compose([Validators.required])],
+            // repeatValue: [this.mRatesDateS_7],
 
             objectUserType: ['', Validators.compose([Validators.required])],
             status: [''],
             type: '2',
 
-            // createdAt: [this.mRatesDateS_7],
-            // endDate: [this.mRatesDateS],
+            createdAt: [this.mRatesDateS_7],
+            endDate: [this.mRatesDateS],
             user_notifications: [],
         });
     }
