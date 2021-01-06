@@ -24,6 +24,7 @@
     "@angular/router": "8.2.11",
     "@ckeditor/ckeditor5-angular": "^1.1.0",
     "@ckeditor/ckeditor5-build-classic": "^12.3.1",
+    "@ckeditor/ckeditor5-easy-image": "^24.0.0",
     "@ckeditor/ckeditor5-special-characters": "^22.0.0",
     "@ctrl/ngx-emoji-mart": "^4.0.2",
     "@kolkov/angular-editor": "^1.1.3",

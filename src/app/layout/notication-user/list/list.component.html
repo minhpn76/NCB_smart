@@ -184,7 +184,8 @@
 
                             </td>
                             <td>
-                                {{ helper.formatFullDateTime(data?.repeatValue, data?.repeatType) }}
+                                {{ helper.formatDateTime(data?.repeatValue, data?.repeatType) }}
+                                <!-- {{ data?.repeatValue}} -->
                             </td>
                             <td>
                                 <span *ngIf="data?.status == 'A'" class="badge badge-primary">Kích hoạt</span>
