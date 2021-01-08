@@ -17,7 +17,7 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { ExcelService } from '../../../services/excel.service';
 import { async } from '@angular/core/testing';
-// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters';
 import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials';
@@ -30,6 +30,9 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
     providers: [Helper, NCBService, ExcelService],
 })
 export class CreateComponent implements OnInit {
+    objUpload: any = {};
+    isLockSave = false;
+    objFile: any = {};
 
     constructor(
         private formBuilder: FormBuilder,
@@ -46,7 +49,7 @@ export class CreateComponent implements OnInit {
     get Form() {
         return this.dataForm.controls;
     }
-    public Editor = DecoupledEditor;
+    Editor = DecoupledEditor;
     // public Editor = ClassicEditor;
     mRatesDateS: NgbDateStruct;
     mRatesDateS_7: NgbDateStruct;
@@ -104,12 +107,6 @@ export class CreateComponent implements OnInit {
     ];
 
     listNotifications: any = [...listNotify];
-    public onReady( editor ) {
-        editor.ui.view.editable.element.parentElement.insertBefore(
-            editor.ui.view.toolbar.element,
-            editor.ui.view.editable.element
-        );
-    }
 
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
@@ -192,6 +189,19 @@ export class CreateComponent implements OnInit {
                 ];
             });
     }
+
+    public onReady(editor) {
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            console.log('loader : ', loader);
+            console.log(btoa(loader.file));
+            return new UploadAdapter(loader);
+        };
+        editor.ui.view.editable.element.parentElement.insertBefore(
+            editor.ui.view.toolbar.element,
+            editor.ui.view.editable.element
+        );
+    }
+
     onSubmit() {
         this.submitted = true;
         // stop here if form is invalid
@@ -255,6 +265,8 @@ export class CreateComponent implements OnInit {
             this.fileExcel.size = fileList[0].size;
         }
     }
+
+    // upload image
     onUploadServer() {
         if (this.fileExcel.file) {
             this.temp.loading = true;
@@ -281,5 +293,27 @@ export class CreateComponent implements OnInit {
             this.temp.loading = false;
             this.closeModal();
         }
+    }
+}
+
+// upload image ckeditor5
+export class UploadAdapter {
+    private loader;
+    constructor(loader) {
+        this.loader = loader;
+    }
+
+    upload() {
+        return this.loader.file.then(
+            (file) =>
+                new Promise((resolve, reject) => {
+                    const myReader = new FileReader();
+                    myReader.onloadend = (e) => {
+                        resolve({ default: myReader.result });
+                    };
+
+                    myReader.readAsDataURL(file);
+                })
+        );
     }
 }
