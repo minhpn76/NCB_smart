@@ -250,7 +250,7 @@ export class EditComponent implements OnInit {
                     title: body.title,
                     content: body.content,
                     repeatType: body.repeatType,
-                    repeatValue: body.repeatValue,
+                    repeatValue: Helper.formatDateTimeEdit(body.repeatValue, body.repeatType),
                     objectUserType: body.objectUserType,
                     user_notifications: body.userNotifications,
                     status: body.status,
