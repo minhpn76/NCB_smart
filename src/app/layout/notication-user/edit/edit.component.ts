@@ -76,7 +76,6 @@ export class EditComponent implements OnInit {
         },
     ];
 
-
     constructor(
         private formBuilder: FormBuilder,
         private toastr: ToastrService,
@@ -89,13 +88,18 @@ export class EditComponent implements OnInit {
     ) {
         this.loadDate();
     }
-    public onReady( editor ) {
+
+    public onReady(editor) {
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            console.log('loader : ', loader);
+            console.log(btoa(loader.file));
+            return new UploadAdapter(loader);
+        };
         editor.ui.view.editable.element.parentElement.insertBefore(
             editor.ui.view.toolbar.element,
             editor.ui.view.editable.element
         );
     }
-
 
     ngOnInit() {
         // Hiển thị
@@ -255,5 +259,26 @@ export class EditComponent implements OnInit {
             .catch((err) => {
                 this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
             });
+    }
+}
+
+export class UploadAdapter {
+    private loader;
+    constructor(loader) {
+        this.loader = loader;
+    }
+
+    upload() {
+        return this.loader.file.then(
+            (file) =>
+                new Promise((resolve, reject) => {
+                    const myReader = new FileReader();
+                    myReader.onloadend = (e) => {
+                        resolve({ default: myReader.result });
+                    };
+
+                    myReader.readAsDataURL(file);
+                })
+        );
     }
 }
