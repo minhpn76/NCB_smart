@@ -12,14 +12,41 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 @Injectable()
 export class Helper {
-    public patternEmail =
-        '^(([^<>()[]\\._,;:s@"]+([._][^<>()[]\\._,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$';
-    public country = [];
 
     constructor(
         private appComponent: AppComponent,
         public toastr: ToastrService
     ) {}
+    public patternEmail =
+        '^(([^<>()[]\\._,;:s@"]+([._][^<>()[]\\._,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$';
+    public country = [];
+
+
+    static formatDateTimeEdit(str, type) {
+        if (type === '0' || type === '2' || type === '3') {
+            const words = str.split(' ');
+            console.log(words);
+            const chars = words[0].substring(0, 4);
+            const chars2 = words[0].substring(4, 6);
+            const chars3 = words[0].substring(6, 8);
+            const strCopy = words[1].substring(0, 2);
+            const strCopy2 = words[1].substring(2, 4);
+            const all = `${chars}-${chars2}-${chars3}T${strCopy}:${strCopy2}`;
+            console.log('all', all);
+            return all;
+        }
+        if (type === '1') {
+            if (str.length === 4) {
+                return `${str.substring(0, 2)}:${str.substring(2, 4)}`;
+            }
+        }
+        if (type === '4') {
+            const year = str.substring(0, 4);
+            const month = str.substring(4, 6);
+            return `${year}-${month}`;
+        }
+
+    }
 
     getParameterByName(name, url = '') {
         if (url === '') {
@@ -356,4 +383,5 @@ export class Helper {
             return `${year}/${month}`;
         }
     }
+
 }
