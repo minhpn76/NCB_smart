@@ -73,8 +73,8 @@ export class Helper {
     }
 
     formatDateSplit (date) {
-        if (!date) return ''
-        return date.split('.')[0]
+        if (!date) { return ''; }
+        return date.split('.')[0];
     }
     getWeekOfMonth(input) {
         const date = new Date(input);
@@ -197,13 +197,16 @@ export class Helper {
             thamSo: [],
             offThamSo: false,
             traCuu: [],
-            offTraCuu: false
+            offTraCuu: false,
+            hopPhi: [],
+            offHocPhi: false
         };
         roles.quanTri = listRole.filter(item => item.menu === 'QUAN_TRI');
         roles.giaoDich = listRole.filter(item => item.menu === 'GIAO_DICH');
         roles.khachHang = listRole.filter(item => item.menu === 'KHACH_HANG');
         roles.thamSo = listRole.filter(item => item.menu === 'THAM_SO');
         roles.traCuu = listRole.filter(item => item.menu === 'TRA_CUU');
+        roles.hopPhi = listRole.filter(item => item.menu === 'HOC_PHI');
         // set off
         roles.offQuanTri = roles.quanTri.find(item => item.isAll === true) === undefined ? true : false;
         roles.offGiaoDich = roles.giaoDich.find(item => item.isAll === true) === undefined ? true : false;

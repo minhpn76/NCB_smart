@@ -1,0 +1,159 @@
+<div>
+    <app-page-header 
+        [heading]="'Trường học'"
+        [url_heading]="'/schools'">
+    </app-page-header>
+    <!--Phần tìm kiếm-->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Chọn trường học:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" aria-readonly="true" [(ngModel)]='re_search.schoolCode'>
+                        <option *ngFor="let School of listSchool" [value]="School.schoolCode">{{School.schoolCode}} - {{ School.schoolName }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Mã học sinh:</label>
+                <div class="col-sm-6">
+                    <input class="form-control col-lg-12"
+                    itrim type="text" id="search" [(ngModel)]="re_search.studentCode"
+                    placeholder="Mã học sinh">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="re_search.status">
+                        <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
+
+                    </select>
+                </div>
+                
+            </div>
+        </div> 
+        <div class="col-md-6">
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Từ ngày:</label>
+                <div class="col-sm-6 input-group">
+                    <input readonly class="form-control" placeholder="Từ ngày" name="dFS_1" ngbDatepicker
+                        [(ngModel)]="mRatesDateS" type="date" itrim #dFS_1="ngbDatepicker" />
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="dFS_1.toggle()" type="button">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Đến ngày:</label>
+                <div class="col-sm-6 input-group">
+                    <input readonly class="form-control" placeholder="Đến ngày" name="dTS_1"
+                        [(ngModel)]="mRatesDateS_7" type="date" itrim ngbDatepicker #dTS_1="ngbDatepicker" />
+
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="dTS_1.toggle()" type="button">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 text-center">
+            <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
+                <i class="fa fa-search"></i>&nbsp;Tìm kiếm
+            </button>
+            <a class="btn btn-warning" [routerLink]="['/uploadtuition/upload']">
+                <i class="fa fa-plus"></i>&nbsp;Upload học phí
+            </a>
+        </div>
+    </div>
+    <!-- Phần danh sach-->
+    <div class="row mt-50">
+        <div class="col-md-8">
+            <div class="form-group row">
+                <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
+                    <select class="form-control col-sm-2" [(ngModel)]="re_search.offset" (change)="changePageSize()">
+                        <option *ngFor="let page_size of listPageSize" [value]="page_size">{{page_size}}</option>
+                    </select> &nbsp;
+                    <label for="search" class=" col-form-label">Bản ghi</label>  
+            </div>
+        </div> 
+    </div>
+    <div class="row">
+        <div class="col-md-12 table-responsive Flipped">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col"> Mã trường  </th>
+                    <th scope="col"> Tên trường</th>
+                    <th scope="col"> Mã khoa</th>
+                    <th scope="col"> Tên khoa   </th>  
+                    <th scope="col"> Mã lớp</th>
+                    <th scope="col"> Tên lớp</th> 
+                    <th scope="col"> Mã học sinh</th>
+                    <th scope="col"> Tên học sinh</th>  
+                    <th scope="col"> Kỳ thanh toán</th>
+                    <th scope="col"> Loại thanh toán</th>
+                    <th scope="col"> Số tiền(VND)</th>
+                    <th scope="col"> Ngày đóng</th>
+                    <th scope="col"> Người đóng</th>
+                    <th scope="col"> Trạng thái</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="isProcessLoad == 1" class="text-center">
+                        <td colspan=15><i class="fa fa-spin fa-spinner font-30"></i></td>
+                    </tr>
+                    <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
+                        <td colspan=15>Không tìm thấy kết quả</td>
+                    </tr>
+                    <tr *ngFor ="let data of listData | orderBy:'case-insensitive'; let i = index">
+                        <th scope="row">
+                            {{ i+1 }}
+                        </th>
+                        <td>{{data?.schoolCode}}</td> 
+                        <td>{{data?.schoolName}}</td> 
+                        <td>{{data?.facultiyCode}}</td> 
+                        <td>{{data?.facultyName}}</td> 
+                        <td>{{data?.classCode}}</td> 
+                        <td>{{data?.className}}</td> 
+                        <td>{{data?.studentCode}}</td> 
+                        <td>{{data?.studentName}}</td> 
+                        <td>{{data?.description}}</td> 
+                        <td>{{data?.term}}</td> 
+                        <td>{{formatNumber(data?.amount)}}</td> 
+                        <td>{{data?.paymentDate}}</td> 
+                        <td>{{data?.paymentBy}}</td>  
+                        <td>
+                            <span *ngIf="data?.status === 1" class="badge badge-success">Đã đóng</span>
+                            <span *ngIf="data?.status === 0" class="badge badge-danger">Chưa đóng</span>
+                        </td>  
+                    </tr> 
+                </tbody>
+            </table>
+        </div> 
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <ngb-pagination *ngIf="totalSearch > 0 && totalSearch > re_search.offset"
+                [collectionSize]="totalSearch" [pageSize]="re_search.offset" [(page)]="re_search.page"
+                [boundaryLinks]="true"
+                [maxSize]="10" (pageChange)="loadPage($event)">
+            </ngb-pagination>
+        </div>
+    </div>
+</div>

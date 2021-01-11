@@ -1,0 +1,75 @@
+<div>
+    <app-page-header [heading]="'Lớp'" [heading_second]="'Cập nhật lớp'" [url_heading]="'/clazz'"> </app-page-header>
+    <div class="row">
+        <div class="col-md-10" style="margin:0px auto">
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Chọn trường học(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" aria-readonly="true" formControlName="schoolCode" name="schoolCode" (change)="getFaculties($event.target.value)">
+                            <option *ngFor="let School of listSchool" [value]="School.schoolCode" selected="selected">{{School.schoolCode}} - {{ School.schoolName }}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.schoolCode.errors" class="invalid-feedback">
+                            <div *ngIf="Form.schoolCode.hasError('whitespace')"> Mã trường không hợp lệ</div>
+                            <div *ngIf="Form.schoolCode.errors.required"> Mã trường là bắt buộc</div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label"> Mã khoa:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" aria-readonly="true" formControlName="facultyCode" name="facultyCode">
+                            <option *ngFor="let faculties of listFaculties"  [value]="faculties.facultyCode">{{faculties.facultyCode}} - {{ faculties.facultyName }}</option>
+                        </select>
+                    </div> 
+                </div> 
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label"> Mã lớp(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="classCode"
+                            class="form-control col-lg-12"
+                            placeholder="Mã lớp"
+                            [ngClass]="{ 'is-invalid': submitted && Form.classCode.errors }"
+                        />
+                        <div *ngIf="submitted && Form.classCode.errors" class="invalid-feedback">
+                            <div *ngIf="Form.classCode.hasError('whitespace')"> Mã lớp không hợp lệ</div>
+                            <div *ngIf="Form.classCode.errors.required"> Mã lớp là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label"> Tên lớp(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="className"
+                            class="form-control col-lg-12"
+                            placeholder="Tên lớp"
+                            [ngClass]="{ 'is-invalid': submitted && Form.className.errors }"
+                        />
+                        <div *ngIf="submitted && Form.className.errors" class="invalid-feedback">
+                            <div *ngIf="Form.className.hasError('whitespace')"> Tên lớp không hợp lệ</div>
+                            <div *ngIf="Form.className.errors.required"> Tên lớp là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" aria-readonly="true" formControlName="status" name="status">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
+                        </select>
+                    </div>
+                </div> 
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3"><i class="fa fa-save"></i>&nbsp;Lưu lại</button>
+                        <button class="btn btn-light" (click)="resetForm()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
