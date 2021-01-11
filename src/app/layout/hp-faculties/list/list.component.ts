@@ -119,7 +119,6 @@ export class ListComponent implements OnInit {
       this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
     });
   }
-  changePageSize() {}
   deleteItem(code) {
     Swal.fire({
       title: 'Bạn có chắc chắn xoá?',
@@ -181,7 +180,10 @@ export class ListComponent implements OnInit {
   closeModal() {
       this.modalOp.close();
   }
-
+  changePageSize() {
+    this.re_search.page = 0;
+    this.getListData(this.re_search);
+  }
   onUploadFile(event) {
       const fileList: FileList = event.files;
       if (fileList.length > 0) {

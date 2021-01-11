@@ -94,7 +94,10 @@ export class ListComponent implements OnInit {
       this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
     });
   }
-  changePageSize() {}
+  changePageSize() {
+    this.re_search.page = 0;
+    this.getListData(this.re_search);
+  }
   deleteItem(code) {
     Swal.fire({
       title: 'Bạn có chắc chắn xoá?',
