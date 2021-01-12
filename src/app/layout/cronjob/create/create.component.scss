@@ -2394,6 +2394,14 @@ textarea.input-lg {
 	top: 0
 }
 
+.main-container{
+	margin-top:-25px !important;
+}
+@media (min-width: 768px){
+	.navbar{
+		border-radius: 0px !important;
+	}
+}
 .help-block {
 	display: block;
 	margin-top: 5px;

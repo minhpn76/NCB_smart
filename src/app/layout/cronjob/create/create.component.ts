@@ -16,6 +16,7 @@ import { CronOptions } from 'cron-editor/cron-editor';
   // encapsulation: ViewEncapsulation.Native
   encapsulation: ViewEncapsulation.None
   // encapsulation: ViewEncapsulation.ShadowDom
+  // encapsulation: ViewEncapsulation.Emulated
 })
 export class CreateComponent implements OnInit {
   dataForm: FormGroup;
@@ -74,7 +75,7 @@ export class CreateComponent implements OnInit {
     if (this.dataForm.invalid) {
       return;
     }
-    this.ncbService.createRoles(this.dataForm.value).then((result) => {
+    this.ncbService.createConfigCronjob(this.dataForm.value).then((result) => {
       if (result.status === 200) {
         if (result.json().code !== '00') {
           this.toastr.error(result.json().message, 'Thất bại!');
