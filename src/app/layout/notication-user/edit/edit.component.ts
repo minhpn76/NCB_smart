@@ -28,7 +28,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 })
 export class EditComponent implements OnInit {
     // public Editor = ClassicEditor;
-    public Editor = DecoupledEditor;
+    // public Editor = DecoupledEditor;
     mRatesDateS: NgbDateStruct;
     mRatesDateS_7: NgbDateStruct;
     my: any = new Date();
