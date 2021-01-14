@@ -197,7 +197,7 @@ export class CreateComponent implements OnInit {
       return;
     }
     if (new Date(this.tranferDateMinus(this.dataForm.value.fromDate)) > new Date(this.tranferDateMinus(this.dataForm.value.toDate))) {
-      this.toastr.error('Ngày bắt đầu phải nhỏ hơn ngày kết thúc', 'Thất bại!');
+      this.toastr.error('Ngày bắt đầu phải trước ngày kết thúc', 'Thất bại!');
       return;
     }
 

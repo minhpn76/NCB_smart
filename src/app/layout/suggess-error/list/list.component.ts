@@ -118,7 +118,10 @@ export class ListComponent implements OnInit {
             'Dữ liệu đã xoá hoàn toàn.',
             'success'
           );
-          setTimeout(() => {this.router.navigateByUrl('/suggesstions-error'); }, 500);
+          setTimeout(() => {
+            this.re_search.page = 0;
+            this.onSearch(this.re_search);
+        }, 500);
         });
         // For more information about handling dismissals please visit
         // https://sweetalert2.github.io/#handling-dismissals
