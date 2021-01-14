@@ -49,7 +49,7 @@ export class CreateComponent implements OnInit {
     get Form() {
         return this.dataForm.controls;
     }
-    Editor = DecoupledEditor;
+    // Editor = DecoupledEditor;
     // public Editor = ClassicEditor;
     mRatesDateS: NgbDateStruct;
     mRatesDateS_7: NgbDateStruct;
