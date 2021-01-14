@@ -27,7 +27,7 @@
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Chọn trường học:</label>
                 <div class="col-sm-6">
-                    <select class="form-control" aria-readonly="true" [(ngModel)]='schoolCode' (change)='getClass($event.target.value)'>
+                    <select class="form-control" aria-readonly="true" [(ngModel)]='schoolCode' (change)='getClass($event.target.value);getFaculties($event.target.value);'>
                         <option *ngFor="let School of listSchool" [value]="School.schoolCode">{{School.schoolCode}} - {{ School.schoolName }}</option>
                     </select>
                 </div>
@@ -104,9 +104,12 @@
 </div>
 
 <div class="row" style="padding-top: 50px;">
-    <label style="color: red;">Danh sách các học sinh bị xuất hiện 2 lần</label>
-    <div class="col-md-12 table-responsive Flipped"> 
-        <table id="DataTable" class="table  table-bordered" mdbTable mdbTableScroll  scrollY="true" maxHeight="200" bordered="true">
+    <label style="color: red;font-weight: bold;">Danh sách các học sinh bị trùng mã số học sinh và trường học.</label>
+    <div class="col-md-12 table-responsive"
+     style=" max-width: 100%; overflow-y: scroll;height: 500px;
+    overflow: auto;"
+    > 
+        <table class="table table-bordered collapsed" mdbTable mdbTableScroll  bordered="true">
             <thead> 
                 <tr>
                     <th>STT</th> 
@@ -141,5 +144,5 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> 
 </div>

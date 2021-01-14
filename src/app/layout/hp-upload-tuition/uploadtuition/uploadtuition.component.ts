@@ -95,6 +95,14 @@ export class UploadtuitionComponent implements OnInit {
     page: 1,
     previous_page: 0
   };
+  listFaculty: any[];
+  reseachFaculty = {
+    schoolCode: '',
+    status: 1,
+    size: 1000,
+    page: 1,
+    previous_page: 0
+  };
   testapi;
   listCost: any;
   fileExcel: any = {
@@ -245,9 +253,9 @@ export class UploadtuitionComponent implements OnInit {
               if (row[7] || row[8]) {
                 this.errPage = this.errPage + 1;
               }
+              if (row[1] !== undefined &&  row[7] !== undefined) {
               const tem = row[1].toString().trim() + row[7].toString().trim() ;
               if (this.dataSchoolStudent !== null) {
-                const  data = row;
                 const check = this.dataSchoolStudent.find(e => e.toLowerCase() === tem.toString().toLowerCase());
                 if (check !== undefined) {
                   this.dataError.push({STT: row[0],
@@ -269,8 +277,7 @@ export class UploadtuitionComponent implements OnInit {
               } else if (tem !== undefined) {
                 this.dataSchoolStudent.push(tem.toString());
               }
-              console.log(this.dataSchoolStudent);
-               console.log( this.dataError);
+            }
           });
          // bỏ đi herder của file excell
          this.data = this.data.slice(1);
@@ -291,6 +298,7 @@ export class UploadtuitionComponent implements OnInit {
   ngOnInit() {
       this.getCost();
       this.getSchools();
+
   }
   showdata(datas) {
     // alert(datas);
@@ -301,11 +309,11 @@ export class UploadtuitionComponent implements OnInit {
       // console.log(this.headers.length + '|' + this.headers[i] + '=>' + data[i]);
       const validate = /^(\d+|\d{1,3}(,\d{3})*)$/.test(data[i]);
       if (this.isEmpty(data[i])) {
-        if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
+        // if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
         check = true;
       } else {
         if (!validate) {
-          if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
+           if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
           check = true;
         }
       }
@@ -340,9 +348,20 @@ export class UploadtuitionComponent implements OnInit {
     if (data[7]) {
       const check = this.dataSchoolStudent.find(e => e.toLowerCase() === data[7].toString().toLowerCase());
       if (check === undefined) {
-        if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
+       if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
         this.dataError.push(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8]);
 
+      }
+    }
+  }
+  checkFaculty(data) { // tuition
+    if (data) {
+      const check = this.listFaculty.find(e => e.FacultyCode.toLowerCase() === data.toString().toLowerCase());
+      if (check === undefined) {
+        if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
+        return true;
+      } else {
+        return false;
       }
     }
   }
@@ -366,6 +385,9 @@ export class UploadtuitionComponent implements OnInit {
   }
   getClass(idschool) {
     this.reseachClass.schoolCode = idschool;
+    if ( this.reseachClass.schoolCode === '') {
+      return null;
+    }
     this.ncbService.getListHpClass(this.reseachClass).then(result => {
       setTimeout(() => {
         const body = result.json().body;
@@ -373,6 +395,21 @@ export class UploadtuitionComponent implements OnInit {
       }, 300);
     }).catch(err => {
       this.listClass = [];
+      this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
+    });
+  }
+  getFaculties(idschool) {
+    this.reseachFaculty.schoolCode = idschool;
+    if ( this.reseachFaculty.schoolCode === '') {
+      return null;
+    }
+    this.ncbService.getListHpFaculties(this.reseachClass).then(result => {
+      setTimeout(() => {
+        const body = result.json().body;
+        this.listFaculty = body;
+      }, 300);
+    }).catch(err => {
+      this.listFaculty = [];
       this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
     });
   }

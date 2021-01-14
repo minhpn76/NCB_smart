@@ -198,7 +198,7 @@ export class Helper {
             offThamSo: false,
             traCuu: [],
             offTraCuu: false,
-            hopPhi: [],
+            hocPhi: [],
             offHocPhi: false
         };
         roles.quanTri = listRole.filter(item => item.menu === 'QUAN_TRI');
@@ -206,7 +206,7 @@ export class Helper {
         roles.khachHang = listRole.filter(item => item.menu === 'KHACH_HANG');
         roles.thamSo = listRole.filter(item => item.menu === 'THAM_SO');
         roles.traCuu = listRole.filter(item => item.menu === 'TRA_CUU');
-        roles.hopPhi = listRole.filter(item => item.menu === 'HOC_PHI');
+        roles.hocPhi = listRole.filter(item => item.menu === 'HOC_PHI');
         // set off
         roles.offQuanTri = roles.quanTri.find(item => item.isAll === true) === undefined ? true : false;
         roles.offGiaoDich = roles.giaoDich.find(item => item.isAll === true) === undefined ? true : false;
