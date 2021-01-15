@@ -57,7 +57,8 @@
       Chú thích màu|  <span class="erEmty" style="padding-right: 20px;"></span> :Lỗi thiếu thông tin Mã trường, Học sinh
       <span class="erCost" style="padding-right: 20px;"></span> :Lỗi các loại phí thanh toán
       <span class="erCodeSchool" style="padding-right: 20px;"></span> :Lỗi trường học
-      <span class="erCodeClass" style="padding-right: 20px;"></span> :Lỗi lớp học
+      <span class="erCodeClass" style="padding-right: 20px;"></span> :Lỗi lớp họcerCodefaculty
+      <span class="erCodefaculty" style="padding-right: 20px;"></span> :Lỗi khoa
       <span style="float: right;color: red;">{{this.errPage}}/{{this.errAll}} (Trường hợp lỗi/Tổng lỗi)</span>
     </div>
     <div class="col-md-12">
@@ -81,7 +82,7 @@
             </thead>
             <tbody> 
                 <tr *ngFor="let row of dataStudent" 
-                [ngClass]="{'erEmty': (!row[1]||!row[7]||!row[8]),'erCodeSchool':onCheckSchool(row[1]),'erCodeClass':onCheckClass(row[5])}" >  
+                [ngClass]="{'erEmty': (!row[1]||!row[7]||!row[8]),'erCodeSchool':onCheckSchool(row[1]),'erCodefaculty':checkFaculty(row[3]),'erCodeClass':onCheckClass(row[5])}" >  
                     <td *ngFor="let val of row" > 
                         {{val}}
                     </td>
