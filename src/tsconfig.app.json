@@ -3,6 +3,7 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "outDir": "../out-tsc/app",
+    "skipLibCheck": true,
     "types": []
   },
   "exclude": [
