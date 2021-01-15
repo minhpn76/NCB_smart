@@ -1,3 +1,7 @@
 :host ::ng-deep .ck-editor__editable_inline {
   min-height: 500px;
 }
+
+::ng-deep .main-container{
+  overflow: inherit !important;
+}

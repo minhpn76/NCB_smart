@@ -79,14 +79,19 @@ export class CreateComponent implements OnInit {
       if (result.status === 200) {
         if (result.json().code !== '00') {
           this.toastr.error(result.json().message, 'Thất bại!');
+          this.dataForm.reset();
         } else {
           this.toastr.success('Thêm thành công', 'Thành công!');
+          this.dataForm.reset();
         }
+        this.dataForm.reset();
       } else {
         this.toastr.error(result.message, 'Thất bại!');
+        this.dataForm.reset();
       }
     }).catch((err) => {
       this.toastr.error(err.json().message, 'Thất bại!');
+      this.dataForm.reset();
     });
   }
   resetForm() {

@@ -38,10 +38,10 @@
                                 placeholder="Thời gian bắt đầu"
                                 [ngClass]="{ 'is-invalid': submitted && Form.timeStart.errors }"
                             >
-                            <div *ngIf="submitted && Form.timeStart.errors" class="invalid-feedback">
+                            <!-- <div *ngIf="submitted && Form.timeStart.errors" class="invalid-feedback">
                                 <div *ngIf="Form.timeStart.errors.required">Thời gian bắt đầu là bắt buộc</div>
                                 <div *ngIf="Form.timeStart.hasError('whitespace')">Thời gian bắt đầu là không hợp lệ</div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -56,10 +56,10 @@
                                 placeholder="Thời gian kết thúc"
                                 [ngClass]="{ 'is-invalid': submitted && Form.timeEnd.errors }"
                             >
-                            <div *ngIf="submitted && Form.timeEnd.errors" class="invalid-feedback">
+                            <!-- <div *ngIf="submitted && Form.timeEnd.errors" class="invalid-feedback">
                                 <div *ngIf="Form.timeEnd.errors.required">Thời gian kết thúc là bắt buộc</div>
                                 <div *ngIf="Form.timeEnd.hasError('whitespace')">Thời gian kết thúc là không hợp lệ</div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
