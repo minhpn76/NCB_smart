@@ -201,12 +201,12 @@ export class CreateComponent implements OnInit {
       this.toastr.error('Ngày bắt đầu phải trước ngày kết thúc', 'Thất bại!');
       return;
     }
-
+    // StartDate > Today
     if (new Date(this.tranferDateMinus(this.dataForm.value.fromDate)) < (this.my_1.setDate(this.my_1.getDate() - 7))) {
       this.toastr.error('Ngày bắt đầu phải trước ngày hiện tại', 'Thất bại!');
       return;
     }
-
+    // EndDate >Today
     if (new Date(this.tranferDateMinus(this.dataForm.value.toDate)) < (this.my_1.setDate(this.my_1.getDate() - 7))) {
       this.toastr.error('Ngày kết thúc phải trước ngày hiện tại', 'Thất bại!');
       return;
