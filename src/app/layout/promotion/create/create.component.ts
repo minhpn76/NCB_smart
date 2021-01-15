@@ -179,7 +179,7 @@ export class CreateComponent implements OnInit {
     return params.year + '-' + params.month + '-' + params.day;
   }
   public loadDate(): void {
-    this.my_7_1.setDate(this.my_7_1.getDate() - 7);
+    this.my_1.setDate(this.my_1.getDate() + 7);
 
     this.mRatesDateS_1 = { year: this.my_7_1.getFullYear(), month: this.my_7_1.getMonth() + 1, day: this.my_7_1.getDate() };
     this.mRatesDateS_7_1 = { year: this.my_1.getFullYear(), month: this.my_1.getMonth() + 1, day: this.my_1.getDate() };
@@ -196,8 +196,19 @@ export class CreateComponent implements OnInit {
     if (this.dataForm.invalid) {
       return;
     }
+    // startDate<EndDate
     if (new Date(this.tranferDateMinus(this.dataForm.value.fromDate)) > new Date(this.tranferDateMinus(this.dataForm.value.toDate))) {
       this.toastr.error('Ngày bắt đầu phải trước ngày kết thúc', 'Thất bại!');
+      return;
+    }
+    // StartDate > Today
+    if (new Date(this.tranferDateMinus(this.dataForm.value.fromDate)) < (this.my_1.setDate(this.my_1.getDate() - 7))) {
+      this.toastr.error('Ngày bắt đầu phải trước ngày hiện tại', 'Thất bại!');
+      return;
+    }
+    // EndDate >Today
+    if (new Date(this.tranferDateMinus(this.dataForm.value.toDate)) < (this.my_1.setDate(this.my_1.getDate() - 7))) {
+      this.toastr.error('Ngày kết thúc phải trước ngày hiện tại', 'Thất bại!');
       return;
     }
 
