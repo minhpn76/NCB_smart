@@ -1,40 +1,46 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NCBService } from '../../../services/ncb.service';
-import { OrderPipe } from 'ngx-order-pipe';
-import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { NCBService } from "../../../services/ncb.service";
+import { OrderPipe } from "ngx-order-pipe";
+import { ToastrService } from "ngx-toastr";
 import Swal from 'sweetalert2';
 import { Helper } from '../../../helper';
 import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    selector: 'app-list',
-    templateUrl: './list.component.html',
-    styleUrls: ['./list.component.scss'],
+    selector: "app-list",
+    templateUrl: "./list.component.html",
+    styleUrls: ["./list.component.scss"],
     providers: [NCBService, Helper],
 })
 export class ListComponent implements OnInit {
+    @ViewChild('ctdTabset', { static: true }) ctdTabset: any;
+    tabId: string = 'partner-promotion'
     constructor(
         private ncbService: NCBService, public toastr: ToastrService,
         public helper: Helper,  private router: Router,
         private route: ActivatedRoute,
     ) {
-        this.loadDate();
+        this.loadDate()
         this.route.queryParams.subscribe(params => {
             if (params && 'tab' in params) {
-                this.tabId = params['tab'];
+                this.tabId = params['tab']
             }
         });
     }
-    @ViewChild('ctdTabset', { static: true }) ctdTabset: any;
-    tabId = 'partner-promotion';
+    ngAfterViewInit() {
+        this.switchNgBTab(this.tabId);
+    }
+    switchNgBTab(id: string) {
+        this.ctdTabset.select(id);
+    }
     isProcessLoad: any = 0;
-    isProcessLoadNCC: any = 0;
+    isProcessLoadNCC: any = 0
     totalSearch: any = 0;
     totalSearchNCC: any = 0;
-    order = 'title';
+    order = "title";
     reverse = false;
-    isShowCreate = false;
+    isShowCreate = false
 
     mRatesDateS_1: NgbDateStruct;
     mRatesDateS_7_1: NgbDateStruct;
@@ -51,20 +57,20 @@ export class ListComponent implements OnInit {
     listDataNCC: any = [];
     listStatus: any = [
         {
-            name: 'Tất cả',
-            code: '',
+            name: "Tất cả",
+            code: "",
         },
         {
-            name: 'Đang chờ phê duyệt',
-            code: '0',
+            name: "Phê duyệt & Có hiệu lực",
+            code: "1",
         },
         {
-            name: 'Phê duyệt & Có hiệu lực',
-            code: '1',
+            name: "Đang chờ phê duyệt",
+            code: "0",
         },
         {
-            name: 'Phê duyệt & Admin vô hiệu hoá',
-            code: '2',
+            name: "Phê duyệt & Admin vô hiệu hoá",
+            code: "2",
         },
     ];
 
@@ -73,7 +79,7 @@ export class ListComponent implements OnInit {
         page: 0,
         fromDate: '',
         toDate: '',
-    };
+    }
 
 
     search: any = {
@@ -83,23 +89,17 @@ export class ListComponent implements OnInit {
         toDate: '',
         page: 0,
         size: 10
-    };
-    ngAfterViewInit() {
-        this.switchNgBTab(this.tabId);
-    }
-    switchNgBTab(id: string) {
-        this.ctdTabset.select(id);
     }
 
     ngOnInit() {
         this.getListData(this.search_config);
 
-        const tempPayloadNCC: any = {...this.search};
+        let tempPayloadNCC: any = {...this.search}
         if (!tempPayloadNCC.status) {
-            delete tempPayloadNCC['status'];
+            delete tempPayloadNCC['status']
         }
         this.getListNCC(tempPayloadNCC);
-        this.getAllPartnerPromotion();
+        this.getAllPartnerPromotion()
     }
     public loadDate(): void {
         this.my_7_1.setDate(this.my_7_1.getDate() - 7);
@@ -114,11 +114,11 @@ export class ListComponent implements OnInit {
         this.mRatesDateS_7 = { year: this.my.getFullYear(), month: this.my.getMonth() + 1, day: this.my.getDate() };
     }
     findNameConfig (input: string) {
-        const obj: any =  this.listPartnerAll.find(i => i.value === input);
-        if (!obj) {
-            return '';
+        const obj: any =  this.listPartnerAll.find(i => i.value === input)
+        if (!obj){
+            return ''
         }
-        return 'name' in obj ? obj.name : '';
+        return 'name' in obj ? obj.name : ''
     }
     getListData(params) {
         if (this.mRatesDateS_7_1 !== undefined && this.mRatesDateS_1 !== undefined) {
@@ -136,7 +136,7 @@ export class ListComponent implements OnInit {
                     this.listData = body.content;
                     this.totalSearch = body.totalElements;
                     this.isProcessLoad = 0;
-                    this.isShowCreate = body.content.length < 0 ? true : false;
+                    this.isShowCreate = body.content.length < 0 ? true : false
                 }, 300);
             })
             .catch((err) => {
@@ -156,7 +156,7 @@ export class ListComponent implements OnInit {
             .then((result) => {
                 setTimeout(() => {
                     const body = result.json().body;
-                    this.listPartnerAll.push({'code': '', 'name': 'Tất cả', 'value': ''});
+                    this.listPartnerAll.push({'code': '', 'name': 'Tất cả', 'value': ''})
                     body.content.forEach(content => {
                         this.listPartnerAll.push({
                             code: content.id,
@@ -227,106 +227,77 @@ export class ListComponent implements OnInit {
     }
 
     onSearch(payload) {
-        if ( payload.referPartnerCode !== '' && payload.status !== '') {
+        if ( payload.referPartnerCode !== '' || payload.status !== '') {
             payload.page = 0;
-            const temp: any = {
-                referPartnerCode: payload.referPartnerCode,
-                fromDate: payload.fromDate,
-                toDate: payload.referParttoDatenerCode,
-                page: payload.page,
-                size: payload.size,
-                status: payload.status,
-            };
-            this.getListNCC(temp);
-            console.log('status', temp);
-        } else if (payload.status === '' &&  payload.referPartnerCode !== '') {
-            const tempCode: any = {
-                referPartnerCode: payload.referPartnerCode,
-                fromDate: payload.fromDate,
-                toDate: payload.referParttoDatenerCode,
-                page: payload.page,
-                size: payload.size,
-            };
-            this.getListNCC(tempCode);
-            console.log('list', tempCode);
-        } else if ( payload.referPartnerCode === '' && payload.status !== '') {
-            const tempS: any = {
-                referPartnerCode: payload.referPartnerCode,
-                fromDate: payload.fromDate,
-                toDate: payload.referParttoDatenerCode,
-                page: payload.page,
-                size: payload.size,
-                status: payload.status,
-            };
-            this.getListNCC(tempS);
-
-        } else {
-            this.getListNCC(this.listDataNCC);
         }
-
         // if (!payload.status) {
         //     delete payload['status']
         // }
-
-
-
+        const temp : any = {
+            referPartnerCode: payload.referPartnerCode,
+            fromDate: payload.fromDate,
+            toDate: payload.referParttoDatenerCode,
+            page: payload.page,
+            size: payload.size
+        }
+        this.getListNCC(temp);
     }
 
     deleteItem(event, index, id) {
         Swal.fire({
-            title: 'Bạn có chắc chắn xoá?',
-            text: 'Dữ liệu đã xoá không thể khôi phục lại',
-            type: 'warning',
+            title: "Bạn có chắc chắn xoá?",
+            text: "Dữ liệu đã xoá không thể khôi phục lại",
+            type: "warning",
             showCancelButton: true,
-            confirmButtonText: 'Đồng ý',
-            cancelButtonText: 'Không, trở lại',
+            confirmButtonText: "Đồng ý",
+            cancelButtonText: "Không, trở lại",
         }).then((result) => {
             if (result.value) {
                 this.ncbService.deleteReferalCodePartner({ id: id }).then(() => {
                     this.listData.splice(index, 1);
                     Swal.fire(
-                        'Đã xoá!',
-                        'Dữ liệu đã xoá hoàn toàn.',
-                        'success'
+                        "Đã xoá!",
+                        "Dữ liệu đã xoá hoàn toàn.",
+                        "success"
                     );
                 });
                 // For more information about handling dismissals please visit
                 // https://sweetalert2.github.io/#handling-dismissals
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                Swal.fire('Huỷ bỏ', 'Dữ liệu được bảo toàn :)', 'error');
+                Swal.fire("Huỷ bỏ", "Dữ liệu được bảo toàn :)", "error");
             }
         });
     }
     deleteItemPromo(event, index, id) {
         Swal.fire({
-            title: 'Bạn có chắc chắn xoá?',
-            text: 'Dữ liệu đã xoá không thể khôi phục lại',
-            type: 'warning',
+            title: "Bạn có chắc chắn xoá?",
+            text: "Dữ liệu đã xoá không thể khôi phục lại",
+            type: "warning",
             showCancelButton: true,
-            confirmButtonText: 'Đồng ý',
-            cancelButtonText: 'Không, trở lại',
+            confirmButtonText: "Đồng ý",
+            cancelButtonText: "Không, trở lại",
         }).then((result) => {
             if (result.value) {
                 this.ncbService.deletePromotionDetail({ id: id }).then(() => {
                     this.listDataNCC.splice(index, 1);
                     Swal.fire(
-                        'Đã xoá!',
-                        'Dữ liệu đã xoá hoàn toàn.',
-                        'success'
+                        "Đã xoá!",
+                        "Dữ liệu đã xoá hoàn toàn.",
+                        "success"
                     );
                 });
                 // For more information about handling dismissals please visit
                 // https://sweetalert2.github.io/#handling-dismissals
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                Swal.fire('Huỷ bỏ', 'Dữ liệu được bảo toàn :)', 'error');
+                Swal.fire("Huỷ bỏ", "Dữ liệu được bảo toàn :)", "error");
             }
         });
     }
     beforeChange(event: any) {
         if (!event) {
-            return;
+            return
         }
-        const idTab: string = event.nextId;
+        const idTab: string = event.nextId
         this.router.navigate(['/partner-promotion'], { queryParams: { tab: idTab } });
     }
 

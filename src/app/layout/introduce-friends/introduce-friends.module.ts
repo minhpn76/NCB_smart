@@ -8,11 +8,10 @@ import { EditComponent } from './edit/edit.component';
 import { PageHeaderModule } from '../../shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { EditDisComponent } from './edit-dis/edit-dis.component';
 
 
 @NgModule({
-  declarations: [CreateComponent, ListComponent, EditComponent, EditDisComponent],
+  declarations: [CreateComponent, ListComponent, EditComponent],
   imports: [
     PageHeaderModule,
     CommonModule,

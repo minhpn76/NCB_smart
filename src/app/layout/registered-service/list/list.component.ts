@@ -32,10 +32,10 @@ export class ListComponent implements OnInit {
     service: '',
     status: '',
     size: 10,
-    page: 0,
+    page: 1,
     previous_page: 0,
-    // fromDate: '',
-    // toDate: ''
+    fromDate: '',
+    toDate: ''
   };
   listPGD: any = [];
   comment: any = '';
@@ -141,10 +141,10 @@ export class ListComponent implements OnInit {
   getListData(params) {
     this.listData = [];
     this.isProcessLoad = 1;
-    // if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
-    //   params.toDate = this.tranferDate(this.mRatesDateS_7);
-    //   params.fromDate = this.tranferDate(this.mRatesDateS);
-    // }
+    if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
+      params.toDate = this.tranferDate(this.mRatesDateS_7);
+      params.fromDate = this.tranferDate(this.mRatesDateS);
+    }
     // xu ly
 
     this.ncbService.searchRegisterService(params).then((result) => {
@@ -398,8 +398,8 @@ export class ListComponent implements OnInit {
     //   search.fromDate = this.tranferDate(this.mRatesDateS);
     //   console.log('###', search.toDate);
     // }
-    // search.toDate = this.tranferDate(this.mRatesDateS_7);
-    // search.fromDate = this.tranferDate(this.mRatesDateS);
+    search.toDate = this.tranferDate(this.mRatesDateS_7);
+    search.fromDate = this.tranferDate(this.mRatesDateS);
 
     const page = Math.ceil(this.totalSearch / search.size);
     for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {

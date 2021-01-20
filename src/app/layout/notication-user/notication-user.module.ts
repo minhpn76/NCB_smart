@@ -13,9 +13,9 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { FileUploadModule } from 'primeng/fileupload';
 import { OrderModule } from 'ngx-order-pipe';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
-// import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import { CKEditorModule } from 'ckeditor4-angular';
+
 
 @NgModule({
   declarations: [ListComponent, CreateComponent, EditComponent],

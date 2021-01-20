@@ -1,0 +1,54 @@
+<div></div>
+<app-page-header [heading]="'Phí thanh toán'" [heading_second]="'Cập nhật phí'" [url_heading]="'/hpcosts'"> </app-page-header>
+<div class="row">
+    <div class="col-md-10" style="margin:0px auto">
+        <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label"> Mã thanh toán(<span class="text-danger">*</span>):</label>
+                <div class="col-sm-6">
+                    <input
+                        formControlName="costCode"
+                        class="form-control col-lg-12"
+                        placeholder=" Mã thanh toán"
+                        pattern="[a-zA-Z ]*"
+                        [ngClass]="{ 'is-invalid': submitted && Form.costCode.errors }"
+                    />
+                    <div *ngIf="submitted && Form.costCode.errors" class="invalid-feedback">
+                        <div *ngIf="Form.costCode.hasError('whitespace')"> Mã thanh toán không hợp lệ</div>
+                        <div *ngIf="Form.costCode.errors.required"> Mã thanh toán là bắt buộc</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label"> Tên phí thanh toán(<span class="text-danger">*</span>):</label>
+                <div class="col-sm-6">
+                    <input
+                        formControlName="costName"
+                        class="form-control col-lg-12"
+                        placeholder="Tên thanh toán"
+                        [ngClass]="{ 'is-invalid': submitted && Form.costName.errors }"
+                    />
+                    <div *ngIf="submitted && Form.costName.errors" class="invalid-feedback">
+                        <div *ngIf="Form.costName.hasError('whitespace')"> Tên loại phí thanh toán không hợp lệ</div>
+                        <div *ngIf="Form.costName.errors.required"> Tên loại phí thanh toán là bắt buộc</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" aria-readonly="true" formControlName="status" name="status">
+                        <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
+                    </select>
+                </div>
+            </div> 
+            <div class="form-group row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-7">
+                    <button class="btn btn-success mr-3"><i class="fa fa-save"></i>&nbsp;Lưu lại</button>
+                    <button class="btn btn-light" (click)="resetForm()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

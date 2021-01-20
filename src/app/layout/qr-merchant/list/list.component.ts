@@ -37,15 +37,15 @@ export class ListComponent implements OnInit {
         private modalService: NgbModal,
     ) { }
 
-    qrMerchants: any = []
+    qrMerchants: any = [];
 
     fileExcel: any = {
         file: File,
         path: null,
         name: ''
     };
-    arrayBuffer: any = []
-    filelist: any = []
+    arrayBuffer: any = [];
+    filelist: any = [];
     temp: any = {
         loading: false,
     };
@@ -64,11 +64,7 @@ export class ListComponent implements OnInit {
     arrExport: any = [];
     reverse = false;
     isProcessLoadExcel: any = 0;
-
-
     listData = [];
-
-
     ngOnInit() {
         this.getListData(this.search);
     }
@@ -183,62 +179,62 @@ export class ListComponent implements OnInit {
     }
 
     reloadDataSearch() {
-        let { page, size, search, previous_page } = this.search;
-        let tempage: number = 0
+        const { page, size, search, previous_page } = this.search;
+        let tempage = 0;
         if (page > 0) {
-            tempage = page - 1
+            tempage = page - 1;
         }
         return {
             page: tempage,
             size: size,
             search: search,
             previous_page: previous_page
-        }
+        };
     }
     onUploadServer() {
         if (this.fileExcel.file) {
-            this.temp.loading = true
-            let fileReader = new FileReader();
+            this.temp.loading = true;
+            const fileReader = new FileReader();
             fileReader.readAsArrayBuffer(this.fileExcel.file);
             fileReader.onload = (e) => {
                 this.arrayBuffer = fileReader.result;
-                var data = new Uint8Array(this.arrayBuffer);
-                var arr = new Array();
-                for (var i = 0; i != data.length; ++i) { arr[i] = String.fromCharCode(data[i]); }
-                var bstr = arr.join("");
-                var workbook = XLSX.read(bstr, { type: "binary" });
-                var first_sheet_name = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[first_sheet_name];
+                const data = new Uint8Array(this.arrayBuffer);
+                const arr = new Array();
+                for (let i = 0; i !== data.length; ++i) { arr[i] = String.fromCharCode(data[i]); }
+                const bstr = arr.join('');
+                const workbook = XLSX.read(bstr, { type: 'binary' });
+                const first_sheet_name = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[first_sheet_name];
                 console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }));
-                var arraylist = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-                this.filelist = arraylist
+                const arraylist = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+                this.filelist = arraylist;
                 this.ncbService
                     .createQRMerchant({
                         qrMerchants: arraylist
                     })
                     .then((result) => {
                         if (result.status === 200) {
-                            if (result.json().code === "00") {
+                            if (result.json().code === '00') {
                                 this.toastr.success(
-                                    "Thêm mới thành công",
-                                    "Thành công!"
+                                    'Thêm mới thành công',
+                                    'Thành công!'
                                 );
                                 setTimeout(() => {
-                                    this.router.navigateByUrl("/qr-merchants");
+                                    this.router.navigateByUrl('/qr-merchants');
                                 }, 500);
                                 this.onSearch(this.reloadDataSearch());
-                            } else if (result.json().code === "909") {
-                                this.toastr.error("Dữ liệu đã tồn tại", "Thất bại!");
+                            } else if (result.json().code === '909') {
+                                this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
                             } else {
-                                this.toastr.error("Thêm mới thất bại", "Thất bại!");
+                                this.toastr.error('Thêm mới thất bại', 'Thất bại!');
                             }
                         }
                     })
                     .catch((err) => {
-                        this.toastr.error(err.json().description, "Thất bại!");
+                        this.toastr.error(err.json().description, 'Thất bại!');
                     });
-            }
-            this.temp.loading = false
+            };
+            this.temp.loading = false;
             this.closeModal();
         }
     }

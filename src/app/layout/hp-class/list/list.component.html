@@ -1,0 +1,176 @@
+<div>
+    <app-page-header 
+        [heading]="'Lớp'"
+        [url_heading]="'/class'">
+    </app-page-header>
+    <!--Phần tìm kiếm-->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Mã trường học:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" aria-readonly="true" [(ngModel)]="re_search.schoolCode" (change)="getFaculties($event.target.value)">
+                        <option *ngFor="let School of listSchool" [value]="School.schoolCode">{{School.schoolCode}} {{ School.schoolName }}</option>
+                    </select>
+                </div>
+            </div>
+        </div> 
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Mã khoa:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" aria-readonly="true" [(ngModel)]="re_search.facultieCode">
+                        <option *ngFor="let faculties of listFaculties"  [value]="faculties.facultyCode">{{faculties.facultyCode}}{{ faculties.facultyName }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Mã lớp:</label>
+                <div class="col-sm-6">
+                    <input class="form-control col-lg-12"
+                    itrim type="text" id="search" [(ngModel)]="re_search.classCode"
+                    placeholder="Mã lớp">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="re_search.status">
+                        <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
+
+                    </select>
+                </div>
+                
+            </div>
+        </div> 
+        <div class="col-md-12 text-center">
+            <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
+                <i class="fa fa-search"></i>&nbsp;Tìm kiếm
+            </button>
+            <a class="btn btn-warning mr-3" [routerLink]="['/clazz/create']">
+                <i class="fa fa-plus"></i>&nbsp;Thêm mới
+            </a>
+            <a class="btn btn-primary" (click)="openModal(uploadMultiFile)">
+                <i class="fa fa-upload"></i>&nbsp;Tải lên danh sách
+            </a>
+        </div>
+    </div>
+    <!-- Phần danh sach-->
+    <div class="row mt-50">
+        <div class="col-md-8">
+            <div class="form-group row">
+                <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
+                    <select class="form-control col-sm-2" [(ngModel)]="re_search.size" (change)="changePageSize()">
+                        <option *ngFor="let page_size of listPageSize" [value]="page_size">{{page_size}}</option>
+                    </select> &nbsp;
+                    <label for="search" class=" col-form-label">Bản ghi</label>  
+            </div>
+        </div> 
+    </div>
+    <div class="row">
+        <div class="col-md-12 table-responsive Flipped">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                    <th scope="col">STT</th> 
+                    <th scope="col"> Mã trường</th>
+                    <th scope="col"> Mã khoa</th>  
+                    <th scope="col"> Mã lớp  </th> 
+                    <th scope="col"> Tên lớp  </th> 
+                    <th scope="col"> Trạng thái</th> 
+                    <th scope="col">Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="isProcessLoad == 1" class="text-center">
+                        <td colspan=7><i class="fa fa-spin fa-spinner font-30"></i></td>
+                    </tr>
+                    <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
+                        <td colspan=7>Không tìm thấy kết quả</td>
+                    </tr>
+                    <tr *ngFor ="let data of listData | orderBy:'case-insensitive'; let i = index">
+                        <th scope="row">
+                            {{ i+1 + (this.re_search.size * (this.re_search.page<=1?0:this.re_search.page-1)) }}
+                        </th>
+                        <td>{{data?.schoolCode}}</td>  
+                        <td>{{data?.facultyCode}}</td>
+                        <td>{{data?.classCode}}</td>
+                        <td>{{data?.className}}</td>  
+                        <td>
+                            <span *ngIf="data?.status === 1" class="badge badge-success">Active</span>
+                            <span *ngIf="data?.status === 0" class="badge badge-danger">Deactive</span>
+                        </td> 
+                        <td>
+                            <a class="mr-2 cursor-pointer text-blue" routerLink='/clazz/edit/{{data?.id}}'>
+                                <i class="fa fa-edit"></i>
+                            </a> 
+                            <span class="mr-2 cursor-pointer text-danger"(click)="deleteItem(data?.id)">  
+                               <i class="fa fa-trash" ></i> 
+                            </span>
+                        </td>
+                    </tr> 
+                </tbody>
+            </table>
+        </div> 
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <ngb-pagination *ngIf="totalSearch > 0 && totalSearch > re_search.size"
+                [collectionSize]="totalSearch" [pageSize]="re_search.size" [(page)]="re_search.page"
+                [boundaryLinks]="true"
+                [maxSize]="10" (pageChange)="loadPage($event)">
+            </ngb-pagination>
+        </div>
+    </div>
+</div>
+
+<ng-template #uploadMultiFile let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title">
+            <i class="icon-plus"></i>
+            Tải lên danh sách lớp
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="d('Crossclick')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Bước 1:</h5>
+                <span>Download template mẫu: <a
+                        href="assets/template-excel/Template_HocPhi_Lop.xlsx"><i>tại đây</i></a></span>
+            </div>
+            <div class="col-md-12 mt-3">
+                <h5>Bước 2:</h5>
+                <div>
+                    <p-fileUpload  #fubauto
+                        name="Excel"
+                        accept=".csv,.xlsx,.xls"
+                        customUpload="true"
+                        mode="basic"
+                        maxFileSize="1000000"
+                        (uploadHandler)="onUploadFile($event)"
+                        auto="true"
+                        iconLabel="fa-cloud-upload"
+                        chooseLabel="Chọn tệp tin"></p-fileUpload>
+                    <p *ngIf="fileExcel.name" class="m-b-0 text-primary">{{
+                        fileExcel.name }}</p>
+                </div>
+            </div>
+            <div class="col-md-12 mt-3 text-right">
+                <button [disabled]="!fileExcel.name || temp.loading"
+                    (click)="onUploadServer()" class="btn btn-primary"
+                    type="submit">
+                    <i class="fa fa-save"></i> Cập nhật
+                    <i *ngIf="temp.loading" class="fa fa-spin fa-spinner"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>

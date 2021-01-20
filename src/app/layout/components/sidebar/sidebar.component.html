@@ -84,16 +84,7 @@
                             <i class="fa fa-archive"></i>&nbsp;
                             <span>Gói sản phẩm</span>
                         </a>
-                    </li>
-                    <!-- <li *ngIf="khachhang.code === 'GOI_KH_SU_DUNG' &&
-                        khachhang.isAll === true">
-                        <a [routerLink]="['/package-user']"
-                            [routerLinkActive]="['router-link-active']"
-                            class="list-group-item">
-                            <i class="fa fa-barcode"></i>&nbsp;
-                            <span>Gói KH sử dụng gói SP</span>
-                        </a>
-                    </li> -->
+                    </li> 
                     <li *ngIf="khachhang.code === 'KHUYEN_MAI' &&
                         khachhang.isAll === true">
                         <a [routerLink]="['/promotion']" [routerLinkActive]="['router-link-active']"
@@ -146,10 +137,10 @@
                             <span>Giới thiệu bạn bè</span>
                         </a>
                     </li>
-                    <li *ngIf="khachhang.code === 'NOTIFY_USER' && khachhang.isAll === true">
+                    <li *ngIf="khachhang.code === 'NOTIFY_U' && khachhang.isAll === true">
                         <a [routerLink]="['/notifications']" [routerLinkActive]="['router-link-active']"
                             class="list-group-item">
-                            <i class="fa fa-bell"></i>&nbsp;
+                            <i class="fa fa-archive"></i>&nbsp;
                             <span>Thông báo người dùng</span>
                         </a>
                     </li>
@@ -158,6 +149,53 @@
                             class="list-group-item">
                             <i class="fa fa-archive"></i>&nbsp;
                             <span>Đối tác tham gia ưu đãi</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </div>
+        <div class="nested-menu">
+            <a class="list-group-item" (click)="addExpandClass('mschools')"
+                *ngIf="true">
+                <i class="fa fa-user"></i>&nbsp;
+                <span>Học phí</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'mschools'">
+                <ul class="submenu" *ngFor="let hocPhi of
+                objRolesMatch.hocPhi">
+                    <li *ngIf="hocPhi.code === 'HP_COST' && hocPhi.isAll === true">
+                        <a [routerLink]="['/hpcosts']" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item">
+                            <i class="fa fa-gift"></i>&nbsp;
+                            <span>Phí thanh toán</span>
+                        </a>
+                    </li>
+                    <li *ngIf="hocPhi.code === 'HP_MANAGER' && hocPhi.isAll === true">
+                        <a [routerLink]="['/uploadtuition']" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item">
+                            <i class="fa fa-gift"></i>&nbsp;
+                            <span>Quản lý học phí</span>
+                        </a>
+                    </li>
+                    <li *ngIf="hocPhi.code === 'HP_SCHOOL' && hocPhi.isAll === true">
+                        <a [routerLink]="['/schools']" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item">
+                            <i class="fa fa-gift"></i>&nbsp;
+                            <span>Trường học</span>
+                        </a>
+                    </li>
+                    <li *ngIf="hocPhi.code === 'HP_FACULTY' && hocPhi.isAll === true">
+                        <a [routerLink]="['/faculties']" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item">
+                            <i class="fa fa-gift"></i>&nbsp;
+                            <span>Khoa</span>
+                        </a>
+                    </li> 
+                    <li *ngIf="hocPhi.code === 'HP_CLASS' && hocPhi.isAll === true">
+                        <a [routerLink]="['/clazz']" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item">
+                            <i class="fa fa-gift"></i>&nbsp;
+                            <span>Lớp học</span>
                         </a>
                     </li>
                 </ul>
@@ -252,15 +290,7 @@
                             <span>Mạng lưới chi nhánh, PGD</span>
                         </a>
                     </li>
-                    <!-- <li *ngIf="tracuu.code === 'HD_SU_DUNG' && tracuu.isAll ===
-                        true">
-                        <a [routerLink]="['/guide']"
-                            [routerLinkActive]="['router-link-active']"
-                            class="list-group-item">
-                            <i class="fa fa-info"></i>&nbsp;
-                            <span>Hướng dẫn sử dụng</span>
-                        </a>
-                    </li> -->
+                   
                     <li *ngIf="tracuu.code === 'TT_QA' && tracuu.isAll ===
                         true">
                         <a [routerLink]="['/qas-info']" [routerLinkActive]="['router-link-active']"

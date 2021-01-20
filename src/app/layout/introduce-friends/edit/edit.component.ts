@@ -59,7 +59,7 @@ export class EditComponent implements OnInit {
                 ''
             ],
             provider: '',
-            status: ''
+            status: '1'
         });
     }
 
@@ -102,7 +102,6 @@ export class EditComponent implements OnInit {
                 urlPromotion: body.urlPromotion,
                 urlBanner: body.urlBanner,
                 provider: body.provider,
-                status: body.status,
             });
             }).catch(err => {
 

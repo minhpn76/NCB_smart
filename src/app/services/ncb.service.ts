@@ -1,3 +1,4 @@
+import { Params } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { AppSettings } from '../app.settings';
 import { AuthService } from '../services/auth.service';
@@ -1224,13 +1225,11 @@ export class NCBService {
             method: 'GET',
         });
     }
-    detailCompany(params: any): Promise<any> {
-        const {compCode, mp, mcn} = params;
-        const tempParam = `compCode=${compCode}&mp=${mp}&mcn=${mcn}`;
-        const url = `${API_URL}/company/detail?${tempParam}`;
+    detailCompany(params): Promise<any> {
+        const url = `${API_URL}/company/detail`;
         return this.auth.authRequest({
             url: url,
-            params: {},
+            params: params,
             method: 'GET',
         });
     }
@@ -1755,16 +1754,6 @@ export class NCBService {
             application: true,
         });
     }
-    approvedQRCoupon( id: string, params): Promise<any> {
-        const url = `${API_URL}/qr-coupons/${id}`;
-        return this.auth.authRequest({
-            url: url,
-            params: params,
-            method: 'PATCH',
-            application: true,
-        });
-    }
-
     detailQRCoupon(id: string): Promise<any> {
         const url = `${API_URL}/qr-coupons/${id}`;
         return this.auth.authRequest({ url: url, method: 'GET' });
@@ -2041,4 +2030,178 @@ export class NCBService {
         });
     }
 
+ // Hp costs
+ getListHpCosts(params): Promise<any> {
+    const url = `${API_URL}/costs/get-costs`;
+    return this.auth.authRequest({
+        url: url,
+        params: params,
+        method: 'GET',
+    });
+}
+createHpCosts(body): Promise<any> {
+    const url = `${API_URL}/costs/save-costs`;
+    return this.auth.authRequest({
+        url: url,
+        data: body,
+        method: 'POST',
+        application: true,
+    });
+}
+getdetailtHpCosts(code: any): Promise<any> {
+    const url = `${API_URL}/costs/detailt?idCost=${code}`;
+    return this.auth.authRequest({ url: url, method: 'GET' });
+}
+updateHpCosts(body: any): Promise<any> {
+    const url = `${API_URL}/costs/update-cost`;
+    return this.auth.authRequest({
+        url: url,
+        data: body,
+        method: 'PUT',
+        application: true,
+    });
+}
+deleteHpCosts(code: any): Promise<any> {
+    const url = `${API_URL}/costs/delete-cost?idCost=${code}`;
+    return this.auth.authRequest({
+        url: url,
+        method: 'DELETE',
+    });
+}
+
+    // hp serviece uploadtuition
+    upFileExcelHpTuition(file): Promise<any> {
+        const formData: FormData = new FormData();
+        formData.append('file', file, file.name);
+        const url = `${API_URL}/tuitions/uploadFile`;
+        return this.auth.authRequestFile({
+            url: url,
+            data: formData,
+            method: 'POST',
+        });
+    }
+    getListHpTuition(params): Promise<any> {
+        const url = `${API_URL}/tuitions/get-tuitions`;
+        return this.auth.authRequest({
+            url: url,
+            params: params,
+            method: 'GET',
+        });
+    }
+    // Hp service trường
+    getListHpSchool(params): Promise<any> {
+        const url = `${API_URL}/schools/get-schools`;
+        return this.auth.authRequest({
+            url: url,
+            params: params,
+            method: 'GET',
+        });
+    }
+    createHpSchoolDetail(body): Promise<any> {
+        const url = `${API_URL}/schools/save-schools`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: 'POST',
+            application: true,
+        });
+    }
+    getdetailtHpSchool(code: any): Promise<any> {
+        const url = `${API_URL}/schools/detailt?idCost=${code}`;
+        return this.auth.authRequest({ url: url, method: 'GET' });
+    }
+    updateHpSchool(body: any): Promise<any> {
+
+        const url = `${API_URL}/schools/update-school`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: 'PUT',
+            application: true,
+        });
+    }
+    deleteSchool(code: any): Promise<any> {
+        const url = `${API_URL}/schools/delete-school?idSchool=${code}`;
+        return this.auth.authRequest({
+            url: url,
+            method: 'DELETE',
+        });
+    }
+     // Hp service khoa
+     getListHpFaculties(params): Promise<any> {
+        const url = `${API_URL}/faculties/get-faculties`;
+        return this.auth.authRequest({
+            url: url,
+            params: params,
+            method: 'GET',
+        });
+    }
+    createHpFaculty(body): Promise<any> {
+        const url = `${API_URL}/faculties/save-faculties`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: 'POST',
+            application: true,
+        });
+    }
+    getdetailtHpFacultie(code: any): Promise<any> {
+        const url = `${API_URL}/faculties/detailt?idCost=${code}`;
+        return this.auth.authRequest({ url: url, method: 'GET' });
+    }
+    updateHpFacultie(body: any): Promise<any> {
+
+        const url = `${API_URL}/faculties/update-facultie`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: 'PUT',
+            application: true,
+        });
+    }
+    deleteFaculties(code: any): Promise<any> {
+        const url = `${API_URL}/faculties/delete-facultie?idRequest=${code}`;
+        return this.auth.authRequest({
+            url: url,
+            method: 'DELETE',
+        });
+    }
+      // Hp service Lớp
+      getListHpClass(params): Promise<any> {
+        const url = `${API_URL}/clazzs/get-clazzs`;
+        return this.auth.authRequest({
+            url: url,
+            params: params,
+            method: 'GET',
+        });
+    }
+    createHpClass(body): Promise<any> {
+        const url = `${API_URL}/clazzs/save-clazzs`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: 'POST',
+            application: true,
+        });
+    }
+    getdetailtHpClass(code: any): Promise<any> {
+        const url = `${API_URL}/clazzs/detailt?idClass=${code}`;
+        return this.auth.authRequest({ url: url, method: 'GET' });
+    }
+    updateHpClass(body: any): Promise<any> {
+        const url = `${API_URL}/clazzs/update-clazz`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: 'PUT',
+            application: true,
+        });
+    }
+    deleteClass(code: any): Promise<any> {
+        const url = `${API_URL}/clazzs/delete-clazz?idRequest=${code}`;
+        return this.auth.authRequest({
+            url: url,
+            method: 'DELETE',
+        });
+    }
 }

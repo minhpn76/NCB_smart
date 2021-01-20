@@ -250,7 +250,7 @@ export class ListComponent implements OnInit {
     }
 
 
-    approved(id, isApprove) {
+    approved(id, approveStatus) {
 
         Swal.fire({
             title: 'Bạn có muốn phê duyệt?',
@@ -261,8 +261,9 @@ export class ListComponent implements OnInit {
         }).then((result) => {
             if (result.value) {
                 this.ncbService
-                    .approvedQRCoupon(id, {
-                        isApprove: true,
+                    .updateQRCoupon(id, {
+                        objectUserType: '',
+                        approveStatus: '1',
                     })
                     .then((res) => {
                         if (res.json().code === '00') {

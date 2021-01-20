@@ -436,8 +436,8 @@
                                     <td>{{ data?.promotionCode }}</td>
                                     <td>{{ findNameConfig(data?.referPartnerCode)  }}</td>
                                     <td>
-                                        <span class="badge badge-info" *ngIf="data.status === '0'">Đang chờ phê duyệt</span>
-                                        <span class="badge badge-success" *ngIf="data.status === '1'">Phê duyệt & Có hiệu lực</span>
+                                        <span class="badge badge-info" *ngIf="data.status === '1'">Đang chờ phê duyệt</span>
+                                        <span class="badge badge-success" *ngIf="data.status === '0'">Phê duyệt & Có hiệu lực</span>
                                         <span class="badge badge-warning" *ngIf="data.status === '2'">Phê duyệt & Admin vô hiệu hoá</span>
                                     </td>
                                     <td>{{ helper.formatDateSplit(data?.createdAt) }}</td>
