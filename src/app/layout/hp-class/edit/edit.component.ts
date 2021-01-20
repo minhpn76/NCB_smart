@@ -69,7 +69,7 @@ export class EditComponent implements OnInit {
   getItem(params) {
     this.ncbService.getdetailtHpClass(params).then((result) => {
       const body = result.json().body;
-      this.facultyCode = body.schoolCode;
+      this.facultyCode = body.facultyCode;
       this.getFaculties(body.schoolCode);
       this.dataForm.patchValue({
         schoolCode: body.schoolCode,
@@ -113,10 +113,10 @@ getSchools() {
   // xu ly
   this.ncbService.getListHpSchool(null).then((result) => {
     setTimeout(() => {
-      const body = result.json().body;
+      const body = result.json().body.content;
       body.forEach(element => {
         this.listSchool.push({
-          schoolName: element.schoolName,
+          schoolName: ' - ' + element.schoolName,
           schoolCode: element.schoolCode
         });
       });
@@ -133,10 +133,10 @@ getFaculties(idschool) {
   // xu ly
   this.ncbService.getListHpFaculties(this.obj_searchFaculties).then((result) => {
     setTimeout(() => {
-      const body = result.json().body;
+      const body = result.json().body.content;
       body.forEach(element => {
         this.listFaculties.push({
-          facultyName: element.facultyName,
+          facultyName: ' - ' + element.facultyName,
           facultyCode: element.facultyCode
         });
       });

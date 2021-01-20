@@ -70,7 +70,7 @@
                     </tr>
                     <tr *ngFor ="let data of listData | orderBy:'case-insensitive'; let i = index">
                         <th scope="row">
-                            {{ i+1 }}
+                            {{ i+1 + (this.re_search.size * (this.re_search.page<=1?0:this.re_search.page-1)) }}
                         </th>
                         <td>{{data?.costCode}}</td>
                         <td>{{data?.costName}}</td> 

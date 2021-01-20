@@ -67,8 +67,8 @@ export class ListComponent implements OnInit {
     this.ncbService.getListHpCosts(payload).then(result => {
       setTimeout(() => {
         const body = result.json().body;
-        this.listData = body;
-        this.totalSearch = body.total;
+        this.listData = body.content;
+        this.totalSearch = body.totalElements;
         this.isProcessLoad = 0;
       }, 300);
     }).catch(err => {
@@ -83,8 +83,8 @@ export class ListComponent implements OnInit {
     this.ncbService.getListHpCosts(params).then((result) => {
       setTimeout(() => {
         const body = result.json().body;
-        this.listData = body;
-        this.totalSearch = body.total;
+        this.listData = body.content;
+        this.totalSearch = body.totalElements;
         this.isProcessLoad = 0;
       }, 300);
     }).catch(err => {

@@ -10,7 +10,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Chọn trường học:</label>
                 <div class="col-sm-6">
                     <select class="form-control" aria-readonly="true" [(ngModel)]="re_search.codeSchool">
-                        <option *ngFor="let School of listSchool" [value]="School.schoolCode">{{School.schoolCode}} - {{ School.schoolName }}</option>
+                        <option *ngFor="let School of listSchool" [value]="School.schoolCode">{{School.schoolCode}}{{ School.schoolName }}</option>
                     </select>
                 </div>
             </div>
@@ -41,7 +41,7 @@
             <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
                 <i class="fa fa-search"></i>&nbsp;Tìm kiếm
             </button>
-            <a class="btn btn-warning" [routerLink]="['/faculties/create']">
+            <a class="btn btn-warning mr-3" [routerLink]="['/faculties/create']">
                 <i class="fa fa-plus"></i>&nbsp;Thêm mới
             </a>
             <a class="btn btn-primary" (click)="openModal(uploadMultiFile)">
@@ -83,7 +83,8 @@
                     </tr>
                     <tr *ngFor ="let data of listData | orderBy:'case-insensitive'; let i = index">
                          <th scope="row">
-                            {{ i+1 }}
+                            <!-- xu ly page index  STT 1 - 100-->
+                            {{ i+1 + (this.re_search.size * (this.re_search.page<=1?0:this.re_search.page-1)) }}
                         </th>  
                         <td>{{data?.schoolCode}}</td> 
                         <td>{{data?.facultyCode}}</td>
@@ -111,7 +112,7 @@
             <ngb-pagination *ngIf="totalSearch > 0 && totalSearch > re_search.size"
                 [collectionSize]="totalSearch" [pageSize]="re_search.size" [(page)]="re_search.page"
                 [boundaryLinks]="true"
-               (pageChange)="changePageSize($event)">
+               (pageChange)="changePage($event)">
             </ngb-pagination>
         </div>
     </div>

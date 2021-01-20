@@ -15,7 +15,7 @@ export class ListComponent implements OnInit {
   re_search = {
     schoolCode: '',
     status: 1,
-    offset: 10,
+    size: 10,
     page: 0,
     previous_page: 0
   };
@@ -67,8 +67,8 @@ export class ListComponent implements OnInit {
     this.ncbService.getListHpSchool(payload).then(result => {
       setTimeout(() => {
         const body = result.json().body;
-        this.listData = body;
-        this.totalSearch = body.total;
+        this.listData = body.content;
+        this.totalSearch = body.totalElements;
         this.isProcessLoad = 0;
       }, 300);
     }).catch(err => {
@@ -84,8 +84,8 @@ export class ListComponent implements OnInit {
     this.ncbService.getListHpSchool(params).then((result) => {
       setTimeout(() => {
         const body = result.json().body;
-        this.listData = body;
-        this.totalSearch = body.total;
+        this.listData = body.content;
+        this.totalSearch = body.totalElements;
         this.isProcessLoad = 0;
         console.log(this.listData);
       }, 300);

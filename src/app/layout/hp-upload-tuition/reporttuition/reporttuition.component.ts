@@ -26,7 +26,7 @@ export class ReporttuitionComponent implements OnInit {
     studentCode: '',
     endDate: '',
     status: -1,
-    offset: 10,
+    size: 10,
     page: 0,
     previous_page: 0
   };
@@ -65,7 +65,7 @@ export class ReporttuitionComponent implements OnInit {
     const page_number = page;
     if (page_number !== this.re_search.previous_page) {
       this.re_search.page = page_number;
-      this.re_search.previous_page = page_number;
+      this.re_search.previous_page = page_number - 1;
       this.onSearch(this.re_search);
     }
   }
@@ -89,7 +89,7 @@ export class ReporttuitionComponent implements OnInit {
     this.listSchool = [];
     this.listSchool.push({ schoolName: '--Chưa chọn---', schoolCode: ''});
     this.ncbService.getListHpSchool(null).then((result) => {
-      const body = result.json().body;
+      const body = result.json().body.content;
       this.listSchool = body;
     }).catch(err => {
       this.toastr.error(err.json().decription, 'Thất bại!');
@@ -97,6 +97,9 @@ export class ReporttuitionComponent implements OnInit {
   }
   /*Câ[j nhat lại ham sert tai day] */
   onSearch(payload) {
+    if (!payload.schoolCode) {
+     return alert('Vui lòng chọn trường!');
+    }
     this.listData = [];
     this.isProcessLoad = 1;
     payload.startDate = this.helper.tranferDate(this.mRatesDateS);
@@ -104,8 +107,8 @@ export class ReporttuitionComponent implements OnInit {
     this.ncbService.getListHpTuition(payload).then(result => {
       setTimeout(() => {
         const body = result.json().body;
-        this.listData = body;
-        this.totalSearch = body.total;
+        this.listData = body.content;
+        this.totalSearch = body.totalElements;
         this.isProcessLoad = 0;
       }, 300);
     }).catch(err => {
@@ -121,8 +124,8 @@ export class ReporttuitionComponent implements OnInit {
     this.ncbService.getListHpTuition(params).then((result) => {
       setTimeout(() => {
         const body = result.json().body;
-        this.listData = body;
-        this.totalSearch = body.total;
+        this.listData = body.content;
+        this.totalSearch = body.totalElements;
         this.isProcessLoad = 0;
         console.log(this.listData);
       }, 300);

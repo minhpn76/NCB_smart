@@ -30,7 +30,7 @@ export class ListComponent implements OnInit {
     facultieCode: '',
     status: '',
     size: 10,
-    page: 1,
+    page: 0,
     previous_page: 0
   };
   listStatus: any = [
@@ -61,7 +61,7 @@ export class ListComponent implements OnInit {
     codeFacultie: '',
     status: 1,
     size: 10000,
-    page: 1,
+    page: 0,
     previous_page: 0
   };
   modalOp: any;
@@ -104,8 +104,8 @@ export class ListComponent implements OnInit {
     this.ncbService.getListHpClass(payload).then(result => {
       setTimeout(() => {
         const body = result.json().body;
-        this.listData = body;
-        this.totalSearch = body.total;
+        this.listData = body.content;
+        this.totalSearch = body.totalElements;
         this.isProcessLoad = 0;
       }, 300);
     }).catch(err => {
@@ -121,8 +121,8 @@ export class ListComponent implements OnInit {
     this.ncbService.getListHpClass(params).then((result) => {
       setTimeout(() => {
         const body = result.json().body;
-        this.listData = body;
-        this.totalSearch = body.total;
+        this.listData = body.content;
+        this.totalSearch = body.totalElements;
         this.isProcessLoad = 0;
       }, 300);
     }).catch(err => {
@@ -175,10 +175,10 @@ export class ListComponent implements OnInit {
     // xu ly
     this.ncbService.getListHpSchool(null).then((result) => {
       setTimeout(() => {
-        const body = result.json().body;
+        const body = result.json().body.content;
         body.forEach(element => {
           this.listSchool.push({
-            schoolName: element.schoolName,
+            schoolName: ' - ' + element.schoolName,
             schoolCode: element.schoolCode
           });
         });
@@ -197,11 +197,11 @@ export class ListComponent implements OnInit {
     // xu ly
     this.ncbService.getListHpFaculties(this.obj_searchFaculties).then((result) => {
       setTimeout(() => {
-        const body = result.json().body;
+        const body = result.json().body.content;
         this.listFaculties.push({ facultyName: '---Chưa chọn---', facultyCode: ''});
         body.forEach(element => {
           this.listFaculties.push({
-            facultyName: element.facultyName,
+            facultyName: ' - ' + element.facultyName,
             facultyCode: element.facultyCode
           });
         });

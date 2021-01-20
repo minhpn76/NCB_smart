@@ -63,10 +63,10 @@ export class CreateComponent implements OnInit {
     // xu ly
     this.ncbService.getListHpSchool(null).then((result) => {
       setTimeout(() => {
-        const body = result.json().body;
+        const body = result.json().body.content;
         body.forEach(element => {
           this.listSchool.push({
-            schoolName: element.schoolName,
+            schoolName: ' - ' + element.schoolName,
             schoolCode: element.schoolCode
           });
         });
@@ -97,6 +97,7 @@ export class CreateComponent implements OnInit {
       schoolCode: this.dataForm.value.schoolCode,
       facultyName: this.dataForm.value.facultyName,
       facultyCode: this.dataForm.value.facultyCode,
+      status: 1
     }];
 
     // Add code sumit from khi có api

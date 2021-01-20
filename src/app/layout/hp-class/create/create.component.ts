@@ -67,7 +67,7 @@ export class CreateComponent implements OnInit {
     this.getSchool();
     this.dataForm = this.formBuilder.group({
       schoolCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      facultyCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      facultyCode: '',
       className: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       classCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
    });
@@ -120,10 +120,10 @@ export class CreateComponent implements OnInit {
     // xu ly
     this.ncbService.getListHpSchool(null).then((result) => {
       setTimeout(() => {
-        const body = result.json().body;
+        const body = result.json().body.content;
         body.forEach(element => {
           this.listSchool.push({
-            schoolName: element.schoolName,
+            schoolName: ' - ' + element.schoolName,
             schoolCode: element.schoolCode
           });
         });
@@ -139,10 +139,10 @@ export class CreateComponent implements OnInit {
     // xu ly
     this.ncbService.getListHpFaculties(this.obj_searchFaculties).then((result) => {
       setTimeout(() => {
-        const body = result.json().body;
+        const body = result.json().body.content;
         body.forEach(element => {
           this.listFaculties.push({
-            facultyName: element.facultyName,
+            facultyName: ' - ' + element.facultyName,
             facultyCode: element.facultyCode
           });
         });

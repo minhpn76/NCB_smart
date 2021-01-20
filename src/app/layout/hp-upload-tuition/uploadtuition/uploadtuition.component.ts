@@ -368,7 +368,7 @@ export class UploadtuitionComponent implements OnInit {
   getCost() {
     this.ncbService.getListHpCosts(null).then(result => {
       setTimeout(() => {
-        const body = result.json().body;
+        const body = result.json().body.content;
         this.listCost = body;
       }, 300);
     }).catch(err => {
@@ -377,7 +377,7 @@ export class UploadtuitionComponent implements OnInit {
   }
   getSchools() {
     this.ncbService.getListHpSchool(null).then((result) => {
-      const body = result.json().body;
+      const body = result.json().body.content;
       this.listSchool = body;
     }).catch(err => {
       this.toastr.error(err.json().decription, 'Thất bại!');
@@ -390,7 +390,7 @@ export class UploadtuitionComponent implements OnInit {
     }
     this.ncbService.getListHpClass(this.reseachClass).then(result => {
       setTimeout(() => {
-        const body = result.json().body;
+        const body = result.json().body.content;
         this.listClass = body;
       }, 300);
     }).catch(err => {
@@ -405,7 +405,7 @@ export class UploadtuitionComponent implements OnInit {
     }
     this.ncbService.getListHpFaculties(this.reseachClass).then(result => {
       setTimeout(() => {
-        const body = result.json().body;
+        const body = result.json().body.content;
         this.listFaculty = body;
       }, 300);
     }).catch(err => {

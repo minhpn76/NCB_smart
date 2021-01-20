@@ -10,7 +10,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Mã trường học:</label>
                 <div class="col-sm-6">
                     <select class="form-control" aria-readonly="true" [(ngModel)]="re_search.schoolCode" (change)="getFaculties($event.target.value)">
-                        <option *ngFor="let School of listSchool" [value]="School.schoolCode">{{School.schoolCode}} - {{ School.schoolName }}</option>
+                        <option *ngFor="let School of listSchool" [value]="School.schoolCode">{{School.schoolCode}} {{ School.schoolName }}</option>
                     </select>
                 </div>
             </div>
@@ -20,7 +20,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Mã khoa:</label>
                 <div class="col-sm-6">
                     <select class="form-control" aria-readonly="true" [(ngModel)]="re_search.facultieCode">
-                        <option *ngFor="let faculties of listFaculties"  [value]="faculties.facultyCode">{{faculties.facultyCode}} - {{ faculties.facultyName }}</option>
+                        <option *ngFor="let faculties of listFaculties"  [value]="faculties.facultyCode">{{faculties.facultyCode}}{{ faculties.facultyName }}</option>
                     </select>
                 </div>
             </div>
@@ -51,7 +51,7 @@
             <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
                 <i class="fa fa-search"></i>&nbsp;Tìm kiếm
             </button>
-            <a class="btn btn-warning" [routerLink]="['/clazz/create']">
+            <a class="btn btn-warning mr-3" [routerLink]="['/clazz/create']">
                 <i class="fa fa-plus"></i>&nbsp;Thêm mới
             </a>
             <a class="btn btn-primary" (click)="openModal(uploadMultiFile)">
@@ -77,8 +77,8 @@
                 <thead>
                     <tr>
                     <th scope="col">STT</th> 
-                    <th scope="col"> Tên trường</th>
-                    <th scope="col"> Tên khoa</th>  
+                    <th scope="col"> Mã trường</th>
+                    <th scope="col"> Mã khoa</th>  
                     <th scope="col"> Mã lớp  </th> 
                     <th scope="col"> Tên lớp  </th> 
                     <th scope="col"> Trạng thái</th> 
@@ -94,7 +94,7 @@
                     </tr>
                     <tr *ngFor ="let data of listData | orderBy:'case-insensitive'; let i = index">
                         <th scope="row">
-                            {{ i+1 }}
+                            {{ i+1 + (this.re_search.size * (this.re_search.page<=1?0:this.re_search.page-1)) }}
                         </th>
                         <td>{{data?.schoolCode}}</td>  
                         <td>{{data?.facultyCode}}</td>

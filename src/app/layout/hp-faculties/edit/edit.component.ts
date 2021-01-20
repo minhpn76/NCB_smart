@@ -65,7 +65,7 @@ export class EditComponent implements OnInit {
   }
   getSchools() {
     this.ncbService.getListHpSchool(null).then((result) => {
-      const body = result.json().body;
+      const body = result.json().body.content;
       this.listSchool = body;
     }).catch(err => {
       this.toastr.error(err.json().decription, 'Thất bại!');

@@ -7,7 +7,7 @@
                     <label for="search" class="col-sm-4 col-form-label">Chọn trường học(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-6"> 
                         <select class="form-control" aria-readonly="true" formControlName="schoolCode" name="schoolCode"  (change)="getFaculties($event.target.value)">
-                            <option *ngFor="let School of listSchool" [value]="School.schoolCode">{{School.schoolCode}} - {{ School.schoolName }}</option>
+                            <option *ngFor="let School of listSchool" [value]="School.schoolCode">{{School.schoolCode}} {{ School.schoolName }}</option>
                         </select> 
                         <div *ngIf="submitted && Form.schoolCode.errors" class="invalid-feedback">
                             <div *ngIf="Form.schoolCode.hasError('whitespace')"> Mã trường không hợp lệ</div>
@@ -19,7 +19,7 @@
                     <label for="search" class="col-sm-4 col-form-label">Chọn khoa(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-6">
                         <select class="form-control" aria-readonly="true" formControlName="facultyCode" name="facultyCode">
-                            <option *ngFor="let faculties of listFaculties"  [value]="faculties.facultyCode">{{faculties.facultyCode}} - {{ faculties.facultyName }}</option>
+                            <option *ngFor="let faculties of listFaculties"  [value]="faculties.facultyCode">{{faculties.facultyCode}}{{ faculties.facultyName }}</option>
                         </select>
                         <div *ngIf="submitted && Form.facultyCode.errors" class="invalid-feedback">
                             <div *ngIf="Form.facultyCode.hasError('whitespace')"> Mã khoa không hợp lệ</div>
