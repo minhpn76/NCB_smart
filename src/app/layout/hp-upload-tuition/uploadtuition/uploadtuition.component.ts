@@ -355,8 +355,8 @@ export class UploadtuitionComponent implements OnInit {
     }
   }
   checkFaculty(data) { // tuition
-    if (data) {
-      const check = this.listFaculty.find(e => e.FacultyCode.toLowerCase() === data.toString().toLowerCase());
+    if (data !== undefined) {
+      const check = this.listFaculty.find(e => e.facultyCode.toLowerCase() === data.toString().toLowerCase());
       if (check === undefined) {
         if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
         return true;
