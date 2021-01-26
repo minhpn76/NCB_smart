@@ -2394,6 +2394,14 @@ textarea.input-lg {
 	top: 0
 }
 
+.main-container{
+	margin-top:-25px !important;
+}
+@media (min-width: 768px){
+	.navbar{
+		border-radius: 0px !important;
+	}
+}
 .help-block {
 	display: block;
 	margin-top: 5px;
@@ -3016,9 +3024,9 @@ tbody.collapse.in {
 	transition-duration: .35s;
 	transition-property: height, visibility
 }
-
 .caret {
-	display: inline-block;
+	// display: inline-block;
+	display: none;
 	width: 0;
 	height: 0;
 	margin-left: 2px;
@@ -3834,7 +3842,7 @@ textarea.input-group-sm>.input-group-btn>.btn {
 		box-shadow: none
 	}
 	.navbar-collapse.collapse {
-		display: block!important;
+		// display: block!important;
 		height: auto!important;
 		padding-bottom: 0;
 		overflow: visible!important
@@ -3885,6 +3893,7 @@ textarea.input-group-sm>.input-group-btn>.btn {
 }
 
 .navbar-brand {
+	margin-right: 75vw;
 	float: left;
 	height: 50px;
 	padding: 15px;

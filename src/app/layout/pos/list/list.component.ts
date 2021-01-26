@@ -107,7 +107,10 @@ export class ListComponent implements OnInit {
                       'Dữ liệu đã xoá hoàn toàn.',
                       'success'
                     );
-                    setTimeout(() => {this.router.navigateByUrl('/transaction-room'); }, 500);
+                    setTimeout(() => {
+                        this.re_search.page = 0;
+                        this.onSearch(this.re_search);
+                    }, 500);
                   });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
                 Swal.fire('Huỷ bỏ', 'Dữ liệu được bảo toàn :)', 'error');

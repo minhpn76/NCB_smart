@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { OrderPipe } from 'ngx-order-pipe';
 
 @Component({
@@ -39,17 +40,17 @@ export class ListComponent implements OnInit {
             code: 'D'
         }
     ];
-    order: string = 'compName';
-    reverse: boolean = false;
-  
+    order = 'compName';
+    reverse = false;
+
     sortedCollection: any[];
 
     constructor(
-        private ncbService: NCBService, private modalService: NgbModal, private toastr: ToastrService,
+        private ncbService: NCBService, private modalService: NgbModal, private toastr: ToastrService, private router: Router,
         private orderPipe: OrderPipe) {
             this.sortedCollection = orderPipe.transform(this.listData, 'compName');
     }
-    
+
 
     ngOnInit() {
         this.getListData(this.re_search);
@@ -58,7 +59,7 @@ export class ListComponent implements OnInit {
         if (this.order === value) {
           this.reverse = !this.reverse;
         }
-    
+
         this.order = value;
       }
 
@@ -84,7 +85,7 @@ export class ListComponent implements OnInit {
             });
     }
 
-    deleteItem(event, index, code) {
+    deleteItem(event, index, code, mp, mcn ) {
         Swal.fire({
             title: 'Bạn có chắc chắn xoá?',
             text: 'Dữ liệu đã xoá không thể khôi phục lại',
@@ -94,7 +95,7 @@ export class ListComponent implements OnInit {
             cancelButtonText: 'Không, trở lại'
         }).then(result => {
             if (result.value) {
-                this.ncbService.deleteCompany({ compCode: code }).then((res) => {
+                this.ncbService.deleteCompany({ compCode: code, mp: mp, mcn: mcn }).then((res) => {
                     if (res.json().code === '00') {
                         this.listData.splice(index, 1);
                         Swal.fire(
@@ -119,6 +120,12 @@ export class ListComponent implements OnInit {
             this.getListData(this.re_search);
             this.re_search.page = page;
         }
+    }
+
+    matchParamDetail ({compCode, mp, mcn}) {
+        this.router.navigate(['/branch/edit'], { queryParams: {
+            compCode, mp, mcn
+         } });
     }
     onSearch(payload) {
         if (payload.compCode !== '' || payload.compName !== '') {

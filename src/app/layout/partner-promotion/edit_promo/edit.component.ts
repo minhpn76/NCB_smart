@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { NCBService } from "../../../services/ncb.service";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NCBService } from '../../../services/ncb.service';
 import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
-import { ToastrService } from "ngx-toastr";
-import { Helper } from "../../../helper";
+import { ToastrService } from 'ngx-toastr';
+import { Helper } from '../../../helper';
 
 @Component({
     selector: 'app-edit',
@@ -17,23 +17,23 @@ export class EditPromoComponent implements OnInit {
     itemId: any;
     listStatus: any = [
         {
-            name: "Tất cả",
-            code: "",
+            name: 'Tất cả',
+            code: '',
         },
         {
-            name: "Phê duyệt & Có hiệu lực",
-            code: "1",
+            name: 'Đang chờ phê duyệt',
+            code: '0',
         },
         {
-            name: "Đang chờ phê duyệt",
-            code: "0",
+            name: 'Phê duyệt & Có hiệu lực',
+            code: '1',
         },
         {
-            name: "Phê duyệt & Admin vô hiệu hoá",
-            code: "2",
+            name: 'Phê duyệt & Admin vô hiệu hoá',
+            code: '2',
         },
     ];
-    listPartnerAll: any = []
+    listPartnerAll: any = [];
     constructor(
         private formBuilder: FormBuilder,
         private ncbService: NCBService,
@@ -47,14 +47,14 @@ export class EditPromoComponent implements OnInit {
         });
         this.dataForm = this.formBuilder.group({
             promotionName: [
-                "",
+                '',
                 Validators.compose([
                     Validators.required,
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
             promotionCode: [
-                "",
+                '',
                 Validators.compose([
                     Validators.required,
                     Validators.maxLength(5),
@@ -62,7 +62,7 @@ export class EditPromoComponent implements OnInit {
                 ]),
             ],
             referPartnerCode: [
-                "",
+                '',
                 Validators.compose([
                     Validators.required,
                     this.helper.noWhitespaceValidator,
@@ -76,7 +76,7 @@ export class EditPromoComponent implements OnInit {
 
     ngOnInit() {
         this.getItem({id: this.itemId});
-        this.getAllPartnerPromotion()
+        this.getAllPartnerPromotion();
 
     }
     getItem(params) {

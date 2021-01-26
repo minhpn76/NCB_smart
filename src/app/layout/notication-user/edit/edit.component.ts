@@ -12,6 +12,8 @@ import {
     NgbTabChangeEvent,
 } from '@ng-bootstrap/ng-bootstrap';
 import * as FileSaver from 'file-saver';
+// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import * as XLSX from 'xlsx';
 import { ExcelService } from '../../../services/excel.service';
 import { async } from '@angular/core/testing';
@@ -25,6 +27,8 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
     providers: [Helper, NCBService, ExcelService],
 })
 export class EditComponent implements OnInit {
+    // public Editor = ClassicEditor;
+    // public Editor = DecoupledEditor;
     mRatesDateS: NgbDateStruct;
     mRatesDateS_7: NgbDateStruct;
     my: any = new Date();
@@ -72,48 +76,6 @@ export class EditComponent implements OnInit {
         },
     ];
 
-    editorConfig: AngularEditorConfig = {
-        editable: true,
-        spellcheck: true,
-        height: 'auto',
-        minHeight: '0',
-        maxHeight: 'auto',
-        width: 'auto',
-        minWidth: '0',
-        translate: 'yes',
-        enableToolbar: true,
-        showToolbar: true,
-        placeholder: 'Nội dung...',
-        defaultParagraphSeparator: '',
-        defaultFontName: '',
-        defaultFontSize: '',
-        fonts: [
-            { class: 'arial', name: 'Arial' },
-            { class: 'times-new-roman', name: 'Times New Roman' },
-            { class: 'calibri', name: 'Calibri' },
-            { class: 'comic-sans-ms', name: 'Comic Sans MS' },
-        ],
-        customClasses: [
-            {
-                name: 'quote',
-                class: 'quote',
-            },
-            {
-                name: 'redText',
-                class: 'redText',
-            },
-            {
-                name: 'titleText',
-                class: 'titleText',
-                tag: 'h1',
-            },
-        ],
-        uploadUrl: 'v1/image',
-        uploadWithCredentials: false,
-        sanitize: true,
-        toolbarPosition: 'top',
-        toolbarHiddenButtons: [['bold', 'italic'], ['fontSize']],
-    };
     constructor(
         private formBuilder: FormBuilder,
         private toastr: ToastrService,
@@ -125,6 +87,18 @@ export class EditComponent implements OnInit {
         private excelService: ExcelService
     ) {
         this.loadDate();
+    }
+
+    public onReady(editor) {
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            console.log('loader : ', loader);
+            console.log(btoa(loader.file));
+            return new UploadAdapter(loader);
+        };
+        editor.ui.view.editable.element.parentElement.insertBefore(
+            editor.ui.view.toolbar.element,
+            editor.ui.view.editable.element
+        );
     }
 
     ngOnInit() {
@@ -193,7 +167,7 @@ export class EditComponent implements OnInit {
             return;
         }
         const payload = {
-            title: this.dataForm.value.name,
+            title: this.dataForm.value.title,
             content: this.dataForm.value.content,
             repeatType: this.dataForm.value.repeatType,
             repeatValue: this.dataForm.value.repeatValue,
@@ -273,10 +247,10 @@ export class EditComponent implements OnInit {
             .then((result) => {
                 const body = result.json().body;
                 this.dataForm.patchValue({
-                    name: body.title,
+                    title: body.title,
                     content: body.content,
                     repeatType: body.repeatType,
-                    repeatValue: body.repeatValue,
+                    repeatValue: Helper.formatDateTimeEdit(body.repeatValue, body.repeatType),
                     objectUserType: body.objectUserType,
                     user_notifications: body.userNotifications,
                     status: body.status,
@@ -285,5 +259,26 @@ export class EditComponent implements OnInit {
             .catch((err) => {
                 this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
             });
+    }
+}
+
+export class UploadAdapter {
+    private loader;
+    constructor(loader) {
+        this.loader = loader;
+    }
+
+    upload() {
+        return this.loader.file.then(
+            (file) =>
+                new Promise((resolve, reject) => {
+                    const myReader = new FileReader();
+                    myReader.onloadend = (e) => {
+                        resolve({ default: myReader.result });
+                    };
+
+                    myReader.readAsDataURL(file);
+                })
+        );
     }
 }

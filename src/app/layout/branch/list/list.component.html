@@ -72,6 +72,14 @@
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
+                        <!-- <th scope="col"
+                            [class.active]="order === 'compName'"
+                            (click)="setOrder('compName')"
+                        >
+                            Địa chỉ
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th> -->
                         <th scope="col"
                             [class.active]="order === 'dao'"
                             (click)="setOrder('dao')"
@@ -93,15 +101,20 @@
                         <th scope="row">
                             {{ i + 1 }}
                         </th>
-                        <td>{{ branch.compCode }}</td>
+                        <td>{{ branch.key.compCode }}</td>
                         <td>{{ branch.compName }}</td>
+                        <!-- <td>{{ branch.address }}</td> -->
                         <td>{{ branch.dao }}</td>
                         <td>
-                            <a class="mr-2 cursor-pointer text-blue" routerLink="/branch/edit/{{ branch.compCode }}">
+                            <a class="mr-2 cursor-pointer text-blue" href="javascript:void(0)" (click)="matchParamDetail({
+                                compCode: branch.key.compCode,
+                                mp: branch.key.mp,
+                                mcn: branch.key.mcn
+                            })">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <span class="mr-2 cursor-pointer text-danger">
-                                <i class="fa fa-trash" (click)="deleteItem(1, i, branch.compCode)"></i>
+                                <i class="fa fa-trash" (click)="deleteItem(1, i, branch.key.compCode,branch.key.mp,branch.key.mcn)"></i>
                             </span>
                         </td>
                     </tr>
@@ -109,9 +122,9 @@
             </table>
         </div>
     </div>
-
-    <div class="row mt-3">
-        <div class="col-md-12">
+    <div>
+        <div class="row mt-3">
+            <div class="col-md-12">
             <ngb-pagination
                 *ngIf="totalSearch > 0 && totalSearch > re_search.size"
                 [collectionSize]="totalSearch"
