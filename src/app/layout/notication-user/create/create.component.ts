@@ -15,7 +15,9 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { ExcelService } from '../../../services/excel.service';
 import { async } from '@angular/core/testing';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+
 import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters';
 import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials';
 import { listNotify } from '../code';
