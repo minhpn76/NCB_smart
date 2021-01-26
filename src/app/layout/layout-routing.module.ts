@@ -37,15 +37,25 @@ const routes: Routes = [
             { path: 'config-cronjob', loadChildren: () => import('./cronjob/cronjob.module').then(m => m.CronjobModule) },
             { path: 'image-paycard', loadChildren: () => import('./image-paycard/image-paycard.module').then(m => m.ImgPayCardModule) },
             { path: 'promotion-package', loadChildren: () => import('./promotion-package/link.module').then(m => m.PromotionPGModule) },
+            // create by truonghm
+            {path: 'hpcosts', loadChildren: () => import('./hp-costs/hp-costs.module').then(m => m.HpCostsModule)},
+            {path: 'schools', loadChildren: () => import('./hp-school/hp-school.module').then(m => m.HpSchoolModule)},
+            {path: 'faculties', loadChildren: () => import('./hp-faculties/hp-faculties.module').then(m => m.HpFacultiesModule)},
+            {path: 'clazz', loadChildren: () => import('./hp-class/hp-class.module').then(m => m.HpClassModule)},
+            {path: 'uploadtuition', loadChildren: () => import('./hp-upload-tuition/hp-upload-tuition.module').then(m => m.HpUploadTuitionModule)},
+
 
             // create by tiennx
             {path: 'qr-services', loadChildren: () => import('./qr-server/qr-service.module').then(m => m.QrServiceModule)},
-
             {path: 'qr-coupons', loadChildren: () => import('./qr-coupon/qr-coupon.module').then(m => m.QrCouponModule)},
             {path: 'qr-merchants', loadChildren: () => import('./qr-merchant/qr-merchant.module').then(m => m.QrMerchantModule)},
+            // tslint:disable-next-line:max-line-length
             {path: 'notifications', loadChildren: () => import('./notication-user/notication-user.module').then(m => m.NotificationUserModule)},
+            // tslint:disable-next-line:max-line-length
             {path: 'version-app-lzi', loadChildren: () => import('./version-app-lzi/version-app-lzi.module').then(m => m.VersionAppLziModule)},
+            // tslint:disable-next-line:max-line-length
             {path: 'invite-friends', loadChildren: () => import('./introduce-friends/introduce-friends.module').then(m => m.IntroduceFriendsModule)},
+            // tslint:disable-next-line:max-line-length
             {path: 'partner-promotion', loadChildren: () => import('./partner-promotion/partner-promotion.module').then(m => m.PartnerPromotionModule)}
         ]
     }

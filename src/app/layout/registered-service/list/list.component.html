@@ -1,5 +1,7 @@
 <div>
-    <app-page-header [heading]="'Danh sách dịch vụ đã đăng ký'" [url_heading]="'/registered-service'">
+    <app-page-header 
+        [heading]="'Danh sách dịch vụ đã đăng ký'"
+        [url_heading]="'/registered-service'">
     </app-page-header>
     <div class="row">
         <div class="col-md-6">
@@ -7,8 +9,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Mã chi nhánh/ phòng giao dịch:</label>
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.compCode">
-                        <option *ngFor="let status of listPGD" [value]="status.code" selected="selected">{{status.name}}
-                        </option>
+                        <option *ngFor="let status of listPGD" [value]="status.code" selected="selected">{{status.name}}</option>
 
                     </select>
                     <!-- <input class="form-control col-lg-12"
@@ -19,81 +20,85 @@
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">CMND/HC:</label>
                 <div class="col-sm-6">
-                    <input class="form-control col-lg-12" itrim type="text" id="search" [(ngModel)]="re_search.idCard"
-                        placeholder="Hộ chiếu">
+                    <input class="form-control col-lg-12"
+                    itrim type="text" id="search" [(ngModel)]="re_search.idCard"
+                    placeholder="Hộ chiếu">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Phân hệ:</label>
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.type" (change)="onSearch(re_search)">
-                        <option *ngFor="let status of listPHe" [value]="status.code" selected="selected">{{status.name}}
-                        </option>
+                        <option *ngFor="let status of listPHe" [value]="status.code" selected="selected">{{status.name}}</option>
 
                     </select>
                 </div>
-
+                
             </div>
-            <!-- <div class="form-group row">
+            <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Từ ngày:</label>
                 <div class="col-sm-6 input-group">
-                    <input readonly class="form-control" placeholder="Từ ngày" name="dFS" ngbDatepicker
-                        #dFS="ngbDatepicker" [(ngModel)]="mRatesDateS">
-
+                    <input readonly class="form-control" placeholder="Từ ngày"
+                        name="dFS" ngbDatepicker #dFS="ngbDatepicker"
+                        [(ngModel)]="mRatesDateS"
+                        > 
+                        
+                        <!-- [(ngModel)]="mRatesDateS" -->
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" (click)="dFS.toggle()" type="button">
                             <i class="fa fa-calendar"></i>
                         </button>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
         <div class="col-md-6">
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Dịch vụ:</label>
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.service">
-                        <option *ngFor="let status of listService" [value]="status.code" selected="selected">
-                            {{status.name}}</option>
+                        <option *ngFor="let status of listService" [value]="status.code" selected="selected">{{status.name}}</option>
 
                     </select>
                 </div>
-
+                
             </div>
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.status">
-                        <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">
-                            {{status.name}}</option>
+                        <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
 
                     </select>
                 </div>
-
+                
             </div>
-            <!-- <div class="form-group row">
+            <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Đến ngày:</label>
                 <div class="col-sm-6 input-group">
-                    <input readonly class="form-control" placeholder="Đến ngày" name="dTS" ngbDatepicker
-                        #dTS="ngbDatepicker" [(ngModel)]="mRatesDateS_7">
-                   
-
+                    <input readonly class="form-control" placeholder="Đến ngày"
+                        name="dTS" ngbDatepicker #dTS="ngbDatepicker"
+                        [(ngModel)]="mRatesDateS_7"
+                        > 
+                        <!-- (ngModelChange)="getOrder(search); -->
+                        
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" (click)="dTS.toggle()" type="button">
                             <i class="fa fa-calendar"></i>
                         </button>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
-        </div>
+        </div> 
         <div class="col-md-12 text-center">
             <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
                 <i class="fa fa-search"></i>&nbsp;Tìm kiếm
             </button>
             <button class="btn btn-success" (click)="exportExcel()">
-                <i *ngIf="isProcessLoadExcel === 1" class="fa fa-spinner font-20"></i>
-                <i *ngIf="isProcessLoadExcel === 0" class="fa fa-file"></i>&nbsp;Xuất excel
+                <i *ngIf="isProcessLoadExcel === 1"
+                    class="fa fa-spinner font-20"></i>
+                <i  *ngIf="isProcessLoadExcel === 0" class="fa fa-file"></i>&nbsp;Xuất excel
             </button>
         </div>
     </div>
@@ -101,10 +106,14 @@
         <div class="col-md-8">
             <div class="form-group row">
                 <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
-                <select class="form-control col-sm-1" [(ngModel)]="re_search.size" (ngModelChange)="changeSize($event)">
-                    <option *ngFor="let page_size of listPageSize" [value]="page_size">{{page_size}}</option>
-                </select> &nbsp;
-                <label for="search" class=" col-form-label">Bản ghi</label>
+                    <select 
+                        class="form-control col-sm-1" 
+                        [(ngModel)]="re_search.size"
+                        (ngModelChange)="changeSize($event)"
+                    >
+                        <option *ngFor="let page_size of listPageSize" [value]="page_size">{{page_size}}</option>
+                    </select> &nbsp;
+                    <label for="search" class=" col-form-label">Bản ghi</label>  
             </div>
         </div>
     </div>
@@ -114,33 +123,52 @@
                 <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col" [class.active]="order === 'status'" (click)="setOrder('status')">Mã yêu cầu
+                        <th scope="col"
+                            [class.active]="order === 'status'"
+                            (click)="setOrder('status')"
+                        >Mã yêu cầu
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th scope="col" [class.active]="order === 'customerName'" (click)="setOrder('customerName')">Họ
-                            và tên
+                        <th scope="col"
+                            [class.active]="order === 'customerName'"
+                            (click)="setOrder('customerName')"
+                        >Họ và tên
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th scope="col" [class.active]="order === 'idCard'" (click)="setOrder('idCard')">CMND /Hộ chiếu
+                        <th scope="col"
+                            [class.active]="order === 'idCard'"
+                            (click)="setOrder('idCard')"
+                        >CMND /Hộ chiếu
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th scope="col" [class.active]="order === 'phone'" (click)="setOrder('phone')">Số điện thoại
+                        <th scope="col"
+                            [class.active]="order === 'phone'"
+                            (click)="setOrder('phone')"
+                        >Số điện thoại
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th scope="col" [class.active]="order === 'service'" (click)="setOrder('service')">Sản phẩm/
-                            Dịch vụ
+                        <th scope="col"
+                            [class.active]="order === 'service'"
+                            (click)="setOrder('service')"
+                        >Sản phẩm/ Dịch vụ
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th scope="col" [class.active]="order === 'compName'" (click)="setOrder('compName')">CN/ PGD
+                        <th scope="col"
+                            [class.active]="order === 'compName'"
+                            (click)="setOrder('compName')"
+                        >CN/ PGD
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th scope="col" [class.active]="order === 'status'" (click)="setOrder('status')">Trạng thái
+                        <th scope="col"
+                            [class.active]="order === 'status'"
+                            (click)="setOrder('status')"
+                        >Trạng thái
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
@@ -148,7 +176,7 @@
                         <th scope="col">Người xử lý</th>
                     </tr>
                 </thead>
-
+                
                 <tbody>
                     <tr *ngIf="isProcessLoad == 1" class="text-center">
                         <td colspan=10><i class="fa fa-spin fa-spinner font-30"></i></td>
@@ -156,13 +184,12 @@
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
                         <td colspan=10>Không tìm thấy kết quả</td>
                     </tr>
-                    <tr *ngFor="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index"
-                        style="cursor: pointer" (click)="openPopUpRequest(data.id, data)">
-
+                    <tr *ngFor ="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index" style="cursor: pointer" (click)="openPopUpRequest(data.id, data)">
+                        
                         <th scope="row">
                             {{i+1}}
                         </th>
-                        <td>{{data?.id}}
+                        <td>{{data?.id}} 
                         </td>
                         <td>{{data?.customerName}}</td>
                         <td>{{data?.idCard}}</td>
@@ -171,8 +198,8 @@
                         <td>{{data?.compName}}</td>
                         <td>
                             <span class="badge badge-success" *ngIf="data?.status === 'NEW'">NEW</span>
-                            <span class="badge badge-warning" *ngIf="data?.status === 'PROCESSING'">PROCESSING</span>
-                            <span class="badge badge-danger" *ngIf="data?.status === 'CLOSED'">CLOSED</span>
+                            <span class="badge badge-warning"  *ngIf="data?.status === 'PROCESSING'">PROCESSING</span>
+                            <span class="badge badge-danger" *ngIf="data?.status === 'CLOSED'" >CLOSED</span>
                         </td>
                         <td>{{data?.requestDate}}</td>
                         <td>{{data?.userId}}</td>
@@ -182,163 +209,29 @@
                             </a>
                         </td> -->
                     </tr>
-
+                    
                 </tbody>
             </table>
-        </div>
+        </div> 
     </div>
     <div class="row mt-3">
         <div class="col-md-12">
-            <ngb-pagination *ngIf="totalSearch > 0 && totalSearch > re_search.size" [collectionSize]="totalSearch"
-                [(page)]="re_search.page" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
-                (pageChange)="loadPage($event)">
+            <ngb-pagination 
+                *ngIf="totalSearch > 0 && totalSearch > re_search.size"
+                [collectionSize]="totalSearch" 
+                [(page)]="re_search.page" [maxSize]="10" [rotate]="true" 
+                [boundaryLinks]="true"
+                (pageChange)="loadPage($event)"
+            >
             </ngb-pagination>
         </div>
     </div>
     <!-- /.row -->
 </div>
 
-<!-- Yêu cầu trực tuyến -->
 <ng-template #popupReqest let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h5 class="modal-title">Yêu cầu trực tuyến</h5>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-
-    <div class="form-group row mt-4 ml-2">
-        <label for="search" class="col-sm-2 col-form-label">Mã yêu cầu:</label>
-        <div class="col-sm-5" style="margin-left: -22px">
-            <div class="input-group">
-                <input class="form-control col-lg-12" (keydown)="keyDownFunction($event, passData.id)" itrim type="text"
-                    id="search" [(ngModel)]="passData.id" placeholder="Mã yêu cầu">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" (click)="getItem(passData.id)" type="button">Truy
-                        vấn</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row m-t-10" *ngIf="isSearchItem === 1 && isSearchCode === 1">
-        <div class="text-center col-md-12">
-            <i class="fa fa-spin fa-spinner font-30"></i>
-        </div>
-    </div>
-    <div class="row m-t-10" *ngIf="isSearchCode === 0">
-        <div class="text-center col-md-12">
-            Không tìm thấy dữ liệu
-        </div>
-    </div>
-    <div class="modal-body p-t-0 d-flex">
-        <div class="row m-t-10" *ngIf="isSearchItem === 0">
-            <div class="col-md-12">
-
-
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Sản phẩm/ dịch vụ:</label>
-                    <div class="col-sm-6 mb-3">
-                        <input class="form-control col-lg-12" itrim type="text" id="search"
-                            placeholder="Sản phẩm/ dịch vụ" [attr.disabled]="true" [(ngModel)]="passData.service">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">CMND/HC:</label>
-                    <div class="col-sm-6">
-                        <input class="form-control col-lg-12" itrim type="text" id="search"
-                            [(ngModel)]="passData.idCard" [attr.disabled]="true" placeholder="CMND/HC">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Ngày yêu cầu:</label>
-                    <div class="col-sm-6">
-                        <input class="form-control col-lg-12" itrim type="text" id="search"
-                            [(ngModel)]="passData.requestDate" [attr.disabled]="true" placeholder="Ngày yêu cầu">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">CN yêu cầu xử lý:</label>
-                    <div class="col-sm-6">
-                        <select class="form-control" [(ngModel)]="passData.compCode">
-                            <option *ngFor="let item of listBranch" [value]="item.code">{{item.name}}</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
-                    <div class="col-sm-6">
-                        <select class="form-control" [(ngModel)]="passData.status">
-                            <option *ngFor="let item of listStatus" [value]="item.code">{{item.name}}</option>
-                        </select>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <div class="row m-t-10" *ngIf="isSearchItem === 0">
-            <div class="col-md-12">
-
-
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Số điện thoại:</label>
-                    <div class="col-sm-8">
-                        <input class="form-control col-lg-12" itrim type="text" id="search" [(ngModel)]="passData.phone"
-                            [attr.disabled]="true" placeholder="Số điện thoại">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="search" class="col-sm-4 col-form-label">Họ và tên KH:</label>
-                    <div class="col-sm-8">
-                        <input class="form-control col-lg-12" itrim type="text" id="search"
-                            [(ngModel)]="passData.customerName" [attr.disabled]="true" placeholder="Họ và tên KH">
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="search" class="col-sm-4 col-form-label ml-3">Cập nhật chi tiết:</label>
-        <div class="col-sm-6">
-            <div *ngIf="listLog.length > 0">
-                <ul *ngFor="let item of listLog">
-                    <li>{{ item.datetime | date:'yyyy-MM-dd HH:mm'}} - {{item.userId}} - {{item.newValue}}
-                    </li>
-                </ul>
-            </div>
-            <div *ngIf="listLog.length === 0">
-                <i>Không có thông tin cập nhật chi tiết</i>
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="search" class="col-sm-4 col-form-label"></label>
-        <div class="col-sm-6">
-            <textarea name="" id="" placeholder="Viết nội dung cập nhật" [(ngModel)]="comment" rows="3"
-                style="width: 100%"></textarea>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="search" class="col-sm-4 col-form-label"></label>
-        <div class="col-sm-6">
-            <button class="btn btn-default" (click)="closeModal()">Bỏ qua</button>
-            &nbsp;
-            <button class="btn btn-primary" (click)="updateService()">Lưu</button>
-
-        </div>
-    </div>
-</ng-template>
-
-<!-- <ng-template #popupReqest let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <h5 class="modal-title">Chi tiết đăng ký</h5>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -737,4 +630,4 @@
             </div>
         </div>
     </div>
-</ng-template> -->
+</ng-template>

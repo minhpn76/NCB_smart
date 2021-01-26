@@ -1,28 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { NCBService } from '../../../services/ncb.service';
-import { OrderPipe } from 'ngx-order-pipe';
-import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit } from "@angular/core";
+import { NCBService } from "../../../services/ncb.service";
+import { OrderPipe } from "ngx-order-pipe";
+import { ToastrService } from "ngx-toastr";
 import Swal from 'sweetalert2';
 import { Helper } from '../../../helper';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    selector: 'app-list',
-    templateUrl: './list.component.html',
-    styleUrls: ['./list.component.scss'],
+    selector: "app-list",
+    templateUrl: "./list.component.html",
+    styleUrls: ["./list.component.scss"],
     providers: [NCBService, Helper],
 })
 export class ListComponent implements OnInit {
     constructor(private ncbService: NCBService, public toastr: ToastrService, public helper: Helper) {
-        this.loadDate();
+        this.loadDate()
     }
     isProcessLoad: any = 0;
-    isProcessLoadNCC: any = 0;
+    isProcessLoadNCC: any = 0
     totalSearch: any = 0;
     totalSearchNCC: any = 0;
-    order = 'title';
+    order = "title";
     reverse = false;
-    isShowCreate = false;
+    isShowCreate = false
     mRatesDateS: NgbDateStruct;
     mRatesDateS_7: NgbDateStruct;
     my: any = new Date();
@@ -32,40 +32,40 @@ export class ListComponent implements OnInit {
     listDataNCC: any = [];
     listStatus: any = [
         {
-            name: 'Tất cả',
-            code: '',
+            name: "Tất cả",
+            code: "",
         },
         {
-            name: 'Thành công',
-            code: '1',
+            name: "Thành công",
+            code: "1",
         },
         {
-            name: 'Thất bại',
-            code: '0',
+            name: "Thất bại",
+            code: "0",
         },
     ];
 
     search_config: any = {
         size: 10,
         page: 0,
-    };
+    }
 
 
     search: any = {
-        rootUserCif: '',
-        targetUserCif: '',
+        rootCif: '',
+        targetCif: '',
         start: '',
         end: '',
         status: '',
         page: 0,
         size: 10
-    };
+    }
 
     ngOnInit() {
         this.getListData(this.search_config);
-        const tempPayloadNCC: any = {...this.search};
+        let tempPayloadNCC: any = {...this.search}
         if (!tempPayloadNCC.status) {
-            delete tempPayloadNCC['status'];
+            delete tempPayloadNCC['status']
         }
         this.getListNCC(tempPayloadNCC);
     }
@@ -75,7 +75,7 @@ export class ListComponent implements OnInit {
         this.mRatesDateS_7 = { year: this.my.getFullYear(), month: this.my.getMonth() + 1, day: this.my.getDate() };
     }
     findNameConfig (input: string) {
-        return this.listData.find(i => i.id === input);
+        return this.listData.find(i => i.id === input)
     }
     getListData(params) {
         this.listData = [];
@@ -89,7 +89,7 @@ export class ListComponent implements OnInit {
                     this.listData = body.content;
                     this.totalSearch = body.totalElements;
                     this.isProcessLoad = 0;
-                    this.isShowCreate = body.content.length < 0 ? true : false;
+                    this.isShowCreate = body.content.length < 0 ? true : false
                 }, 300);
             })
             .catch((err) => {
@@ -149,119 +149,46 @@ export class ListComponent implements OnInit {
           this.search.page = page;
         }
       }
-
-    keyDownFunction(event) {
-        if (event.keyCode === 13) {
-          this.onSearch(this.search);
-        }
-    }
     onSearch(payload) {
-        if (payload.rootUserCif !== '' && payload.targetUserCif !== '' && payload.status !== '') {
+        if (payload.rootCif !== '' || payload.targetCif !== '' || payload.status !== '') {
             payload.page = 0;
-            this.getListNCC(payload);
-        } else if (payload.rootUserCif !== '' && payload.targetUserCif === '' && payload.status === '') {
-            payload.page = 0;
-            const temp: any = {
-                    rootUserCif: payload.rootUserCif,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                this.getListNCC(temp);
-        } else if (payload.rootUserCif === '' && payload.targetUserCif !== '' && payload.status === '') {
-            payload.page = 0;
-            const temps: any = {
-                    targetUserCif: payload.targetUserCif,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                this.getListNCC(temps);
-        } else if (payload.rootUserCif === '' && payload.targetUserCif === '' && payload.status !== '') {
-            payload.page = 0;
-            const tempsr: any = {
-                    status: payload.status,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                this.getListNCC(tempsr);
-        } else if (payload.rootUserCif !== '' && payload.targetUserCif === '' && payload.status !== '') {
-            payload.page = 0;
-            const tempsr: any = {
-                    rootCif: payload.rootUserCif,
-                    status: payload.status,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                this.getListNCC(tempsr);
-        } else if (payload.rootUserCif !== '' && payload.targetUserCif !== '' && payload.status === '') {
-            payload.page = 0;
-            const tempCT: any = {
-                    targetUserCif: payload.targetUserCif,
-                    rootUserCif: payload.rootUserCif,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                this.getListNCC(tempCT);
-        } else if (payload.rootUserCif === '' && payload.targetUserCif !== '' && payload.status !== '') {
-            payload.page = 0;
-            const tempCT: any = {
-                    targetUserCif: payload.targetUserCif,
-                    status: payload.status,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                this.getListNCC(tempCT);
-        } else {
-            this.getListNCC(this.listDataNCC);
         }
         // if (!payload.status) {
         //     delete payload['status']
         // }
-        // const temp: any = {
-        //     rootCif: payload.rootCif,
-        //     targetCif: payload.targetCif,
-        //     fromDate: payload.fromDate,
-        //     toDate: payload.referParttoDatenerCode,
-        //     status: payload.status,
-        //     page: payload.page,
-        //     size: payload.size
-        // };
-        // this.getListNCC(temp);
+        const temp : any = {
+            rootCif: payload.rootCif,
+            targetCif: payload.targetCif,
+            fromDate: payload.fromDate,
+            toDate: payload.referParttoDatenerCode,
+            page: payload.page,
+            size: payload.size
+        }
+        this.getListNCC(temp);
     }
 
     deleteItem(event, index, id) {
         Swal.fire({
-            title: 'Bạn có chắc chắn xoá?',
-            text: 'Dữ liệu đã xoá không thể khôi phục lại',
-            type: 'warning',
+            title: "Bạn có chắc chắn xoá?",
+            text: "Dữ liệu đã xoá không thể khôi phục lại",
+            type: "warning",
             showCancelButton: true,
-            confirmButtonText: 'Đồng ý',
-            cancelButtonText: 'Không, trở lại',
+            confirmButtonText: "Đồng ý",
+            cancelButtonText: "Không, trở lại",
         }).then((result) => {
             if (result.value) {
                 this.ncbService.deleteConfigFriend({ id: id }).then(() => {
                     this.listData.splice(index, 1);
                     Swal.fire(
-                        'Đã xoá!',
-                        'Dữ liệu đã xoá hoàn toàn.',
-                        'success'
+                        "Đã xoá!",
+                        "Dữ liệu đã xoá hoàn toàn.",
+                        "success"
                     );
                 });
                 // For more information about handling dismissals please visit
                 // https://sweetalert2.github.io/#handling-dismissals
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                Swal.fire('Huỷ bỏ', 'Dữ liệu được bảo toàn :)', 'error');
+                Swal.fire("Huỷ bỏ", "Dữ liệu được bảo toàn :)", "error");
             }
         });
     }

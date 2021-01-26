@@ -1,0 +1,67 @@
+<div>
+    <app-page-header [heading]="'Khoa'" [heading_second]="'Thêm mới khoa'" [url_heading]="'/faculties'"> </app-page-header>
+    <div class="row">
+        <div class="col-md-10" style="margin:0px auto">
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Chọn trường học(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" aria-readonly="true" formControlName="schoolCode" name="schoolCode">
+                            <option *ngFor="let School of listSchool" [value]="School.schoolCode" selected="selected">{{School.schoolCode}} - {{ School.schoolName }}</option>
+                        </select>
+                        <div *ngIf="submitted && Form.schoolCode.errors" class="invalid-feedback">
+                            <div *ngIf="Form.schoolCode.hasError('whitespace')"> Mã trường không hợp lệ</div>
+                            <div *ngIf="Form.schoolCode.errors.required"> Mã trường là bắt buộc</div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label"> Mã khoa(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="facultyCode"
+                            class="form-control col-lg-12"
+                            placeholder="Mã khoa"
+                            [ngClass]="{ 'is-invalid': submitted && Form.facultyCode.errors }"
+                        />
+                        <div *ngIf="submitted && Form.facultyCode.errors" class="invalid-feedback">
+                            <div *ngIf="Form.facultyCode.hasError('whitespace')"> Mã khoa không hợp lệ</div>
+                            <div *ngIf="Form.facultyCode.errors.required"> Mã khoa là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label"> Tên khoa(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="facultyName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên khoa"
+                            [ngClass]="{ 'is-invalid': submitted && Form.facultyName.errors }"
+                        />
+                        <div *ngIf="submitted && Form.facultyName.errors" class="invalid-feedback">
+                            <div *ngIf="Form.facultyName.hasError('whitespace')"> Tên khoa không hợp lệ</div>
+                            <div *ngIf="Form.facultyName.errors.required"> Tên khoa là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" aria-readonly="true" formControlName="status" name="status">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
+                        </select>
+                    </div>
+                </div> 
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3"><i class="fa fa-save"></i>&nbsp;Lưu lại</button>
+                        <button class="btn btn-light" (click)="resetForm()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

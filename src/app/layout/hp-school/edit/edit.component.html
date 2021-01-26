@@ -1,0 +1,178 @@
+ 
+<div>
+    <app-page-header [heading]="'Trường học'" [heading_second]="'Thêm mới trường học'" [url_heading]="'/schools'"> </app-page-header>
+    <div class="row">
+        <div class="col-md-10" style="margin:0px auto">
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label"> Mã trường(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="schoolCode"
+                            class="form-control col-lg-12"
+                            placeholder=" Mã trường"
+                            maxlength="20"
+                            [ngClass]="{ 'is-invalid': submitted && Form.schoolCode.errors }"
+                        />
+                        <div *ngIf="submitted && Form.schoolCode.errors" class="invalid-feedback">
+                            <div *ngIf="Form.schoolCode.hasError('whitespace')"> Mã trường không hợp lệ</div>
+                            <div *ngIf="Form.schoolCode.errors.required"> Mã trường là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label"> Tên trường(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="schoolName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên trường"
+                            maxlength="150"
+                            [ngClass]="{ 'is-invalid': submitted && Form.schoolName.errors }"
+                        />
+                        <div *ngIf="submitted && Form.schoolName.errors" class="invalid-feedback">
+                            <div *ngIf="Form.schoolName.hasError('whitespace')"> Tên trường không hợp lệ</div>
+                            <div *ngIf="Form.schoolName.errors.required"> Tên trường là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <!--Chi ap dung cho chưc nang sua-->
+                <div class="form-group row">  
+                    <label for="search" class="col-sm-4 col-form-label">Số cif(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="schoolCif"
+                            class="form-control col-lg-12"
+                            placeholder=" Số cif "
+                            maxlength="10"
+                            [ngClass]="{ 'is-invalid': submitted && Form.schoolCif.errors }"
+                        />
+                        <div *ngIf="submitted && Form.schoolCif.errors" class="invalid-feedback">
+                            <div *ngIf="Form.schoolCif.hasError('whitespace')"> Số cif không hợp lệ</div>
+                            <div *ngIf="Form.schoolCif.errors.required"> Số cif là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Số tài khoản(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="schoolAcctNo"
+                            class="form-control col-lg-12"
+                            placeholder="Số tài khoản"
+                            maxlength="10"
+                            [ngClass]="{ 'is-invalid': submitted && Form.schoolAcctNo.errors }"
+                        />
+                        <div *ngIf="submitted && Form.schoolAcctNo.errors" class="invalid-feedback">
+                            <div *ngIf="Form.schoolAcctNo.hasError('whitespace')">Số tài khoản không hợp lệ</div>
+                            <div *ngIf="Form.schoolAcctNo.errors.required"> Số tài khoản là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Tên tài khoản(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="schoolAcctName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên tài khoản"
+                            [ngClass]="{ 'is-invalid': submitted && Form.schoolAcctName.errors }"
+                        />
+                        <div *ngIf="submitted && Form.schoolAcctName.errors" class="invalid-feedback">
+                            <div *ngIf="Form.schoolAcctName.hasError('whitespace')">Tên tài khoản không hợp lệ</div>
+                            <div *ngIf="Form.schoolAcctName.errors.required"> Tên tài khoản là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row" hidden>
+                    <label for="search" class="col-sm-4 col-form-label">Tên tài khoản(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="schoolBankCode"
+                            class="form-control col-lg-12"
+                            placeholder="Mã ngân hàng"
+                            [ngClass]="{ 'is-invalid': submitted && Form.schoolBankCode.errors }"
+                        /> 
+                    </div>
+                </div>
+                <div class="form-group row" hidden>
+                    <label for="search" class="col-sm-4 col-form-label">Tên tài khoản(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="schoolBankName"
+                            class="form-control col-lg-12"
+                            placeholder="Tên ngân hàng"
+                            [ngClass]="{ 'is-invalid': submitted && Form.schoolBankName.errors }"
+                        /> 
+                    </div>
+                </div> 
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã citad GT:</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="schoolCitadGt"
+                            class="form-control col-lg-12"
+                            placeholder="Mã citad GT" 
+                            maxlength="20"
+                        /> 
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã citad TT:</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="schoolCitadTT"
+                            class="form-control col-lg-12"
+                            placeholder="Mã citad TT" 
+                            maxlength="20"
+                        /> 
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Số điện thoại(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="schoolPhoneNumber"
+                            class="form-control col-lg-12"
+                            placeholder="Số điện thoại"
+                            maxlength="15"
+                            [ngClass]="{ 'is-invalid': submitted && Form.schoolPhoneNumber.errors }"
+                        />
+                        <div *ngIf="submitted && Form.schoolPhoneNumber.errors" class="invalid-feedback">
+                            <div *ngIf="Form.schoolPhoneNumber.hasError('whitespace')">Số điện thoại không hợp lệ</div>
+                            <div *ngIf="Form.schoolPhoneNumber.errors.required"> Số điện thoại là bắt buộc</div>
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Địa chỉ:</label>
+                    <div class="col-sm-6">
+                        <input
+                            formControlName="schoolAddress"
+                            class="form-control col-lg-12"
+                            placeholder="Địa chỉ" 
+                            maxlength="200"
+                        /> 
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" aria-readonly="true" formControlName="status" name="status">
+                            <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
+                        </select>
+                    </div>
+                </div> 
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-success mr-3" type="submit"><i class="fa fa-save"></i>&nbsp;Lưu lại</button>
+                        <button class="btn btn-light" (click)="resetForm()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

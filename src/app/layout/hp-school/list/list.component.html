@@ -1,0 +1,115 @@
+<div>
+    <app-page-header 
+        [heading]="'Trường học'"
+        [url_heading]="'/schools'">
+    </app-page-header>
+    <!--Phần tìm kiếm-->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Mã trường học:</label>
+                <div class="col-sm-6">
+                    <input class="form-control col-lg-12"
+                    itrim type="text" id="search" [(ngModel)]="re_search.schoolCode"
+                    placeholder="Mã trường học">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="re_search.status">
+                        <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{status.name}}</option>
+
+                    </select>
+                </div>
+                
+            </div>
+        </div> 
+        <div class="col-md-12 text-center">
+            <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
+                <i class="fa fa-search"></i>&nbsp;Tìm kiếm
+            </button>
+            <a class="btn btn-warning" [routerLink]="['/schools/create']">
+                <i class="fa fa-plus"></i>&nbsp;Thêm mới
+            </a>
+        </div>
+    </div>
+    <!-- Phần danh sach-->
+    <div class="row mt-50">
+        <div class="col-md-8">
+            <div class="form-group row">
+                <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
+                    <select class="form-control col-sm-2" [(ngModel)]="re_search.size" (change)="changePageSize()">
+                        <option *ngFor="let page_size of listPageSize" [value]="page_size">{{page_size}}</option>
+                    </select> &nbsp;
+                    <label for="search" class=" col-form-label">Bản ghi</label>  
+            </div>
+        </div> 
+    </div>
+    <div class="row">
+        <div class="col-md-12 table-responsive Flipped">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col"> Mã trường  </th>
+                    <th scope="col"> Tên trường</th>
+                    <th scope="col"> Số CIF   </th> 
+                    <th scope="col"> Số tài khoản</th>
+                    <th scope="col"> Mã citad GT</th>
+                    <th scope="col"> Mã citad TT</th> 
+                    <th scope="col"> Trạng thái</th>
+                    <th scope="col"> Địa chỉ</th> 
+                    <th scope="col"> Số điện thoại</th>
+                    <th scope="col"> Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="isProcessLoad == 1" class="text-center">
+                        <td colspan=12><i class="fa fa-spin fa-spinner font-30"></i></td>
+                    </tr>
+                    <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
+                        <td colspan=12>Không tìm thấy kết quả</td>
+                    </tr>
+                    <tr *ngFor ="let data of listData | orderBy:'case-insensitive'; let i = index">
+                        <th scope="row">
+                            {{ i+1 + (this.re_search.size * (this.re_search.page<=1?0:this.re_search.page-1)) }}
+                        </th>
+                        <td>{{data?.schoolCode}}</td>
+                        <td>{{data?.schoolName}}</td>
+                        <td>{{data?.schoolCif}}</td>
+                        <td>{{data?.schoolAcctNo}}</td>
+                        <td>{{data?.schoolCitadGt}}</td>
+                        <td>{{data?.schoolCitadTT}}</td>
+                        <td>
+                            <span *ngIf="data?.status === 1" class="badge badge-success">Active</span>
+                            <span *ngIf="data?.status === 0" class="badge badge-danger">Deactive</span>
+                        </td>
+                        <td>{{data?.schoolAddress}}</td>
+                        <td>{{data?.schoolPhoneNumber}}</td> 
+                        <td>
+                            <a class="mr-2 cursor-pointer text-blue" routerLink='/schools/edit/{{data?.id}}'>
+                                <i class="fa fa-edit"></i>
+                            </a> 
+                            <span class="mr-2 cursor-pointer text-danger"(click)="deleteItem(data?.id)">  
+                               <i class="fa fa-trash" ></i> 
+                            </span>
+                        </td>
+                    </tr> 
+                </tbody>
+            </table>
+        </div> 
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <ngb-pagination *ngIf="totalSearch > 0 && totalSearch > re_search.size"
+                [collectionSize]="totalSearch" [pageSize]="re_search.size" [(page)]="re_search.page"
+                [boundaryLinks]="true"
+                [maxSize]="10" (pageChange)="loadPage($event)">
+            </ngb-pagination>
+        </div>
+    </div>
+</div>

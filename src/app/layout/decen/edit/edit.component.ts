@@ -25,7 +25,6 @@ export class EditComponent implements OnInit {
   re_search: any = {
     roleName: '',
     status: 'A',
-    briefDescription: '',
     page: 1,
     size: 1000
   };
@@ -149,8 +148,7 @@ export class EditComponent implements OnInit {
           } else {
             this.obj.description = JSON.stringify(this.listRoles);
             this.toastr.success('Cập nhật thành công', 'Thành công!');
-            // this.pageRefresh();
-            setTimeout(() => {this.router.navigateByUrl('/decen'); }, 500);
+            this.pageRefresh();
             resolve();
           }
         } else {
@@ -243,15 +241,15 @@ export class EditComponent implements OnInit {
     this.router.navigateByUrl('/decen');
   }
   async onSubmitRole() {
-    if (this.roleName === '') {
+    if (this.roleName !== '') {
       this.toastr.error('Tên phân quyền là bắt buộc', 'Có lỗi xảy ra');
       return;
     }
-    if (this.briefDescription === '') {
+    if (this.briefDescription !== '') {
       this.toastr.error('Mô tả phân quyền là bắt buộc', 'Có lỗi xảy ra');
       return;
     }
-    if (this.status === '') {
+    if (this.status !== '') {
       this.toastr.error('Trạng thái phân quyền là bắt buộc', 'Có lỗi xảy ra');
       return;
     }
@@ -262,7 +260,5 @@ export class EditComponent implements OnInit {
       status: this.status
     };
     await this.updateRole(payload);
-    console.log(122, payload);
-
   }
 }

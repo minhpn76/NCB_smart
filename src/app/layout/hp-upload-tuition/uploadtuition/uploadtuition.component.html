@@ -1,0 +1,149 @@
+<style>
+    .erEmty{
+        background-color:#ff0000b0 !important;
+    }
+    .erCost{
+        background-color:#fff700ee !important;
+    } 
+    .erCodeClass{
+        background-color:#ee65d3 !important;
+    } 
+    .erCodefaculty{
+        background-color:#da9c25 !important;
+    } 
+    .erCodeSchool{
+        background-color:#d2a8b2 !important;
+    }
+</style>
+<app-page-header 
+[heading] = "'Học phí'"
+[heading_second]="'Import tuition'"
+[url_heading]="'/uploadtuition'">
+</app-page-header>
+
+<div class="panel panel-info" style="border:1px solid rgb(39, 127, 243);padding:5px" >
+     
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Chọn trường học:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" aria-readonly="true" [(ngModel)]='schoolCode' (change)='getClass($event.target.value);getFaculties($event.target.value);'>
+                        <option *ngFor="let School of listSchool" [value]="School.schoolCode">{{School.schoolCode}} - {{ School.schoolName }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <label class="col-sm-4 col-form-label">Chọn học phí cần đóng:</label> 
+        <ul class="row" style=" list-style-type:none">
+            <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="font-size:12pt" *ngFor="let item of listCost; let i = index" [attr.data-index]="i">
+                <label class="form-check-label">
+                    <input type="checkbox" (click)='SelectCost(item.costCode)' [ngModel]="false" [value]="item.costCode"> {{item.costName}}
+                 </label> 
+            </li>
+        </ul> 
+   
+        <div class="col-md-6">
+            <button type="button" class="btn btn-default" (click)='export()'>Tải Template</button>
+        </div>
+      
+</div> 
+<div class="row"> 
+    <div class="col-md-12" style="padding-top: 10px;">
+       <label>(Lưu ý: Mỗi trường chỉ up một file) Chọn file import:</label>
+       <input type="file" class="btn-info" id="datafile" name="data" (mousewheel)="GetData($event)" (change)="GetData($event)"  title="Đưa chuột vào chọn tệp và lăn 'con lăn chuột' một nhịp để load lại dữ liệu."/>
+    <button type="button" class="btn btn-dranger"  color="warn" onclick="(document.getElementById('datafile').value = null)" (click)="this.dataStudent=null" >Hủy</button>
+    </div>  
+    <div class="col-md-12">
+      Chú thích màu|  <span class="erEmty" style="padding-right: 20px;"></span> :Lỗi thiếu thông tin Mã trường, Học sinh
+      <span class="erCost" style="padding-right: 20px;"></span> :Lỗi các loại phí thanh toán
+      <span class="erCodeSchool" style="padding-right: 20px;"></span> :Lỗi trường học
+      <span class="erCodeClass" style="padding-right: 20px;"></span> :Lỗi lớp họcerCodefaculty
+      <span class="erCodefaculty" style="padding-right: 20px;"></span> :Lỗi khoa
+      <span style="float: right;color: red;">{{this.errPage}}/{{this.errAll}} (Trường hợp lỗi/Tổng lỗi)</span>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
+                    <select class="form-control col-sm-2" [(ngModel)]="re_search.size" (change)="changePageSize()">
+                        <option *ngFor="let page_size of listPageSize" [value]="page_size">{{page_size}}</option>
+                    </select> &nbsp;
+                <label for="search" class=" col-form-label">Bản ghi</label>
+            </div>
+        </div>  
+    </div>
+ 
+    <div class="col-md-12 table-responsive Flipped"> 
+        <table id="DataTable" class="table  table-bordered" mdbTable mdbTableScroll  scrollY="true" maxHeight="200" bordered="true">
+            <thead> 
+                <tr>
+                    <th *ngFor="let header of headers">{{ header }}</th> 
+                </tr>
+            </thead>
+            <tbody> 
+                <tr *ngFor="let row of dataStudent" 
+                [ngClass]="{'erEmty': (!row[1]||!row[7]||!row[8]),'erCodeSchool':onCheckSchool(row[1]),'erCodefaculty':checkFaculty(row[3]),'erCodeClass':onCheckClass(row[5])}" >  
+                    <td *ngFor="let val of row" > 
+                        {{val}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <ngb-pagination *ngIf="totalSearch > 0 && totalSearch > re_search.size"
+                [collectionSize]="totalSearch" [pageSize]="re_search.size" [(page)]="re_search.page"
+                [boundaryLinks]="true"
+                [maxSize]="10" (pageChange)="loadPage($event)">
+            </ngb-pagination>
+        </div>
+    </div>
+</div>
+<div style="padding-top: 10px;"> 
+    <button type="button" class="btn btn-info" (click)="onSend()" *ngIf='errAll==0'>Lưu học phí</button>
+</div>
+
+<div class="row" style="padding-top: 50px;">
+    <label style="color: red;font-weight: bold;">Danh sách các học sinh bị trùng mã số học sinh và trường học.</label>
+    <div class="col-md-12 table-responsive"
+     style=" max-width: 100%; overflow-y: scroll;height: 500px;
+    overflow: auto;"
+    > 
+        <table class="table table-bordered collapsed" mdbTable mdbTableScroll  bordered="true">
+            <thead> 
+                <tr>
+                    <th>STT</th> 
+                    <th>MATRUONG</th> 
+                    <th>TENTRUONG</th> 
+                    <th>MAKHOA</th> 
+                    <th>TENKHOA</th> 
+                    <th>MALOP</th> 
+                    <th>TENLOP</th> 
+                    <th>MAHOCSINH</th> 
+                    <th>TENHOCSINH</th> 
+                    <th>KYTHANHTOAN</th> 
+                    <th>GHICHU</th> 
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="dataError.length == 0" class="text-center">
+                    <td colspan=11>Không tìm thấy kết quả</td>
+                </tr>
+                <tr *ngFor="let row of dataError">   
+                   <td>{{row.STT}} </td>
+                   <td>{{row.MATRUONG}} </td>
+                   <td>{{row.TENTRUONG}} </td>
+                   <td>{{row.MAKHOA}} </td>
+                   <td>{{row.TENKHOA}} </td>
+                   <td>{{row.MALOP}} </td>
+                   <td>{{row.TENLOP}} </td>
+                   <td>{{row.MAHOCSINH}} </td>
+                   <td>{{row.TENHOCSINH}} </td>
+                   <td>{{row.KYTHANHTOAN}} </td>
+                   <td>{{row.GHICHU}} </td>  
+                </tr>
+            </tbody>
+        </table>
+    </div> 
+</div>

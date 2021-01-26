@@ -206,7 +206,6 @@ export class CreateComponent implements OnInit {
             .getListQRServer({
                 size: 1000,
                 page: 0,
-                status: '1',
             })
             .then((result) => {
                 setTimeout(() => {

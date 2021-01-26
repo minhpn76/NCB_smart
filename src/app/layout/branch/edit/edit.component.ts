@@ -36,21 +36,17 @@ export class EditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      console.log(222, params);
-      this.departCode = params;
+    this.route.params.subscribe(params => {
+      this.departCode = params.itemId;
     });
     this.dataForm = this.formBuilder.group({
       compCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       compName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      address: [''],
       dao: ['', this.helper.noWhitespaceValidator],
       mcn: [''],
-      mp: [''],
-      address: ['']
+      mp: ['']
     });
-    console.log(233, this.dataForm);
-
-    const {compCode, mp, mcn} = this.departCode;
     this.getItem(this.departCode);
   }
   get Form() { return this.dataForm.controls; }
@@ -78,16 +74,15 @@ export class EditComponent implements OnInit {
     });
   }
   getItem(params) {
-    console.log(222, params);
-    this.ncbService.detailCompany(params).then((result) => {
+    this.ncbService.detailCompany({compCode: params}).then((result) => {
       const body = result.json().body;
       this.dataForm.patchValue({
-        compCode: body.key.compCode,
+        compCode: body.compCode,
         compName: body.compName,
         address: body.address,
-        mcn: body.key.mcn,
+        mcn: body.mcn,
         dao: body.dao,
-        mp: body.key.mp
+        mp: body.mp
       });
     }).catch(err => {
       this.toastr.error(err.json().decription, 'Thất bại!');
