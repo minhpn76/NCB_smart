@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +14,7 @@ import {
 import { Router } from '@angular/router';
 import { listNotify } from '../code';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-list',
@@ -28,7 +29,8 @@ export class ListComponent implements OnInit {
         private ncbService: NCBService,
         public toastr: ToastrService,
         public helper: Helper,
-        private router: Router
+        private router: Router,
+        private sanitized: DomSanitizer
     ) {
         this.loadDate();
     }
@@ -48,6 +50,7 @@ export class ListComponent implements OnInit {
         objectUserType: '',
         fromDate: '',
         toDate: '',
+        repeatValue: '',
         size: 10,
         page: 0,
         previous_page: 0,
@@ -98,6 +101,11 @@ export class ListComponent implements OnInit {
     profile: any = JSON.parse(localStorage.getItem('profile'))
         ? JSON.parse(localStorage.getItem('profile'))
         : null;
+
+
+    bypassHTML(str: any) {
+        return this.sanitized.bypassSecurityTrustHtml(str);
+    }
 
     ngOnInit() {
         this.getListData(this.search);
@@ -239,23 +247,26 @@ export class ListComponent implements OnInit {
                                 'Dữ liệu đã xoá hoàn toàn.',
                                 'success'
                             );
-
-                            const {
-                                page,
-                                size,
-                                search,
-                                previous_page,
-                            } = this.search;
-                            let tempage = 0;
-                            if (page > 0) {
-                                tempage = page - 1;
-                            }
-                            this.getListData({
-                                page: tempage,
-                                size: size,
-                                search: search,
-                                previous_page: previous_page,
-                            });
+                            // setTimeout(() => {
+                            //     this.getListData(this.search);
+                            // }, 300);
+                            this.onSearch(this.search);
+                            // const {
+                            //     page,
+                            //     size,
+                            //     search,
+                            //     previous_page,
+                            // } = this.search;
+                            // let tempage = 0;
+                            // if (page > 0) {
+                            //     tempage = page - 1;
+                            // }
+                            // this.getListData({
+                            //     page: tempage,
+                            //     size: size,
+                            //     search: search,
+                            //     previous_page: previous_page,
+                            // });
                         } else {
                             this.toastr.error('Xoá thất bại', 'Thất bại');
                         }

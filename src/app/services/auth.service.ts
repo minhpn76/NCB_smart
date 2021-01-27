@@ -111,8 +111,7 @@ export class AuthService {
         return this.res;
     }
     authRequestFile(config): Promise<any> {
-        const param_header = {
-};
+        const param_header = {};
         if (config.dont_auth === false || !config.dont_auth) {
             param_header['Authorization'] = this.getToken();
         }

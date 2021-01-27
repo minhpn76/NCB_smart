@@ -251,7 +251,6 @@ export class ListComponent implements OnInit {
   }
   onUploadServer() {
     if (this.fileExcel.file) {
-      console.log(this.fileExcel.file);
       this.temp.loading = true;
        const file: File = this.fileExcel.file;
       this.ncbService.uploadFileTelecom(file).then((result) => {

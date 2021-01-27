@@ -58,10 +58,10 @@ export class CreateComponent implements OnInit {
         this.dataForm = this.formBuilder.group({
             compCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
             compName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-            address: [''],
-            dao: [''],
-            mcn: [''],
-            mp: ['']
+            address: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            dao: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            mcn: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+            mp: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])]
         });
     }
     get Form() {

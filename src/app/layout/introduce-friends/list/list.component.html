@@ -120,10 +120,11 @@
                                         *ngIf="data?.status === '0'">Hết hiệu lực</span>
                                     </td>
                                     <td>
-                                        {{ helper.formatDate(data?.createdAt) }}
+                                        <!-- {{ helper.formatDate(data?.createdAt) }} -->
+                                        {{helper.formatFullDateTime(data?.createdAt)}}
                                     </td>
                                     <td>
-                                        <a *ngIf="data?.status == '1'"
+                                        <a
                                             data-toggle="tool-tip"
                                             title="Chỉnh sửa"
                                             class="mr-2 cursor-pointer text-blue"
@@ -133,7 +134,17 @@
                                         >
                                         <i class="fa fa-edit"></i>
                                         </a>
-                                        <a *ngIf="data?.status == '0'" class="mr-2 text-gray" style="cursor: not-allowed;"> <i class="fa fa-edit"></i></a>
+                                        <!-- <a  *ngIf="data?.status === '0'"
+                                            data-toggle="tool-tip"
+                                            title="Chỉnh sửa"
+                                            class="mr-2 cursor-pointer text-blue"
+                                            routerLink="/invite-friends/edit-dis/{{
+                                                data.id
+                                            }}"
+                                        >
+                                        <i class="fa fa-edit"></i>
+                                        </a> -->
+                                        <!-- <a *ngIf="data?.status == '0'" class="mr-2 text-gray" style="cursor: not-allowed;"> <i class="fa fa-edit"></i></a> -->
                                         <span
                                             data-toggle="tool-tip"
                                             title="Phê duyệt"
@@ -182,12 +193,12 @@
                             <div class="col-sm-6">
                                 <input
                                     class="form-control col-lg-12"
-                                    [(ngModel)]="search.rootCif"
+                                    [(ngModel)]="search.rootUserCif"
                                     (keydown)="keyDownFunction($event)"
                                     itrim
                                     type="text"
                                     id="search"
-                                    placeholder=" Tên ưu đãi "
+                                    placeholder="Nhập cif người giới thiệu "
                                 />
                             </div>
                         </div>
@@ -200,12 +211,12 @@
                             <div class="col-sm-6">
                                 <input
                                     class="form-control col-lg-12"
-                                    [(ngModel)]="search.targetCif"
+                                    [(ngModel)]="search.targetUserCif"
                                     (keydown)="keyDownFunction($event)"
                                     itrim
                                     type="text"
                                     id="search"
-                                    placeholder=" Người được giới thiệu "
+                                    placeholder=" Nhập cif người được giới thiệu "
                                 />
                             </div>
                         </div>
@@ -330,7 +341,7 @@
                                         [class.active]="order === 'targetUserCif'"
                                         (click)="setOrder('targetUserCif')"
                                     >
-                                        Cif người nhập mã
+                                        Cif người được giới thiệu
                                         <span [hidden]="reverse">▼</span>
                                         <span [hidden]="!reverse">▲</span>
                                     </th>
@@ -339,7 +350,7 @@
                                         [class.active]="order === 'targetUserCif'"
                                         (click)="setOrder('targetUserCif')"
                                     >
-                                        Cif người nhập mã
+                                        Mã đối tác
                                         <span [hidden]="reverse">▼</span>
                                         <span [hidden]="!reverse">▲</span>
                                     </th>
@@ -350,7 +361,7 @@
                                         "
                                         (click)="setOrder('partnerCode')"
                                     >
-                                        Mã đối tác
+                                        Mã Khuyến mãi
                                         <span [hidden]="reverse">▼</span>
                                         <span [hidden]="!reverse">▲</span>
                                     </th>
@@ -361,7 +372,7 @@
                                         "
                                         (click)="setOrder('promotionCode')"
                                     >
-                                        Mã chương trình
+                                        Trạng thái
                                         <span [hidden]="reverse">▼</span>
                                         <span [hidden]="!reverse">▲</span>
                                     </th>
@@ -425,7 +436,8 @@
                                         <span class="badge badge-success" *ngIf="data.status === '1'">Thành công</span>
                                         <span class="badge badge-danger" *ngIf="data.status === '0'">Thất bại</span>
                                     </td>
-                                    <td>{{ helper.formatDate(data?.createdAt) }}</td>
+                                    <!-- <td>{{ helper.formatDate(data?.createdAt) }}</td> -->
+                                    <td>{{ helper.formatFullDateTime(data?.createdAt) }}</td>
                                     <td>{{ data?.createdBy }}</td>
                                 </tr>
                             </tbody>

@@ -97,7 +97,7 @@
                                 <span *ngIf="data?.status == '0'" class="badge badge-danger">Không hiệu lực</span>
                             </td>
                             <td>{{helper.formatDate(data.createdAt)}}</td>
-                            <td>{{data.updatedBy}}</td>
+                            <td>{{data.createdBy}}</td>
                             <td>
                                 <a class="mr-2 cursor-pointer text-blue" routerLink="/qr-services/edit/{{data.id}}">
                                     <i class="fa fa-edit"></i>

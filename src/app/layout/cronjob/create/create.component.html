@@ -38,10 +38,10 @@
                                 placeholder="Thời gian bắt đầu"
                                 [ngClass]="{ 'is-invalid': submitted && Form.timeStart.errors }"
                             >
-                            <div *ngIf="submitted && Form.timeStart.errors" class="invalid-feedback">
+                            <!-- <div *ngIf="submitted && Form.timeStart.errors" class="invalid-feedback">
                                 <div *ngIf="Form.timeStart.errors.required">Thời gian bắt đầu là bắt buộc</div>
                                 <div *ngIf="Form.timeStart.hasError('whitespace')">Thời gian bắt đầu là không hợp lệ</div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -56,20 +56,20 @@
                                 placeholder="Thời gian kết thúc"
                                 [ngClass]="{ 'is-invalid': submitted && Form.timeEnd.errors }"
                             >
-                            <div *ngIf="submitted && Form.timeEnd.errors" class="invalid-feedback">
+                            <!-- <div *ngIf="submitted && Form.timeEnd.errors" class="invalid-feedback">
                                 <div *ngIf="Form.timeEnd.errors.required">Thời gian kết thúc là bắt buộc</div>
                                 <div *ngIf="Form.timeEnd.hasError('whitespace')">Thời gian kết thúc là không hợp lệ</div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-3"></div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 " style="text-align: center;">
                         <button class="btn btn-success mr-3"><i class="fa
                                 fa-save"></i>&nbsp;Lưu lại</button>
-                        <button class="btn btn-light" (click)="resetForm()"><i
-                                class="fa fa-close"></i>&nbsp;Huỷ</button>
+                        <!-- <button class="btn btn-light" (click)="resetForm()"><i
+                                class="fa fa-close"></i>&nbsp;Huỷ</button> -->
                     </div>
                 </div>
             </form>

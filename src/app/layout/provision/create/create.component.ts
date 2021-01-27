@@ -30,10 +30,19 @@ export class CreateComponent implements OnInit {
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
       provisionName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      provisionLink: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])]
+      provisionLink: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      provisionCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
     });
   }
   get Form() { return this.dataForm.controls; }
+
+  onReady(eventData) {
+    eventData.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+      console.log('loader : ', loader);
+      console.log(btoa(loader.file));
+      return new UploadAdapter(loader);
+    };
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -62,6 +71,24 @@ export class CreateComponent implements OnInit {
   }
   resetForm() {
     this.router.navigateByUrl('/provision');
+  }
+}
+export class UploadAdapter {
+  private loader;
+  constructor( loader ) {
+     this.loader = loader;
+  }
+
+  upload() {
+     return this.loader.file
+           .then( file => new Promise( ( resolve, reject ) => {
+                 const myReader = new FileReader();
+                 myReader.onloadend = (e) => {
+                    resolve({ default: myReader.result });
+                 };
+
+                 myReader.readAsDataURL(file);
+           } ) );
   }
 }
 
