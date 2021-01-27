@@ -321,7 +321,7 @@ export class UploadtuitionComponent implements OnInit {
     return check;
   }
   onCheckSchool(data) {
-    if (data) {
+    if (data !== undefined) {
       // console.log('school=' + data + '|' + this.schoolCode);
       if ((this.schoolCode.toLowerCase() === data.toLowerCase())) {
         return false;
@@ -333,7 +333,7 @@ export class UploadtuitionComponent implements OnInit {
 
   }
   onCheckClass(data) {
-    if (data) {
+    if (data !== undefined) {
       const check = this.listClass.find(e => e.classCode.toLowerCase() === data.toString().toLowerCase());
       if (check === undefined) {
         if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
