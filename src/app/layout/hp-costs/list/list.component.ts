@@ -25,11 +25,11 @@ export class ListComponent implements OnInit {
       code: null,
     },
     {
-      name: 'Active',
+      name: 'Có hiệu lực',
       code: 1,
     },
     {
-      name: 'Deactive',
+      name: 'Không hiệu lực',
       code: 0,
     }
   ];

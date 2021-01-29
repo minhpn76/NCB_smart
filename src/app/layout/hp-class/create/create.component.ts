@@ -88,18 +88,18 @@ export class CreateComponent implements OnInit {
     if (this.dataForm.invalid) {
       return;
     }
-    const payload = [{
+    const payload = {
       schoolCode: this.dataForm.value.schoolCode,
       facultyCode: this.dataForm.value.facultyCode,
       classCode: this.dataForm.value.classCode,
       className: this.dataForm.value.className,
       status: 1
-    }];
+    };
     // Add code sumit from khi có api
     this.ncbService.createHpClass(payload).then((result) => {
       if (result.status === 200) {
         if (result.json().code !== '00') {
-          this.toastr.error(result.json().message, 'Thất bại!');
+          this.toastr.error(result.json().message, result.json().description);
         } else {
           this.toastr.success('Thêm thành công', 'Thành công!');
           this.pageRefresh();

@@ -17,12 +17,12 @@ export class EditComponent implements OnInit {
   schoolId: any;
   listStatus: any = [
     {
-      name: 'Active',
-      code: '1',
+      name: 'Có hiệu lực',
+      code: 1,
     },
     {
-      name: 'Deactive',
-      code: '0',
+      name: 'Không hiệu lực',
+      code: 0,
     }
   ];
 

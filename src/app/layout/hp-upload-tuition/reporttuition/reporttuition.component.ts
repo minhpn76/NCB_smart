@@ -63,11 +63,9 @@ export class ReporttuitionComponent implements OnInit {
   }
   loadPage(page: number)  {
     const page_number = page;
-    if (page_number !== this.re_search.previous_page) {
       this.re_search.page = page_number;
-      this.re_search.previous_page = page_number - 1;
-      this.onSearch(this.re_search);
-    }
+      this.getListData(this.re_search);
+
   }
   public loadDate(): void {
     this.my_7.setDate(this.my_7.getDate() - 7);
@@ -90,7 +88,12 @@ export class ReporttuitionComponent implements OnInit {
     this.listSchool.push({ schoolName: '--Chưa chọn---', schoolCode: ''});
     this.ncbService.getListHpSchool(null).then((result) => {
       const body = result.json().body.content;
-      this.listSchool = body;
+      body.forEach(element => {
+        this.listSchool.push({
+          schoolName: ' - ' + element.schoolName,
+          schoolCode: element.schoolCode
+        });
+      });
     }).catch(err => {
       this.toastr.error(err.json().decription, 'Thất bại!');
     });
@@ -107,6 +110,9 @@ export class ReporttuitionComponent implements OnInit {
     this.ncbService.getListHpTuition(payload).then(result => {
       setTimeout(() => {
         const body = result.json().body;
+        if (body === null) {
+          return;
+        }
         this.listData = body.content;
         this.totalSearch = body.totalElements;
         this.isProcessLoad = 0;
@@ -120,10 +126,12 @@ export class ReporttuitionComponent implements OnInit {
   getListData(params) {
     this.listData = [];
     this.isProcessLoad = 1;
+
     // xu ly
     this.ncbService.getListHpTuition(params).then((result) => {
       setTimeout(() => {
         const body = result.json().body;
+        if (body === null) { return; }
         this.listData = body.content;
         this.totalSearch = body.totalElements;
         this.isProcessLoad = 0;

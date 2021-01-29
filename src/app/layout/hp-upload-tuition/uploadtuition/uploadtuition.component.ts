@@ -321,7 +321,7 @@ export class UploadtuitionComponent implements OnInit {
     return check;
   }
   onCheckSchool(data) {
-    if (data) {
+    if (data !== undefined) {
       // console.log('school=' + data + '|' + this.schoolCode);
       if ((this.schoolCode.toLowerCase() === data.toLowerCase())) {
         return false;
@@ -333,7 +333,7 @@ export class UploadtuitionComponent implements OnInit {
 
   }
   onCheckClass(data) {
-    if (data) {
+    if (data !== undefined) {
       const check = this.listClass.find(e => e.classCode.toLowerCase() === data.toString().toLowerCase());
       if (check === undefined) {
         if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
@@ -355,8 +355,8 @@ export class UploadtuitionComponent implements OnInit {
     }
   }
   checkFaculty(data) { // tuition
-    if (data) {
-      const check = this.listFaculty.find(e => e.FacultyCode.toLowerCase() === data.toString().toLowerCase());
+    if (data !== undefined) {
+      const check = this.listFaculty.find(e => e.facultyCode.toLowerCase() === data.toString().toLowerCase());
       if (check === undefined) {
         if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
         return true;
@@ -424,9 +424,9 @@ export class UploadtuitionComponent implements OnInit {
         this.ncbService.upFileExcelHpTuition(file).then((result) => {
           if (result.status === 200) {
             if (result.json().code !== '00') {
-              this.toastr.error(result.json().message, 'Thất bại!');
+              this.toastr.error(result.json().message, result.json().description);
             } else {
-              this.toastr.success('Upload dữ liệu thành công', 'Thành công!');
+              this.toastr.success('Upload dữ liệu thành công', result.json().description);
               this.temp.loading = false;
               setTimeout(() => {
               }, 3000);

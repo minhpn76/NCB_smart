@@ -10,7 +10,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Chọn trường học:</label>
                 <div class="col-sm-6">
                     <select class="form-control" aria-readonly="true" [(ngModel)]='re_search.schoolCode'>
-                        <option *ngFor="let School of listSchool" [value]="School.schoolCode">{{School.schoolCode}} - {{ School.schoolName }}</option>
+                        <option *ngFor="let School of listSchool" [value]="School.schoolCode">{{School.schoolCode}}{{ School.schoolName }}</option>
                     </select>
                 </div>
             </div>
@@ -126,14 +126,14 @@
                         </th>
                         <td>{{data?.schoolCode}}</td> 
                         <td>{{data?.schoolName}}</td> 
-                        <td>{{data?.facultiyCode}}</td> 
+                        <td>{{data?.facultyCode}}</td> 
                         <td>{{data?.facultyName}}</td> 
                         <td>{{data?.classCode}}</td> 
                         <td>{{data?.className}}</td> 
                         <td>{{data?.studentCode}}</td> 
                         <td>{{data?.studentName}}</td> 
-                        <td>{{data?.description}}</td> 
-                        <td>{{data?.term}}</td> 
+                        <td>{{data?.term}}</td>  
+                        <td>{{data?.costCode}}</td> 
                         <td>{{formatNumber(data?.amount)}}</td> 
                         <td>{{data?.paymentDate}}</td> 
                         <td>{{data?.paymentBy}}</td>  
