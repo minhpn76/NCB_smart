@@ -39,11 +39,11 @@ export class ListComponent implements OnInit {
       code: '',
     },
     {
-      name: 'Active',
+      name: 'Có hiệu lực',
       code: 1,
     },
     {
-      name: 'Deactive',
+      name: 'Không hiệu lực',
       code: 0,
     }
   ];
@@ -99,6 +99,7 @@ export class ListComponent implements OnInit {
   }
   /*Câp nhật dữ liệu onSearch  */
   onSearch(payload) {
+    payload.page = 0;
     this.listData = [];
     this.isProcessLoad = 1;
     this.ncbService.getListHpClass(payload).then(result => {
@@ -246,7 +247,7 @@ onUploadFile(event) {
             const arraylist = XLSX.utils.sheet_to_json(worksheet, { raw: true });
             this.filelist = arraylist;
             this.ncbService
-                .createHpClass(arraylist)
+                .createHpListClass(arraylist)
                 .then((result) => {
                     if (result.status === 200) {
                         if (result.json().code === '00') {

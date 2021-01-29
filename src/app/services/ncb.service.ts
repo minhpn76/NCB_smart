@@ -2062,7 +2062,7 @@ createHpCosts(body): Promise<any> {
     });
 }
 getdetailtHpCosts(code: any): Promise<any> {
-    const url = `${API_URL}/costs/detailt?idCost=${code}`;
+    const url = `${API_URL}/costs/detail?idCost=${code}`;
     return this.auth.authRequest({ url: url, method: 'GET' });
 }
 updateHpCosts(body: any): Promise<any> {
@@ -2120,7 +2120,7 @@ deleteHpCosts(code: any): Promise<any> {
         });
     }
     getdetailtHpSchool(code: any): Promise<any> {
-        const url = `${API_URL}/schools/detailt?idCost=${code}`;
+        const url = `${API_URL}/schools/detail?idCost=${code}`;
         return this.auth.authRequest({ url: url, method: 'GET' });
     }
     updateHpSchool(body: any): Promise<any> {
@@ -2158,8 +2158,17 @@ deleteHpCosts(code: any): Promise<any> {
             application: true,
         });
     }
+    createHpListFaculty(body): Promise<any> {
+        const url = `${API_URL}/faculties/save-listfaculties`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: 'POST',
+            application: true,
+        });
+    }
     getdetailtHpFacultie(code: any): Promise<any> {
-        const url = `${API_URL}/faculties/detailt?idCost=${code}`;
+        const url = `${API_URL}/faculties/detail?idCost=${code}`;
         return this.auth.authRequest({ url: url, method: 'GET' });
     }
     updateHpFacultie(body: any): Promise<any> {
@@ -2197,8 +2206,17 @@ deleteHpCosts(code: any): Promise<any> {
             application: true,
         });
     }
+    createHpListClass(body): Promise<any> {
+        const url = `${API_URL}/clazzs/save-listclazzs`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: 'POST',
+            application: true,
+        });
+    }
     getdetailtHpClass(code: any): Promise<any> {
-        const url = `${API_URL}/clazzs/detailt?idClass=${code}`;
+        const url = `${API_URL}/clazzs/detail?idClass=${code}`;
         return this.auth.authRequest({ url: url, method: 'GET' });
     }
     updateHpClass(body: any): Promise<any> {

@@ -35,11 +35,11 @@ export class ListComponent implements OnInit {
       code: -1,
     },
     {
-      name: 'Active',
+      name: 'Có hiệu lực',
       code: 1,
     },
     {
-      name: 'Deactive',
+      name: 'Không hiệu lực',
       code: 0,
     }
   ];
@@ -82,7 +82,7 @@ export class ListComponent implements OnInit {
       this.onSearch(this.re_search);
     }
   }
-  /*Câ[j nhat lại ham sert tai day] */
+  /*Load du lieu khi an nut timkiem va ban dau */
   onSearch(payload) {
     this.listData = [];
     this.isProcessLoad = 1;
@@ -100,7 +100,7 @@ export class ListComponent implements OnInit {
       this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
     });
   }
-  /*Đổi tên hàm serach trong NCB service */
+  /*load du lieu phan trang NCB service */
   getListData(params) {
     this.listData = [];
     this.isProcessLoad = 1;
@@ -214,7 +214,7 @@ export class ListComponent implements OnInit {
               const arraylist = XLSX.utils.sheet_to_json(worksheet, { raw: true });
               this.filelist = arraylist;
               this.ncbService
-                  .createHpFaculty(arraylist)
+                  .createHpListFaculty(arraylist)
                   .then((result) => {
                       if (result.status === 200) {
                           if (result.json().code === '00') {

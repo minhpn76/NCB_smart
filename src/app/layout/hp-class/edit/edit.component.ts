@@ -20,11 +20,11 @@ export class EditComponent implements OnInit {
   facultyCode: any;
   listStatus: any = [
     {
-      name: 'Active',
+      name: 'Có hiệu lực',
       code: 1,
     },
     {
-      name: 'Deactive',
+      name: 'Không hiệu lực',
       code: 0,
     }
   ];

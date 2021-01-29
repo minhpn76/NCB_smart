@@ -25,12 +25,12 @@ export class ListComponent implements OnInit {
       code: '',
     },
     {
-      name: 'Active',
-      code: '1',
+      name: 'Có hiệu lực',
+      code: 1,
     },
     {
-      name: 'Deactive',
-      code: '0',
+      name: 'Không hiệu lực',
+      code: 0,
     }
   ];
   listPageSize: any = [10, 20, 30, 40, 50];

@@ -424,9 +424,9 @@ export class UploadtuitionComponent implements OnInit {
         this.ncbService.upFileExcelHpTuition(file).then((result) => {
           if (result.status === 200) {
             if (result.json().code !== '00') {
-              this.toastr.error(result.json().message, 'Thất bại!');
+              this.toastr.error(result.json().message, result.json().description);
             } else {
-              this.toastr.success('Upload dữ liệu thành công', 'Thành công!');
+              this.toastr.success('Upload dữ liệu thành công', result.json().description);
               this.temp.loading = false;
               setTimeout(() => {
               }, 3000);
