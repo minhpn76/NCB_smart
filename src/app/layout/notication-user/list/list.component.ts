@@ -72,11 +72,11 @@ export class ListComponent implements OnInit {
         },
         {
             name: 'Kích hoạt',
-            code: 'A',
+            code: '1',
         },
         {
             name: 'Chưa kích hoạt',
-            code: 'D',
+            code: '0',
         },
     ];
     listRepeatValue: any = [...listNotify];

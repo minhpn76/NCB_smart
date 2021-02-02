@@ -97,12 +97,12 @@ export class CreateComponent implements OnInit {
             name: '---Vui lòng chọn trạng thái---',
         },
         {
-            code: 'A',
+            code: '1',
             name: 'Kích hoạt',
         },
         {
             name: 'Chưa kích hoạt',
-            code: 'D',
+            code: '0',
         },
     ];
 

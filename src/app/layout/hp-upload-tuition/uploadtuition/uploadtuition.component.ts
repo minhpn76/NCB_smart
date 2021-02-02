@@ -47,15 +47,15 @@ export class UploadtuitionComponent implements OnInit {
   dataError: Array<{
     STT: Number ;
     MATRUONG: '' ;
-     TENTRUONG: '';
+    TENTRUONG: '';
     MAKHOA: '';
     TENKHOA: '';
     MALOP: '';
-      TENLOP: '';
-        MAHOCSINH: '';
-           TENHOCSINH: '';
-           KYTHANHTOAN: '';
-            GHICHU: '';
+    TENLOP: '';
+    MAHOCSINH: '';
+    TENHOCSINH: '';
+    KYTHANHTOAN: '';
+    GHICHU: '';
   }> = [];
   dataSchoolStudent: Array<String> = [];
   listRoles: any;
