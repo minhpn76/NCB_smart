@@ -21,8 +21,7 @@
 [url_heading]="'/uploadtuition'">
 </app-page-header>
 
-<div class="panel panel-info" style="border:1px solid rgb(39, 127, 243);padding:5px" >
-     
+<div class="panel panel-info" style="border:1px solid rgb(39, 127, 243);padding:5px" > 
         <div class="col-md-6">
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Chọn trường học:</label>
@@ -50,7 +49,7 @@
 <div class="row"> 
     <div class="col-md-12" style="padding-top: 10px;">
        <label>(Lưu ý: Mỗi trường chỉ up một file) Chọn file import:</label>
-       <input type="file" class="btn-info" id="datafile" name="data" (mousewheel)="GetData($event)" (change)="GetData($event)"  title="Đưa chuột vào chọn tệp và lăn 'con lăn chuột' một nhịp để load lại dữ liệu."/>
+       <input type="file" class="btn-info" id="datafile" name="data" (mousewheel)="GetData($event)"(change)="GetData($event)"  title="Đưa chuột vào chọn tệp và lăn 'con lăn chuột' một nhịp để load lại dữ liệu."/>
     <button type="button" class="btn btn-dranger"  color="warn" onclick="(document.getElementById('datafile').value = null)" (click)="this.dataStudent=null" >Hủy</button>
     </div>  
     <div class="col-md-12">
@@ -82,7 +81,7 @@
             </thead>
             <tbody> 
                 <tr *ngFor="let row of dataStudent" 
-                [ngClass]="{'erEmty': (!row[1]||!row[7]||!row[8]),'erCodeSchool':onCheckSchool(row[1]),'erCodefaculty':checkFaculty(row[3]),'erCodeClass':onCheckClass(row[5])}" >  
+                [ngClass]="{'erEmty': (!row[1]||!row[7]||!row[8]),'erCost':onCheckHocPhi(row),'erCodeSchool':onCheckSchool(row[1]),'erCodefaculty':checkFaculty(row[3]),'erCodeClass':onCheckClass(row[5])}" >  
                     <td *ngFor="let val of row" > 
                         {{val}}
                     </td>

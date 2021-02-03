@@ -104,7 +104,7 @@ export class UploadtuitionComponent implements OnInit {
     previous_page: 0
   };
   testapi;
-  listCost: any;
+  listCost: any[];
   fileExcel: any = {
     file: File,
     path: null,
@@ -134,6 +134,11 @@ export class UploadtuitionComponent implements OnInit {
       this.XuLyPage();
     }
   }
+  ngOnInit() {
+    this.getCost();
+    this.getSchools();
+
+}
   private XuLyPage() {
     this.errPage = 0;
     const end = (this.re_search.page) * this.re_search.size;
@@ -147,6 +152,7 @@ export class UploadtuitionComponent implements OnInit {
     this.XuLyPage();
   }
 /*chọn học phí cần đóng */
+
   SelectCost(cost) {
     if (this.headers.find(m => m === cost) === cost) {
       console.log('remove->' + cost);
@@ -199,23 +205,6 @@ export class UploadtuitionComponent implements OnInit {
     };
     readFile.readAsArrayBuffer(this.fileUploaded);
 
-  }
-  XulyMau(dataArr) {
-    let check = 1;
-    if (dataArr[0].length !== this.headers.length) {
-      alert('File template không đúng định dạng!');
-    }
-    for (let i = 1; i < this.headers.length; i++) {
-      const filde = dataArr[0][i].toLowerCase().replace('*', '');
-      console.log(filde);
-      if (!filde.includes(this.headers[i].toLowerCase().replace('*', ''))) {
-        alert('Thiếu thông tin trường ' + this.headers[i]);
-        if (this.isErrAll) {this.errAll = this.errAll + 1; }
-
-        check = 0;
-     }
-    }
-    return check;
   }
   onFileChange(evt: any, myCallback) {
     /* wire up file reader */
@@ -295,13 +284,34 @@ export class UploadtuitionComponent implements OnInit {
     reader.readAsBinaryString(target.files[0]);
   }
   /**Ket thuc xu li file */
-  ngOnInit() {
-      this.getCost();
-      this.getSchools();
-
-  }
   showdata(datas) {
     // alert(datas);
+  }
+  XulyMau(dataArr) {
+    let check = 1;
+    for (let i = 1; i < this.headers.length; i++) {
+      const filde = dataArr[0][i].toLowerCase().replace('*', '');
+      console.log(filde);
+      if (i < 11) {
+
+        if (!filde.includes(this.headers[i].toLowerCase().replace('*', ''))) {
+          alert('Sai thông tin trường ' + this.headers[i]);
+          if (this.isErrAll) {this.errAll = this.errAll + 1; }
+
+          check = 0;
+        }
+      } else {
+        const isCost = this.listCost.find(e => e.costCode.toLowerCase() === filde.toString());
+        if (isCost === undefined) {
+          alert('Sai thông tin trường ' + filde);
+          if (this.isErrAll) {this.errAll = this.errAll + 1; }
+          check = 0;
+        }
+      }
+
+
+    }
+    return check;
   }
   onCheckHocPhi(data) {
     let check = false;
@@ -309,7 +319,7 @@ export class UploadtuitionComponent implements OnInit {
       // console.log(this.headers.length + '|' + this.headers[i] + '=>' + data[i]);
       const validate = /^(\d+|\d{1,3}(,\d{3})*)$/.test(data[i]);
       if (this.isEmpty(data[i])) {
-        // if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
+       // if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
         check = true;
       } else {
         if (!validate) {
@@ -322,7 +332,7 @@ export class UploadtuitionComponent implements OnInit {
   }
   onCheckSchool(data) {
     if (data !== undefined) {
-      // console.log('school=' + data + '|' + this.schoolCode);
+       console.log('school=' + data + '|' + this.schoolCode);
       if ((this.schoolCode.toLowerCase() === data.toLowerCase())) {
         return false;
       } else {
@@ -417,7 +427,6 @@ export class UploadtuitionComponent implements OnInit {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
   }
   onSend() {
-
       if (this.fileExcel.file) {
         this.temp.loading = true;
          const file: File = this.fileExcel.file;
@@ -429,21 +438,19 @@ export class UploadtuitionComponent implements OnInit {
               this.toastr.success('Upload dữ liệu thành công', result.json().description);
               this.temp.loading = false;
               setTimeout(() => {
+                this.router.navigateByUrl('/uploadtuition');
               }, 3000);
             }
           } else {
             this.toastr.error(result.message, 'Thất bại!');
           }
-
         }).catch((err) => {
           this.toastr.error(err.json().message, 'Thất bại!');
-
         });
       }
     // } else {
     //   alert('Các thông tin chưa được hoàn thiện');
     // }
-
   }
   resetPage() {
     window.location.reload();
