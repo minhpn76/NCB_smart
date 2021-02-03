@@ -151,7 +151,7 @@ export class ListComponent implements OnInit {
       setTimeout(() => {
         const body = result.json().body;
         this.listData = body.content;
-        this.totalSearch = body.total;
+        this.totalSearch = body.totalElements;
         this.isProcessLoad = 0;
       }, 300);
     }).catch(err => {
@@ -402,10 +402,12 @@ export class ListComponent implements OnInit {
     // search.fromDate = this.tranferDate(this.mRatesDateS);
 
     const page = Math.ceil(this.totalSearch / search.size);
+
     for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {
         search.page = i;
         await this.getDataExcel(search);
     }
+
     search.page = 0;
 
     const data = [];

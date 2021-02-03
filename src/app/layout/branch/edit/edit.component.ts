@@ -37,7 +37,6 @@ export class EditComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      console.log(222, params);
       this.departCode = params;
     });
     this.dataForm = this.formBuilder.group({
@@ -48,7 +47,6 @@ export class EditComponent implements OnInit {
       mp: [''],
       address: ['']
     });
-    console.log(233, this.dataForm);
 
     const {compCode, mp, mcn} = this.departCode;
     this.getItem(this.departCode);
@@ -78,7 +76,6 @@ export class EditComponent implements OnInit {
     });
   }
   getItem(params) {
-    console.log(222, params);
     this.ncbService.detailCompany(params).then((result) => {
       const body = result.json().body;
       this.dataForm.patchValue({
