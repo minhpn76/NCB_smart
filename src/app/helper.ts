@@ -335,11 +335,9 @@ export class Helper {
     }
 
     formatDateTime(str, type) {
-        console.log('==', str);
 
         if (type === '0') {
             let date = str.split(' ');
-            console.log(2, date[0]);
             const year = date[0].substring(0, 4);
             const month = date[0].substring(4, 6);
             const day = date[0].substring(6, 8);
