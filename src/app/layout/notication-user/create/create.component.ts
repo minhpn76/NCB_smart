@@ -4,7 +4,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Helper } from '../../../helper';
 import { NCBService } from '../../../services/ncb.service';
 import { Router } from '@angular/router';
-import EasyImage from '@ckeditor/ckeditor5-easy-image/src/easyimage';
 
 import {
     NgbModal,
@@ -13,6 +12,7 @@ import {
     NgbDatepickerConfig,
     NgbTabChangeEvent,
 } from '@ng-bootstrap/ng-bootstrap';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { ExcelService } from '../../../services/excel.service';
@@ -33,7 +33,7 @@ export class CreateComponent implements OnInit {
     objUpload: any = {};
     isLockSave = false;
     objFile: any = {};
-
+    public Editor = DecoupledEditor;
     constructor(
         private formBuilder: FormBuilder,
         private toastr: ToastrService,
@@ -107,6 +107,8 @@ export class CreateComponent implements OnInit {
     ];
 
     listNotifications: any = [...listNotify];
+
+    isLoading: Boolean = false;
 
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
@@ -191,18 +193,29 @@ export class CreateComponent implements OnInit {
     }
 
     public onReady(editor) {
-        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-            console.log('loader : ', loader);
-            console.log(btoa(loader.file));
-            return new UploadAdapter(loader);
-        };
-        editor.ui.view.editable.element.parentElement.insertBefore(
+        editor.ui.getEditableElement().parentElement.insertBefore(
             editor.ui.view.toolbar.element,
-            editor.ui.view.editable.element
+            editor.ui.getEditableElement()
         );
     }
 
+    // public onReady(editor) {
+    //     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+    //         console.log('loader : ', loader);
+    //         console.log(btoa(loader.file));
+    //         return new UploadAdapter(loader);
+    //     };
+    //     editor.ui.view.editable.element.parentElement.insertBefore(
+    //         editor.ui.view.toolbar.element,
+    //         editor.ui.view.editable.element
+    //     );
+    // }
+
     onSubmit() {
+        if (this.isLoading) {
+            return;
+        }
+        this.isLoading = true;
         this.submitted = true;
         // stop here if form is invalid
         if (this.dataForm.invalid) {
@@ -237,8 +250,7 @@ export class CreateComponent implements OnInit {
                         this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
                     } else if (result.json().code === '1001') {
                         this.toastr.error(
-                            `Người dùng ${
-                                result.json().description
+                            `Người dùng ${result.json().description
                             } không tồn tại trong hệ thống`,
                             'Thất bại!'
                         );

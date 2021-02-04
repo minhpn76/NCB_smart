@@ -228,6 +228,7 @@ export class ListComponent implements OnInit {
   }
   async exportExcel() {
     this.arrExport = [];
+
     this.isProcessLoadExcel = 1;
     const search = Object.assign({}, this.re_search);
     // search.size = 1000;

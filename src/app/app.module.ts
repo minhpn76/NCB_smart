@@ -8,19 +8,21 @@ import { LanguageTranslationModule } from './shared/modules/language-translation
 import { ItrimDirective } from './shared/directive/itrim.directive';
 import { InunberDirective } from './shared/directive/inumber.directive';
 import { IemailDirective } from './shared/directive/iemail.directive';
-
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { ToastrModule } from 'ngx-toastr';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 
 
 @NgModule({
     imports: [
+        FormsModule,
         CommonModule,
+        CKEditorModule,
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,

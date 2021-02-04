@@ -141,24 +141,28 @@ export class ListComponent implements OnInit {
         }
     }
 
-    onSearch(payload) {
+    async onSearch(payload) {
         if (
             // payload.search !== '' ||
             payload.status !== '' ||
             payload.repeatType !== '' ||
             payload.objectUserType !== '' ||
-            payload.formDate !== '' ||
+            payload.fromDate !== '' ||
             payload.startDate !== ''
         ) {
             payload.page = 0;
         }
-        payload.formDate = this.helper.tranferDate(this.mRatesDateS);
+
+        payload.fromDate = this.helper.tranferDate(this.mRatesDateS);
         payload.startDate = this.helper.tranferDate(this.mRatesDateS_7);
+        console.log(payload.fromDate, payload.startDate);
+
+        console.log(payload);
         this.getListData(payload);
-        console.log('test', payload);
     }
 
     getListData(params: any) {
+
         this.listData = [];
         this.isProcessLoad = 1;
         // xu ly
@@ -196,7 +200,6 @@ export class ListComponent implements OnInit {
             .detailNoticationUser(params)
             .then((result) => {
                 const body = result.json().body.userNotifications;
-                console.log('1212', body);
                 this.listUserForNotify = body;
                 // this.dataForm.patchValue({
                 //     user_notifications: body,
@@ -240,7 +243,6 @@ export class ListComponent implements OnInit {
                 this.ncbService
                     .deleteNoticationUser(itemId)
                     .then((res) => {
-                        console.log('test', res);
                         if (res.json().code === '00') {
                             Swal.fire(
                                 'Đã xoá!',
@@ -280,6 +282,5 @@ export class ListComponent implements OnInit {
 
     openModal(user_notifications) {
         this.modalOp = this.modalNotitfications.open(user_notifications);
-        console.log('test', this.modalOp);
     }
 }

@@ -186,13 +186,13 @@ export class CreateComponent implements OnInit {
     }
     openModal(content) {
         this.modalOp = this.modalService.open(content);
-      }
+    }
 
     public loadDate(): void {
         this.my_7.setDate(this.my_7.getDate() + 7);
         this.mRatesDateS = { year: this.my_7.getFullYear(), month: this.my_7.getMonth() + 1, day: this.my_7.getDate() };
         this.mRatesDateS_7 = { year: this.my.getFullYear(), month: this.my.getMonth() + 1, day: this.my.getDate() };
-      }
+    }
 
     getQrService() {
         this.listQrService = [
@@ -274,6 +274,8 @@ export class CreateComponent implements OnInit {
                         }, 500);
                     } else if (result.json().code === '909') {
                         this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
+                    } else if (result.json().code === '1001') {
+                        this.toastr.error('Dữ liệu sai. Vui lòng kiểm tra lại dữ liệu người dùng!', 'Thất bại!');
                     } else {
                         this.toastr.error('Thêm mới thất bại', 'Thất bại!');
                     }
@@ -296,8 +298,8 @@ export class CreateComponent implements OnInit {
             this.fileExcel.name = fileList[0].name;
             this.fileExcel.size = fileList[0].size;
         }
-      }
-      onUploadServer() {
+    }
+    onUploadServer() {
         if (this.fileExcel.file) {
             this.temp.loading = true;
             const fileReader = new FileReader();
@@ -308,16 +310,16 @@ export class CreateComponent implements OnInit {
                 const arr = new Array();
                 for (let i = 0; i !== data.length; ++i) { arr[i] = String.fromCharCode(data[i]); }
                 const bstr = arr.join('');
-                const workbook = XLSX.read(bstr, {type: 'binary'});
+                const workbook = XLSX.read(bstr, { type: 'binary' });
                 const first_sheet_name = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[first_sheet_name];
-                console.log(XLSX.utils.sheet_to_json(worksheet, {raw: true}));
-                const arraylist = XLSX.utils.sheet_to_json(worksheet, {raw: true});
+                console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }));
+                const arraylist = XLSX.utils.sheet_to_json(worksheet, { raw: true });
                 this.filelist = arraylist;
                 this.dataForm.value.user_coupon = arraylist;
             };
             this.temp.loading = false;
             this.closeModal();
         }
-      }
+    }
 }
