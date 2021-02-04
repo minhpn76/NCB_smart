@@ -183,7 +183,7 @@ export class EditComponent implements OnInit {
                 if (result.status === 200) {
                     if (result.json().code === '00') {
                         this.toastr.success(
-                            'Thêm mới thành công',
+                            'Cập nhật thành công',
                             'Thành công!'
                         );
                         setTimeout(() => {
