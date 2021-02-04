@@ -30,7 +30,8 @@ export class UploadtuitionComponent implements OnInit {
     private excelService: ExcelService,
     public router: Router,
     private helper: Helper,
-    public location: Location
+    public location: Location,
+    private modalService: NgbModal
   ) {
     this.listRoles = AppSettings.listRoles;
     // Đoạn này dung để khi them moi thanh cong thì hcuyen ve trang danh sach
@@ -154,7 +155,7 @@ export class UploadtuitionComponent implements OnInit {
 /*chọn học phí cần đóng */
 
   SelectCost(cost) {
-    if (this.headers.find(m => m === cost) === cost) {
+    if (this.headers.find(m => m === cost.toLowerCase()) === cost.toLowerCase()) {
       console.log('remove->' + cost);
       const index =  this.headers.indexOf(cost);
       if (index > -1) {
@@ -175,11 +176,16 @@ export class UploadtuitionComponent implements OnInit {
     const targetTableElm = document.getElementById('DataTable');
     const wb = XLSX.utils.table_to_book(targetTableElm, <XLSX.Table2SheetOpts>{ sheet: 'page1' });
     XLSX.writeFile(wb, `TemplateHocPhi.xlsx`);
+    this.modalService.dismissAll();
    // this.excelService.exportAsExcelFile(this.headers, 'TemplateHocPhi');
   }
   /*Doc file & xu li file */
   GetData(event) {
     /*Read excel */
+    if (this.schoolCode === '' ) {
+      alert('Vui lòng chọn trường học cần upload');
+      return;
+    }
     this.errAll = 0; this.errPage = 0; this.isErrAll = true;
     this.onFileChange(event, this.showdata);
     this.dataError = [];
@@ -289,23 +295,25 @@ export class UploadtuitionComponent implements OnInit {
   }
   XulyMau(dataArr) {
     let check = 1;
-    for (let i = 1; i < this.headers.length; i++) {
+    this.headers.splice(11, dataArr[0].length);
+    for (let i = 1; i < dataArr[0].length; i++) {
       const filde = dataArr[0][i].toLowerCase().replace('*', '');
       console.log(filde);
       if (i < 11) {
 
         if (!filde.includes(this.headers[i].toLowerCase().replace('*', ''))) {
-          alert('Sai thông tin trường ' + this.headers[i]);
+          alert('Sai thông tin trường dữ liệu ' + this.headers[i]);
           if (this.isErrAll) {this.errAll = this.errAll + 1; }
-
           check = 0;
         }
       } else {
         const isCost = this.listCost.find(e => e.costCode.toLowerCase() === filde.toString());
         if (isCost === undefined) {
-          alert('Sai thông tin trường ' + filde);
+          alert('Sai thông tin mã phí ' + filde);
           if (this.isErrAll) {this.errAll = this.errAll + 1; }
           check = 0;
+        } else {
+          this.headers.push(filde.toString().toUpperCase());
         }
       }
 
@@ -333,7 +341,7 @@ export class UploadtuitionComponent implements OnInit {
   onCheckSchool(data) {
     if (data !== undefined) {
        console.log('school=' + data + '|' + this.schoolCode);
-      if ((this.schoolCode.toLowerCase() === data.toLowerCase())) {
+      if ((this.schoolCode.toLowerCase() === data.toString().toLowerCase())) {
         return false;
       } else {
         if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
@@ -393,6 +401,11 @@ export class UploadtuitionComponent implements OnInit {
       this.toastr.error(err.json().decription, 'Thất bại!');
     });
   }
+  onChangeSchool(value) {
+    this.schoolCode = value;
+    this.getClass(value);
+    this.getFaculties(value);
+  }
   getClass(idschool) {
     this.reseachClass.schoolCode = idschool;
     if ( this.reseachClass.schoolCode === '') {
@@ -439,7 +452,7 @@ export class UploadtuitionComponent implements OnInit {
               this.temp.loading = false;
               setTimeout(() => {
                 this.router.navigateByUrl('/uploadtuition');
-              }, 3000);
+              }, 300);
             }
           } else {
             this.toastr.error(result.message, 'Thất bại!');
@@ -454,5 +467,8 @@ export class UploadtuitionComponent implements OnInit {
   }
   resetPage() {
     window.location.reload();
+  }
+  open(content) {
+    this.modalService.open(content, { size: 'lg' });
   }
 }
