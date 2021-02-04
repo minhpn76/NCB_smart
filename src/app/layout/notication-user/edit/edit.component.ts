@@ -52,11 +52,11 @@ export class EditComponent implements OnInit {
     listStatus: any = [
         {
             name: 'Kích hoạt',
-            code: 'A',
+            code: '1',
         },
         {
             name: 'Chưa kích hoạt',
-            code: 'D',
+            code: '0',
         },
     ];
     listRepeatType: any = [...listNotify];
