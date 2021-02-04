@@ -66,11 +66,11 @@ export class CreateComponent implements OnInit {
     this.dataForm = this.formBuilder.group({
       schoolName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       schoolCode: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-    //  schoolCif: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      schoolCif: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       ACCTNo: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       ACCTName: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      citadGT: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
-      citadTT: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
+      citadGT: '',
+      citadTT: '',
       status: '1',
       address: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])],
       phoneNumber: ['', Validators.compose([Validators.required, this.helper.noWhitespaceValidator])]
@@ -86,7 +86,7 @@ export class CreateComponent implements OnInit {
     const payload = {
       schoolCode: this.dataForm.value.schoolCode,
       schoolName:  this.dataForm.value.schoolName,
-      schoolCif: null,
+      schoolCif: this.dataForm.value.schoolCif,
       schoolAcctNo: this.dataForm.value.ACCTNo,
       schoolAcctName:  this.dataForm.value.ACCTName,
       schoolBankCode: '',

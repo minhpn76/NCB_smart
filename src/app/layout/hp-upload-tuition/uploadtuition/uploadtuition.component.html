@@ -21,38 +21,30 @@
 [url_heading]="'/uploadtuition'">
 </app-page-header>
 
-<div class="panel panel-info" style="border:1px solid rgb(39, 127, 243);padding:5px" >
-     
+<div class="panel panel-info" style="border:1px solid rgb(39, 127, 243);padding:5px" > 
         <div class="col-md-6">
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Chọn trường học:</label>
                 <div class="col-sm-6">
-                    <select class="form-control" aria-readonly="true" [(ngModel)]='schoolCode' (change)='getClass($event.target.value);getFaculties($event.target.value);'>
+                    <select class="form-control" #inputsShoolCode  aria-readonly="true" [(ngModel)]='schoolCode' (change)='onChangeSchool($event.target.value)'>
                         <option *ngFor="let School of listSchool" [value]="School.schoolCode">{{School.schoolCode}} - {{ School.schoolName }}</option>
                     </select>
                 </div>
-            </div>
-        </div>
-        <label class="col-sm-4 col-form-label">Chọn học phí cần đóng:</label> 
-        <ul class="row" style=" list-style-type:none">
-            <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="font-size:12pt" *ngFor="let item of listCost; let i = index" [attr.data-index]="i">
-                <label class="form-check-label">
-                    <input type="checkbox" (click)='SelectCost(item.costCode)' [ngModel]="false" [value]="item.costCode"> {{item.costName}}
-                 </label> 
-            </li>
-        </ul> 
-   
-        <div class="col-md-6">
-            <button type="button" class="btn btn-default" (click)='export()'>Tải Template</button>
-        </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Tải template</button>
+                </div>
+               
+            </div> 
       
+          
 </div> 
 <div class="row"> 
     <div class="col-md-12" style="padding-top: 10px;">
-       <label>(Lưu ý: Mỗi trường chỉ up một file) Chọn file import:</label>
-       <input type="file" class="btn-info" id="datafile" name="data" (mousewheel)="GetData($event)" (change)="GetData($event)"  title="Đưa chuột vào chọn tệp và lăn 'con lăn chuột' một nhịp để load lại dữ liệu."/>
+        <label>  Chọn file import:</label>   
+       <input type="file" class="btn-info" id="datafile" name="data" (mousewheel)="GetData($event)" (change)="GetData($event)" title="Đưa chuột vào chọn tệp và lăn 'con lăn chuột' một nhịp để load lại dữ liệu."/>
     <button type="button" class="btn btn-dranger"  color="warn" onclick="(document.getElementById('datafile').value = null)" (click)="this.dataStudent=null" >Hủy</button>
-    </div>  
+    <label>(Lưu ý: Chọn trường học trước khi upload, mỗi trường chỉ up một file)</label>   
+</div>  
     <div class="col-md-12">
       Chú thích màu|  <span class="erEmty" style="padding-right: 20px;"></span> :Lỗi thiếu thông tin Mã trường, Học sinh
       <span class="erCost" style="padding-right: 20px;"></span> :Lỗi các loại phí thanh toán
@@ -82,7 +74,7 @@
             </thead>
             <tbody> 
                 <tr *ngFor="let row of dataStudent" 
-                [ngClass]="{'erEmty': (!row[1]||!row[7]||!row[8]),'erCodeSchool':onCheckSchool(row[1]),'erCodefaculty':checkFaculty(row[3]),'erCodeClass':onCheckClass(row[5])}" >  
+                [ngClass]="{'erEmty': (!row[1]||!row[7]||!row[8]),'erCost':onCheckHocPhi(row),'erCodeSchool':onCheckSchool(row[1]),'erCodefaculty':checkFaculty(row[3]),'erCodeClass':onCheckClass(row[5])}" >  
                     <td *ngFor="let val of row" > 
                         {{val}}
                     </td>
@@ -147,3 +139,32 @@
         </table>
     </div> 
 </div>
+<ng-template #content let-c="close" class="modal-lg" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Chọn các học phí cần đóng theo trường!</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="input-group">
+          <ul class="row" style=" list-style-type:none">
+              <li class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="font-size:12pt" *ngFor="let item of listCost; let i = index" [attr.data-index]="i">
+                  <label class="form-check-label">
+                      <input type="checkbox" (click)='SelectCost(item.costCode)' [ngModel]="false" [value]="item.costCode"> {{item.costName}}
+                   </label> 
+              </li>
+          </ul> 
+     
+          <div class="col-md-6">
+             
+          </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-lg btn-outline-primary" (click)='export()'>Tải Template</button>
+       
+      <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Đóng</button>
+    </div>
+  </ng-template>
+  

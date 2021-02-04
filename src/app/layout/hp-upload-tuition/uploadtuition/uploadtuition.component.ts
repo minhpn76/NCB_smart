@@ -30,7 +30,8 @@ export class UploadtuitionComponent implements OnInit {
     private excelService: ExcelService,
     public router: Router,
     private helper: Helper,
-    public location: Location
+    public location: Location,
+    private modalService: NgbModal
   ) {
     this.listRoles = AppSettings.listRoles;
     // Đoạn này dung để khi them moi thanh cong thì hcuyen ve trang danh sach
@@ -47,15 +48,15 @@ export class UploadtuitionComponent implements OnInit {
   dataError: Array<{
     STT: Number ;
     MATRUONG: '' ;
-     TENTRUONG: '';
+    TENTRUONG: '';
     MAKHOA: '';
     TENKHOA: '';
     MALOP: '';
-      TENLOP: '';
-        MAHOCSINH: '';
-           TENHOCSINH: '';
-           KYTHANHTOAN: '';
-            GHICHU: '';
+    TENLOP: '';
+    MAHOCSINH: '';
+    TENHOCSINH: '';
+    KYTHANHTOAN: '';
+    GHICHU: '';
   }> = [];
   dataSchoolStudent: Array<String> = [];
   listRoles: any;
@@ -104,7 +105,7 @@ export class UploadtuitionComponent implements OnInit {
     previous_page: 0
   };
   testapi;
-  listCost: any;
+  listCost: any[];
   fileExcel: any = {
     file: File,
     path: null,
@@ -134,6 +135,11 @@ export class UploadtuitionComponent implements OnInit {
       this.XuLyPage();
     }
   }
+  ngOnInit() {
+    this.getCost();
+    this.getSchools();
+
+}
   private XuLyPage() {
     this.errPage = 0;
     const end = (this.re_search.page) * this.re_search.size;
@@ -147,8 +153,9 @@ export class UploadtuitionComponent implements OnInit {
     this.XuLyPage();
   }
 /*chọn học phí cần đóng */
+
   SelectCost(cost) {
-    if (this.headers.find(m => m === cost) === cost) {
+    if (this.headers.find(m => m === cost.toLowerCase()) === cost.toLowerCase()) {
       console.log('remove->' + cost);
       const index =  this.headers.indexOf(cost);
       if (index > -1) {
@@ -169,11 +176,16 @@ export class UploadtuitionComponent implements OnInit {
     const targetTableElm = document.getElementById('DataTable');
     const wb = XLSX.utils.table_to_book(targetTableElm, <XLSX.Table2SheetOpts>{ sheet: 'page1' });
     XLSX.writeFile(wb, `TemplateHocPhi.xlsx`);
+    this.modalService.dismissAll();
    // this.excelService.exportAsExcelFile(this.headers, 'TemplateHocPhi');
   }
   /*Doc file & xu li file */
   GetData(event) {
     /*Read excel */
+    if (this.schoolCode === '' ) {
+      alert('Vui lòng chọn trường học cần upload');
+      return;
+    }
     this.errAll = 0; this.errPage = 0; this.isErrAll = true;
     this.onFileChange(event, this.showdata);
     this.dataError = [];
@@ -199,23 +211,6 @@ export class UploadtuitionComponent implements OnInit {
     };
     readFile.readAsArrayBuffer(this.fileUploaded);
 
-  }
-  XulyMau(dataArr) {
-    let check = 1;
-    if (dataArr[0].length !== this.headers.length) {
-      alert('File template không đúng định dạng!');
-    }
-    for (let i = 1; i < this.headers.length; i++) {
-      const filde = dataArr[0][i].toLowerCase().replace('*', '');
-      console.log(filde);
-      if (!filde.includes(this.headers[i].toLowerCase().replace('*', ''))) {
-        alert('Thiếu thông tin trường ' + this.headers[i]);
-        if (this.isErrAll) {this.errAll = this.errAll + 1; }
-
-        check = 0;
-     }
-    }
-    return check;
   }
   onFileChange(evt: any, myCallback) {
     /* wire up file reader */
@@ -295,13 +290,36 @@ export class UploadtuitionComponent implements OnInit {
     reader.readAsBinaryString(target.files[0]);
   }
   /**Ket thuc xu li file */
-  ngOnInit() {
-      this.getCost();
-      this.getSchools();
-
-  }
   showdata(datas) {
     // alert(datas);
+  }
+  XulyMau(dataArr) {
+    let check = 1;
+    this.headers.splice(11, dataArr[0].length);
+    for (let i = 1; i < dataArr[0].length; i++) {
+      const filde = dataArr[0][i].toLowerCase().replace('*', '');
+      console.log(filde);
+      if (i < 11) {
+
+        if (!filde.includes(this.headers[i].toLowerCase().replace('*', ''))) {
+          alert('Sai thông tin trường dữ liệu ' + this.headers[i]);
+          if (this.isErrAll) {this.errAll = this.errAll + 1; }
+          check = 0;
+        }
+      } else {
+        const isCost = this.listCost.find(e => e.costCode.toLowerCase() === filde.toString());
+        if (isCost === undefined) {
+          alert('Sai thông tin mã phí ' + filde);
+          if (this.isErrAll) {this.errAll = this.errAll + 1; }
+          check = 0;
+        } else {
+          this.headers.push(filde.toString().toUpperCase());
+        }
+      }
+
+
+    }
+    return check;
   }
   onCheckHocPhi(data) {
     let check = false;
@@ -309,7 +327,7 @@ export class UploadtuitionComponent implements OnInit {
       // console.log(this.headers.length + '|' + this.headers[i] + '=>' + data[i]);
       const validate = /^(\d+|\d{1,3}(,\d{3})*)$/.test(data[i]);
       if (this.isEmpty(data[i])) {
-        // if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
+       // if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
         check = true;
       } else {
         if (!validate) {
@@ -322,8 +340,8 @@ export class UploadtuitionComponent implements OnInit {
   }
   onCheckSchool(data) {
     if (data !== undefined) {
-      // console.log('school=' + data + '|' + this.schoolCode);
-      if ((this.schoolCode.toLowerCase() === data.toLowerCase())) {
+       console.log('school=' + data + '|' + this.schoolCode);
+      if ((this.schoolCode.toLowerCase() === data.toString().toLowerCase())) {
         return false;
       } else {
         if (this.isErrAll) {this.errAll = this.errAll + 1; } else { this.errPage = this.errPage + 1; }
@@ -383,6 +401,11 @@ export class UploadtuitionComponent implements OnInit {
       this.toastr.error(err.json().decription, 'Thất bại!');
     });
   }
+  onChangeSchool(value) {
+    this.schoolCode = value;
+    this.getClass(value);
+    this.getFaculties(value);
+  }
   getClass(idschool) {
     this.reseachClass.schoolCode = idschool;
     if ( this.reseachClass.schoolCode === '') {
@@ -417,7 +440,6 @@ export class UploadtuitionComponent implements OnInit {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
   }
   onSend() {
-
       if (this.fileExcel.file) {
         this.temp.loading = true;
          const file: File = this.fileExcel.file;
@@ -429,23 +451,24 @@ export class UploadtuitionComponent implements OnInit {
               this.toastr.success('Upload dữ liệu thành công', result.json().description);
               this.temp.loading = false;
               setTimeout(() => {
-              }, 3000);
+                this.router.navigateByUrl('/uploadtuition');
+              }, 300);
             }
           } else {
             this.toastr.error(result.message, 'Thất bại!');
           }
-
         }).catch((err) => {
           this.toastr.error(err.json().message, 'Thất bại!');
-
         });
       }
     // } else {
     //   alert('Các thông tin chưa được hoàn thiện');
     // }
-
   }
   resetPage() {
     window.location.reload();
+  }
+  open(content) {
+    this.modalService.open(content, { size: 'lg' });
   }
 }

@@ -75,15 +75,15 @@ export class CreateComponent implements OnInit {
     if (this.dataForm.invalid) {
       return;
     }
-    const payload = [{
+    const payload = {
       costCode: this.dataForm.value.costCode,
       costName: this.dataForm.value.costName,
       status: this.dataForm.value.status,
-    }];
+    };
     this.ncbService.createHpCosts(payload).then((result) => {
       if (result.status === 200) {
         if (result.json().code !== '00') {
-          this.toastr.error(result.json().message, 'Thất bại!');
+          this.toastr.error(result.json().message, result.json().description);
         } else {
           this.toastr.success('Thêm thành công', 'Thành công!');
           this.pageRefresh();
