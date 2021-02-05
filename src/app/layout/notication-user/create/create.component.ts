@@ -33,6 +33,7 @@ export class CreateComponent implements OnInit {
     objUpload: any = {};
     isLockSave = false;
     objFile: any = {};
+    ckConfig: any = {};
     public Editor = DecoupledEditor;
     constructor(
         private formBuilder: FormBuilder,
@@ -144,6 +145,7 @@ export class CreateComponent implements OnInit {
             endDate: [this.mRatesDateS],
             user_notifications: [],
         });
+        this.ckConfig = {extraPlugins: 'easyimage, emojione' };
     }
     openModal(content) {
         this.modalOp = this.modalService.open(content);
