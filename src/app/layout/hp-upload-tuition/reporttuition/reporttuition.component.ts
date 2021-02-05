@@ -59,7 +59,6 @@ export class ReporttuitionComponent implements OnInit {
     localStorage.setItem('redirect', 'false');
     this.loadDate();
   }
-
   ngOnInit() {
       this.getSchools();
       this.getBatchs();
