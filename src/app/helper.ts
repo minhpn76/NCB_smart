@@ -373,10 +373,11 @@ export class Helper {
             return `${days[t]} ,${hour}:${minute}`;
         }
         if (type === '3') {
-            return `${this.getWeekOfMonth(str)}, ${str.substring(
+            const date = str.split(' ');
+            return `${this.getWeekOfMonth(str)}, ${date[1].substring(
                 0,
                 2
-            )}:${str.substring(2, 4)}`;
+            )}:${date[1].substring(2, 4)}`;
         }
         if (type === '4') {
             const year = str.substring(0, 4);
