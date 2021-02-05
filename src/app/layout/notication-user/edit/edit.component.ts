@@ -75,6 +75,7 @@ export class EditComponent implements OnInit {
             code: '1',
         },
     ];
+    ckConfig: { extraPlugins: string; };
 
     constructor(
         private formBuilder: FormBuilder,
@@ -139,6 +140,7 @@ export class EditComponent implements OnInit {
         });
 
         this.getItem(this.itemId);
+        this.ckConfig = {extraPlugins: 'easyimage, emojione' };
     }
 
     get Form() {
