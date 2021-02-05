@@ -5,7 +5,7 @@ import { OrderPipe } from 'ngx-order-pipe';
 import { NCBService } from '../../../services/ncb.service';
 import Swal from 'sweetalert2';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-reporttuition',
@@ -20,10 +20,12 @@ export class ReporttuitionComponent implements OnInit {
   my_7: any = new Date();
   my_14: any = new Date();
   listSchool: any;
+  listBatch: any;
   re_search = {
     schoolCode: '',
     startDate: '',
     studentCode: '',
+    batchCode: '',
     endDate: '',
     status: -1,
     size: 10,
@@ -60,6 +62,8 @@ export class ReporttuitionComponent implements OnInit {
 
   ngOnInit() {
       this.getSchools();
+      this.getBatchs();
+      this.getListData(this.re_search);
   }
   loadPage(page: number)  {
     const page_number = page;
@@ -98,11 +102,24 @@ export class ReporttuitionComponent implements OnInit {
       this.toastr.error(err.json().decription, 'Thất bại!');
     });
   }
+  getBatchs() {
+    this.listBatch = [];
+    this.listBatch.push({ batchCode: ''});
+    this.ncbService.getlistHpBatch(null).then((result) => {
+      const body = result.json().body.content;
+      this.re_search.batchCode = body[0].batchCode.toString();
+      body.forEach(element => {
+        this.listBatch.push({
+          batchCode: element.batchCode.toString()
+        });
+      });
+    }).catch(err => {
+      this.toastr.error(err.json().decription, 'Thất bại!');
+    });
+  }
   /*Câ[j nhat lại ham sert tai day] */
   onSearch(payload) {
-    if (!payload.schoolCode) {
-     return alert('Vui lòng chọn trường!');
-    }
+
     this.listData = [];
     this.isProcessLoad = 1;
     payload.startDate = this.helper.tranferDate(this.mRatesDateS);
