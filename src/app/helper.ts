@@ -360,7 +360,7 @@ export class Helper {
             const minute = date[1].substring(2, 4);
             const datetime = `${year}/${month}/${day} ${hour}:${minute}`;
             const dt = new Date(datetime);
-            const t = dt.getDay() - 1;
+            const t = dt.getDay();
             const days = [
                 'Chủ nhật',
                 'Thứ 2',
@@ -370,13 +370,14 @@ export class Helper {
                 'Thứ 6',
                 'Thứ 7',
             ];
-            return `${days[t]} ,${str.substring(0, 2)}:${str.substring(2, 4)}`;
+            return `${days[t]} ,${hour}:${minute}`;
         }
         if (type === '3') {
-            return `${this.getWeekOfMonth(str)}, ${str.substring(
+            const date = str.split(' ');
+            return `${this.getWeekOfMonth(str)}, ${date[1].substring(
                 0,
                 2
-            )}:${str.substring(2, 4)}`;
+            )}:${date[1].substring(2, 4)}`;
         }
         if (type === '4') {
             const year = str.substring(0, 4);
