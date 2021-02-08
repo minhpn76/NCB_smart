@@ -120,7 +120,8 @@ var CKBUILDER_CONFIG = {
 		'uploadimage': 1,
 		'wsc': 1,
 		'wysiwygarea': 1,
-		'emojione': 1
+		'emojione': 1,
+		'easyimage': 1
 	},
 	languages: {
 		'af': 1,

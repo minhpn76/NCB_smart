@@ -67,7 +67,7 @@
                     <label for="search" class="col-sm-5 col-form-label">Nội dung(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <!-- <ckeditor [editor]="Editor" formControlName="content"></ckeditor> -->
-                        <ckeditor placeholder="Nội dung..." (ready)="onReady($event)"  [config]="{extraPlugins: 'emojione' }"  formControlName="content"></ckeditor>
+                        <ckeditor placeholder="Nội dung..." [config]="ckConfig"  formControlName="content"></ckeditor>
                         <!-- <ckeditor [editor]="Editor" data="<p>Hello, world!</p>" (ready)="onReady($event)"></ckeditor> -->
 
                         <div *ngIf="submitted && Form.content.errors" class="invalid-feedback">

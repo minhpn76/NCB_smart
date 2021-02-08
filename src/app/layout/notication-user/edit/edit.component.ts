@@ -52,11 +52,11 @@ export class EditComponent implements OnInit {
     listStatus: any = [
         {
             name: 'Kích hoạt',
-            code: 'A',
+            code: '1',
         },
         {
             name: 'Chưa kích hoạt',
-            code: 'D',
+            code: '0',
         },
     ];
     listRepeatType: any = [...listNotify];
@@ -75,6 +75,7 @@ export class EditComponent implements OnInit {
             code: '1',
         },
     ];
+    ckConfig: { extraPlugins: string; };
 
     constructor(
         private formBuilder: FormBuilder,
@@ -139,6 +140,7 @@ export class EditComponent implements OnInit {
         });
 
         this.getItem(this.itemId);
+        this.ckConfig = {extraPlugins: 'easyimage, emojione' };
     }
 
     get Form() {
@@ -183,7 +185,7 @@ export class EditComponent implements OnInit {
                 if (result.status === 200) {
                     if (result.json().code === '00') {
                         this.toastr.success(
-                            'Thêm mới thành công',
+                            'Cập nhật thành công',
                             'Thành công!'
                         );
                         setTimeout(() => {

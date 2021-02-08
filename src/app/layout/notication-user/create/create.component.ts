@@ -33,6 +33,7 @@ export class CreateComponent implements OnInit {
     objUpload: any = {};
     isLockSave = false;
     objFile: any = {};
+    ckConfig: any = {};
     public Editor = DecoupledEditor;
     constructor(
         private formBuilder: FormBuilder,
@@ -97,12 +98,12 @@ export class CreateComponent implements OnInit {
             name: '---Vui lòng chọn trạng thái---',
         },
         {
-            code: 'A',
+            code: '1',
             name: 'Kích hoạt',
         },
         {
             name: 'Chưa kích hoạt',
-            code: 'D',
+            code: '0',
         },
     ];
 
@@ -144,6 +145,7 @@ export class CreateComponent implements OnInit {
             endDate: [this.mRatesDateS],
             user_notifications: [],
         });
+        this.ckConfig = {extraPlugins: 'easyimage, emojione' };
     }
     openModal(content) {
         this.modalOp = this.modalService.open(content);
