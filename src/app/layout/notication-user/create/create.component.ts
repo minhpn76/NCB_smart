@@ -236,6 +236,7 @@ export class CreateComponent implements OnInit {
             return;
         }
 
+        this.isLoading = true;
         const payload = {
             title: this.dataForm.value.title,
             content: this.dataForm.value.content,
@@ -286,9 +287,6 @@ export class CreateComponent implements OnInit {
             this._date = new Date(this._date[0]);
             payload.repeatValue = `${this._date.getDate()}T${payload.repeatValue.split('T')[1]}`;
         }
-
-        console.log(payload.repeatValue);
-
 
         this.ncbService
             .createNoticationUser(payload)
