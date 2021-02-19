@@ -40,6 +40,10 @@ export class ReporttuitionComponent implements OnInit {
     {
       name: 'Chưa đóng',
       code: '0',
+    },
+    {
+      name: 'Đang xử lý',
+      code: '2',
     }
   ];
   listPageSize: any = [10, 20, 30, 40, 50];
