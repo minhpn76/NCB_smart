@@ -27,6 +27,23 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
     providers: [Helper, NCBService, ExcelService],
 })
 export class EditComponent implements OnInit {
+
+    constructor(
+        private formBuilder: FormBuilder,
+        private toastr: ToastrService,
+        private modalNotitfications: NgbModal,
+        private ncbService: NCBService,
+        private helper: Helper,
+        public router: Router,
+        private route: ActivatedRoute,
+        private excelService: ExcelService
+    ) {
+        this.loadDate();
+    }
+
+    get Form() {
+        return this.dataForm.controls;
+    }
     // public Editor = ClassicEditor;
     // public Editor = DecoupledEditor;
     mRatesDateS: NgbDateStruct;
@@ -77,18 +94,8 @@ export class EditComponent implements OnInit {
     ];
     ckConfig: { extraPlugins: string; };
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private toastr: ToastrService,
-        private modalNotitfications: NgbModal,
-        private ncbService: NCBService,
-        private helper: Helper,
-        public router: Router,
-        private route: ActivatedRoute,
-        private excelService: ExcelService
-    ) {
-        this.loadDate();
-    }
+    _date: any = '';
+    isLoading: Boolean = false;
 
     public onReady(editor) {
         editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
@@ -140,11 +147,7 @@ export class EditComponent implements OnInit {
         });
 
         this.getItem(this.itemId);
-        this.ckConfig = {extraPlugins: 'easyimage, emojione' };
-    }
-
-    get Form() {
-        return this.dataForm.controls;
+        this.ckConfig = { extraPlugins: 'easyimage, emojione' };
     }
     // modal Danh sách hiện có
     openModal(content) {
@@ -160,14 +163,29 @@ export class EditComponent implements OnInit {
         };
     }
 
+    getWeekDay(date) {
+        // Create an array containing each day, starting with Sunday.
+        const weekdays = new Array(
+            'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+        );
+        // Use the getDay() method to get the day.
+        const day = new Date(date).getDay();
+        // Return the element that corresponds to that index.
+        return weekdays[day];
+    }
     // truyền đi các thông tin trong danh sách
     onSubmit() {
-        this.submitted = true;
-
-        // stop here if form is invalid
-        if (this.dataForm.invalid) {
+        if (this.isLoading) {
             return;
         }
+
+        this.submitted = true;
+        // stop here if form is invalid
+        if (this.dataForm.invalid) {
+            this.isLoading = false;
+            return;
+        }
+        this.isLoading = true;
         const payload = {
             title: this.dataForm.value.title,
             content: this.dataForm.value.content,
@@ -179,6 +197,45 @@ export class EditComponent implements OnInit {
                 ? this.dataForm.value.user_notifications
                 : this.filelist,
         };
+
+        if (payload.repeatType === '2') {
+            this._date = payload.repeatValue.split('T');
+            this._date = new Date(this._date[0]);
+            this._date = this.getWeekDay(this._date);
+            switch (this._date) {
+                case 'Monday':
+                    this._date = 2;
+                    break;
+                case 'Tuesday':
+                    this._date = 3;
+                    break;
+                case 'Wednesday':
+                    this._date = 4;
+                    break;
+                case 'Thursday':
+                    this._date = 5;
+                    break;
+                case 'Friday':
+                    this._date = 6;
+                    break;
+                case 'Saturday':
+                    this._date = 7;
+                    break;
+                case 'Sunday':
+                    this._date = 8;
+                    break;
+                default:
+                    break;
+            }
+            payload.repeatValue = `${this._date}T${payload.repeatValue.split('T')[1]}`;
+        }
+
+        if (payload.repeatType === '3') {
+            this._date = payload.repeatValue.split('T');
+            this._date = new Date(this._date[0]);
+            payload.repeatValue = `${this._date.getDate()}T${payload.repeatValue.split('T')[1]}`;
+        }
+
         this.ncbService
             .updateNoticationUser(this.itemId, payload)
             .then((result) => {
