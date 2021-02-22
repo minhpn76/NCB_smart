@@ -30,10 +30,6 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
     providers: [Helper, NCBService, ExcelService],
 })
 export class CreateComponent implements OnInit {
-    objUpload: any = {};
-    isLockSave = false;
-    objFile: any = {};
-    public Editor = DecoupledEditor;
     constructor(
         private formBuilder: FormBuilder,
         private toastr: ToastrService,
@@ -49,6 +45,11 @@ export class CreateComponent implements OnInit {
     get Form() {
         return this.dataForm.controls;
     }
+    objUpload: any = {};
+    isLockSave = false;
+    objFile: any = {};
+    ckConfig: any = {};
+    public Editor = DecoupledEditor;
     // Editor = DecoupledEditor;
     // public Editor = ClassicEditor;
     mRatesDateS: NgbDateStruct;
@@ -110,6 +111,20 @@ export class CreateComponent implements OnInit {
 
     isLoading: Boolean = false;
 
+    _date: any = '';
+
+    // public onReady(editor) {
+    //     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+    //         console.log('loader : ', loader);
+    //         console.log(btoa(loader.file));
+    //         return new UploadAdapter(loader);
+    //     };
+    //     editor.ui.view.editable.element.parentElement.insertBefore(
+    //         editor.ui.view.toolbar.element,
+    //         editor.ui.view.editable.element
+    //     );
+    // }
+
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
             title: [
@@ -144,6 +159,7 @@ export class CreateComponent implements OnInit {
             endDate: [this.mRatesDateS],
             user_notifications: [],
         });
+        this.ckConfig = { extraPlugins: 'easyimage, emojione' };
     }
     openModal(content) {
         this.modalOp = this.modalService.open(content);
@@ -199,28 +215,28 @@ export class CreateComponent implements OnInit {
         );
     }
 
-    // public onReady(editor) {
-    //     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-    //         console.log('loader : ', loader);
-    //         console.log(btoa(loader.file));
-    //         return new UploadAdapter(loader);
-    //     };
-    //     editor.ui.view.editable.element.parentElement.insertBefore(
-    //         editor.ui.view.toolbar.element,
-    //         editor.ui.view.editable.element
-    //     );
-    // }
-
+    getWeekDay(date) {
+        // Create an array containing each day, starting with Sunday.
+        const weekdays = new Array(
+            'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+        );
+        // Use the getDay() method to get the day.
+        const day = new Date(date).getDay();
+        // Return the element that corresponds to that index.
+        return weekdays[day];
+    }
     onSubmit() {
         if (this.isLoading) {
             return;
         }
-        this.isLoading = true;
         this.submitted = true;
         // stop here if form is invalid
         if (this.dataForm.invalid) {
+            this.isLoading = false;
             return;
         }
+
+        this.isLoading = true;
         const payload = {
             title: this.dataForm.value.title,
             content: this.dataForm.value.content,
@@ -233,6 +249,44 @@ export class CreateComponent implements OnInit {
                 : this.filelist,
             type: '2',
         };
+
+        if (payload.repeatType === '2') {
+            this._date = payload.repeatValue.split('T');
+            this._date = new Date(this._date[0]);
+            this._date = this.getWeekDay(this._date);
+            switch (this._date) {
+                case 'Monday':
+                    this._date = 2;
+                    break;
+                case 'Tuesday':
+                    this._date = 3;
+                    break;
+                case 'Wednesday':
+                    this._date = 4;
+                    break;
+                case 'Thursday':
+                    this._date = 5;
+                    break;
+                case 'Friday':
+                    this._date = 6;
+                    break;
+                case 'Saturday':
+                    this._date = 7;
+                    break;
+                case 'Sunday':
+                    this._date = 8;
+                    break;
+                default:
+                    break;
+            }
+            payload.repeatValue = `${this._date}T${payload.repeatValue.split('T')[1]}`;
+        }
+
+        if (payload.repeatType === '3') {
+            this._date = payload.repeatValue.split('T');
+            this._date = new Date(this._date[0]);
+            payload.repeatValue = `${this._date.getDate()}T${payload.repeatValue.split('T')[1]}`;
+        }
 
         this.ncbService
             .createNoticationUser(payload)
