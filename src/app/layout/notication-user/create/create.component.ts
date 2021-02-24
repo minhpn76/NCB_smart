@@ -249,7 +249,9 @@ export class CreateComponent implements OnInit {
                 : this.filelist,
             type: '2',
         };
+        console.log('a', this.dataForm.value.repeatValue);
 
+        // định dạng theo tháng
         if (payload.repeatType === '2') {
             this._date = payload.repeatValue.split('T');
             this._date = new Date(this._date[0]);
@@ -281,11 +283,20 @@ export class CreateComponent implements OnInit {
             }
             payload.repeatValue = `${this._date}T${payload.repeatValue.split('T')[1]}`;
         }
-
+        // Định dạng theo tháng
         if (payload.repeatType === '3') {
             this._date = payload.repeatValue.split('T');
             this._date = new Date(this._date[0]);
             payload.repeatValue = `${this._date.getDate()}T${payload.repeatValue.split('T')[1]}`;
+        }
+
+        // Định dạng theo Năm
+        if (payload.repeatType === '4') {
+            this._date = payload.repeatValue.split('T')[0];
+            // this._date = new Date(this._date[0]);
+            const month = this._date.split('-')[1];
+            const date = this._date.split('-')[2];
+            payload.repeatValue = `${month}-${date}T${payload.repeatValue.split('T')[1]}`;
         }
 
         this.ncbService

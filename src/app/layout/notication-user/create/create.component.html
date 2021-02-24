@@ -1,30 +1,19 @@
 <div>
-    <app-page-header
-        [heading]="'Danh sách thông báo người dùng'"
-        [heading_second]="'Tạo mới danh sách thông báo người dùng'"
-        [url_heading]="'/notifications'"
-    >
+    <app-page-header [heading]="'Danh sách thông báo người dùng'"
+        [heading_second]="'Tạo mới danh sách thông báo người dùng'" [url_heading]="'/notifications'">
     </app-page-header>
     <div class="row">
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="create" class="col-sm-5 col-form-label"
-                        >Tên thông báo (<span class="text-danger">*</span>):</label
-                    >
+                    <label for="create" class="col-sm-5 col-form-label">Tên thông báo (<span
+                            class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <input
-                            formControlName="title"
-                            class="form-control col-lg-12"
-                            placeholder="Tên thông báo"
+                        <input formControlName="title" class="form-control col-lg-12" placeholder="Tên thông báo"
                             [ngClass]="{
                                 'is-invalid': submitted && Form.title?.errors
-                            }"
-                        />
-                        <div
-                            *ngIf="submitted && Form.title?.errors"
-                            class="invalid-feedback"
-                        >
+                            }" />
+                        <div *ngIf="submitted && Form.title?.errors" class="invalid-feedback">
                             <div *ngIf="Form.title?.errors?.required">
                                 Tiêu đề là bắt buộc
                             </div>
@@ -40,7 +29,7 @@
                     >
                     <div class="col-sm-7"> -->
 
-                        <!-- <textarea
+                <!-- <textarea
                             formControlName="content"
                             class="form-control col-lg-12"
                             placeholder="Nội dung"
@@ -59,15 +48,16 @@
                                 Nội dung không hợp lệ
                             </div>
                         </div> -->
-                        <!-- <angular-editor formControlName="content" [config]="editorConfig"></angular-editor> -->
-                    <!-- </div>
+                <!-- <angular-editor formControlName="content" [config]="editorConfig"></angular-editor> -->
+                <!-- </div>
                 </div> -->
 
                 <div class="form-group row">
-                    <label for="search" class="col-sm-5 col-form-label">Nội dung(<span class="text-danger">*</span>):</label>
+                    <label for="search" class="col-sm-5 col-form-label">Nội dung(<span
+                            class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <!-- <ckeditor [editor]="Editor" formControlName="content"></ckeditor> -->
-                        <ckeditor placeholder="Nội dung..." [config]="ckConfig"  formControlName="content"></ckeditor>
+                        <ckeditor placeholder="Nội dung..." [config]="ckConfig" formControlName="content"></ckeditor>
                         <!-- <ckeditor [editor]="Editor" data="<p>Hello, world!</p>" (ready)="onReady($event)"></ckeditor> -->
 
                         <div *ngIf="submitted && Form.content.errors" class="invalid-feedback">
@@ -78,31 +68,18 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="create" class="col-sm-5 col-form-label"
-                        >Cách thức lặp (<span class="text-danger">*</span
-                        >):</label
-                    >
+                    <label for="create" class="col-sm-5 col-form-label">Cách thức lặp (<span
+                            class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select
-                            class="form-control"
-                            formControlName="repeatType"
-                            [ngClass]="{
+                        <select class="form-control" formControlName="repeatType" [ngClass]="{
                                 'is-invalid':
                                     submitted && Form.repeatType?.errors
-                            }"
-                        >
-                            <option
-                                *ngFor="let i of listNotifications"
-                                [value]="i.code"
-                                selected="selected"
-                            >
+                            }">
+                            <option *ngFor="let i of listNotifications" [value]="i.code" selected="selected">
                                 {{ i.name }}
                             </option>
                         </select>
-                        <div
-                            *ngIf="submitted && Form.repeatType?.errors"
-                            class="invalid-feedback"
-                        >
+                        <div *ngIf="submitted && Form.repeatType?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatType?.errors?.required">
                                 Cách thức lặp là bắt buộc
                             </div>
@@ -111,173 +88,91 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="search" class="col-sm-5 col-form-label"
-                        >Giá trị thời gian(<span class="text-danger">*</span
-                        >):</label
-                    >
-                    <div
-                        class="col-sm-7 input-group"
-                        *ngIf="
+                    <label for="search" class="col-sm-5 col-form-label">Giá trị thời gian(<span
+                            class="text-danger">*</span>):</label>
+                    <div class="col-sm-7 input-group" *ngIf="
                             Form.repeatType.value === '0' ||
                             Form.repeatType.value === ''
-                        "
-                    >
-                        <input
-                            class="form-control"
-                            type="datetime-local"
-                            formControlName="repeatValue"
-                            id="example-datetime-local-input"
-                            [ngClass]="{
+                        ">
+                        <input class="form-control" type="datetime-local" formControlName="repeatValue"
+                            id="example-datetime-local-input" [ngClass]="{
                                 'is-invalid': submitted && Form.repeatValue?.errors
-                            }"
-                        />
-                        <div
-                            *ngIf="submitted && Form.repeatValue?.errors"
-                            class="invalid-feedback"
-                        >
+                            }" />
+                        <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc
                             </div>
                         </div>
                     </div>
-                    <div
-                        *ngIf="Form.repeatType.value === '1'"
-                        class="col-sm-7 input-group"
-                    >
-                        <input
-                            class="form-control"
-                            type="time"
-                            formControlName="repeatValue"
-                            [ngClass]="{
+                    <div *ngIf="Form.repeatType.value === '1'" class="col-sm-7 input-group">
+                        <input class="form-control" type="time" formControlName="repeatValue" [ngClass]="{
                                 'is-invalid': submitted && Form.repeatValue?.errors
-                            }"
-                            id="example-time-input"
-                        />
-                        <div
-                            *ngIf="submitted && Form.repeatValue?.errors"
-                            class="invalid-feedback"
-                        >
+                            }" id="example-time-input" />
+                        <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc
                             </div>
                         </div>
                     </div>
-                    <div
-                        class="col-sm-7 input-group"
-                        *ngIf="Form.repeatType.value === '2'"
-                    >
-                        <input
-                            class="form-control"
-                            type="datetime-local"
-                            formControlName="repeatValue"
-                            [ngClass]="{
+                    <div class="col-sm-7 input-group" *ngIf="Form.repeatType.value === '2'">
+                        <input class="form-control" type="datetime-local" formControlName="repeatValue" [ngClass]="{
                                 'is-invalid': submitted && Form.repeatValue?.errors
-                            }"
-                            id="example-date-input"
-                        />
-                        <div
-                            *ngIf="submitted && Form.repeatValue?.errors"
-                            class="invalid-feedback"
-                        >
+                            }" id="example-date-input" />
+                        <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc
                             </div>
                         </div>
                     </div>
 
-                    <div
-                        class="col-sm-7 input-group"
-                        *ngIf="Form.repeatType.value === '3'"
-                    >
-                        <input
-                            class="form-control"
-                            type="datetime-local"
-                            formControlName="repeatValue"
-                            [ngClass]="{
+                    <div class="col-sm-7 input-group" *ngIf="Form.repeatType.value === '3'">
+                        <input class="form-control" type="datetime-local" formControlName="repeatValue" [ngClass]="{
                                 'is-invalid': submitted && Form.repeatValue?.errors
-                            }"
-                            id="example-month-input"
-                        />
-                        <div
-                            *ngIf="submitted && Form.repeatValue?.errors"
-                            class="invalid-feedback"
-                        >
+                            }" id="example-month-input" />
+                        <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc
                             </div>
                         </div>
                     </div>
-                    <div
-                        class="col-sm-7 input-group"
-                        *ngIf="Form.repeatType.value == '4'"
-                    >
-                        <input
-                            class="form-control"
-                            type="month"
-                            formControlName="repeatValue"
-                            [ngClass]="{
+                    <div class="col-sm-7 input-group" *ngIf="Form.repeatType.value == '4'">
+                        <input class="form-control" type="datetime-local" formControlName="repeatValue" [ngClass]="{
                                 'is-invalid': submitted && Form.repeatValue?.errors
-                            }"
-                            id="example-year-input"
-                        />
-                        <div
-                            *ngIf="submitted && Form.repeatValue?.errors"
-                            class="invalid-feedback"
-                        >
+                            }" id="example-year-input" />
+                        <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc
                             </div>
                         </div>
                     </div>
-                   
                 </div>
-               
+
 
                 <div class="form-group row">
-                    <label for="create" class="col-sm-5 col-form-label"
-                        >Đối tượng (<span class="text-danger">*</span>):</label
-                    >
+                    <label for="create" class="col-sm-5 col-form-label">Đối tượng (<span
+                            class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select
-                            class="form-control"
-                            formControlName="objectUserType"
-                            [ngClass]="{
+                        <select class="form-control" formControlName="objectUserType" [ngClass]="{
                                 'is-invalid':
                                     submitted && Form.objectUserType?.errors
-                            }"
-                        >
-                            <option
-                                *ngFor="let i of objectUserTypes"
-                                [value]="i.code"
-                                selected="selected"
-                            >
+                            }">
+                            <option *ngFor="let i of objectUserTypes" [value]="i.code" selected="selected">
                                 {{ i.name }}
                             </option>
                         </select>
-                        <div
-                            *ngIf="submitted && Form.objectUserType?.errors"
-                            class="invalid-feedback"
-                        >
+                        <div *ngIf="submitted && Form.objectUserType?.errors" class="invalid-feedback">
                             <div *ngIf="Form.objectUserType?.errors?.required">
                                 Đối tượng áp dụng là bắt buộc
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
 
-                <div
-                    class="form-group row"
-                    *ngIf="Form.objectUserType.value === '1'"
-                >
-                    <label for="create" class="col-sm-5 col-form-label"
-                        >Danh sách được áp dụng:</label
-                    >
+                <div class="form-group row" *ngIf="Form.objectUserType.value === '1'">
+                    <label for="create" class="col-sm-5 col-form-label">Danh sách được áp dụng:</label>
                     <div class="col-sm-7">
-                        <a
-                            class="btn btn-primary"
-                            (click)="openModal(uploadMultiFile)"
-                        >
+                        <a class="btn btn-primary" (click)="openModal(uploadMultiFile)">
                             <i class="fa fa-upload"></i>&nbsp;Tải lên danh sách
                         </a>
                     </div>
@@ -316,12 +211,7 @@
             <i class="icon-plus"></i>
             Tải lên danh sách người dùng được áp dụng
         </h5>
-        <button
-            type="button"
-            class="close"
-            aria-label="Close"
-            (click)="d('Crossclick')"
-        >
+        <button type="button" class="close" aria-label="Close" (click)="d('Crossclick')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -329,41 +219,23 @@
         <div class="row">
             <div class="col-md-12">
                 <h5>Bước 1:</h5>
-                <span
-                    >Download template mẫu:
-                    <a
-                        href="assets/template-excel/Template_Users_Notification.xlsx"
-                        ><i>tại đây</i></a
-                    ></span
-                >
+                <span>Download template mẫu:
+                    <a href="assets/template-excel/Template_Users_Notification.xlsx"><i>tại đây</i></a></span>
             </div>
             <div class="col-md-12 mt-3">
                 <h5>Bước 2:</h5>
                 <div>
-                    <p-fileUpload
-                        #fubauto
-                        name="Excel"
-                        accept=".csv,.xlsx,.xls"
-                        customUpload="true"
-                        mode="basic"
-                        maxFileSize="1000000"
-                        (uploadHandler)="onUploadFile($event)"
-                        auto="true"
-                        iconLabel="fa-cloud-upload"
-                        chooseLabel="Chọn tệp tin"
-                    ></p-fileUpload>
+                    <p-fileUpload #fubauto name="Excel" accept=".csv,.xlsx,.xls" customUpload="true" mode="basic"
+                        maxFileSize="1000000" (uploadHandler)="onUploadFile($event)" auto="true"
+                        iconLabel="fa-cloud-upload" chooseLabel="Chọn tệp tin"></p-fileUpload>
                     <p *ngIf="fileExcel.name" class="m-b-0 text-primary">
                         {{ fileExcel.name }}
                     </p>
                 </div>
             </div>
             <div class="col-md-12 mt-3 text-right">
-                <button
-                    [disabled]="!fileExcel.name || temp.loading"
-                    (click)="onUploadServer()"
-                    class="btn btn-primary"
-                    type="submit"
-                >
+                <button [disabled]="!fileExcel.name || temp.loading" (click)="onUploadServer()" class="btn btn-primary"
+                    type="submit">
                     <i class="fa fa-save"></i> Cập nhật
                     <i *ngIf="temp.loading" class="fa fa-spin fa-spinner"></i>
                 </button>

@@ -14,7 +14,7 @@ import {EnsureAuthenticated} from '../services/ensure-authenticated.service';
         CommonModule,
         LayoutRoutingModule,
         TranslateModule,
-        NgbDropdownModule
+        NgbDropdownModule,
     ],
     declarations: [LayoutComponent, SidebarComponent, HeaderComponent],
     providers: [
