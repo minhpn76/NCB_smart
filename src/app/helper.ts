@@ -380,9 +380,13 @@ export class Helper {
             )}:${date[1].substring(2, 4)}`;
         }
         if (type === '4') {
-            const year = str.substring(0, 4);
-            const month = str.substring(4, 6);
-            return `${year}/${month}`;
+            let date = str.split(' ');
+            const month = date[0].substring(0, 2);
+            const day = date[0].substring(2, 4);
+            const hour = date[1].substring(0, 2);
+            const minute = date[1].substring(2, 4);
+            date = `${month}/${day} ${hour}:${minute}`;
+            return date;
         }
     }
 
