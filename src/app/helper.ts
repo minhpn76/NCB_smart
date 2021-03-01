@@ -353,24 +353,14 @@ export class Helper {
         }
         if (type === '2') {
             const date = str.split(' ');
-            const year = date[0].substring(0, 4);
-            const month = date[0].substring(4, 6);
-            const day = date[0].substring(6, 8);
             const hour = date[1].substring(0, 2);
             const minute = date[1].substring(2, 4);
-            const datetime = `${year}/${month}/${day} ${hour}:${minute}`;
-            const dt = new Date(datetime);
-            const t = dt.getDay();
-            const days = [
-                'Chủ nhật',
-                'Thứ 2',
-                'Thứ 3',
-                'Thứ 4',
-                'Thứ 5',
-                'Thứ 6',
-                'Thứ 7',
-            ];
-            return `${days[t]} ,${hour}:${minute}`;
+            const week = parseInt(date[0]);
+            if (week === 8) {
+                return `Chủ nhật, ${hour}:${minute}`;
+            } else {
+            return `Thứ ${week} ,${hour}:${minute}`;
+            }
         }
         if (type === '3') {
             const date = str.split(' ');
