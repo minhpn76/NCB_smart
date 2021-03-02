@@ -117,10 +117,10 @@ export class EditComponent implements OnInit {
         this.dataForm = this.formBuilder.group({
             title: [
                 '',
-                Validators.compose([
-                    Validators.required,
-                    this.helper.noWhitespaceValidator,
-                ]),
+                // Validators.compose([
+                //     Validators.required,
+                //     this.helper.noWhitespaceValidator,
+                // ]),
             ],
             content: [
                 '',

@@ -110,7 +110,7 @@ export class ListComponent implements OnInit {
 
     // chuyển dữ liệu profile trong localStorage sang dạng json
     profile: any = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : null;
-    // TODO find QR_COUPON has isA === true
+    // TODO find QR_COUPON has isAll === true
     objQRCoupon: any = JSON.parse(this.profile.role.description).find((item) => {
         return item.code === 'QR_COUPON';
     });
