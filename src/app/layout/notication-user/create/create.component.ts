@@ -129,10 +129,10 @@ export class CreateComponent implements OnInit {
         this.dataForm = this.formBuilder.group({
             title: [
                 '',
-                Validators.compose([
-                    Validators.required,
-                    this.helper.noWhitespaceValidator,
-                ]),
+                // Validators.compose([
+                //     Validators.required,
+                //     this.helper.noWhitespaceValidator,
+                // ]),
             ],
             content: [
                 '',
@@ -159,7 +159,7 @@ export class CreateComponent implements OnInit {
             endDate: [this.mRatesDateS],
             user_notifications: [],
         });
-        this.ckConfig = { extraPlugins: 'easyimage, emojione' };
+        this.ckConfig = { extraPlugins: 'easyimage, emojione'};
     }
     openModal(content) {
         this.modalOp = this.modalService.open(content);
@@ -209,16 +209,24 @@ export class CreateComponent implements OnInit {
     }
 
     public onReady(editor) {
-        editor.ui.getEditableElement().parentElement.insertBefore(
-            editor.ui.view.toolbar.element,
-            editor.ui.getEditableElement()
-        );
+        editor.ui
+            .getEditableElement()
+            .parentElement.insertBefore(
+                editor.ui.view.toolbar.element,
+                editor.ui.getEditableElement()
+            );
     }
 
     getWeekDay(date) {
         // Create an array containing each day, starting with Sunday.
         const weekdays = new Array(
-            'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday'
         );
         // Use the getDay() method to get the day.
         const day = new Date(date).getDay();
@@ -281,13 +289,17 @@ export class CreateComponent implements OnInit {
                 default:
                     break;
             }
-            payload.repeatValue = `${this._date}T${payload.repeatValue.split('T')[1]}`;
+            payload.repeatValue = `${this._date}T${
+                payload.repeatValue.split('T')[1]
+            }`;
         }
         // Định dạng theo tháng
         if (payload.repeatType === '3') {
             this._date = payload.repeatValue.split('T');
             this._date = new Date(this._date[0]);
-            payload.repeatValue = `${this._date.getDate()}T${payload.repeatValue.split('T')[1]}`;
+            payload.repeatValue = `${this._date.getDate()}T${
+                payload.repeatValue.split('T')[1]
+            }`;
         }
 
         // Định dạng theo Năm
@@ -296,7 +308,9 @@ export class CreateComponent implements OnInit {
             // this._date = new Date(this._date[0]);
             const month = this._date.split('-')[1];
             const date = this._date.split('-')[2];
-            payload.repeatValue = `${month}-${date}T${payload.repeatValue.split('T')[1]}`;
+            payload.repeatValue = `${month}-${date}T${
+                payload.repeatValue.split('T')[1]
+            }`;
         }
 
         this.ncbService
@@ -315,7 +329,8 @@ export class CreateComponent implements OnInit {
                         this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
                     } else if (result.json().code === '1001') {
                         this.toastr.error(
-                            `Người dùng ${result.json().description
+                            `Người dùng ${
+                                result.json().description
                             } không tồn tại trong hệ thống`,
                             'Thất bại!'
                         );
@@ -328,6 +343,23 @@ export class CreateComponent implements OnInit {
                 this.toastr.error(err.json().content, 'Thất bại!');
             });
     }
+
+    // upload image ckeditor
+    toDataURL(url, callback) {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                callback(reader.result);
+            };
+            reader.readAsDataURL(xhr.response);
+        };
+        xhr.open('GET', url);
+        xhr.responseType = 'blob';
+        xhr.send();
+    }
+    // end
+
     resetForm() {
         this.router.navigateByUrl('/notifications');
     }
