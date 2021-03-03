@@ -185,7 +185,7 @@ export class EditComponent implements OnInit {
             this.isLoading = false;
             return;
         }
-        this.isLoading = true;
+        this.isLoading = false;
         const payload = {
             title: this.dataForm.value.title,
             content: this.dataForm.value.content,
@@ -197,6 +197,14 @@ export class EditComponent implements OnInit {
                 ? this.dataForm.value.user_notifications
                 : this.filelist,
         };
+
+
+        // lay link blob
+        // payload.content = JSON.stringify(payload.content);
+        // payload.content = payload.content.split('src=')[1];
+        // payload.content = payload.content.split('"')[1];
+        // console.log(payload.content);
+
         // Định dạng theo tuần
         if (payload.repeatType === '2') {
             this._date = payload.repeatValue.split('T');
@@ -245,28 +253,28 @@ export class EditComponent implements OnInit {
         }
 
 
-        this.ncbService
-            .updateNoticationUser(this.itemId, payload)
-            .then((result) => {
-                if (result.status === 200) {
-                    if (result.json().code === '00') {
-                        this.toastr.success(
-                            'Cập nhật thành công',
-                            'Thành công!'
-                        );
-                        setTimeout(() => {
-                            this.router.navigateByUrl('/notifications');
-                        }, 500);
-                    } else if (result.json().code === '909') {
-                        this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
-                    } else {
-                        this.toastr.error('Thêm mới thất bại', 'Thất bại!');
-                    }
-                }
-            })
-            .catch((err) => {
-                this.toastr.error(err.json().body, 'Thất bại!');
-            });
+        // this.ncbService
+        //     .updateNoticationUser(this.itemId, payload)
+        //     .then((result) => {
+        //         if (result.status === 200) {
+        //             if (result.json().code === '00') {
+        //                 this.toastr.success(
+        //                     'Cập nhật thành công',
+        //                     'Thành công!'
+        //                 );
+        //                 setTimeout(() => {
+        //                     this.router.navigateByUrl('/notifications');
+        //                 }, 500);
+        //             } else if (result.json().code === '909') {
+        //                 this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
+        //             } else {
+        //                 this.toastr.error('Thêm mới thất bại', 'Thất bại!');
+        //             }
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         this.toastr.error(err.json().body, 'Thất bại!');
+        //     });
     }
     resetForm() {
         this.router.navigateByUrl('/notifications');
