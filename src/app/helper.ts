@@ -364,7 +364,7 @@ export class Helper {
         }
         if (type === '3') {
             const date = str.split(' ');
-            return `ngày ${date[0]}, ${date[1].substring(
+            return `Ngày ${date[0]}, ${date[1].substring(
                 0,
                 2
             )}:${date[1].substring(2, 4)}`;

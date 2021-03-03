@@ -197,6 +197,14 @@ export class EditComponent implements OnInit {
                 ? this.dataForm.value.user_notifications
                 : this.filelist,
         };
+
+
+        // lay link blob
+        // payload.content = JSON.stringify(payload.content);
+        // payload.content = payload.content.split('src=')[1];
+        // payload.content = payload.content.split('"')[1];
+        // console.log(payload.content);
+
         // Định dạng theo tuần
         if (payload.repeatType === '2') {
             this._date = payload.repeatValue.split('T');

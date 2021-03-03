@@ -257,7 +257,8 @@ export class CreateComponent implements OnInit {
                 : this.filelist,
             type: '2',
         };
-        console.log('a', this.dataForm.value.repeatValue);
+
+        console.log('a', payload.content);
 
         // định dạng theo tháng
         if (payload.repeatType === '2') {
