@@ -53,6 +53,7 @@ export class EditComponent implements OnInit {
     dataForm: FormGroup;
     submitted = false;
     itemId: any;
+    ckConfig: any = {};
     private modalOp: NgbModalRef;
 
     fileExcel: any = {
@@ -92,7 +93,6 @@ export class EditComponent implements OnInit {
             code: '1',
         },
     ];
-    ckConfig: { extraPlugins: string; };
 
     _date: any = '';
     isLoading: Boolean = false;
@@ -117,10 +117,10 @@ export class EditComponent implements OnInit {
         this.dataForm = this.formBuilder.group({
             title: [
                 '',
-                Validators.compose([
-                    Validators.required,
-                    this.helper.noWhitespaceValidator,
-                ]),
+                // Validators.compose([
+                //     Validators.required,
+                //     this.helper.noWhitespaceValidator,
+                // ]),
             ],
             content: [
                 '',
@@ -197,7 +197,7 @@ export class EditComponent implements OnInit {
                 ? this.dataForm.value.user_notifications
                 : this.filelist,
         };
-
+        // Định dạng theo tuần
         if (payload.repeatType === '2') {
             this._date = payload.repeatValue.split('T');
             this._date = new Date(this._date[0]);
@@ -229,12 +229,21 @@ export class EditComponent implements OnInit {
             }
             payload.repeatValue = `${this._date}T${payload.repeatValue.split('T')[1]}`;
         }
-
+        // Định dạng theo tháng
         if (payload.repeatType === '3') {
             this._date = payload.repeatValue.split('T');
             this._date = new Date(this._date[0]);
             payload.repeatValue = `${this._date.getDate()}T${payload.repeatValue.split('T')[1]}`;
         }
+
+        if (payload.repeatType === '4') {
+            this._date = payload.repeatValue.split('T')[0];
+            // this._date = new Date(this._date[0]);
+            const month = this._date.split('-')[1];
+            const date = this._date.split('-')[2];
+            payload.repeatValue = `${month}-${date}T${payload.repeatValue.split('T')[1]}`;
+        }
+
 
         this.ncbService
             .updateNoticationUser(this.itemId, payload)

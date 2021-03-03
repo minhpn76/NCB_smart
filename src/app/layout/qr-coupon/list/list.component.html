@@ -245,7 +245,7 @@
                                         deleteItem(1, i, data.id)
                                     "></i>
                             </span>
-                            <span *ngIf="objQRCoupon && objQRCoupon.isA === true && data.approveStatus ==='0'" data-toggle="tool-tip" title="Phê duyệt"
+                            <span *ngIf="objQRCoupon && objQRCoupon.isAll === true && data.approveStatus ==='0'" data-toggle="tool-tip" title="Phê duyệt"
                             class="mr-2 cursor-pointer text-warning">
                             <i class="fa fa-check" (click)="approved(data.id)"></i>
                         </span>
