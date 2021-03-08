@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Helper } from '../../../helper';
 import { NCBService } from '../../../services/ncb.service';
 import { Router } from '@angular/router';
-
+import {MenuItem} from 'primeng/api';
 import {
     NgbModal,
     NgbModalRef,
@@ -42,9 +42,18 @@ export class CreateComponent implements OnInit {
         // this.getNotifications();
         this.loadDate();
     }
+
     get Form() {
         return this.dataForm.controls;
     }
+    myGroup = new FormGroup({
+        firstName: new FormControl()
+     });
+    dateOnly: Date;
+    time: Date;
+    Weekday: Date;
+    Month: Date;
+    Year: Date;
     objUpload: any = {};
     isLockSave = false;
     objFile: any = {};
@@ -233,6 +242,9 @@ export class CreateComponent implements OnInit {
         // Return the element that corresponds to that index.
         return weekdays[day];
     }
+
+    // convert RepeatValue
+
     onSubmit() {
         if (this.isLoading) {
             return;
@@ -259,10 +271,30 @@ export class CreateComponent implements OnInit {
         };
 
         console.log('a', payload.content);
+        console.log('dateTime', payload.repeatValue);
 
+        // định dạng chỉ 1 lần
+        if (payload.repeatType === '0' || payload.repeatType === '') {
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${('0' + (_newDate.getMonth() + 1)).slice(-2)}-${('0'
+            + _newDate.getDate()).slice(-2)}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(-2)}`;
+            console.log(0, c_date);
+        }
+
+        // Định dạng hàng Ngày
+        if (payload.repeatType === '1') {
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getHours()}${('0' + _newDate.getMinutes()).slice(-2)}`;
+            console.log(1, c_date);
+            payload.repeatValue = `${c_date}`;
+        }
         // định dạng theo tháng
         if (payload.repeatType === '2') {
-            this._date = payload.repeatValue.split('T');
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${('0' + (_newDate.getMonth() + 1)).slice(-2)}-${('0'
+            + _newDate.getDate()).slice(-2)}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(-2)}`;
+            console.log(2, c_date);
+            this._date = payload.repeatValue.toISOString().split('T');
             this._date = new Date(this._date[0]);
             this._date = this.getWeekDay(this._date);
             switch (this._date) {
@@ -291,26 +323,34 @@ export class CreateComponent implements OnInit {
                     break;
             }
             payload.repeatValue = `${this._date}T${
-                payload.repeatValue.split('T')[1]
+                payload.repeatValue.toISOString().split('T')[1]
             }`;
         }
         // Định dạng theo tháng
         if (payload.repeatType === '3') {
-            this._date = payload.repeatValue.split('T');
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${('0' + (_newDate.getMonth() + 1)).slice(-2)}-${('0'
+            + _newDate.getDate()).slice(-2)}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(-2)}`;
+            console.log(3, c_date);
+            this._date = payload.repeatValue.toISOString().split('T');
             this._date = new Date(this._date[0]);
             payload.repeatValue = `${this._date.getDate()}T${
-                payload.repeatValue.split('T')[1]
+                payload.repeatValue.toISOString().split('T')[1]
             }`;
         }
 
         // Định dạng theo Năm
         if (payload.repeatType === '4') {
-            this._date = payload.repeatValue.split('T')[0];
-            // this._date = new Date(this._date[0]);
+
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${('0' + (_newDate.getMonth() + 1)).slice(-2)}-${('0'
+            + _newDate.getDate()).slice(-2)}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(-2)}`;
+            console.log(4, c_date);
+            this._date = payload.repeatValue.toISOString().split('T')[0];
             const month = this._date.split('-')[1];
             const date = this._date.split('-')[2];
             payload.repeatValue = `${month}-${date}T${
-                payload.repeatValue.split('T')[1]
+                payload.repeatValue.toISOString().split('T')[1]
             }`;
         }
 
