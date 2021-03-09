@@ -27,7 +27,6 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
     providers: [Helper, NCBService, ExcelService],
 })
 export class EditComponent implements OnInit {
-
     constructor(
         private formBuilder: FormBuilder,
         private toastr: ToastrService,
@@ -46,6 +45,11 @@ export class EditComponent implements OnInit {
     }
     // public Editor = ClassicEditor;
     // public Editor = DecoupledEditor;
+    dateOnly: Date;
+    time: Date;
+    Weekday: Date;
+    Month: Date;
+    Year: Date;
     mRatesDateS: NgbDateStruct;
     mRatesDateS_7: NgbDateStruct;
     my: any = new Date();
@@ -97,10 +101,10 @@ export class EditComponent implements OnInit {
     _date: any = '';
     isLoading: Boolean = false;
 
+    CanlendarDate = '04/08/2015';
+
     public onReady(editor) {
         editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-            console.log('loader : ', loader);
-            console.log(btoa(loader.file));
             return new UploadAdapter(loader);
         };
         editor.ui.view.editable.element.parentElement.insertBefore(
@@ -166,7 +170,13 @@ export class EditComponent implements OnInit {
     getWeekDay(date) {
         // Create an array containing each day, starting with Sunday.
         const weekdays = new Array(
-            'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday'
         );
         // Use the getDay() method to get the day.
         const day = new Date(date).getDay();
@@ -205,9 +215,40 @@ export class EditComponent implements OnInit {
         // payload.content = payload.content.split('"')[1];
         // console.log(payload.content);
 
-        // Định dạng theo tuần
+        // định dạng chỉ 1 lần
+        if (payload.repeatType === '0' || payload.repeatType === '') {
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${(
+                '0' +
+                (_newDate.getMonth() + 1)
+            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
+                -2
+            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
+                -2
+            )}`;
+            payload.repeatValue = `${c_date}`;
+        }
+
+        // Định dạng hàng Ngày
+        if (payload.repeatType === '1') {
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getHours()}${(
+                '0' + _newDate.getMinutes()
+            ).slice(-2)}`;
+            payload.repeatValue = `${c_date}`;
+        }
+        // định dạng theo tháng
         if (payload.repeatType === '2') {
-            this._date = payload.repeatValue.split('T');
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${(
+                '0' +
+                (_newDate.getMonth() + 1)
+            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
+                -2
+            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
+                -2
+            )}`;
+            this._date = payload.repeatValue.toISOString().split('T');
             this._date = new Date(this._date[0]);
             this._date = this.getWeekDay(this._date);
             switch (this._date) {
@@ -235,23 +276,46 @@ export class EditComponent implements OnInit {
                 default:
                     break;
             }
-            payload.repeatValue = `${this._date}T${payload.repeatValue.split('T')[1]}`;
+            payload.repeatValue = `${this._date}T${
+                payload.repeatValue.toISOString().split('T')[1]
+            }`;
         }
         // Định dạng theo tháng
         if (payload.repeatType === '3') {
-            this._date = payload.repeatValue.split('T');
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${(
+                '0' +
+                (_newDate.getMonth() + 1)
+            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
+                -2
+            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
+                -2
+            )}`;
+            this._date = payload.repeatValue.toISOString().split('T');
             this._date = new Date(this._date[0]);
-            payload.repeatValue = `${this._date.getDate()}T${payload.repeatValue.split('T')[1]}`;
+            payload.repeatValue = `${this._date.getDate()}T${
+                payload.repeatValue.toISOString().split('T')[1]
+            }`;
         }
 
+        // Định dạng theo Năm
         if (payload.repeatType === '4') {
-            this._date = payload.repeatValue.split('T')[0];
-            // this._date = new Date(this._date[0]);
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${(
+                '0' +
+                (_newDate.getMonth() + 1)
+            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
+                -2
+            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
+                -2
+            )}`;
+            this._date = payload.repeatValue.toISOString().split('T')[0];
             const month = this._date.split('-')[1];
             const date = this._date.split('-')[2];
-            payload.repeatValue = `${month}-${date}T${payload.repeatValue.split('T')[1]}`;
+            payload.repeatValue = `${month}-${date}T${
+                payload.repeatValue.toISOString().split('T')[1]
+            }`;
         }
-
 
         this.ncbService
             .updateNoticationUser(this.itemId, payload)
@@ -306,7 +370,6 @@ export class EditComponent implements OnInit {
                 const workbook = XLSX.read(bstr, { type: 'binary' });
                 const first_sheet_name = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[first_sheet_name];
-                console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }));
                 const arraylist = XLSX.utils.sheet_to_json(worksheet, {
                     raw: true,
                 });
@@ -322,21 +385,33 @@ export class EditComponent implements OnInit {
             .detailNoticationUser(params)
             .then((result) => {
                 const body = result.json().body;
+                // body.repeatType = Helper.formatDateTimeEdit(
+                //         body.repeatValue,
+                //         body.repeatType
+                //     ),
+                // console.log('load data', body.repeatType);
                 this.dataForm.patchValue({
                     title: body.title,
                     content: body.content,
                     repeatType: body.repeatType,
-                    repeatValue: Helper.formatDateTimeEdit(body.repeatValue, body.repeatType),
+                    // repeatValue: Helper.formatDateTimeEdit(
+                    //     body.repeatValue,
+                    //     body.repeatType
+                    // ),
+                    // repeatValue: body.TimeZone().repeatValue,
                     objectUserType: body.objectUserType,
                     user_notifications: body.userNotifications,
                     status: body.status,
                 });
+
             })
             .catch((err) => {
                 this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
             });
     }
+
 }
+
 
 export class UploadAdapter {
     private loader;

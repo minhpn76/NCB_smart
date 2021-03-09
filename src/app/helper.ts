@@ -32,7 +32,6 @@ export class Helper {
             const strCopy = words[1].substring(0, 2);
             const strCopy2 = words[1].substring(2, 4);
             const all = `${chars}-${chars2}-${chars3}T${strCopy}:${strCopy2}`;
-            console.log('all', all);
             return all;
         }
         if (type === '1') {

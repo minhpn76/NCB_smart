@@ -6,9 +6,9 @@
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="create" class="col-sm-5 col-form-label">Tên thông báo:</label> 
+                    <label for="create" class="col-sm-5 col-form-label">Tên thông báo:</label>
                     <div class="col-sm-7">
-                        <input formControlName="title" class="form-control col-lg-12" placeholder="Tên thông báo"/>
+                        <input formControlName="title" class="form-control col-lg-12" placeholder="Tên thông báo" />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -50,10 +50,8 @@
                             Form.repeatType.value === '0' ||
                             Form.repeatType.value === ''
                         ">
-                        <input class="form-control" type="datetime-local" formControlName="repeatValue"
-                            id="example-datetime-local-input" [ngClass]="{
-                                'is-invalid': submitted && Form.repeatValue?.errors
-                            }" />
+                        <p-calendar [(ngModel)]="dateOnly" formControlName="repeatValue" [showTime]="true"
+                        [hourFormat]="12" [showIcon]="true" inputId="icon"></p-calendar>
                         <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc
@@ -61,9 +59,7 @@
                         </div>
                     </div>
                     <div *ngIf="Form.repeatType.value === '1'" class="col-sm-7 input-group">
-                        <input class="form-control" type="time" formControlName="repeatValue" [ngClass]="{
-                                'is-invalid': submitted && Form.repeatValue?.errors
-                            }" id="example-time-input" />
+                        <p-calendar [(ngModel)]="time" formControlName="repeatValue" [timeOnly]="true" [showIcon]="true" [hourFormat]="12" inputId="time" inputId="icon"></p-calendar>
                         <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc
@@ -71,9 +67,8 @@
                         </div>
                     </div>
                     <div class="col-sm-7 input-group" *ngIf="Form.repeatType.value === '2'">
-                        <input class="form-control" type="datetime-local" formControlName="repeatValue" [ngClass]="{
-                                'is-invalid': submitted && Form.repeatValue?.errors
-                            }" id="example-date-input" />
+                        <p-calendar [(ngModel)]="Weekday" formControlName="repeatValue" [showTime]="true"
+                        [hourFormat]="12" [showIcon]="true" inputId="icon"></p-calendar>
                         <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc
@@ -82,9 +77,8 @@
                     </div>
 
                     <div class="col-sm-7 input-group" *ngIf="Form.repeatType.value === '3'">
-                        <input class="form-control" type="datetime-local" formControlName="repeatValue" [ngClass]="{
-                                'is-invalid': submitted && Form.repeatValue?.errors
-                            }" id="example-month-input" />
+                        <p-calendar [(ngModel)]="Month" formControlName="repeatValue" [showTime]="true"
+                        [hourFormat]="12" [showIcon]="true" inputId="icon"></p-calendar>
                         <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc
@@ -92,9 +86,8 @@
                         </div>
                     </div>
                     <div class="col-sm-7 input-group" *ngIf="Form.repeatType.value == '4'">
-                        <input class="form-control" type="datetime-local" formControlName="repeatValue" [ngClass]="{
-                                'is-invalid': submitted && Form.repeatValue?.errors
-                            }" id="example-year-input" />
+                        <p-calendar [(ngModel)]="Year" formControlName="repeatValue" [showTime]="true"
+                        [hourFormat]="12" [showIcon]="true" inputId="icon"></p-calendar>
                         <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc
