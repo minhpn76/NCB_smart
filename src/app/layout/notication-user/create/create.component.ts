@@ -279,6 +279,7 @@ export class CreateComponent implements OnInit {
             const c_date = `${_newDate.getFullYear()}-${('0' + (_newDate.getMonth() + 1)).slice(-2)}-${('0'
             + _newDate.getDate()).slice(-2)}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(-2)}`;
             console.log(0, c_date);
+            payload.repeatValue = `${c_date}`;
         }
 
         // Định dạng hàng Ngày

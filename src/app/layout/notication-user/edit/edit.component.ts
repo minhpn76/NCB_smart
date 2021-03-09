@@ -391,18 +391,22 @@ export class EditComponent implements OnInit {
             .detailNoticationUser(params)
             .then((result) => {
                 const body = result.json().body;
+
                 this.dataForm.patchValue({
                     title: body.title,
                     content: body.content,
                     repeatType: body.repeatType,
-                    repeatValue: Helper.formatDateTimeEdit(
-                        body.repeatValue,
-                        body.repeatType
-                    ),
+                    // repeatValue: Helper.formatDateTimeEdit(
+                    //     body.repeatValue,
+                    //     body.repeatType
+                    // ),
+                    // repeatValue: body.stringify().repeatValue,
                     objectUserType: body.objectUserType,
                     user_notifications: body.userNotifications,
                     status: body.status,
                 });
+                console.log('load data', this.dataForm);
+
             })
             .catch((err) => {
                 this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
