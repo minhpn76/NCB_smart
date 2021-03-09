@@ -176,7 +176,7 @@
                             Form.repeatType.value === ''
                         ">
                         <p-calendar [(ngModel)]="dateOnly" formControlName="repeatValue" [showTime]="true"
-                            [hourFormat]="12" [showIcon]="true" inputId="icon"></p-calendar>
+                            [hourFormat]="12" [showIcon]="true" [(ngModel)]="CanlendarDate" inputId="icon"></p-calendar>
                         <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc

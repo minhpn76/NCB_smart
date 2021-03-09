@@ -101,10 +101,10 @@ export class EditComponent implements OnInit {
     _date: any = '';
     isLoading: Boolean = false;
 
+    CanlendarDate = '04/08/2015';
+
     public onReady(editor) {
         editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-            console.log('loader : ', loader);
-            console.log(btoa(loader.file));
             return new UploadAdapter(loader);
         };
         editor.ui.view.editable.element.parentElement.insertBefore(
@@ -208,7 +208,6 @@ export class EditComponent implements OnInit {
                 : this.filelist,
         };
 
-        console.log('time', this.dataForm.value.repeatValue);
 
         // lay link blob
         // payload.content = JSON.stringify(payload.content);
@@ -227,7 +226,6 @@ export class EditComponent implements OnInit {
             )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
                 -2
             )}`;
-            console.log(0, c_date);
             payload.repeatValue = `${c_date}`;
         }
 
@@ -237,7 +235,6 @@ export class EditComponent implements OnInit {
             const c_date = `${_newDate.getHours()}${(
                 '0' + _newDate.getMinutes()
             ).slice(-2)}`;
-            console.log(1, c_date);
             payload.repeatValue = `${c_date}`;
         }
         // định dạng theo tháng
@@ -251,7 +248,6 @@ export class EditComponent implements OnInit {
             )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
                 -2
             )}`;
-            console.log(2, c_date);
             this._date = payload.repeatValue.toISOString().split('T');
             this._date = new Date(this._date[0]);
             this._date = this.getWeekDay(this._date);
@@ -295,7 +291,6 @@ export class EditComponent implements OnInit {
             )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
                 -2
             )}`;
-            console.log(3, c_date);
             this._date = payload.repeatValue.toISOString().split('T');
             this._date = new Date(this._date[0]);
             payload.repeatValue = `${this._date.getDate()}T${
@@ -314,7 +309,6 @@ export class EditComponent implements OnInit {
             )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
                 -2
             )}`;
-            console.log(4, c_date);
             this._date = payload.repeatValue.toISOString().split('T')[0];
             const month = this._date.split('-')[1];
             const date = this._date.split('-')[2];
@@ -376,7 +370,6 @@ export class EditComponent implements OnInit {
                 const workbook = XLSX.read(bstr, { type: 'binary' });
                 const first_sheet_name = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[first_sheet_name];
-                console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }));
                 const arraylist = XLSX.utils.sheet_to_json(worksheet, {
                     raw: true,
                 });
@@ -392,7 +385,11 @@ export class EditComponent implements OnInit {
             .detailNoticationUser(params)
             .then((result) => {
                 const body = result.json().body;
-
+                // body.repeatType = Helper.formatDateTimeEdit(
+                //         body.repeatValue,
+                //         body.repeatType
+                //     ),
+                // console.log('load data', body.repeatType);
                 this.dataForm.patchValue({
                     title: body.title,
                     content: body.content,
@@ -401,19 +398,20 @@ export class EditComponent implements OnInit {
                     //     body.repeatValue,
                     //     body.repeatType
                     // ),
-                    // repeatValue: body.stringify().repeatValue,
+                    // repeatValue: body.TimeZone().repeatValue,
                     objectUserType: body.objectUserType,
                     user_notifications: body.userNotifications,
                     status: body.status,
                 });
-                console.log('load data', this.dataForm);
 
             })
             .catch((err) => {
                 this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
             });
     }
+
 }
+
 
 export class UploadAdapter {
     private loader;

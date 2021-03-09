@@ -41,4 +41,10 @@
             width: 85%;
         }
     }
+    @media (width: 1366px) {
+        width: 210%;
+        .ui-inputtext {
+            width: 85%;
+        }
+    }
 }
