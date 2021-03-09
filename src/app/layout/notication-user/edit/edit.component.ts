@@ -228,6 +228,7 @@ export class EditComponent implements OnInit {
                 -2
             )}`;
             console.log(0, c_date);
+            payload.repeatValue = `${c_date}`;
         }
 
         // Định dạng hàng Ngày
