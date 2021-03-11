@@ -27,6 +27,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
     providers: [Helper, NCBService, ExcelService],
 })
 export class EditComponent implements OnInit {
+
     constructor(
         private formBuilder: FormBuilder,
         private toastr: ToastrService,
@@ -45,11 +46,6 @@ export class EditComponent implements OnInit {
     }
     // public Editor = ClassicEditor;
     // public Editor = DecoupledEditor;
-    dateOnly: Date;
-    time: Date;
-    Weekday: Date;
-    Month: Date;
-    Year: Date;
     mRatesDateS: NgbDateStruct;
     mRatesDateS_7: NgbDateStruct;
     my: any = new Date();
@@ -170,13 +166,7 @@ export class EditComponent implements OnInit {
     getWeekDay(date) {
         // Create an array containing each day, starting with Sunday.
         const weekdays = new Array(
-            'Sunday',
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday'
+            'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
         );
         // Use the getDay() method to get the day.
         const day = new Date(date).getDay();
@@ -215,6 +205,7 @@ export class EditComponent implements OnInit {
         // payload.content = payload.content.split('"')[1];
         // console.log(payload.content);
 
+<<<<<<< HEAD
         // định dạng chỉ 1 lần
         if (payload.repeatType === '0' || payload.repeatType === '') {
             const _newDate = new Date(payload.repeatValue);
@@ -249,6 +240,11 @@ export class EditComponent implements OnInit {
                 -2
             )}`;
             this._date = payload.repeatValue.toISOString().split('T');
+=======
+        // Định dạng theo tuần
+        if (payload.repeatType === '2') {
+            this._date = payload.repeatValue.split('T');
+>>>>>>> parent of be943cb (update time in screen create-notification-user)
             this._date = new Date(this._date[0]);
             this._date = this.getWeekDay(this._date);
             switch (this._date) {
@@ -276,12 +272,11 @@ export class EditComponent implements OnInit {
                 default:
                     break;
             }
-            payload.repeatValue = `${this._date}T${
-                payload.repeatValue.toISOString().split('T')[1]
-            }`;
+            payload.repeatValue = `${this._date}T${payload.repeatValue.split('T')[1]}`;
         }
         // Định dạng theo tháng
         if (payload.repeatType === '3') {
+<<<<<<< HEAD
             const _newDate = new Date(payload.repeatValue);
             const c_date = `${_newDate.getFullYear()}-${(
                 '0' +
@@ -292,14 +287,15 @@ export class EditComponent implements OnInit {
                 -2
             )}`;
             this._date = payload.repeatValue.toISOString().split('T');
+=======
+            this._date = payload.repeatValue.split('T');
+>>>>>>> parent of be943cb (update time in screen create-notification-user)
             this._date = new Date(this._date[0]);
-            payload.repeatValue = `${this._date.getDate()}T${
-                payload.repeatValue.toISOString().split('T')[1]
-            }`;
+            payload.repeatValue = `${this._date.getDate()}T${payload.repeatValue.split('T')[1]}`;
         }
 
-        // Định dạng theo Năm
         if (payload.repeatType === '4') {
+<<<<<<< HEAD
             const _newDate = new Date(payload.repeatValue);
             const c_date = `${_newDate.getFullYear()}-${(
                 '0' +
@@ -310,12 +306,15 @@ export class EditComponent implements OnInit {
                 -2
             )}`;
             this._date = payload.repeatValue.toISOString().split('T')[0];
+=======
+            this._date = payload.repeatValue.split('T')[0];
+            // this._date = new Date(this._date[0]);
+>>>>>>> parent of be943cb (update time in screen create-notification-user)
             const month = this._date.split('-')[1];
             const date = this._date.split('-')[2];
-            payload.repeatValue = `${month}-${date}T${
-                payload.repeatValue.toISOString().split('T')[1]
-            }`;
+            payload.repeatValue = `${month}-${date}T${payload.repeatValue.split('T')[1]}`;
         }
+
 
         this.ncbService
             .updateNoticationUser(this.itemId, payload)
@@ -394,11 +393,15 @@ export class EditComponent implements OnInit {
                     title: body.title,
                     content: body.content,
                     repeatType: body.repeatType,
+<<<<<<< HEAD
                     // repeatValue: Helper.formatDateTimeEdit(
                     //     body.repeatValue,
                     //     body.repeatType
                     // ),
                     // repeatValue: body.TimeZone().repeatValue,
+=======
+                    repeatValue: Helper.formatDateTimeEdit(body.repeatValue, body.repeatType),
+>>>>>>> parent of be943cb (update time in screen create-notification-user)
                     objectUserType: body.objectUserType,
                     user_notifications: body.userNotifications,
                     status: body.status,
