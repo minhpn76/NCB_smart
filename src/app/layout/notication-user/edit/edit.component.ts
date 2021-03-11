@@ -205,46 +205,9 @@ export class EditComponent implements OnInit {
         // payload.content = payload.content.split('"')[1];
         // console.log(payload.content);
 
-<<<<<<< HEAD
-        // định dạng chỉ 1 lần
-        if (payload.repeatType === '0' || payload.repeatType === '') {
-            const _newDate = new Date(payload.repeatValue);
-            const c_date = `${_newDate.getFullYear()}-${(
-                '0' +
-                (_newDate.getMonth() + 1)
-            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
-                -2
-            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
-                -2
-            )}`;
-            payload.repeatValue = `${c_date}`;
-        }
-
-        // Định dạng hàng Ngày
-        if (payload.repeatType === '1') {
-            const _newDate = new Date(payload.repeatValue);
-            const c_date = `${_newDate.getHours()}${(
-                '0' + _newDate.getMinutes()
-            ).slice(-2)}`;
-            payload.repeatValue = `${c_date}`;
-        }
-        // định dạng theo tháng
-        if (payload.repeatType === '2') {
-            const _newDate = new Date(payload.repeatValue);
-            const c_date = `${_newDate.getFullYear()}-${(
-                '0' +
-                (_newDate.getMonth() + 1)
-            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
-                -2
-            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
-                -2
-            )}`;
-            this._date = payload.repeatValue.toISOString().split('T');
-=======
         // Định dạng theo tuần
         if (payload.repeatType === '2') {
             this._date = payload.repeatValue.split('T');
->>>>>>> parent of be943cb (update time in screen create-notification-user)
             this._date = new Date(this._date[0]);
             this._date = this.getWeekDay(this._date);
             switch (this._date) {
@@ -276,40 +239,14 @@ export class EditComponent implements OnInit {
         }
         // Định dạng theo tháng
         if (payload.repeatType === '3') {
-<<<<<<< HEAD
-            const _newDate = new Date(payload.repeatValue);
-            const c_date = `${_newDate.getFullYear()}-${(
-                '0' +
-                (_newDate.getMonth() + 1)
-            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
-                -2
-            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
-                -2
-            )}`;
-            this._date = payload.repeatValue.toISOString().split('T');
-=======
             this._date = payload.repeatValue.split('T');
->>>>>>> parent of be943cb (update time in screen create-notification-user)
             this._date = new Date(this._date[0]);
             payload.repeatValue = `${this._date.getDate()}T${payload.repeatValue.split('T')[1]}`;
         }
 
         if (payload.repeatType === '4') {
-<<<<<<< HEAD
-            const _newDate = new Date(payload.repeatValue);
-            const c_date = `${_newDate.getFullYear()}-${(
-                '0' +
-                (_newDate.getMonth() + 1)
-            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
-                -2
-            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
-                -2
-            )}`;
-            this._date = payload.repeatValue.toISOString().split('T')[0];
-=======
             this._date = payload.repeatValue.split('T')[0];
             // this._date = new Date(this._date[0]);
->>>>>>> parent of be943cb (update time in screen create-notification-user)
             const month = this._date.split('-')[1];
             const date = this._date.split('-')[2];
             payload.repeatValue = `${month}-${date}T${payload.repeatValue.split('T')[1]}`;
@@ -393,15 +330,7 @@ export class EditComponent implements OnInit {
                     title: body.title,
                     content: body.content,
                     repeatType: body.repeatType,
-<<<<<<< HEAD
-                    // repeatValue: Helper.formatDateTimeEdit(
-                    //     body.repeatValue,
-                    //     body.repeatType
-                    // ),
-                    // repeatValue: body.TimeZone().repeatValue,
-=======
                     repeatValue: Helper.formatDateTimeEdit(body.repeatValue, body.repeatType),
->>>>>>> parent of be943cb (update time in screen create-notification-user)
                     objectUserType: body.objectUserType,
                     user_notifications: body.userNotifications,
                     status: body.status,

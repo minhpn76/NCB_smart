@@ -61,13 +61,9 @@
                         </div>
                     </div>
                     <div *ngIf="Form.repeatType.value === '1'" class="col-sm-7 input-group">
-<<<<<<< HEAD
-                        <p-calendar [(ngModel)]="time" formControlName="repeatValue" [timeOnly]="true" [showIcon]="true" [hourFormat]="12" inputId="time" inputId="icon"></p-calendar>
-=======
                         <input class="form-control" type="time" formControlName="repeatValue" [ngClass]="{
                                 'is-invalid': submitted && Form.repeatValue?.errors
                             }" id="example-time-input" />
->>>>>>> parent of be943cb (update time in screen create-notification-user)
                         <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc

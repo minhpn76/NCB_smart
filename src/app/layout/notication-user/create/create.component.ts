@@ -260,22 +260,6 @@ export class CreateComponent implements OnInit {
 
         console.log('a', payload.content);
 
-        // // định dạng chỉ 1 lần
-        // if (payload.repeatType === '0' || payload.repeatType === '') {
-        //     const _newDate = new Date(payload.repeatValue);
-        //     const c_date = `${_newDate.getFullYear()}-${('0' + (_newDate.getMonth() + 1)).slice(-2)}-${('0'
-        //     + _newDate.getDate()).slice(-2)}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(-2)}`;
-        //     console.log(0, c_date);
-        //     payload.repeatValue = `${c_date}`;
-        // }
-
-        // // Định dạng hàng Ngày
-        // if (payload.repeatType === '1') {
-        //     const _newDate = new Date(payload.repeatValue);
-        //     const c_date = `${_newDate.getHours()}${('0' + _newDate.getMinutes()).slice(-2)}`;
-        //     console.log(1, c_date);
-        //     payload.repeatValue = `${c_date}`;
-        // }
         // định dạng theo tháng
         if (payload.repeatType === '2') {
             this._date = payload.repeatValue.split('T');
