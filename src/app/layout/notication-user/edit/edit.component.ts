@@ -27,7 +27,6 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
     providers: [Helper, NCBService, ExcelService],
 })
 export class EditComponent implements OnInit {
-
     constructor(
         private formBuilder: FormBuilder,
         private toastr: ToastrService,
@@ -46,6 +45,11 @@ export class EditComponent implements OnInit {
     }
     // public Editor = ClassicEditor;
     // public Editor = DecoupledEditor;
+    dateOnly: Date;
+    time: Date;
+    Weekday: Date;
+    Month: Date;
+    Year: Date;
     mRatesDateS: NgbDateStruct;
     mRatesDateS_7: NgbDateStruct;
     my: any = new Date();
@@ -53,6 +57,7 @@ export class EditComponent implements OnInit {
     dataForm: FormGroup;
     submitted = false;
     itemId: any;
+    ckConfig: any = {};
     private modalOp: NgbModalRef;
 
     fileExcel: any = {
@@ -92,7 +97,6 @@ export class EditComponent implements OnInit {
             code: '1',
         },
     ];
-    ckConfig: { extraPlugins: string; };
 
     _date: any = '';
     isLoading: Boolean = false;
@@ -117,10 +121,10 @@ export class EditComponent implements OnInit {
         this.dataForm = this.formBuilder.group({
             title: [
                 '',
-                Validators.compose([
-                    Validators.required,
-                    this.helper.noWhitespaceValidator,
-                ]),
+                // Validators.compose([
+                //     Validators.required,
+                //     this.helper.noWhitespaceValidator,
+                // ]),
             ],
             content: [
                 '',
@@ -166,7 +170,13 @@ export class EditComponent implements OnInit {
     getWeekDay(date) {
         // Create an array containing each day, starting with Sunday.
         const weekdays = new Array(
-            'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday'
         );
         // Use the getDay() method to get the day.
         const day = new Date(date).getDay();
@@ -198,8 +208,50 @@ export class EditComponent implements OnInit {
                 : this.filelist,
         };
 
+        console.log('time', this.dataForm.value.repeatValue);
+
+        // lay link blob
+        // payload.content = JSON.stringify(payload.content);
+        // payload.content = payload.content.split('src=')[1];
+        // payload.content = payload.content.split('"')[1];
+        // console.log(payload.content);
+
+        // định dạng chỉ 1 lần
+        if (payload.repeatType === '0' || payload.repeatType === '') {
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${(
+                '0' +
+                (_newDate.getMonth() + 1)
+            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
+                -2
+            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
+                -2
+            )}`;
+            console.log(0, c_date);
+        }
+
+        // Định dạng hàng Ngày
+        if (payload.repeatType === '1') {
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getHours()}${(
+                '0' + _newDate.getMinutes()
+            ).slice(-2)}`;
+            console.log(1, c_date);
+            payload.repeatValue = `${c_date}`;
+        }
+        // định dạng theo tháng
         if (payload.repeatType === '2') {
-            this._date = payload.repeatValue.split('T');
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${(
+                '0' +
+                (_newDate.getMonth() + 1)
+            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
+                -2
+            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
+                -2
+            )}`;
+            console.log(2, c_date);
+            this._date = payload.repeatValue.toISOString().split('T');
             this._date = new Date(this._date[0]);
             this._date = this.getWeekDay(this._date);
             switch (this._date) {
@@ -227,13 +279,47 @@ export class EditComponent implements OnInit {
                 default:
                     break;
             }
-            payload.repeatValue = `${this._date}T${payload.repeatValue.split('T')[1]}`;
+            payload.repeatValue = `${this._date}T${
+                payload.repeatValue.toISOString().split('T')[1]
+            }`;
+        }
+        // Định dạng theo tháng
+        if (payload.repeatType === '3') {
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${(
+                '0' +
+                (_newDate.getMonth() + 1)
+            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
+                -2
+            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
+                -2
+            )}`;
+            console.log(3, c_date);
+            this._date = payload.repeatValue.toISOString().split('T');
+            this._date = new Date(this._date[0]);
+            payload.repeatValue = `${this._date.getDate()}T${
+                payload.repeatValue.toISOString().split('T')[1]
+            }`;
         }
 
-        if (payload.repeatType === '3') {
-            this._date = payload.repeatValue.split('T');
-            this._date = new Date(this._date[0]);
-            payload.repeatValue = `${this._date.getDate()}T${payload.repeatValue.split('T')[1]}`;
+        // Định dạng theo Năm
+        if (payload.repeatType === '4') {
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${(
+                '0' +
+                (_newDate.getMonth() + 1)
+            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
+                -2
+            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
+                -2
+            )}`;
+            console.log(4, c_date);
+            this._date = payload.repeatValue.toISOString().split('T')[0];
+            const month = this._date.split('-')[1];
+            const date = this._date.split('-')[2];
+            payload.repeatValue = `${month}-${date}T${
+                payload.repeatValue.toISOString().split('T')[1]
+            }`;
         }
 
         this.ncbService
@@ -309,7 +395,10 @@ export class EditComponent implements OnInit {
                     title: body.title,
                     content: body.content,
                     repeatType: body.repeatType,
-                    repeatValue: Helper.formatDateTimeEdit(body.repeatValue, body.repeatType),
+                    repeatValue: Helper.formatDateTimeEdit(
+                        body.repeatValue,
+                        body.repeatType
+                    ),
                     objectUserType: body.objectUserType,
                     user_notifications: body.userNotifications,
                     status: body.status,

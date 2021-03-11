@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Helper } from '../../../helper';
 import { NCBService } from '../../../services/ncb.service';
 import { Router } from '@angular/router';
-
+import {MenuItem} from 'primeng/api';
 import {
     NgbModal,
     NgbModalRef,
@@ -42,9 +42,18 @@ export class CreateComponent implements OnInit {
         // this.getNotifications();
         this.loadDate();
     }
+
     get Form() {
         return this.dataForm.controls;
     }
+    myGroup = new FormGroup({
+        firstName: new FormControl()
+     });
+    dateOnly: Date;
+    time: Date;
+    Weekday: Date;
+    Month: Date;
+    Year: Date;
     objUpload: any = {};
     isLockSave = false;
     objFile: any = {};
@@ -129,10 +138,10 @@ export class CreateComponent implements OnInit {
         this.dataForm = this.formBuilder.group({
             title: [
                 '',
-                Validators.compose([
-                    Validators.required,
-                    this.helper.noWhitespaceValidator,
-                ]),
+                // Validators.compose([
+                //     Validators.required,
+                //     this.helper.noWhitespaceValidator,
+                // ]),
             ],
             content: [
                 '',
@@ -159,7 +168,7 @@ export class CreateComponent implements OnInit {
             endDate: [this.mRatesDateS],
             user_notifications: [],
         });
-        this.ckConfig = { extraPlugins: 'easyimage, emojione' };
+        this.ckConfig = { extraPlugins: 'easyimage, emojione'};
     }
     openModal(content) {
         this.modalOp = this.modalService.open(content);
@@ -209,22 +218,33 @@ export class CreateComponent implements OnInit {
     }
 
     public onReady(editor) {
-        editor.ui.getEditableElement().parentElement.insertBefore(
-            editor.ui.view.toolbar.element,
-            editor.ui.getEditableElement()
-        );
+        editor.ui
+            .getEditableElement()
+            .parentElement.insertBefore(
+                editor.ui.view.toolbar.element,
+                editor.ui.getEditableElement()
+            );
     }
 
     getWeekDay(date) {
         // Create an array containing each day, starting with Sunday.
         const weekdays = new Array(
-            'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday'
         );
         // Use the getDay() method to get the day.
         const day = new Date(date).getDay();
         // Return the element that corresponds to that index.
         return weekdays[day];
     }
+
+    // convert RepeatValue
+
     onSubmit() {
         if (this.isLoading) {
             return;
@@ -250,8 +270,31 @@ export class CreateComponent implements OnInit {
             type: '2',
         };
 
+        console.log('a', payload.content);
+        console.log('dateTime', payload.repeatValue);
+
+        // định dạng chỉ 1 lần
+        if (payload.repeatType === '0' || payload.repeatType === '') {
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${('0' + (_newDate.getMonth() + 1)).slice(-2)}-${('0'
+            + _newDate.getDate()).slice(-2)}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(-2)}`;
+            console.log(0, c_date);
+        }
+
+        // Định dạng hàng Ngày
+        if (payload.repeatType === '1') {
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getHours()}${('0' + _newDate.getMinutes()).slice(-2)}`;
+            console.log(1, c_date);
+            payload.repeatValue = `${c_date}`;
+        }
+        // định dạng theo tháng
         if (payload.repeatType === '2') {
-            this._date = payload.repeatValue.split('T');
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${('0' + (_newDate.getMonth() + 1)).slice(-2)}-${('0'
+            + _newDate.getDate()).slice(-2)}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(-2)}`;
+            console.log(2, c_date);
+            this._date = payload.repeatValue.toISOString().split('T');
             this._date = new Date(this._date[0]);
             this._date = this.getWeekDay(this._date);
             switch (this._date) {
@@ -279,13 +322,36 @@ export class CreateComponent implements OnInit {
                 default:
                     break;
             }
-            payload.repeatValue = `${this._date}T${payload.repeatValue.split('T')[1]}`;
+            payload.repeatValue = `${this._date}T${
+                payload.repeatValue.toISOString().split('T')[1]
+            }`;
+        }
+        // Định dạng theo tháng
+        if (payload.repeatType === '3') {
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${('0' + (_newDate.getMonth() + 1)).slice(-2)}-${('0'
+            + _newDate.getDate()).slice(-2)}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(-2)}`;
+            console.log(3, c_date);
+            this._date = payload.repeatValue.toISOString().split('T');
+            this._date = new Date(this._date[0]);
+            payload.repeatValue = `${this._date.getDate()}T${
+                payload.repeatValue.toISOString().split('T')[1]
+            }`;
         }
 
-        if (payload.repeatType === '3') {
-            this._date = payload.repeatValue.split('T');
-            this._date = new Date(this._date[0]);
-            payload.repeatValue = `${this._date.getDate()}T${payload.repeatValue.split('T')[1]}`;
+        // Định dạng theo Năm
+        if (payload.repeatType === '4') {
+
+            const _newDate = new Date(payload.repeatValue);
+            const c_date = `${_newDate.getFullYear()}-${('0' + (_newDate.getMonth() + 1)).slice(-2)}-${('0'
+            + _newDate.getDate()).slice(-2)}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(-2)}`;
+            console.log(4, c_date);
+            this._date = payload.repeatValue.toISOString().split('T')[0];
+            const month = this._date.split('-')[1];
+            const date = this._date.split('-')[2];
+            payload.repeatValue = `${month}-${date}T${
+                payload.repeatValue.toISOString().split('T')[1]
+            }`;
         }
 
         this.ncbService
@@ -304,7 +370,8 @@ export class CreateComponent implements OnInit {
                         this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
                     } else if (result.json().code === '1001') {
                         this.toastr.error(
-                            `Người dùng ${result.json().description
+                            `Người dùng ${
+                                result.json().description
                             } không tồn tại trong hệ thống`,
                             'Thất bại!'
                         );
@@ -317,6 +384,23 @@ export class CreateComponent implements OnInit {
                 this.toastr.error(err.json().content, 'Thất bại!');
             });
     }
+
+    // upload image ckeditor
+    toDataURL(url, callback) {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                callback(reader.result);
+            };
+            reader.readAsDataURL(xhr.response);
+        };
+        xhr.open('GET', url);
+        xhr.responseType = 'blob';
+        xhr.send();
+    }
+    // end
+
     resetForm() {
         this.router.navigateByUrl('/notifications');
     }

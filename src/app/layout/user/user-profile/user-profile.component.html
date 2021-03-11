@@ -162,7 +162,7 @@
                 <label for="search" class="col-sm-4 col-form-label">CIF:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.cifgrp"
+                    [value]="passData?.cifgrp"
                     [attr.disabled]="true"
                     itrim type="text" id="search"
                     placeholder="CIF">
@@ -172,7 +172,7 @@
                 <label for="search" class="col-sm-4 col-form-label">CMND/HC:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.datCfmast.idno"
+                    value={{passData?.datCfmast?.idno}}
                     [attr.disabled]="true"
                     itrim type="text" id="search"
                     placeholder="CMND/HC">
@@ -182,7 +182,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Tên đăng nhập:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.usrid"
+                    value={{passData?.usrid}}
                     [attr.disabled]="true"
                     itrim type="text" id="search"
                     placeholder="Tên đăng nhập">
@@ -192,7 +192,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Họ tên KH:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.usrfname"
+                    value={{passData?.usrfname}}
                     [attr.disabled]="true"
                     itrim type="text" id="search"
                     placeholder="Họ tên KH">
@@ -202,7 +202,7 @@
                 <label for="search" class="col-sm-4 col-form-label">Tên gói sản phẩm:</label>
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
-                    [(ngModel)]="passData.function.prdName"
+                    value={{passData?.function?.prdName}}
                     [attr.disabled]="true"
                     itrim type="text" id="search"
                     placeholder="Tên gói sản phẩm">
@@ -213,7 +213,7 @@
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
                     [attr.disabled]="true"
-                    [(ngModel)]="passData.lm4rm"
+                    value={{passData?.lm4rm}}
                     itrim type="text" id="search"
                     placeholder="Mã gói sản phẩm">
                 </div>
@@ -223,7 +223,7 @@
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
                     [attr.disabled]="true"
-                    [(ngModel)]="passData.function.promotion"
+                    value={{passData?.function?.promotion}}
                     itrim type="text" id="search"
                     placeholder="Mã Ưu đãi">
                 </div>
@@ -233,7 +233,7 @@
                 <div class="col-sm-6">
                     <input class="form-control col-lg-12"
                     [attr.disabled]="true"
-                    [(ngModel)]="passData.function.promotionName"
+                    value={{passData?.function?.promotionName}}
                     itrim type="text" id="search"
                     placeholder="CT ưu đãi">
                 </div>

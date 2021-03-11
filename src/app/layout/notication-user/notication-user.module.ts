@@ -16,7 +16,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 // import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { CKEditorModule } from 'ckeditor4-angular';
-
+import { CalendarModule } from 'primeng/calendar';
 @NgModule({
   declarations: [ListComponent, CreateComponent, EditComponent],
   imports: [
@@ -27,6 +27,7 @@ import { CKEditorModule } from 'ckeditor4-angular';
         TranslateModule.forChild(),
         CurrencyMaskModule,
         CKEditorModule,
+        CalendarModule,
         SweetAlert2Module.forRoot({
             buttonsStyling: false,
             customClass: 'modal-content',
