@@ -258,7 +258,7 @@ export class CreateComponent implements OnInit {
             type: '2',
         };
 
-        console.log('a', payload.content);
+        console.log('a', payload);
 
         // định dạng theo tháng
         if (payload.repeatType === '2') {

@@ -197,6 +197,7 @@ export class EditComponent implements OnInit {
                 ? this.dataForm.value.user_notifications
                 : this.filelist,
         };
+        console.log('payload', payload);
 
 
         // lay link blob
