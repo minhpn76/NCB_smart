@@ -27,6 +27,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
     providers: [Helper, NCBService, ExcelService],
 })
 export class EditComponent implements OnInit {
+
     constructor(
         private formBuilder: FormBuilder,
         private toastr: ToastrService,
@@ -45,11 +46,6 @@ export class EditComponent implements OnInit {
     }
     // public Editor = ClassicEditor;
     // public Editor = DecoupledEditor;
-    dateOnly: Date;
-    time: Date;
-    Weekday: Date;
-    Month: Date;
-    Year: Date;
     mRatesDateS: NgbDateStruct;
     mRatesDateS_7: NgbDateStruct;
     my: any = new Date();
@@ -97,6 +93,124 @@ export class EditComponent implements OnInit {
             code: '1',
         },
     ];
+    listDay = [
+        { code: 2, value: ' Thứ 2' },
+        { code: 3, value: ' Thứ 3' },
+        { code: 4, value: ' Thứ 4' },
+        { code: 5, value: ' Thứ 5' },
+        { code: 6, value: ' Thứ 6' },
+        { code: 7, value: ' Thứ 7' },
+        { code: 8, value: ' Chủ nhật' },
+    ];
+    listDates_30 = [
+        { code: '01', value: ' 01' },
+        { code: '02', value: ' 02' },
+        { code: '03', value: ' 03' },
+        { code: '04', value: '  04' },
+        { code: '05', value: '  05' },
+        { code: '06', value: '  06' },
+        { code: '07', value: ' 07' },
+        { code: '08', value: ' 08' },
+        { code: '09', value: ' 09' },
+        { code: 10, value: ' 10' },
+        { code: 11, value: ' 11' },
+        { code: 12, value: ' 12' },
+        { code: 13, value: ' 13' },
+        { code: 14, value: ' 14' },
+        { code: 15, value: ' 15' },
+        { code: 16, value: ' 16' },
+        { code: 17, value: ' 17' },
+        { code: 18, value: ' 18' },
+        { code: 19, value: ' 19' },
+        { code: 20, value: ' 20' },
+        { code: 21, value: ' 21' },
+        { code: 22, value: ' 22' },
+        { code: 23, value: ' 23' },
+        { code: 24, value: ' 24' },
+        { code: 25, value: ' 25' },
+        { code: 26, value: ' 26' },
+        { code: 27, value: ' 27' },
+        { code: 28, value: ' 28' },
+        { code: 29, value: ' 29' },
+        { code: 30, value: ' 30' },
+    ];
+    listDates_28 = [
+        { code: '01', value: ' 01' },
+        { code: '02', value: ' 02' },
+        { code: '03', value: ' 03' },
+        { code: '04', value: '  04' },
+        { code: '05', value: '  05' },
+        { code: '06', value: '  06' },
+        { code: '07', value: ' 07' },
+        { code: '08', value: ' 08' },
+        { code: '09', value: ' 09' },
+        { code: 10, value: ' 10' },
+        { code: 11, value: ' 11' },
+        { code: 12, value: ' 12' },
+        { code: 13, value: ' 13' },
+        { code: 14, value: ' 14' },
+        { code: 15, value: ' 15' },
+        { code: 16, value: ' 16' },
+        { code: 17, value: ' 17' },
+        { code: 18, value: ' 18' },
+        { code: 19, value: ' 19' },
+        { code: 20, value: ' 20' },
+        { code: 21, value: ' 21' },
+        { code: 22, value: ' 22' },
+        { code: 23, value: ' 23' },
+        { code: 24, value: ' 24' },
+        { code: 25, value: ' 25' },
+        { code: 26, value: ' 26' },
+        { code: 27, value: ' 27' },
+        { code: 28, value: ' 28' },
+    ];
+    listDates = [
+        { code: '01', value: ' 01' },
+        { code: '02', value: ' 02' },
+        { code: '03', value: ' 03' },
+        { code: '04', value: '  04' },
+        { code: '05', value: '  05' },
+        { code: '06', value: '  06' },
+        { code: '07', value: ' 07' },
+        { code: '08', value: ' 08' },
+        { code: '09', value: ' 09' },
+        { code: 10, value: ' 10' },
+        { code: 11, value: ' 11' },
+        { code: 12, value: ' 12' },
+        { code: 13, value: ' 13' },
+        { code: 14, value: ' 14' },
+        { code: 15, value: ' 15' },
+        { code: 16, value: ' 16' },
+        { code: 17, value: ' 17' },
+        { code: 18, value: ' 18' },
+        { code: 19, value: ' 19' },
+        { code: 20, value: ' 20' },
+        { code: 21, value: ' 21' },
+        { code: 22, value: ' 22' },
+        { code: 23, value: ' 23' },
+        { code: 24, value: ' 24' },
+        { code: 25, value: ' 25' },
+        { code: 26, value: ' 26' },
+        { code: 27, value: ' 27' },
+        { code: 28, value: ' 28' },
+        { code: 29, value: ' 29' },
+        { code: 30, value: ' 30' },
+        { code: 31, value: ' 31' },
+    ];
+    listMonth = [
+        { code: '01', value: ' 01' },
+        { code: '02', value: ' 02' },
+        { code: '03', value: ' 03' },
+        { code: '04', value: ' 04' },
+        { code: '05', value: ' 05' },
+        { code: '06', value: ' 06' },
+        { code: '07', value: ' 07' },
+        { code: '08', value: ' 08' },
+        { code: '09', value: ' 09' },
+        { code: 10, value: ' 10' },
+        { code: 11, value: ' 11' },
+        { code: 12, value: ' 12' },
+    ];
 
     _date: any = '';
     isLoading: Boolean = false;
@@ -140,8 +254,12 @@ export class EditComponent implements OnInit {
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
-            repeatValue: ['', Validators.compose([Validators.required])],
-
+            // repeatValue: ['', Validators.compose([Validators.required])],
+            repeatDay: [''],
+            repeatTime: [''],
+            repeatMonth: [''],
+            repeatDate: [''],
+            repeatValue: [''],
             objectUserType: ['', Validators.compose([Validators.required])],
             status: [''],
 
@@ -170,13 +288,7 @@ export class EditComponent implements OnInit {
     getWeekDay(date) {
         // Create an array containing each day, starting with Sunday.
         const weekdays = new Array(
-            'Sunday',
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday'
+            'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
         );
         // Use the getDay() method to get the day.
         const day = new Date(date).getDay();
@@ -200,6 +312,10 @@ export class EditComponent implements OnInit {
             title: this.dataForm.value.title,
             content: this.dataForm.value.content,
             repeatType: this.dataForm.value.repeatType,
+            repeatDay: this.dataForm.value.repeatDay,
+            repeatTime: this.dataForm.value.repeatTime,
+            repeatMonth: this.dataForm.value.repeatMonth,
+            repeatDate: this.dataForm.value.repeatDate,
             repeatValue: this.dataForm.value.repeatValue,
             objectUserType: this.dataForm.value.objectUserType,
             status: this.dataForm.value.status,
@@ -207,115 +323,25 @@ export class EditComponent implements OnInit {
                 ? this.dataForm.value.user_notifications
                 : this.filelist,
         };
+        console.log('payload', payload);
 
 
-        // lay link blob
-        // payload.content = JSON.stringify(payload.content);
-        // payload.content = payload.content.split('src=')[1];
-        // payload.content = payload.content.split('"')[1];
-        // console.log(payload.content);
 
-        // định dạng chỉ 1 lần
-        if (payload.repeatType === '0' || payload.repeatType === '') {
-            const _newDate = new Date(payload.repeatValue);
-            const c_date = `${_newDate.getFullYear()}-${(
-                '0' +
-                (_newDate.getMonth() + 1)
-            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
-                -2
-            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
-                -2
-            )}`;
-            payload.repeatValue = `${c_date}`;
-        }
-
-        // Định dạng hàng Ngày
-        if (payload.repeatType === '1') {
-            const _newDate = new Date(payload.repeatValue);
-            const c_date = `${_newDate.getHours()}${(
-                '0' + _newDate.getMinutes()
-            ).slice(-2)}`;
-            payload.repeatValue = `${c_date}`;
-        }
-        // định dạng theo tháng
+        // định dạng theo tuần
         if (payload.repeatType === '2') {
-            const _newDate = new Date(payload.repeatValue);
-            const c_date = `${_newDate.getFullYear()}-${(
-                '0' +
-                (_newDate.getMonth() + 1)
-            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
-                -2
-            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
-                -2
-            )}`;
-            this._date = payload.repeatValue.toISOString().split('T');
-            this._date = new Date(this._date[0]);
-            this._date = this.getWeekDay(this._date);
-            switch (this._date) {
-                case 'Monday':
-                    this._date = 2;
-                    break;
-                case 'Tuesday':
-                    this._date = 3;
-                    break;
-                case 'Wednesday':
-                    this._date = 4;
-                    break;
-                case 'Thursday':
-                    this._date = 5;
-                    break;
-                case 'Friday':
-                    this._date = 6;
-                    break;
-                case 'Saturday':
-                    this._date = 7;
-                    break;
-                case 'Sunday':
-                    this._date = 8;
-                    break;
-                default:
-                    break;
-            }
-            payload.repeatValue = `${this._date}T${
-                payload.repeatValue.toISOString().split('T')[1]
-            }`;
+            payload.repeatValue = `${payload.repeatDay}T${payload.repeatTime}`;
         }
         // Định dạng theo tháng
         if (payload.repeatType === '3') {
-            const _newDate = new Date(payload.repeatValue);
-            const c_date = `${_newDate.getFullYear()}-${(
-                '0' +
-                (_newDate.getMonth() + 1)
-            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
-                -2
-            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
-                -2
-            )}`;
-            this._date = payload.repeatValue.toISOString().split('T');
-            this._date = new Date(this._date[0]);
-            payload.repeatValue = `${this._date.getDate()}T${
-                payload.repeatValue.toISOString().split('T')[1]
-            }`;
+            payload.repeatValue = `${payload.repeatDate}T${payload.repeatTime}`;
         }
 
         // Định dạng theo Năm
         if (payload.repeatType === '4') {
-            const _newDate = new Date(payload.repeatValue);
-            const c_date = `${_newDate.getFullYear()}-${(
-                '0' +
-                (_newDate.getMonth() + 1)
-            ).slice(-2)}-${('0' + _newDate.getDate()).slice(
-                -2
-            )}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(
-                -2
-            )}`;
-            this._date = payload.repeatValue.toISOString().split('T')[0];
-            const month = this._date.split('-')[1];
-            const date = this._date.split('-')[2];
-            payload.repeatValue = `${month}-${date}T${
-                payload.repeatValue.toISOString().split('T')[1]
+            payload.repeatValue = `${payload.repeatMonth}-${payload.repeatDate}T${payload.repeatTime
             }`;
         }
+
 
         this.ncbService
             .updateNoticationUser(this.itemId, payload)
@@ -394,15 +420,16 @@ export class EditComponent implements OnInit {
                     title: body.title,
                     content: body.content,
                     repeatType: body.repeatType,
-                    // repeatValue: Helper.formatDateTimeEdit(
-                    //     body.repeatValue,
-                    //     body.repeatType
-                    // ),
-                    // repeatValue: body.TimeZone().repeatValue,
+                    repeatValue: Helper.formatDateTimeEdit(body.repeatValue, body.repeatType),
+                    repeatTime: Helper.formatTimeEdit(body.repeatValue, body.repeatType),
+                    repeatDay: Helper.formatDayEdit(body.repeatValue, body.repeatType),
+                    repeatDate: Helper.formatDateEdit(body.repeatValue, body.repeatType),
+                    repeatMonth: Helper.formatMonthEdit(body.repeatValue, body.repeatType),
                     objectUserType: body.objectUserType,
                     user_notifications: body.userNotifications,
                     status: body.status,
                 });
+                console.log('body', body.repeatValue);
 
             })
             .catch((err) => {

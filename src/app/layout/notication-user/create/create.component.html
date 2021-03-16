@@ -50,8 +50,10 @@
                             Form.repeatType.value === '0' ||
                             Form.repeatType.value === ''
                         ">
-                        <p-calendar [(ngModel)]="dateOnly" formControlName="repeatValue" [showTime]="true"
-                        [hourFormat]="12" [showIcon]="true" inputId="icon"></p-calendar>
+                        <input class="form-control" type="datetime-local" formControlName="repeatValue"
+                            id="example-datetime-local-input" [ngClass]="{
+                                'is-invalid': submitted && Form.repeatValue?.errors
+                            }" />
                         <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc
@@ -59,7 +61,9 @@
                         </div>
                     </div>
                     <div *ngIf="Form.repeatType.value === '1'" class="col-sm-7 input-group">
-                        <p-calendar [(ngModel)]="time" formControlName="repeatValue" [timeOnly]="true" [showIcon]="true" [hourFormat]="12" inputId="time" inputId="icon"></p-calendar>
+                        <input class="form-control" type="time" formControlName="repeatValue" [ngClass]="{
+                                'is-invalid': submitted && Form.repeatValue?.errors
+                            }" id="example-time-input" />
                         <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc
@@ -67,27 +71,50 @@
                         </div>
                     </div>
                     <div class="col-sm-7 input-group" *ngIf="Form.repeatType.value === '2'">
-                        <p-calendar [(ngModel)]="Weekday" formControlName="repeatValue" [showTime]="true"
-                        [hourFormat]="12" [showIcon]="true" inputId="icon"></p-calendar>
-                        <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
-                            <div *ngIf="Form.repeatValue?.errors?.required">
-                                Giá trị lặp là bắt buộc
-                            </div>
-                        </div>
+                        <select class="form-select" formControlName="repeatDay"   aria-label="Default select example">
+                            <option selected>Chọn Thứ</option>
+                            <option *ngFor="let date of listDay" [value]="date.code">{{date.value}}</option>
+                        </select>
+                        <input class="form-control" type="time" formControlName="repeatTime" [ngClass]="{
+                            'is-invalid': submitted && Form.repeatTime?.errors
+                        }" id="example-year-input" />
                     </div>
 
                     <div class="col-sm-7 input-group" *ngIf="Form.repeatType.value === '3'">
-                        <p-calendar [(ngModel)]="Month" formControlName="repeatValue" [showTime]="true"
-                        [hourFormat]="12" [showIcon]="true" inputId="icon"></p-calendar>
+                        <select class="form-select" formControlName="repeatDate"   aria-label="Default select example">
+                            <option selected>Chọn Ngày</option>
+                            <option *ngFor="let date of listDates" [value]="date.code">{{date.value}}</option>
+                        </select>
+                        <input class="form-control" type="time" formControlName="repeatTime" [ngClass]="{
+                                'is-invalid': submitted && Form.repeatTime?.errors
+                            }" id="example-month-input" />
                         <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-7 input-group" *ngIf="Form.repeatType.value == '4'">
-                        <p-calendar [(ngModel)]="Year" formControlName="repeatValue" [showTime]="true"
-                        [hourFormat]="12" [showIcon]="true" inputId="icon"></p-calendar>
+                    <div  class="col-sm-7 input-group" *ngIf="Form.repeatType.value == '4'">
+                        <select class="form-select" formControlName="repeatMonth"   aria-label="Default select example">
+                            <option selected>Chọn Tháng</option>
+                            <option *ngFor="let date of listMonth" [value]="date.code">{{date.value}}</option>
+                        </select>
+                        <select *ngIf="Form.repeatMonth.value == '02'" class="form-select" formControlName="repeatDate"   aria-label="Default select example">
+                            <option selected>Chọn Ngày</option>
+                            <option *ngFor="let date of listDates_28" [value]="date.code">{{date.value}}</option>
+                        </select>
+                        <select *ngIf="Form.repeatMonth.value == '01' || Form.repeatMonth.value == '03'|| Form.repeatMonth.value == '05'|| Form.repeatMonth.value == '07'
+                        || Form.repeatMonth.value == '08'|| Form.repeatMonth.value == '10'|| Form.repeatMonth.value == '12'" class="form-select" formControlName="repeatDate"   aria-label="Default select example">
+                            <option selected>Chọn Ngày</option>
+                            <option *ngFor="let date of listDates" [value]="date.code">{{date.value}}</option>
+                        </select>
+                        <select *ngIf="Form.repeatMonth.value == '04'|| Form.repeatMonth.value == '06'|| Form.repeatMonth.value == '11'" class="form-select" formControlName="repeatDate"   aria-label="Default select example">
+                            <option selected>Chọn Ngày</option>
+                            <option *ngFor="let date of listDates_30" [value]="date.code">{{date.value}}</option>
+                        </select>
+                        <input class="form-control" type="time" formControlName="repeatTime" [ngClass]="{
+                                'is-invalid': submitted && Form.repeatTime?.errors
+                            }" id="example-year-input" />
                         <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
                                 Giá trị lặp là bắt buộc
