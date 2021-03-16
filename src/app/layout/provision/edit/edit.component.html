@@ -19,6 +19,21 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Mã điều khoản(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="provisionCode"
+                            class="form-control col-lg-12"
+                            placeholder="Mã điều khoản"
+                            [ngClass]="{ 'is-invalid': submitted && Form.provisionCode.errors }"
+                        />
+                        <div *ngIf="submitted && Form.provisionCode.errors" class="invalid-feedback">
+                            <div *ngIf="Form.provisionCode.errors.required">Mã điều khoản là bắt buộc</div>
+                            <div *ngIf="Form.provisionCode.hasError('whitespace')">Mã điều khoản không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Nội dung(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-8">
                         <!-- <textarea
