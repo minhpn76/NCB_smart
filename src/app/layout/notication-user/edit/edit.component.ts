@@ -27,7 +27,6 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
     providers: [Helper, NCBService, ExcelService],
 })
 export class EditComponent implements OnInit {
-
     constructor(
         private formBuilder: FormBuilder,
         private toastr: ToastrService,
@@ -288,7 +287,13 @@ export class EditComponent implements OnInit {
     getWeekDay(date) {
         // Create an array containing each day, starting with Sunday.
         const weekdays = new Array(
-            'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday'
         );
         // Use the getDay() method to get the day.
         const day = new Date(date).getDay();
@@ -308,63 +313,100 @@ export class EditComponent implements OnInit {
             return;
         }
         this.isLoading = true;
-        const payload = {
-            title: this.dataForm.value.title,
-            content: this.dataForm.value.content,
-            repeatType: this.dataForm.value.repeatType,
-            repeatDay: this.dataForm.value.repeatDay,
-            repeatTime: this.dataForm.value.repeatTime,
-            repeatMonth: this.dataForm.value.repeatMonth,
-            repeatDate: this.dataForm.value.repeatDate,
-            repeatValue: this.dataForm.value.repeatValue,
-            objectUserType: this.dataForm.value.objectUserType,
-            status: this.dataForm.value.status,
-            userNotifications: this.dataForm.value.user_notifications
-                ? this.dataForm.value.user_notifications
-                : this.filelist,
-        };
-        console.log('payload', payload);
 
+        // lay link blob
 
-
-        // định dạng theo tuần
-        if (payload.repeatType === '2') {
-            payload.repeatValue = `${payload.repeatDay}T${payload.repeatTime}`;
+        // payload.content = JSON.stringify(payload.content);
+        // payload.content = payload.content.split('src=')[1];
+        // payload.content = payload.content.split('"')[1];
+        // console.log('hình ảnh', payload.content);
+        const sources = this.dataForm.value.content
+            .match(/<img [^>]*src="[^"]*"[^>]*>/gm)
+            .map((x) => x.replace(/.*src="([^"]*)".*/, '$1'));
+        const promise = [];
+        for (let i = 0; i < sources.length; i++) {
+            promise.push(
+                new Promise<void>((resolve, reject) => {
+                    const src = sources[i];
+                    this.ncbService
+                        .uploadFileImgEditor(src)
+                        .then((result) => {
+                            if (result.status === 200) {
+                                if (result.json().code !== '00') {
+                                    reject(result.json().message);
+                                } else {
+                                    const rs = JSON.parse(result._body);
+                                    this.dataForm.value.content = this.dataForm.value.content.replace(
+                                        src,
+                                        rs.body.linkUrl
+                                    );
+                                    resolve();
+                                }
+                            } else {
+                                reject(result.message);
+                            }
+                        })
+                        .catch((err) => {
+                            reject(err.json().message);
+                        });
+                })
+            );
         }
-        // Định dạng theo tháng
-        if (payload.repeatType === '3') {
-            payload.repeatValue = `${payload.repeatDate}T${payload.repeatTime}`;
-        }
+        Promise.all(promise).then(success => {
+            const payload = {
+                title: this.dataForm.value.title,
+                content: this.dataForm.value.content,
+                repeatType: this.dataForm.value.repeatType,
+                repeatDay: this.dataForm.value.repeatDay,
+                repeatTime: this.dataForm.value.repeatTime,
+                repeatMonth: this.dataForm.value.repeatMonth,
+                repeatDate: this.dataForm.value.repeatDate,
+                repeatValue: this.dataForm.value.repeatValue,
+                objectUserType: this.dataForm.value.objectUserType,
+                status: this.dataForm.value.status,
+                userNotifications: this.dataForm.value.user_notifications
+                    ? this.dataForm.value.user_notifications
+                    : this.filelist,
+            };
+            console.log('payload', payload);
 
-        // Định dạng theo Năm
-        if (payload.repeatType === '4') {
-            payload.repeatValue = `${payload.repeatMonth}-${payload.repeatDate}T${payload.repeatTime
-            }`;
-        }
+            // định dạng theo tuần
+            if (payload.repeatType === '2') {
+                payload.repeatValue = `${payload.repeatDay}T${payload.repeatTime}`;
+            }
+            // Định dạng theo tháng
+            if (payload.repeatType === '3') {
+                payload.repeatValue = `${payload.repeatDate}T${payload.repeatTime}`;
+            }
 
+            // Định dạng theo Năm
+            if (payload.repeatType === '4') {
+                payload.repeatValue = `${payload.repeatMonth}-${payload.repeatDate}T${payload.repeatTime}`;
+            }
 
-        this.ncbService
-            .updateNoticationUser(this.itemId, payload)
-            .then((result) => {
-                if (result.status === 200) {
-                    if (result.json().code === '00') {
-                        this.toastr.success(
-                            'Cập nhật thành công',
-                            'Thành công!'
-                        );
-                        setTimeout(() => {
-                            this.router.navigateByUrl('/notifications');
-                        }, 500);
-                    } else if (result.json().code === '909') {
-                        this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
-                    } else {
-                        this.toastr.error('Thêm mới thất bại', 'Thất bại!');
+            this.ncbService
+                .updateNoticationUser(this.itemId, payload)
+                .then((result) => {
+                    if (result.status === 200) {
+                        if (result.json().code === '00') {
+                            this.toastr.success(
+                                'Cập nhật thành công',
+                                'Thành công!'
+                            );
+                            setTimeout(() => {
+                                this.router.navigateByUrl('/notifications');
+                            }, 500);
+                        } else if (result.json().code === '909') {
+                            this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
+                        } else {
+                            this.toastr.error('Thêm mới thất bại', 'Thất bại!');
+                        }
                     }
-                }
-            })
-            .catch((err) => {
-                this.toastr.error(err.json().body, 'Thất bại!');
-            });
+                })
+                .catch((err) => {
+                    this.toastr.error(err.json().body, 'Thất bại!');
+                });
+        }).catch((err) => console.log(err));
     }
     resetForm() {
         this.router.navigateByUrl('/notifications');
@@ -411,34 +453,41 @@ export class EditComponent implements OnInit {
             .detailNoticationUser(params)
             .then((result) => {
                 const body = result.json().body;
-                // body.repeatType = Helper.formatDateTimeEdit(
-                //         body.repeatValue,
-                //         body.repeatType
-                //     ),
-                // console.log('load data', body.repeatType);
                 this.dataForm.patchValue({
                     title: body.title,
                     content: body.content,
                     repeatType: body.repeatType,
-                    repeatValue: Helper.formatDateTimeEdit(body.repeatValue, body.repeatType),
-                    repeatTime: Helper.formatTimeEdit(body.repeatValue, body.repeatType),
-                    repeatDay: Helper.formatDayEdit(body.repeatValue, body.repeatType),
-                    repeatDate: Helper.formatDateEdit(body.repeatValue, body.repeatType),
-                    repeatMonth: Helper.formatMonthEdit(body.repeatValue, body.repeatType),
+                    repeatValue: Helper.formatDateTimeEdit(
+                        body.repeatValue,
+                        body.repeatType
+                    ),
+                    repeatTime: Helper.formatTimeEdit(
+                        body.repeatValue,
+                        body.repeatType
+                    ),
+                    repeatDay: Helper.formatDayEdit(
+                        body.repeatValue,
+                        body.repeatType
+                    ),
+                    repeatDate: Helper.formatDateEdit(
+                        body.repeatValue,
+                        body.repeatType
+                    ),
+                    repeatMonth: Helper.formatMonthEdit(
+                        body.repeatValue,
+                        body.repeatType
+                    ),
                     objectUserType: body.objectUserType,
                     user_notifications: body.userNotifications,
                     status: body.status,
                 });
                 console.log('body', body.repeatValue);
-
             })
             .catch((err) => {
                 this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
             });
     }
-
 }
-
 
 export class UploadAdapter {
     private loader;

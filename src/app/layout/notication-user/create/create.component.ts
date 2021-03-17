@@ -233,21 +233,6 @@ export class CreateComponent implements OnInit {
     _day: any = '';
     _time: any = '';
     _month: any = '';
-    // repeatDay: any = '';
-    // repeatTime: any = '';
-    // r
-
-    // public onReady(editor) {
-    //     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-    //         console.log('loader : ', loader);
-    //         console.log(btoa(loader.file));
-    //         return new UploadAdapter(loader);
-    //     };
-    //     editor.ui.view.editable.element.parentElement.insertBefore(
-    //         editor.ui.view.toolbar.element,
-    //         editor.ui.view.editable.element
-    //     );
-    // }
 
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
@@ -390,6 +375,11 @@ export class CreateComponent implements OnInit {
             type: '2',
         };
 
+        // lay link blob
+        payload.content = JSON.stringify(payload.content);
+        payload.content = payload.content.split('src=')[1];
+        payload.content = payload.content.split('"')[1];
+        console.log(payload.content);
         console.log('a', payload);
 
         // định dạng theo tuần
@@ -403,9 +393,37 @@ export class CreateComponent implements OnInit {
 
         // Định dạng theo Năm
         if (payload.repeatType === '4') {
-        payload.repeatValue = `${payload.repeatMonth}-${payload.repeatDate}T${payload.repeatTime
-            }`;
+            payload.repeatValue = `${payload.repeatMonth}-${payload.repeatDate}T${payload.repeatTime}`;
         }
+
+        // trả về link uploadimg ckeditor
+        this.ncbService
+            .uploadFileImgEditor(payload.content)
+            .then((result) => {
+                if (result.status === 200) {
+                    if (result.json().code !== '00') {
+                        this.isLockSave = true;
+                        this.toastr.error(result.json().message, 'Thất bại!');
+                    } else {
+                        this.objFile = result.json().body;
+                        this.dataForm.patchValue({
+                            linkImg: payload.content,
+                        });
+                        this.isLockSave = false;
+                        this.toastr.success(
+                            'Upload ảnh thành công',
+                            'Thành công!'
+                        );
+                    }
+                } else {
+                    this.isLockSave = true;
+                    this.toastr.error(result.message, 'Thất bại!');
+                }
+            })
+            .catch((err) => {
+                this.isLockSave = true;
+                this.toastr.error(err.json().message, 'Thất bại!');
+            });
 
 
         this.ncbService
