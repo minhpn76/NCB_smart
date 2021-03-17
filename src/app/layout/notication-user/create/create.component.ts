@@ -233,7 +233,6 @@ export class CreateComponent implements OnInit {
     _day: any = '';
     _time: any = '';
     _month: any = '';
-
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
             title: [
@@ -358,103 +357,117 @@ export class CreateComponent implements OnInit {
         }
 
         this.isLoading = true;
-        const payload = {
-            title: this.dataForm.value.title,
-            content: this.dataForm.value.content,
-            repeatType: this.dataForm.value.repeatType,
-            repeatDay: this.dataForm.value.repeatDay,
-            repeatTime: this.dataForm.value.repeatTime,
-            repeatMonth: this.dataForm.value.repeatMonth,
-            repeatDate: this.dataForm.value.repeatDate,
-            repeatValue: this.dataForm.value.repeatValue,
-            objectUserType: this.dataForm.value.objectUserType,
-            status: this.dataForm.value.status,
-            userNotifications: this.dataForm.value.user_notifications
-                ? this.dataForm.value.user_notifications
-                : this.filelist,
-            type: '2',
-        };
 
-        // lay link blob
-        payload.content = JSON.stringify(payload.content);
-        payload.content = payload.content.split('src=')[1];
-        payload.content = payload.content.split('"')[1];
-        console.log(payload.content);
-        console.log('a', payload);
-
-        // định dạng theo tuần
-        if (payload.repeatType === '2') {
-            payload.repeatValue = `${payload.repeatDay}T${payload.repeatTime}`;
+        let sources = this.dataForm.value.content.match(
+            /<img [^>]*src="[^"]*"[^>]*>/gm
+        );
+        if (sources) {
+            sources = sources.map((x) => x.replace(/.*src="([^"]*)".*/, '$1'));
+        } else {
+            sources = [];
         }
-        // Định dạng theo tháng
-        if (payload.repeatType === '3') {
-            payload.repeatValue = `${payload.repeatDate}T${payload.repeatTime}`;
-        }
-
-        // Định dạng theo Năm
-        if (payload.repeatType === '4') {
-            payload.repeatValue = `${payload.repeatMonth}-${payload.repeatDate}T${payload.repeatTime}`;
-        }
-
-        // trả về link uploadimg ckeditor
-        this.ncbService
-            .uploadFileImgEditor(payload.content)
-            .then((result) => {
-                if (result.status === 200) {
-                    if (result.json().code !== '00') {
-                        this.isLockSave = true;
-                        this.toastr.error(result.json().message, 'Thất bại!');
-                    } else {
-                        this.objFile = result.json().body;
-                        this.dataForm.patchValue({
-                            linkImg: payload.content,
+        const promise = [];
+        for (let i = 0; i < sources.length; i++) {
+            promise.push(
+                new Promise<void>((resolve, reject) => {
+                    const src = sources[i];
+                    this.ncbService
+                        .uploadFileImgEditor(src)
+                        .then((result) => {
+                            if (result.status === 200) {
+                                if (result.json().code !== '00') {
+                                    reject(result.json().message);
+                                } else {
+                                    const rs = JSON.parse(result._body);
+                                    this.dataForm.value.content = this.dataForm.value.content.replace(
+                                        src,
+                                        rs.body.linkUrl
+                                    );
+                                    resolve();
+                                }
+                            } else {
+                                reject(result.message);
+                            }
+                        })
+                        .catch((err) => {
+                            reject(err);
                         });
-                        this.isLockSave = false;
-                        this.toastr.success(
-                            'Upload ảnh thành công',
-                            'Thành công!'
-                        );
-                    }
-                } else {
-                    this.isLockSave = true;
-                    this.toastr.error(result.message, 'Thất bại!');
-                }
-            })
-            .catch((err) => {
-                this.isLockSave = true;
-                this.toastr.error(err.json().message, 'Thất bại!');
-            });
+                })
+            );
+        }
+        Promise.all(promise)
+            .then((success) => {
+                const payload = {
+                    title: this.dataForm.value.title,
+                    content: this.dataForm.value.content,
+                    repeatType: this.dataForm.value.repeatType,
+                    repeatDay: this.dataForm.value.repeatDay,
+                    repeatTime: this.dataForm.value.repeatTime,
+                    repeatMonth: this.dataForm.value.repeatMonth,
+                    repeatDate: this.dataForm.value.repeatDate,
+                    repeatValue: this.dataForm.value.repeatValue,
+                    objectUserType: this.dataForm.value.objectUserType,
+                    status: this.dataForm.value.status,
+                    userNotifications: this.dataForm.value.user_notifications
+                        ? this.dataForm.value.user_notifications
+                        : this.filelist,
+                    type: '2',
+                };
+                console.log('payload', payload);
 
-
-        this.ncbService
-            .createNoticationUser(payload)
-            .then((result) => {
-                if (result.status === 200) {
-                    if (result.json().code === '00') {
-                        this.toastr.success(
-                            'Thêm mới thành công',
-                            'Thành công!'
-                        );
-                        setTimeout(() => {
-                            this.router.navigateByUrl('/notifications');
-                        }, 500);
-                    } else if (result.json().code === '909') {
-                        this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
-                    } else if (result.json().code === '1001') {
-                        this.toastr.error(
-                            `Người dùng ${
-                                result.json().description
-                            } không tồn tại trong hệ thống`,
-                            'Thất bại!'
-                        );
-                    } else {
-                        this.toastr.error('Thêm mới thất bại', 'Thất bại!');
-                    }
+                // định dạng theo tuần
+                if (payload.repeatType === '2') {
+                    payload.repeatValue = `${payload.repeatDay}T${payload.repeatTime}`;
                 }
+                // Định dạng theo tháng
+                if (payload.repeatType === '3') {
+                    payload.repeatValue = `${payload.repeatDate}T${payload.repeatTime}`;
+                }
+
+                // Định dạng theo Năm
+                if (payload.repeatType === '4') {
+                    payload.repeatValue = `${payload.repeatMonth}-${payload.repeatDate}T${payload.repeatTime}`;
+                }
+
+                // trả về link uploadimg ckeditor
+
+                this.ncbService
+                    .createNoticationUser(payload)
+                    .then((result) => {
+                        if (result.status === 200) {
+                            if (result.json().code === '00') {
+                                this.toastr.success(
+                                    'Thêm mới thành công',
+                                    'Thành công!'
+                                );
+                                setTimeout(() => {
+                                    this.router.navigateByUrl('/notifications');
+                                }, 500);
+                            } else if (result.json().code === '909') {
+                                this.toastr.error(
+                                    'Dữ liệu đã tồn tại',
+                                    'Thất bại!'
+                                );
+                            } else if (result.json().code === '1001') {
+                                this.toastr.error(
+                                    `Người dùng ${
+                                        result.json().description
+                                    } không tồn tại trong hệ thống`,
+                                    'Thất bại!'
+                                );
+                            } else {
+                                this.toastr.error(
+                                    'Thêm mới thất bại',
+                                    'Thất bại!'
+                                );
+                            }
+                        }
+                    })
+                    .catch((err) => {
+                        this.toastr.error(err.json().content, 'Thất bại!');
+                    });
             })
-            .catch((err) => {
-                this.toastr.error(err.json().content, 'Thất bại!');
-            });
+            .catch((err) => console.log(err));
     }
 
     // upload image ckeditor

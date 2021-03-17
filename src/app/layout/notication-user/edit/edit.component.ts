@@ -315,14 +315,14 @@ export class EditComponent implements OnInit {
         this.isLoading = true;
 
         // lay link blob
-
-        // payload.content = JSON.stringify(payload.content);
-        // payload.content = payload.content.split('src=')[1];
-        // payload.content = payload.content.split('"')[1];
-        // console.log('hình ảnh', payload.content);
-        const sources = this.dataForm.value.content
-            .match(/<img [^>]*src="[^"]*"[^>]*>/gm)
-            .map((x) => x.replace(/.*src="([^"]*)".*/, '$1'));
+        let sources = this.dataForm.value.content.match(
+            /<img [^>]*src="[^"]*"[^>]*>/gm
+        );
+        if (sources) {
+            sources = sources.map((x) => x.replace(/.*src="([^"]*)".*/, '$1'));
+        } else {
+            sources = [];
+        }
         const promise = [];
         for (let i = 0; i < sources.length; i++) {
             promise.push(
@@ -347,66 +347,74 @@ export class EditComponent implements OnInit {
                             }
                         })
                         .catch((err) => {
-                            reject(err.json().message);
+                            reject(err);
                         });
                 })
             );
         }
-        Promise.all(promise).then(success => {
-            const payload = {
-                title: this.dataForm.value.title,
-                content: this.dataForm.value.content,
-                repeatType: this.dataForm.value.repeatType,
-                repeatDay: this.dataForm.value.repeatDay,
-                repeatTime: this.dataForm.value.repeatTime,
-                repeatMonth: this.dataForm.value.repeatMonth,
-                repeatDate: this.dataForm.value.repeatDate,
-                repeatValue: this.dataForm.value.repeatValue,
-                objectUserType: this.dataForm.value.objectUserType,
-                status: this.dataForm.value.status,
-                userNotifications: this.dataForm.value.user_notifications
-                    ? this.dataForm.value.user_notifications
-                    : this.filelist,
-            };
-            console.log('payload', payload);
+        Promise.all(promise)
+            .then((success) => {
+                const payload = {
+                    title: this.dataForm.value.title,
+                    content: this.dataForm.value.content,
+                    repeatType: this.dataForm.value.repeatType,
+                    repeatDay: this.dataForm.value.repeatDay,
+                    repeatTime: this.dataForm.value.repeatTime,
+                    repeatMonth: this.dataForm.value.repeatMonth,
+                    repeatDate: this.dataForm.value.repeatDate,
+                    repeatValue: this.dataForm.value.repeatValue,
+                    objectUserType: this.dataForm.value.objectUserType,
+                    status: this.dataForm.value.status,
+                    userNotifications: this.dataForm.value.user_notifications
+                        ? this.dataForm.value.user_notifications
+                        : this.filelist,
+                };
+                console.log('payload', payload);
 
-            // định dạng theo tuần
-            if (payload.repeatType === '2') {
-                payload.repeatValue = `${payload.repeatDay}T${payload.repeatTime}`;
-            }
-            // Định dạng theo tháng
-            if (payload.repeatType === '3') {
-                payload.repeatValue = `${payload.repeatDate}T${payload.repeatTime}`;
-            }
+                // định dạng theo tuần
+                if (payload.repeatType === '2') {
+                    payload.repeatValue = `${payload.repeatDay}T${payload.repeatTime}`;
+                }
+                // Định dạng theo tháng
+                if (payload.repeatType === '3') {
+                    payload.repeatValue = `${payload.repeatDate}T${payload.repeatTime}`;
+                }
 
-            // Định dạng theo Năm
-            if (payload.repeatType === '4') {
-                payload.repeatValue = `${payload.repeatMonth}-${payload.repeatDate}T${payload.repeatTime}`;
-            }
+                // Định dạng theo Năm
+                if (payload.repeatType === '4') {
+                    payload.repeatValue = `${payload.repeatMonth}-${payload.repeatDate}T${payload.repeatTime}`;
+                }
 
-            this.ncbService
-                .updateNoticationUser(this.itemId, payload)
-                .then((result) => {
-                    if (result.status === 200) {
-                        if (result.json().code === '00') {
-                            this.toastr.success(
-                                'Cập nhật thành công',
-                                'Thành công!'
-                            );
-                            setTimeout(() => {
-                                this.router.navigateByUrl('/notifications');
-                            }, 500);
-                        } else if (result.json().code === '909') {
-                            this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
-                        } else {
-                            this.toastr.error('Thêm mới thất bại', 'Thất bại!');
+                this.ncbService
+                    .updateNoticationUser(this.itemId, payload)
+                    .then((result) => {
+                        if (result.status === 200) {
+                            if (result.json().code === '00') {
+                                this.toastr.success(
+                                    'Cập nhật thành công',
+                                    'Thành công!'
+                                );
+                                setTimeout(() => {
+                                    this.router.navigateByUrl('/notifications');
+                                }, 500);
+                            } else if (result.json().code === '909') {
+                                this.toastr.error(
+                                    'Dữ liệu đã tồn tại',
+                                    'Thất bại!'
+                                );
+                            } else {
+                                this.toastr.error(
+                                    'Thêm mới thất bại',
+                                    'Thất bại!'
+                                );
+                            }
                         }
-                    }
-                })
-                .catch((err) => {
-                    this.toastr.error(err.json().body, 'Thất bại!');
-                });
-        }).catch((err) => console.log(err));
+                    })
+                    .catch((err) => {
+                        this.toastr.error(err.json().body, 'Thất bại!');
+                    });
+            })
+            .catch((err) => console.log(err));
     }
     resetForm() {
         this.router.navigateByUrl('/notifications');
