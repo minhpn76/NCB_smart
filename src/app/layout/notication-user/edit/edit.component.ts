@@ -316,10 +316,12 @@ export class EditComponent implements OnInit {
 
         // lay link blob
         let sources = this.dataForm.value.content.match(
-            /<img [^>]*src="[^"]*"[^>]*>/gm
+            /<img [^>]*src="blob:[^"]*"[^>]*>/gm
         );
         if (sources) {
             sources = sources.map((x) => x.replace(/.*src="([^"]*)".*/, '$1'));
+            console.log('1111', sources);
+
         } else {
             sources = [];
         }
@@ -349,6 +351,8 @@ export class EditComponent implements OnInit {
                         .catch((err) => {
                             reject(err);
                         });
+                        console.log('sources', sources);
+
                 })
             );
         }

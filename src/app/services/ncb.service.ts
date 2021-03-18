@@ -1860,8 +1860,9 @@ export class NCBService {
     async uploadFileImgEditor(content): Promise<any> {
         const url = `${API_URL}/img/push/uploadFile`;
         const formData: FormData = new FormData();
-        // tslint:disable-next-line:max-line-length
-        const file = await fetch(content).then(r => r.blob()).then(blobFile => new File([blobFile], `${new Date().getTime()}.png`, { type: 'image/png' }));
+        const file = await fetch(content).then(r => r.blob())
+        .then(blobFile => new File([blobFile], `${new Date().getTime()}.png`, { type: 'image/png' }));
+        console.log('file', file);
         formData.append('img', file);
         return this.auth.authRequestFile({
             url: url,
