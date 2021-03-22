@@ -2245,4 +2245,12 @@ export class NCBService {
             method: 'DELETE',
         });
     }
+    getlistHpBatch (params): Promise<any> {
+        const url = `${API_URL}/batchs/get-batchs`;
+        return this.auth.authRequest({
+            url: url,
+            params: params,
+            method: 'GET',
+        });
+    }
 }

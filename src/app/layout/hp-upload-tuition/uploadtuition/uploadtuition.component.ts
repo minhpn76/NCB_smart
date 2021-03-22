@@ -155,7 +155,9 @@ export class UploadtuitionComponent implements OnInit {
 /*chọn học phí cần đóng */
 
   SelectCost(cost) {
-    if (this.headers.find(m => m === cost.toLowerCase()) === cost.toLowerCase()) {
+    console.log('headders->' + this.headers);
+    console.log('cost=>' + cost.toUpperCase());
+    if (this.headers.find(m => m === cost.toUpperCase()) === cost.toUpperCase()) {
       console.log('remove->' + cost);
       const index =  this.headers.indexOf(cost);
       if (index > -1) {
