@@ -114,11 +114,11 @@
                                 <!-- <span [hidden]="reverse">▼</span>
                         <span [hidden]="!reverse">▲</span> -->
                             </th>
-                            <th scope="col" [class.active]="order === 'content'" (click)="setOrder('content')">
+                            <!-- <th scope="col" [class.active]="order === 'content'" (click)="setOrder('content')">
                                 Nội dung
-                                <!-- <span [hidden]="reverse">▼</span>
-                        <span [hidden]="!reverse">▲</span> -->
-                            </th>
+                                 <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span> 
+                            </th> -->
                             <th scope="col" [class.active]="order === 'repeat_type'" (click)="setOrder('repeat_type')">
                                 Cách thức lặp
                                 <span [hidden]="reverse">▼</span>
@@ -164,11 +164,11 @@
 
                             <td>{{ data?.title }}</td>
                             <!-- <td>{{ data?.content }}</td> -->
-                            <td>
+                            <!-- <td>
                                 <div style='width:100%; min-height:50px; z-index:4; visibility: visible; overflow: auto;'
                                     [innerHTML]="bypassHTML(data?.content)">
                                 </div>
-                            </td>
+                            </td> -->
                             <td>
 
                                 <span *ngIf="data?.repeatType == '0'" class="badge badge-primary">Chỉ một lần</span>
