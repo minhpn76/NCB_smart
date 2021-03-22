@@ -177,7 +177,7 @@ export class AppSettings {
             isU: false,
             isD: false,
             isA: false,
-            menu: 'THAM_SO'
+            menu: 'THAM_SO',
         },
         {
             code: 'DIEU_KHOAN',
@@ -334,6 +334,7 @@ export class AppSettings {
             isA: false,
             menu: 'KHACH_HANG',
         },
+<<<<<<< HEAD
          {
         code: 'HP_MANAGER',
         name: 'Up load học phí',
@@ -388,6 +389,62 @@ export class AppSettings {
         isD: false,
         isA: false,
         menu: 'HOC_PHI',
+=======
+        {
+            code: 'HP_MANAGER',
+            name: 'Up load học phí',
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            isA: false,
+            menu: 'HOC_PHI',
+        },
+        {
+            code: 'HP_COST',
+            name: 'Khoản thanh toán',
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            isA: false,
+            menu: 'HOC_PHI',
+        },
+        {
+            code: 'HP_SCHOOL',
+            name: 'Trường học',
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            isA: false,
+            menu: 'HOC_PHI',
+        },
+        {
+            code: 'HP_FACULTY',
+            name: 'Khoa',
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            isA: false,
+            menu: 'HOC_PHI',
+        },
+        {
+            code: 'HP_CLASS',
+            name: 'Lớp học',
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            isA: false,
+            menu: 'HOC_PHI',
+>>>>>>> master
         },
     ];
     public static getListRoles() {

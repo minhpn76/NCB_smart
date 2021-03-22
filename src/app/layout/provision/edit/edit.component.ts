@@ -27,6 +27,7 @@ export class EditComponent implements OnInit {
     obj: any = {
         status: '',
         provisionName: '',
+        provisionCode: '',
         provisionLink: '',
     };
     listStatus: any = [
@@ -53,6 +54,13 @@ export class EditComponent implements OnInit {
         });
         this.dataForm = this.formBuilder.group({
             provisionName: [
+                '',
+                Validators.compose([
+                    Validators.required,
+                    this.helper.noWhitespaceValidator,
+                ]),
+            ],
+            provisionCode: [
                 '',
                 Validators.compose([
                     Validators.required,
@@ -120,6 +128,7 @@ export class EditComponent implements OnInit {
                     status: body.status,
                     provisionLink: body.provisionLink,
                     provisionName: body.provisionName,
+                    provisionCode: body.provisionCode,
                 });
             })
             .catch((err) => {

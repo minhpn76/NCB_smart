@@ -1,5 +1,55 @@
 :host ::ng-deep .ck-editor__editable_inline {
     min-height: 200px;
     border: 1px solid rgb(168, 161, 161);
-    border-top:none;
-  }
+    border-top: none;
+}
+
+:host ::ng-deep .ui-calendar {
+    @media (width: 1920px) {
+        width: 336%;
+        .ui-inputtext {
+            width: 85%;
+        }
+    }
+    @media (width: 1680px) {
+        width: 280%;
+        .ui-inputtext {
+            width: 85%;
+        }
+    }
+    @media (width: 1600px) {
+        width: 263%;
+        .ui-inputtext {
+            width: 85%;
+        }
+    }
+    @media (width: 1440px) {
+        width: 227%;
+        .ui-inputtext {
+            width: 85%;
+        }
+    }
+    @media (width: 1400px) {
+        width: 217%;
+        .ui-inputtext {
+            width: 85%;
+        }
+    }
+    @media (width: 1366px) {
+        width: 210%;
+        .ui-inputtext {
+            width: 85%;
+        }
+    }
+    @media (width: 1366px) {
+        width: 210%;
+        .ui-inputtext {
+            width: 85%;
+        }
+    }
+}
+
+.form-select{
+    border: 1px solid #ced4da;
+    font-size: 13px;
+}

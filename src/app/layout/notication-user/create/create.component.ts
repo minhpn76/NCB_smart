@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Helper } from '../../../helper';
 import { NCBService } from '../../../services/ncb.service';
 import { Router } from '@angular/router';
-import {MenuItem} from 'primeng/api';
+
 import {
     NgbModal,
     NgbModalRef,
@@ -42,18 +42,9 @@ export class CreateComponent implements OnInit {
         // this.getNotifications();
         this.loadDate();
     }
-
     get Form() {
         return this.dataForm.controls;
     }
-    myGroup = new FormGroup({
-        firstName: new FormControl()
-     });
-    dateOnly: Date;
-    time: Date;
-    Weekday: Date;
-    Month: Date;
-    Year: Date;
     objUpload: any = {};
     isLockSave = false;
     objFile: any = {};
@@ -86,6 +77,125 @@ export class CreateComponent implements OnInit {
         align: 'left',
     };
 
+    listDay = [
+        { code: 2, value: ' Thứ 2' },
+        { code: 3, value: ' Thứ 3' },
+        { code: 4, value: ' Thứ 4' },
+        { code: 5, value: ' Thứ 5' },
+        { code: 6, value: ' Thứ 6' },
+        { code: 7, value: ' Thứ 7' },
+        { code: 8, value: ' Chủ nhật' },
+    ];
+
+    listDates = [
+        { code: '01', value: ' 01' },
+        { code: '02', value: ' 02' },
+        { code: '03', value: ' 03' },
+        { code: '04', value: '  04' },
+        { code: '05', value: '  05' },
+        { code: '06', value: '  06' },
+        { code: '07', value: ' 07' },
+        { code: '08', value: ' 08' },
+        { code: '09', value: ' 09' },
+        { code: 10, value: ' 10' },
+        { code: 11, value: ' 11' },
+        { code: 12, value: ' 12' },
+        { code: 13, value: ' 13' },
+        { code: 14, value: ' 14' },
+        { code: 15, value: ' 15' },
+        { code: 16, value: ' 16' },
+        { code: 17, value: ' 17' },
+        { code: 18, value: ' 18' },
+        { code: 19, value: ' 19' },
+        { code: 20, value: ' 20' },
+        { code: 21, value: ' 21' },
+        { code: 22, value: ' 22' },
+        { code: 23, value: ' 23' },
+        { code: 24, value: ' 24' },
+        { code: 25, value: ' 25' },
+        { code: 26, value: ' 26' },
+        { code: 27, value: ' 27' },
+        { code: 28, value: ' 28' },
+        { code: 29, value: ' 29' },
+        { code: 30, value: ' 30' },
+        { code: 31, value: ' 31' },
+    ];
+    listDates_30 = [
+        { code: '01', value: ' 01' },
+        { code: '02', value: ' 02' },
+        { code: '03', value: ' 03' },
+        { code: '04', value: '  04' },
+        { code: '05', value: '  05' },
+        { code: '06', value: '  06' },
+        { code: '07', value: ' 07' },
+        { code: '08', value: ' 08' },
+        { code: '09', value: ' 09' },
+        { code: 10, value: ' 10' },
+        { code: 11, value: ' 11' },
+        { code: 12, value: ' 12' },
+        { code: 13, value: ' 13' },
+        { code: 14, value: ' 14' },
+        { code: 15, value: ' 15' },
+        { code: 16, value: ' 16' },
+        { code: 17, value: ' 17' },
+        { code: 18, value: ' 18' },
+        { code: 19, value: ' 19' },
+        { code: 20, value: ' 20' },
+        { code: 21, value: ' 21' },
+        { code: 22, value: ' 22' },
+        { code: 23, value: ' 23' },
+        { code: 24, value: ' 24' },
+        { code: 25, value: ' 25' },
+        { code: 26, value: ' 26' },
+        { code: 27, value: ' 27' },
+        { code: 28, value: ' 28' },
+        { code: 29, value: ' 29' },
+        { code: 30, value: ' 30' },
+    ];
+    listDates_28 = [
+        { code: '01', value: ' 01' },
+        { code: '02', value: ' 02' },
+        { code: '03', value: ' 03' },
+        { code: '04', value: '  04' },
+        { code: '05', value: '  05' },
+        { code: '06', value: '  06' },
+        { code: '07', value: ' 07' },
+        { code: '08', value: ' 08' },
+        { code: '09', value: ' 09' },
+        { code: 10, value: ' 10' },
+        { code: 11, value: ' 11' },
+        { code: 12, value: ' 12' },
+        { code: 13, value: ' 13' },
+        { code: 14, value: ' 14' },
+        { code: 15, value: ' 15' },
+        { code: 16, value: ' 16' },
+        { code: 17, value: ' 17' },
+        { code: 18, value: ' 18' },
+        { code: 19, value: ' 19' },
+        { code: 20, value: ' 20' },
+        { code: 21, value: ' 21' },
+        { code: 22, value: ' 22' },
+        { code: 23, value: ' 23' },
+        { code: 24, value: ' 24' },
+        { code: 25, value: ' 25' },
+        { code: 26, value: ' 26' },
+        { code: 27, value: ' 27' },
+        { code: 28, value: ' 28' },
+    ];
+    listMonth = [
+        { code: '01', value: ' 01' },
+        { code: '02', value: ' 02' },
+        { code: '03', value: ' 03' },
+        { code: '04', value: ' 04' },
+        { code: '05', value: ' 05' },
+        { code: '06', value: ' 06' },
+        { code: '07', value: ' 07' },
+        { code: '08', value: ' 08' },
+        { code: '09', value: ' 09' },
+        { code: 10, value: ' 10' },
+        { code: 11, value: ' 11' },
+        { code: 12, value: ' 12' },
+    ];
     objectUserTypes = [
         {
             code: '',
@@ -120,20 +230,9 @@ export class CreateComponent implements OnInit {
 
     isLoading: Boolean = false;
 
-    _date: any = '';
-
-    // public onReady(editor) {
-    //     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-    //         console.log('loader : ', loader);
-    //         console.log(btoa(loader.file));
-    //         return new UploadAdapter(loader);
-    //     };
-    //     editor.ui.view.editable.element.parentElement.insertBefore(
-    //         editor.ui.view.toolbar.element,
-    //         editor.ui.view.editable.element
-    //     );
-    // }
-
+    _day: any = '';
+    _time: any = '';
+    _month: any = '';
     ngOnInit() {
         this.dataForm = this.formBuilder.group({
             title: [
@@ -157,7 +256,11 @@ export class CreateComponent implements OnInit {
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
-            repeatValue: ['', Validators.compose([Validators.required])],
+            repeatDay: [''],
+            repeatTime: [''],
+            repeatMonth: [''],
+            repeatDate: [''],
+            repeatValue: [''],
             // repeatValue: [this.mRatesDateS_7],
 
             objectUserType: ['', Validators.compose([Validators.required])],
@@ -168,7 +271,7 @@ export class CreateComponent implements OnInit {
             endDate: [this.mRatesDateS],
             user_notifications: [],
         });
-        this.ckConfig = { extraPlugins: 'easyimage, emojione'};
+        this.ckConfig = { extraPlugins: 'easyimage, emojione' };
     }
     openModal(content) {
         this.modalOp = this.modalService.open(content);
@@ -242,9 +345,6 @@ export class CreateComponent implements OnInit {
         // Return the element that corresponds to that index.
         return weekdays[day];
     }
-
-    // convert RepeatValue
-
     onSubmit() {
         if (this.isLoading) {
             return;
@@ -257,132 +357,117 @@ export class CreateComponent implements OnInit {
         }
 
         this.isLoading = true;
-        const payload = {
-            title: this.dataForm.value.title,
-            content: this.dataForm.value.content,
-            repeatType: this.dataForm.value.repeatType,
-            repeatValue: this.dataForm.value.repeatValue,
-            objectUserType: this.dataForm.value.objectUserType,
-            status: this.dataForm.value.status,
-            userNotifications: this.dataForm.value.user_notifications
-                ? this.dataForm.value.user_notifications
-                : this.filelist,
-            type: '2',
-        };
 
-        console.log('a', payload.content);
-        console.log('dateTime', payload.repeatValue);
-
-        // định dạng chỉ 1 lần
-        if (payload.repeatType === '0' || payload.repeatType === '') {
-            const _newDate = new Date(payload.repeatValue);
-            const c_date = `${_newDate.getFullYear()}-${('0' + (_newDate.getMonth() + 1)).slice(-2)}-${('0'
-            + _newDate.getDate()).slice(-2)}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(-2)}`;
-            console.log(0, c_date);
+        let sources = this.dataForm.value.content.match(
+            /<img [^>]*src="[^"]*"[^>]*>/gm
+        );
+        if (sources) {
+            sources = sources.map((x) => x.replace(/.*src="([^"]*)".*/, '$1'));
+        } else {
+            sources = [];
         }
-
-        // Định dạng hàng Ngày
-        if (payload.repeatType === '1') {
-            const _newDate = new Date(payload.repeatValue);
-            const c_date = `${_newDate.getHours()}${('0' + _newDate.getMinutes()).slice(-2)}`;
-            console.log(1, c_date);
-            payload.repeatValue = `${c_date}`;
+        const promise = [];
+        for (let i = 0; i < sources.length; i++) {
+            promise.push(
+                new Promise<void>((resolve, reject) => {
+                    const src = sources[i];
+                    this.ncbService
+                        .uploadFileImgEditor(src)
+                        .then((result) => {
+                            if (result.status === 200) {
+                                if (result.json().code !== '00') {
+                                    reject(result.json().message);
+                                } else {
+                                    const rs = JSON.parse(result._body);
+                                    this.dataForm.value.content = this.dataForm.value.content.replace(
+                                        src,
+                                        rs.body.linkUrl
+                                    );
+                                    resolve();
+                                }
+                            } else {
+                                reject(result.message);
+                            }
+                        })
+                        .catch((err) => {
+                            reject(err);
+                        });
+                })
+            );
         }
-        // định dạng theo tháng
-        if (payload.repeatType === '2') {
-            const _newDate = new Date(payload.repeatValue);
-            const c_date = `${_newDate.getFullYear()}-${('0' + (_newDate.getMonth() + 1)).slice(-2)}-${('0'
-            + _newDate.getDate()).slice(-2)}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(-2)}`;
-            console.log(2, c_date);
-            this._date = payload.repeatValue.toISOString().split('T');
-            this._date = new Date(this._date[0]);
-            this._date = this.getWeekDay(this._date);
-            switch (this._date) {
-                case 'Monday':
-                    this._date = 2;
-                    break;
-                case 'Tuesday':
-                    this._date = 3;
-                    break;
-                case 'Wednesday':
-                    this._date = 4;
-                    break;
-                case 'Thursday':
-                    this._date = 5;
-                    break;
-                case 'Friday':
-                    this._date = 6;
-                    break;
-                case 'Saturday':
-                    this._date = 7;
-                    break;
-                case 'Sunday':
-                    this._date = 8;
-                    break;
-                default:
-                    break;
-            }
-            payload.repeatValue = `${this._date}T${
-                payload.repeatValue.toISOString().split('T')[1]
-            }`;
-        }
-        // Định dạng theo tháng
-        if (payload.repeatType === '3') {
-            const _newDate = new Date(payload.repeatValue);
-            const c_date = `${_newDate.getFullYear()}-${('0' + (_newDate.getMonth() + 1)).slice(-2)}-${('0'
-            + _newDate.getDate()).slice(-2)}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(-2)}`;
-            console.log(3, c_date);
-            this._date = payload.repeatValue.toISOString().split('T');
-            this._date = new Date(this._date[0]);
-            payload.repeatValue = `${this._date.getDate()}T${
-                payload.repeatValue.toISOString().split('T')[1]
-            }`;
-        }
+        Promise.all(promise)
+            .then((success) => {
+                const payload = {
+                    title: this.dataForm.value.title,
+                    content: this.dataForm.value.content,
+                    repeatType: this.dataForm.value.repeatType,
+                    repeatDay: this.dataForm.value.repeatDay,
+                    repeatTime: this.dataForm.value.repeatTime,
+                    repeatMonth: this.dataForm.value.repeatMonth,
+                    repeatDate: this.dataForm.value.repeatDate,
+                    repeatValue: this.dataForm.value.repeatValue,
+                    objectUserType: this.dataForm.value.objectUserType,
+                    status: this.dataForm.value.status,
+                    userNotifications: this.dataForm.value.user_notifications
+                        ? this.dataForm.value.user_notifications
+                        : this.filelist,
+                    type: '2',
+                };
+                console.log('payload', payload);
 
-        // Định dạng theo Năm
-        if (payload.repeatType === '4') {
-
-            const _newDate = new Date(payload.repeatValue);
-            const c_date = `${_newDate.getFullYear()}-${('0' + (_newDate.getMonth() + 1)).slice(-2)}-${('0'
-            + _newDate.getDate()).slice(-2)}T${_newDate.getHours()}:${('0' + _newDate.getMinutes()).slice(-2)}`;
-            console.log(4, c_date);
-            this._date = payload.repeatValue.toISOString().split('T')[0];
-            const month = this._date.split('-')[1];
-            const date = this._date.split('-')[2];
-            payload.repeatValue = `${month}-${date}T${
-                payload.repeatValue.toISOString().split('T')[1]
-            }`;
-        }
-
-        this.ncbService
-            .createNoticationUser(payload)
-            .then((result) => {
-                if (result.status === 200) {
-                    if (result.json().code === '00') {
-                        this.toastr.success(
-                            'Thêm mới thành công',
-                            'Thành công!'
-                        );
-                        setTimeout(() => {
-                            this.router.navigateByUrl('/notifications');
-                        }, 500);
-                    } else if (result.json().code === '909') {
-                        this.toastr.error('Dữ liệu đã tồn tại', 'Thất bại!');
-                    } else if (result.json().code === '1001') {
-                        this.toastr.error(
-                            `Người dùng ${
-                                result.json().description
-                            } không tồn tại trong hệ thống`,
-                            'Thất bại!'
-                        );
-                    } else {
-                        this.toastr.error('Thêm mới thất bại', 'Thất bại!');
-                    }
+                // định dạng theo tuần
+                if (payload.repeatType === '2') {
+                    payload.repeatValue = `${payload.repeatDay}T${payload.repeatTime}`;
                 }
+                // Định dạng theo tháng
+                if (payload.repeatType === '3') {
+                    payload.repeatValue = `${payload.repeatDate}T${payload.repeatTime}`;
+                }
+
+                // Định dạng theo Năm
+                if (payload.repeatType === '4') {
+                    payload.repeatValue = `${payload.repeatMonth}-${payload.repeatDate}T${payload.repeatTime}`;
+                }
+
+                // trả về link uploadimg ckeditor
+
+                this.ncbService
+                    .createNoticationUser(payload)
+                    .then((result) => {
+                        if (result.status === 200) {
+                            if (result.json().code === '00') {
+                                this.toastr.success(
+                                    'Thêm mới thành công',
+                                    'Thành công!'
+                                );
+                                setTimeout(() => {
+                                    this.router.navigateByUrl('/notifications');
+                                }, 500);
+                            } else if (result.json().code === '909') {
+                                this.toastr.error(
+                                    'Dữ liệu đã tồn tại',
+                                    'Thất bại!'
+                                );
+                            } else if (result.json().code === '1001') {
+                                this.toastr.error(
+                                    `Người dùng ${
+                                        result.json().description
+                                    } không tồn tại trong hệ thống`,
+                                    'Thất bại!'
+                                );
+                            } else {
+                                this.toastr.error(
+                                    'Thêm mới thất bại',
+                                    'Thất bại!'
+                                );
+                            }
+                        }
+                    })
+                    .catch((err) => {
+                        this.toastr.error(err.json().content, 'Thất bại!');
+                    });
             })
-            .catch((err) => {
-                this.toastr.error(err.json().content, 'Thất bại!');
-            });
+            .catch((err) => console.log(err));
     }
 
     // upload image ckeditor

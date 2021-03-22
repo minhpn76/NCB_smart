@@ -101,6 +101,7 @@ export class ListComponent implements OnInit {
             'Dữ liệu đã xoá hoàn toàn.',
             'success'
           );
+          this.onSearch(this.re_search );
         });
         // For more information about handling dismissals please visit
         // https://sweetalert2.github.io/#handling-dismissals

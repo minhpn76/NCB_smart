@@ -66,6 +66,13 @@
                             <span [hidden]="!reverse">▲</span>
                         </th>
                         <th scope="col"
+                            [class.active]="order === 'provisionCode'"
+                            (click)="setOrder('provisionCode')"
+                        >Mã điều khoản
+                            <span [hidden]="reverse">▼</span>
+                            <span [hidden]="!reverse">▲</span>
+                        </th>
+                        <th scope="col"
                             [class.active]="order === 'provisionLink'"
                             (click)="setOrder('provisionLink')"
                         >Nội dung
@@ -97,6 +104,7 @@
                             {{ i+1 }}
                         </th>
                         <td>{{data?.provisionName}}</td>
+                        <td>{{data?.provisionCode}}</td>
                         <td>
                             <div 
                                 style='width:100%; min-height:50px; z-index:4; visibility: visible; overflow: auto;'

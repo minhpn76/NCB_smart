@@ -1,4 +1,3 @@
-
 import { Params } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { AppSettings } from '../app.settings';
@@ -1227,7 +1226,7 @@ export class NCBService {
         });
     }
     detailCompany(params: any): Promise<any> {
-        const {compCode, mp, mcn} = params;
+        const { compCode, mp, mcn } = params;
         const tempParam = `compCode=${compCode}&mp=${mp}&mcn=${mcn}`;
         const url = `${API_URL}/company/detail?${tempParam}`;
         return this.auth.authRequest({
@@ -1757,7 +1756,7 @@ export class NCBService {
             application: true,
         });
     }
-    approvedQRCoupon( id: string, params): Promise<any> {
+    approvedQRCoupon(id: string, params): Promise<any> {
         const url = `${API_URL}/qr-coupons/${id}`;
         return this.auth.authRequest({
             url: url,
@@ -1858,6 +1857,19 @@ export class NCBService {
             method: 'DELETE',
         });
     }
+    async uploadFileImgEditor(content): Promise<any> {
+        const url = `${API_URL}/img/push/uploadFile`;
+        const formData: FormData = new FormData();
+        const file = await fetch(content).then(r => r.blob())
+        .then(blobFile => new File([blobFile], `${new Date().getTime()}.png`, { type: 'image/png' }));
+        console.log('file', file);
+        formData.append('img', file);
+        return this.auth.authRequestFile({
+            url: url,
+            data: formData,
+            method: 'POST',
+        });
+    }
 
     // Version_app
     getListVersionApp(params): Promise<any> {
@@ -1927,12 +1939,12 @@ export class NCBService {
         });
     }
     detailConfigFriend(code: any): Promise<any> {
-        const {id} = code;
+        const { id } = code;
         const url = `${API_URL}/refer-friend/${id}`;
         return this.auth.authRequest({ url: url, method: 'GET' });
     }
     deleteConfigFriend(itemCode): Promise<any> {
-        const {id} = itemCode;
+        const { id } = itemCode;
         const url = `${API_URL}/refer-friend/${id}`;
         return this.auth.authRequest({
             url: url,
@@ -1975,12 +1987,12 @@ export class NCBService {
         });
     }
     detailReferalCodePartner(code: any): Promise<any> {
-        const {id} = code;
+        const { id } = code;
         const url = `${API_URL}/referral-code-partners/${id}`;
         return this.auth.authRequest({ url: url, method: 'GET' });
     }
     deleteReferalCodePartner(itemCode): Promise<any> {
-        const {id} = itemCode;
+        const { id } = itemCode;
         const url = `${API_URL}/referral-code-partners/${id}`;
         return this.auth.authRequest({
             url: url,
@@ -2015,12 +2027,12 @@ export class NCBService {
         });
     }
     detailPromotionDetail(code: any): Promise<any> {
-        const {id} = code;
+        const { id } = code;
         const url = `${API_URL}/promotion-details/${id}`;
         return this.auth.authRequest({ url: url, method: 'GET' });
     }
     deletePromotionDetail(itemCode): Promise<any> {
-        const {id} = itemCode;
+        const { id } = itemCode;
         const url = `${API_URL}/promotion-details/${id}`;
         return this.auth.authRequest({
             url: url,
@@ -2043,44 +2055,44 @@ export class NCBService {
         });
     }
 
-// Hp costs
-getListHpCosts(params): Promise<any> {
-    const url = `${API_URL}/costs/get-costs`;
-    return this.auth.authRequest({
-        url: url,
-        params: params,
-        method: 'GET',
-    });
-}
-createHpCosts(body): Promise<any> {
-    const url = `${API_URL}/costs/save-costs`;
-    return this.auth.authRequest({
-        url: url,
-        data: body,
-        method: 'POST',
-        application: true,
-    });
-}
-getdetailtHpCosts(code: any): Promise<any> {
-    const url = `${API_URL}/costs/detail?idCost=${code}`;
-    return this.auth.authRequest({ url: url, method: 'GET' });
-}
-updateHpCosts(body: any): Promise<any> {
-    const url = `${API_URL}/costs/update-cost`;
-    return this.auth.authRequest({
-        url: url,
-        data: body,
-        method: 'PUT',
-        application: true,
-    });
-}
-deleteHpCosts(code: any): Promise<any> {
-    const url = `${API_URL}/costs/delete-cost?idCost=${code}`;
-    return this.auth.authRequest({
-        url: url,
-        method: 'DELETE',
-    });
-}
+    // Hp costs
+    getListHpCosts(params): Promise<any> {
+        const url = `${API_URL}/costs/get-costs`;
+        return this.auth.authRequest({
+            url: url,
+            params: params,
+            method: 'GET',
+        });
+    }
+    createHpCosts(body): Promise<any> {
+        const url = `${API_URL}/costs/save-costs`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: 'POST',
+            application: true,
+        });
+    }
+    getdetailtHpCosts(code: any): Promise<any> {
+        const url = `${API_URL}/costs/detail?idCost=${code}`;
+        return this.auth.authRequest({ url: url, method: 'GET' });
+    }
+    updateHpCosts(body: any): Promise<any> {
+        const url = `${API_URL}/costs/update-cost`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: 'PUT',
+            application: true,
+        });
+    }
+    deleteHpCosts(code: any): Promise<any> {
+        const url = `${API_URL}/costs/delete-cost?idCost=${code}`;
+        return this.auth.authRequest({
+            url: url,
+            method: 'DELETE',
+        });
+    }
 
     // hp serviece uploadtuition
     upFileExcelHpTuition(file): Promise<any> {
@@ -2124,7 +2136,6 @@ deleteHpCosts(code: any): Promise<any> {
         return this.auth.authRequest({ url: url, method: 'GET' });
     }
     updateHpSchool(body: any): Promise<any> {
-
         const url = `${API_URL}/schools/update-school`;
         return this.auth.authRequest({
             url: url,
@@ -2140,8 +2151,8 @@ deleteHpCosts(code: any): Promise<any> {
             method: 'DELETE',
         });
     }
-     // Hp service khoa
-     getListHpFaculties(params): Promise<any> {
+    // Hp service khoa
+    getListHpFaculties(params): Promise<any> {
         const url = `${API_URL}/faculties/get-faculties`;
         return this.auth.authRequest({
             url: url,
@@ -2172,7 +2183,6 @@ deleteHpCosts(code: any): Promise<any> {
         return this.auth.authRequest({ url: url, method: 'GET' });
     }
     updateHpFacultie(body: any): Promise<any> {
-
         const url = `${API_URL}/faculties/update-facultie`;
         return this.auth.authRequest({
             url: url,
@@ -2188,8 +2198,8 @@ deleteHpCosts(code: any): Promise<any> {
             method: 'DELETE',
         });
     }
-      // Hp service Lớp
-      getListHpClass(params): Promise<any> {
+    // Hp service Lớp
+    getListHpClass(params): Promise<any> {
         const url = `${API_URL}/clazzs/get-clazzs`;
         return this.auth.authRequest({
             url: url,

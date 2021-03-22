@@ -23,7 +23,7 @@ export class Helper {
 
 
     static formatDateTimeEdit(str, type) {
-        if (type === '0' || type === '2' || type === '3') {
+        if (type === '0') {
             const words = str.split(' ');
             console.log(words);
             const chars = words[0].substring(0, 4);
@@ -32,7 +32,6 @@ export class Helper {
             const strCopy = words[1].substring(0, 2);
             const strCopy2 = words[1].substring(2, 4);
             const all = `${chars}-${chars2}-${chars3}T${strCopy}:${strCopy2}`;
-            console.log('all', all);
             return all;
         }
         if (type === '1') {
@@ -40,12 +39,75 @@ export class Helper {
                 return `${str.substring(0, 2)}:${str.substring(2, 4)}`;
             }
         }
+        if (type === '2') {
+            const repeatValue = str.split(' ');
+            const all = `${repeatValue[0]}T${repeatValue[1].substring(0, 2)}:${repeatValue[1].substring(2, 4)}`;
+            console.log('rp2', all);
+            return all;
+        }
+        if (type === '3') {
+            const repeatValue = str.split(' ');
+            const all = `${repeatValue[0]} ${repeatValue[1].substring(0, 2)}:${repeatValue[1].substring(2, 4)}`;
+            console.log('rp3', all);
+            return all;
+        }
         if (type === '4') {
-            const year = str.substring(0, 4);
-            const month = str.substring(4, 6);
-            return `${year}-${month}`;
+            const repeatValue = str.split(' ');
+            const all = `${repeatValue[0].substring(0, 2)}-${repeatValue[0].substring(2, 4)} ${repeatValue[1].substring(0, 2)}:${repeatValue[1].substring(2, 4)}`;
+            console.log('rp4', all);
+            return all;
         }
 
+    }
+    static formatTimeEdit(str, type) {
+        if (type === '2') {
+            const repeatValue = str.split(' ');
+            const all = `${repeatValue[1].substring(0, 2)}:${repeatValue[1].substring(2, 4)}`;
+            console.log('time2', all);
+            return all;
+        }
+        if (type === '3') {
+            const repeatValue = str.split(' ');
+            const all = `${repeatValue[1].substring(0, 2)}:${repeatValue[1].substring(2, 4)}`;
+            console.log('time3', all);
+            return all;
+        }
+        if (type === '4') {
+            const repeatValue = str.split(' ');
+            const all = `${repeatValue[1].substring(0, 2)}:${repeatValue[1].substring(2, 4)}`;
+            console.log('time4', all);
+            return all;
+        }
+    }
+    static formatDateEdit(str, type) {
+        if (type === '3') {
+            const repeatValue = str.split(' ');
+            const all = `${repeatValue[0]}`;
+            console.log('date3', all);
+            return all;
+        }
+        if (type === '4') {
+            const repeatDate = str.split(' ');
+            const all = `${repeatDate[0].substring(0, 2)}`;
+            console.log('date4', all);
+            return all;
+        }
+    }
+    static formatMonthEdit(str, type) {
+        if (type === '4') {
+            const repeatDate = str.split(' ');
+            const all = `${repeatDate[0].substring(0, 2)}`;
+            console.log('date4', all);
+            return all;
+        }
+    }
+    static formatDayEdit(str, type) {
+        if (type === '2') {
+            const repeatDay = str.split(' ');
+            const all = `${repeatDay[0]}`;
+            console.log('Day2', all);
+            return all;
+        }
     }
 
     getParameterByName(name, url = '') {
