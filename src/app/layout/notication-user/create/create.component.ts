@@ -265,7 +265,7 @@ export class CreateComponent implements OnInit {
 
             objectUserType: ['', Validators.compose([Validators.required])],
             status: [''],
-            type: '2',
+            type: '1',
 
             createdAt: [this.mRatesDateS_7],
             endDate: [this.mRatesDateS],
@@ -411,7 +411,7 @@ export class CreateComponent implements OnInit {
                     userNotifications: this.dataForm.value.user_notifications
                         ? this.dataForm.value.user_notifications
                         : this.filelist,
-                    type: '2',
+                    type: '1',
                 };
                 console.log('payload', payload);
 
