@@ -165,10 +165,11 @@
                             <td>{{ data?.title }}</td>
                             <!-- <td>{{ data?.content }}</td> -->
                             <td>
-                                <div style='object-fit: cover;  width:100%; min-height:50px; z-index:4; visibility: visible; overflow: auto;'
+                                <div style='object-fit: cover; width: 100%; border-radius:15px; -moz-border-radius: 15px; -webkit-border-radius: 15px;
+                                min-height:450px; max-height: 900px; max-width: 900px; min-width:450px ; z-index:4; visibility: visible; overflow: auto;'
                                     [innerHTML]="bypassHTML(data?.content)">
                                 </div>
-                            </td> -->
+                            </td>
                             <td>
 
                                 <span *ngIf="data?.repeatType == '0'" class="badge badge-primary">Chỉ một lần</span>
