@@ -12,6 +12,6 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.filebrowerFlashBrowseLinkUrl="http://localhost:8001/ckfinder/ckfinder.html?type=Flash";
 	// config.filebrowserBrowseUrl= '/browser/browse.php';
 	// config.filebrowserUploadUrl= '/uploader/upload.php'
-	config.wsc_height = 200;
-	config.wsc_weight = 200;
+	config.wsc_height = 800;
+	config.wsc_weight = 800;
 };
