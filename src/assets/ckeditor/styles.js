@@ -44,6 +44,15 @@ CKEDITOR.stylesSet.add( 'default', [
 			border: '1px solid #ccc'
 		}
 	},
+	{
+        name: 'Image on Left',
+        element: 'img',
+        styles: {
+            padding: '5px 10px',
+			background: '#eee',
+			border: '1px solid #ccc'
+        }
+    },
 
 	/* Inline styles */
 
@@ -135,3 +144,5 @@ CKEDITOR.stylesSet.add( 'default', [
 
 ] );
 
+
+config.stylesSet = 'default';
