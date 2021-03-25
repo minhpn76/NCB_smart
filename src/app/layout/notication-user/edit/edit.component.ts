@@ -320,8 +320,6 @@ export class EditComponent implements OnInit {
         );
         if (sources) {
             sources = sources.map((x) => x.replace(/.*src="([^"]*)".*/, '$1'));
-            console.log('1111', sources);
-
         } else {
             sources = [];
         }
@@ -338,10 +336,7 @@ export class EditComponent implements OnInit {
                                     reject(result.json().message);
                                 } else {
                                     const rs = JSON.parse(result._body);
-                                    this.dataForm.value.content = this.dataForm.value.content.replace(
-                                        src,
-                                        rs.body.linkUrl
-                                    );
+                                    this.dataForm.value.content = this.dataForm.value.content.replace(src, `${rs.body.linkUrl}" style='width:100%; max-width:900px; min-width:450px; max-height:900px; min-height:450px; border-radius:15px; -moz-border-radius: 15px; -webkit-border-radius: 15px'`);
                                     resolve();
                                 }
                             } else {
@@ -373,7 +368,7 @@ export class EditComponent implements OnInit {
                         ? this.dataForm.value.user_notifications
                         : this.filelist,
                 };
-                console.log('payload', payload);
+                console.log('payload', payload.content);
 
                 // định dạng theo tuần
                 if (payload.repeatType === '2') {

@@ -135,9 +135,9 @@
                                 <!-- <span [hidden]="reverse">▼</span>
                         <span [hidden]="!reverse">▲</span> -->
                             </th>
-                            <!-- <th scope="col" [class.active]="order === 'service'" (click)="setOrder('discountType')">
-                        Loại dịch vụ
-                    </th> -->
+                            <th scope="col" [class.active]="order === 'repeatValue'" (click)="setOrder('discountType')">
+                                Giá trị thời gian
+                            </th>
                             <th scope="col" [class.active]="order === 'status'" (click)="setOrder('status')">
                                 Trạng thái
                                 <!-- <span [hidden]="reverse">▼</span>
@@ -165,9 +165,7 @@
                             <td>{{ data?.title }}</td>
                             <!-- <td>{{ data?.content }}</td> -->
                             <td>
-                                <div style='object-fit: cover; width: 100%; border-radius:15px; -moz-border-radius: 15px; -webkit-border-radius: 15px;
-                                min-height:450px; max-height: 900px; max-width: 900px; min-width:450px ; z-index:4; visibility: visible; overflow: auto;'
-                                    [innerHTML]="bypassHTML(data?.content)">
+                                <div [innerHTML]="bypassHTML(data?.content)">
                                 </div>
                             </td>
                             <td>
