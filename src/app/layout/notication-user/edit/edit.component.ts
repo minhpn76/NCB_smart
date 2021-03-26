@@ -336,7 +336,7 @@ export class EditComponent implements OnInit {
                                     reject(result.json().message);
                                 } else {
                                     const rs = JSON.parse(result._body);
-                                    this.dataForm.value.content = this.dataForm.value.content.replace(src, `${rs.body.linkUrl}" style='width:100%; max-width:900px; min-width:450px; max-height:900px; min-height:450px; border-radius:15px; -moz-border-radius: 15px; -webkit-border-radius: 15px'`);
+                                    this.dataForm.value.content = this.dataForm.value.content.replace(src, `${rs.body.linkUrl}" style='width:100%; border-radius:15px; -moz-border-radius: 15px; -webkit-border-radius: 15px'`);
                                     resolve();
                                 }
                             } else {
