@@ -43,8 +43,7 @@
                         <input
                             formControlName="schoolCif"
                             class="form-control col-lg-12"
-                            placeholder=" Số cif "
-                            maxlength="10"
+                            placeholder=" Số cif "  
                             [ngClass]="{ 'is-invalid': submitted && Form.schoolCif.errors }"
                         />
                         <div *ngIf="submitted && Form.schoolCif.errors" class="invalid-feedback">
@@ -60,7 +59,7 @@
                             formControlName="schoolAcctNo"
                             class="form-control col-lg-12"
                             placeholder="Số tài khoản"
-                            maxlength="10"
+                           
                             [ngClass]="{ 'is-invalid': submitted && Form.schoolAcctNo.errors }"
                         />
                         <div *ngIf="submitted && Form.schoolAcctNo.errors" class="invalid-feedback">
