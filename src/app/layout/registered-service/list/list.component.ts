@@ -141,10 +141,10 @@ export class ListComponent implements OnInit {
   getListData(params) {
     this.listData = [];
     this.isProcessLoad = 1;
-    // if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
-    //   params.toDate = this.tranferDate(this.mRatesDateS_7);
-    //   params.fromDate = this.tranferDate(this.mRatesDateS);
-    // }
+    if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
+      params.toDate = this.tranferDate(this.mRatesDateS_7);
+      params.fromDate = this.tranferDate(this.mRatesDateS);
+    }
     // xu ly
 
     this.ncbService.searchRegisterService(params).then((result) => {
@@ -391,15 +391,15 @@ export class ListComponent implements OnInit {
   async exportExcel() {
     this.arrExport = [];
     this.isProcessLoadExcel = 1;
-    const search = Object.assign({}, this.re_search);
-    // search.size = 1000;
-    // if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
-    //   search.toDate = this.tranferDate(this.mRatesDateS_7);
-    //   search.fromDate = this.tranferDate(this.mRatesDateS);
-    //   console.log('###', search.toDate);
-    // }
-    // search.toDate = this.tranferDate(this.mRatesDateS_7);
-    // search.fromDate = this.tranferDate(this.mRatesDateS);
+    const search = Object.assign({toDate: null, fromDate: null}, this.re_search);
+    search.size = 1000;
+    if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
+      search.toDate = this.tranferDate(this.mRatesDateS_7);
+      search.fromDate = this.tranferDate(this.mRatesDateS);
+      console.log('###', search.toDate);
+    }
+    search.toDate = this.tranferDate(this.mRatesDateS_7);
+    search.fromDate = this.tranferDate(this.mRatesDateS);
 
     const page = Math.ceil(this.totalSearch / search.size);
 

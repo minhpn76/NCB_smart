@@ -8,8 +8,7 @@
                 <div class="col-sm-6">
                     <select class="form-control" [(ngModel)]="re_search.compCode">
                         <option *ngFor="let status of listPGD" [value]="status.code" selected="selected">{{status.name}}
-                        </option>
-
+                        </option> 
                     </select>
                     <!-- <input class="form-control col-lg-12"
                     itrim type="text" id="search" [(ngModel)]="re_search.compCode"
@@ -31,22 +30,8 @@
                         </option>
 
                     </select>
-                </div>
-
-            </div>
-            <!-- <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Từ ngày:</label>
-                <div class="col-sm-6 input-group">
-                    <input readonly class="form-control" placeholder="Từ ngày" name="dFS" ngbDatepicker
-                        #dFS="ngbDatepicker" [(ngModel)]="mRatesDateS">
-
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" (click)="dFS.toggle()" type="button">
-                            <i class="fa fa-calendar"></i>
-                        </button>
-                    </div>
-                </div>
-            </div> -->
+                </div> 
+            </div> 
         </div>
         <div class="col-md-6">
             <div class="form-group row">
@@ -57,8 +42,7 @@
                             {{status.name}}</option>
 
                     </select>
-                </div>
-
+                </div> 
             </div>
             <div class="form-group row">
                 <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
@@ -68,11 +52,23 @@
                             {{status.name}}</option>
 
                     </select>
-                </div>
+                </div> 
+            </div> 
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Từ ngày PH Thẻ:</label>
+                <div class="col-sm-6 input-group">
+                    <input readonly class="form-control" placeholder="Từ ngày" name="dFS" ngbDatepicker
+                        #dFS="ngbDatepicker" [(ngModel)]="mRatesDateS">
 
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="dFS.toggle()" type="button">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <!-- <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Đến ngày:</label>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Đến ngày PH Thẻ:</label>
                 <div class="col-sm-6 input-group">
                     <input readonly class="form-control" placeholder="Đến ngày" name="dTS" ngbDatepicker
                         #dTS="ngbDatepicker" [(ngModel)]="mRatesDateS_7">
@@ -84,8 +80,7 @@
                         </button>
                     </div>
                 </div>
-            </div> -->
-
+            </div> 
         </div>
         <div class="col-md-12 text-center">
             <button class="btn btn-primary mr-3" (click)="onSearch(re_search)">
@@ -145,6 +140,7 @@
                             <span [hidden]="!reverse">▲</span>
                         </th>
                         <th scope="col">Ngày yêu cầu</th>
+                        <th scope="col">Ngày phát hành thẻ</th>
                         <th scope="col">Người xử lý</th>
                     </tr>
                 </thead>
@@ -154,7 +150,7 @@
                         <td colspan=10><i class="fa fa-spin fa-spinner font-30"></i></td>
                     </tr>
                     <tr *ngIf="totalSearch == 0 && isProcessLoad == 0" class="text-center">
-                        <td colspan=10>Không tìm thấy kết quả</td>
+                        <td colspan=11>Không tìm thấy kết quả</td>
                     </tr>
                     <tr *ngFor="let data of listData | orderBy: order:reverse:'case-insensitive'; let i = index"
                         style="cursor: pointer" (click)="openPopUpRequest(data.id, data)">
@@ -175,6 +171,7 @@
                             <span class="badge badge-danger" *ngIf="data?.status === 'CLOSED'">CLOSED</span>
                         </td>
                         <td>{{data?.requestDate}}</td>
+                        <td>{{data?.idCardIssueDate}}</td>
                         <td>{{data?.userId}}</td>
                         <!-- <td>
                             <a class="mr-2 cursor-pointer text-blue" routerLink="/registered-service/edit/{{data.id}}">

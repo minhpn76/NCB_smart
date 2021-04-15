@@ -367,6 +367,7 @@ export class EditComponent implements OnInit {
                     userNotifications: this.dataForm.value.user_notifications
                         ? this.dataForm.value.user_notifications
                         : this.filelist,
+                    type: '1',
                 };
                 console.log('payload', payload.content);
 
