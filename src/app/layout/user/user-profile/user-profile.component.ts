@@ -194,12 +194,12 @@ export class UserProfileComponent implements OnInit {
           'CIF': element.cifgrp,
           'Tên đăng nhập': element.usrid,
           'Họ và tên': element.usrfname,
-          'CMND/HC': element.datCfmast ? element.datCfmast.idno : '',
+          'CMND/HC': element.idno ,
           'Nhóm khách hàng': element.crtusrid,
           'Mã gói sản phẩm': element.lm4rm !== null ? element.lm4rm : '',
-          'Gói sản phẩm': element.function !== null ? element.function.prdName : '',
-          'Ưu đãi': element.function !== null ? element.function.promotionName : '',
-          'Tên CT ưu đãi': element.function !== null ? element.function.prodName : ''
+          'Gói sản phẩm': element !== null ? element.prdName : '',
+          'Ưu đãi': element !== null ? element.promotionName : '',
+          'Tên CT ưu đãi': element !== null ? element.prodName : ''
         });
       });
 

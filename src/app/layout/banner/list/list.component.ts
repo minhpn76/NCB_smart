@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
 import { OrderPipe } from 'ngx-order-pipe';
-import {listCodeBanner} from '../code'
+import {listCodeBanner} from '../code';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -17,7 +17,7 @@ export class ListComponent implements OnInit {
     isSearch: any = false;
     isProcessLoad: any = 0;
     totalSearch: any = 0;
-    listBanner: any = [{code: '',name: 'Tất cả'}, ...listCodeBanner];
+    listBanner: any = [{code: '', name: 'Tất cả'}, ...listCodeBanner];
     re_search = {
         bannerCode: '',
         bannerName: '',
@@ -51,8 +51,8 @@ export class ListComponent implements OnInit {
     @ViewChild('showImage', { static: false }) showImageElementRef: ElementRef;
 
 
-    order: string = 'bannerName';
-    reverse: boolean = false;
+    order = 'id';
+    reverse = true;
 
     sortedCollection: any[];
 
@@ -61,8 +61,8 @@ export class ListComponent implements OnInit {
         public toastr: ToastrService,
         private modalService: NgbModal,
         private orderPipe: OrderPipe
-    ) { 
-        this.sortedCollection = orderPipe.transform(this.listData, 'bannerName');
+    ) {
+        this.sortedCollection = orderPipe.transform(this.listData, 'id');
     }
 
     ngOnInit() {
@@ -72,7 +72,7 @@ export class ListComponent implements OnInit {
         if (this.order === value) {
           this.reverse = !this.reverse;
         }
-    
+
         this.order = value;
       }
 
