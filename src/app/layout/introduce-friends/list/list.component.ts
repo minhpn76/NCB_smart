@@ -69,6 +69,15 @@ export class ListComponent implements OnInit {
         }
         this.getListNCC(tempPayloadNCC);
     }
+    setOrder(value: string) {
+        if (this.order === value) {
+          this.reverse = !this.reverse;
+        }
+
+        this.order = value;
+      }
+
+
     public loadDate(): void {
         this.my_7.setDate(this.my_7.getDate() - 7);
         this.mRatesDateS = { year: this.my_7.getFullYear(), month: this.my_7.getMonth() + 1, day: this.my_7.getDate() };

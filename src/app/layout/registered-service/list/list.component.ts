@@ -115,7 +115,7 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.infoUser = JSON.parse(localStorage.getItem('profile')) ? JSON.parse(localStorage.getItem('profile')) : {};
     this.loadDate();
-    this.getListData(this.re_search);
+     this.getListData(this.re_search);
     this.getBranchs();
     this.getListService();
     this.getAllPGD();
@@ -139,15 +139,19 @@ export class ListComponent implements OnInit {
       });
   }
   getListData(params) {
+    const requests = Object.assign({}, params);
     this.listData = [];
     this.isProcessLoad = 1;
+
+    if (requests.page === 1) { requests.page = 0; } else { requests.page = requests.page - 1; }
+
     if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
-      params.toDate = this.tranferDate(this.mRatesDateS_7);
-      params.fromDate = this.tranferDate(this.mRatesDateS);
+      requests.toDate = this.tranferDate(this.mRatesDateS_7);
+      requests.fromDate = this.tranferDate(this.mRatesDateS);
     }
     // xu ly
 
-    this.ncbService.searchRegisterService(params).then((result) => {
+    this.ncbService.searchRegisterService(requests).then((result) => {
       setTimeout(() => {
         const body = result.json().body;
         this.listData = body.content;
@@ -210,7 +214,7 @@ export class ListComponent implements OnInit {
   }
   closeModal() {
     this.modalOp.close();
-    this.getListData(this.re_search);
+    // this.getListData(this.re_search);
   }
   tranferDate(params) {
     const tempMonth = (params.month < 10 ? '0' : '') + params.month;
@@ -218,7 +222,7 @@ export class ListComponent implements OnInit {
     return params.year + '/' + tempMonth + '/' + tempDay;
   }
   onSearch(payload) {
-    this.getListData(payload);
+      this.getListData(payload);
   }
   // keyDownFunction(event) {
   //   if (event.keyCode === 13) {
@@ -227,8 +231,9 @@ export class ListComponent implements OnInit {
   //     this.getListData(this.re_search);
   //   }
   // }
-    changeSize(size) {
-    this.getListData(this.re_search);
+  changeSize(size) {
+    this.re_search.size = size;
+     this.getListData(this.re_search);
   }
   async openPopUpRequest(id, data) {
     this.passData = {};

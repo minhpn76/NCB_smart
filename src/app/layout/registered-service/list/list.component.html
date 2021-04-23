@@ -55,7 +55,7 @@
                 </div> 
             </div> 
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Từ ngày PH Thẻ:</label>
+                <label for="search" class="col-sm-4 col-form-label">Từ ngày y/c:</label>
                 <div class="col-sm-6 input-group">
                     <input readonly class="form-control" placeholder="Từ ngày" name="dFS" ngbDatepicker
                         #dFS="ngbDatepicker" [(ngModel)]="mRatesDateS">
@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="search" class="col-sm-4 col-form-label">Đến ngày PH Thẻ:</label>
+                <label for="search" class="col-sm-4 col-form-label">Đến ngày y/c:</label>
                 <div class="col-sm-6 input-group">
                     <input readonly class="form-control" placeholder="Đến ngày" name="dTS" ngbDatepicker
                         #dTS="ngbDatepicker" [(ngModel)]="mRatesDateS_7">
@@ -187,7 +187,7 @@
     <div class="row mt-3">
         <div class="col-md-12">
             <ngb-pagination *ngIf="totalSearch > 0 && totalSearch > re_search.size" [collectionSize]="totalSearch"
-                [(page)]="re_search.page" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
+                [(page)]="re_search.page" [pageSize]="re_search.size" [rotate]="true" [boundaryLinks]="true"
                 (pageChange)="loadPage($event)">
             </ngb-pagination>
         </div>
