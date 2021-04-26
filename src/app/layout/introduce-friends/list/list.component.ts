@@ -4,16 +4,17 @@ import { OrderPipe } from 'ngx-order-pipe';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { Helper } from '../../../helper';
+import { ExcelService } from '../../../services/excel.service';
 import { NgbModal, NgbModalRef, NgbDateStruct, NgbTabChangeEvent, NgbTooltipConfig, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
-    providers: [NCBService, Helper],
+    providers: [NCBService, ExcelService, Helper],
 })
 export class ListComponent implements OnInit {
-    constructor(private ncbService: NCBService, public toastr: ToastrService, public helper: Helper) {
+    constructor(private ncbService: NCBService, private excelService: ExcelService, public toastr: ToastrService, public helper: Helper) {
         this.loadDate();
     }
     isProcessLoad: any = 0;
@@ -60,7 +61,9 @@ export class ListComponent implements OnInit {
         page: 0,
         size: 10
     };
-
+    isProcessLoadExcel: any = 0;
+    arrExport: any = [];
+    infoUser: any = {};
     ngOnInit() {
         this.getListData(this.search_config);
         const tempPayloadNCC: any = {...this.search};
@@ -234,19 +237,77 @@ export class ListComponent implements OnInit {
         } else {
             this.getListNCC(this.listDataNCC);
         }
-        // if (!payload.status) {
-        //     delete payload['status']
-        // }
-        // const temp: any = {
-        //     rootCif: payload.rootCif,
-        //     targetCif: payload.targetCif,
-        //     fromDate: payload.fromDate,
-        //     toDate: payload.referParttoDatenerCode,
-        //     status: payload.status,
-        //     page: payload.page,
-        //     size: payload.size
-        // };
-        // this.getListNCC(temp);
+    }
+    onfilter(payload) {
+        if (payload.rootUserCif !== '' && payload.targetUserCif !== '' && payload.status !== '') {
+            payload.page = 0;
+           return payload;
+        } else if (payload.rootUserCif !== '' && payload.targetUserCif === '' && payload.status === '') {
+            payload.page = 0;
+            const temp: any = {
+                    rootUserCif: payload.rootUserCif,
+                    fromDate: payload.fromDate,
+                    toDate: payload.referParttoDatenerCode,
+                    page: payload.page,
+                    size: payload.size
+                };
+                return temp;
+        } else if (payload.rootUserCif === '' && payload.targetUserCif !== '' && payload.status === '') {
+            payload.page = 0;
+            const temps: any = {
+                    targetUserCif: payload.targetUserCif,
+                    fromDate: payload.fromDate,
+                    toDate: payload.referParttoDatenerCode,
+                    page: payload.page,
+                    size: payload.size
+                };
+                return temps;
+        } else if (payload.rootUserCif === '' && payload.targetUserCif === '' && payload.status !== '') {
+            payload.page = 0;
+            const tempsr: any = {
+                    status: payload.status,
+                    fromDate: payload.fromDate,
+                    toDate: payload.referParttoDatenerCode,
+                    page: payload.page,
+                    size: payload.size
+                };
+                return tempsr;
+        } else if (payload.rootUserCif !== '' && payload.targetUserCif === '' && payload.status !== '') {
+            payload.page = 0;
+            const tempsr: any = {
+                    rootCif: payload.rootUserCif,
+                    status: payload.status,
+                    fromDate: payload.fromDate,
+                    toDate: payload.referParttoDatenerCode,
+                    page: payload.page,
+                    size: payload.size
+                };
+                return tempsr;
+        } else if (payload.rootUserCif !== '' && payload.targetUserCif !== '' && payload.status === '') {
+            payload.page = 0;
+            const tempCT: any = {
+                    targetUserCif: payload.targetUserCif,
+                    rootUserCif: payload.rootUserCif,
+                    fromDate: payload.fromDate,
+                    toDate: payload.referParttoDatenerCode,
+                    page: payload.page,
+                    size: payload.size
+                };
+                return tempCT;
+        } else if (payload.rootUserCif === '' && payload.targetUserCif !== '' && payload.status !== '') {
+            payload.page = 0;
+            const tempCT: any = {
+                    targetUserCif: payload.targetUserCif,
+                    status: payload.status,
+                    fromDate: payload.fromDate,
+                    toDate: payload.referParttoDatenerCode,
+                    page: payload.page,
+                    size: payload.size
+                };
+                return tempCT;
+        } else {
+            return this.listDataNCC;
+        }
     }
 
     deleteItem(event, index, id) {
@@ -274,4 +335,60 @@ export class ListComponent implements OnInit {
             }
         });
     }
+    getDataExcel(search): Promise<any> {
+        const promise = new Promise((resolve, reject) => {
+          this.ncbService.getListFriends(this.onfilter(search))
+              .then((result) => {
+                  console.log(result);
+                  const body = result.json().body;
+                  this.arrExport = this.arrExport.concat(body.content);
+                  resolve();
+              })
+              .catch((err) => {
+                  resolve();
+              });
+        });
+        return promise;
+      }
+    async exportExcel() {
+        this.arrExport = [];
+        this.isProcessLoadExcel = 1;
+        const search = Object.assign({start: null, end: null}, this.search);
+        search.size = 1000;
+        if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
+          search.end = this.tranferDate(this.mRatesDateS_7);
+          search.start = this.tranferDate(this.mRatesDateS);
+          console.log('###', search.end);
+        }
+        search.end = this.tranferDate(this.mRatesDateS_7);
+        search.start = this.tranferDate(this.mRatesDateS);
+
+        const page = Math.ceil(this.totalSearch / search.size);
+
+        for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {
+            search.page = i;
+            await this.getDataExcel(search);
+        }
+
+        search.page = 0;
+        console.log(this.arrExport);
+        const data = [];
+        this.arrExport.forEach((element) => {
+          data.push({
+            'STT': element.id,
+            'ID chương trình': element.referFriendConfigId,
+            'Tên Người giới thiệu': element.rootUserName,
+            'CIF Người giới thiệu': element.rootUserCif,
+            'CIF Người được giới thiệu': element.targetUserCif,
+            'Mã đối tác': element.partnerCode,
+            'Mã khuyến mại': element.promotionCode,
+            'Trạng Thái': (element.status === 0 ? 'Thành công' : 'Thất bại'),
+            'Ngày tạo': element.createdAt
+          });
+        });
+        this.excelService.exportAsExcelFile(data, 'list_registered_service');
+        this.isProcessLoadExcel = 0;
+        return;
+    }
+
 }

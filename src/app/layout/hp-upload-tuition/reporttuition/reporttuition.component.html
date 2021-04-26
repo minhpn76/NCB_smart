@@ -84,6 +84,10 @@
             <a class="btn btn-warning" [routerLink]="['/uploadtuition/upload']">
                 <i class="fa fa-plus"></i>&nbsp;Upload học phí
             </a>
+            <button class="btn btn-success float-right" (click)="exportDataHocPhi()">
+                <i *ngIf="isProcessLoadExcel === 1" class="fa fa-spinner font-20"></i>
+                <i *ngIf="isProcessLoadExcel === 0" class="fa fa-file"></i>&nbsp;Xuất excel
+            </button>
         </div>
     </div>
     <!-- Phần danh sach-->

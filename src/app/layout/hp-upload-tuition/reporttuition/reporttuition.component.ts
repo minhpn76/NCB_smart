@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { Helper } from './../../../helper';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
@@ -6,12 +7,12 @@ import { NCBService } from '../../../services/ncb.service';
 import Swal from 'sweetalert2';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { ExcelService } from '../../../services/excel.service';
 @Component({
   selector: 'app-reporttuition',
   templateUrl: './reporttuition.component.html',
   styleUrls: ['./reporttuition.component.scss'],
-  providers: [NCBService, Helper]
+  providers: [NCBService, Helper, ExcelService]
 })
 export class ReporttuitionComponent implements OnInit {
   mRatesDateS: NgbDateStruct;
@@ -52,13 +53,15 @@ export class ReporttuitionComponent implements OnInit {
   isProcessLoad: any = 0;
   totalSearch: any = 0;
   listData: any[];
-
+  isProcessLoadExcel: any = 0;
+  arrExport: any[];
 
   constructor(
     private ncbService: NCBService,
     public toastr: ToastrService,
     public helper: Helper,
-    private router: Router
+    private router: Router,
+    private excelService: ExcelService
   ) {
     localStorage.setItem('redirect', 'false');
     this.loadDate();
@@ -171,5 +174,65 @@ export class ReporttuitionComponent implements OnInit {
     this.re_search.page = 0;
     this.getListData(this.re_search);
 
+  }
+
+  async getDataExport(params) {
+    this.isProcessLoadExcel = 1;
+    await this.ncbService.getListHpTuition(params).then((result) => {
+      setTimeout(() => {
+        const body = result.json().body;
+        if (body === null) { return; }
+        this.arrExport = body.content;
+        this.isProcessLoadExcel = 0;
+        console.log(this.arrExport);
+      }, 300);
+    }).catch(err => {
+      this.isProcessLoad = 0;
+      this.listData = [];
+      this.totalSearch = 0;
+      this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
+    });
+  }
+
+  async exportDataHocPhi() {
+    this.arrExport = [];
+    this.isProcessLoadExcel = 1;
+    const search = Object.assign(this.re_search);
+    search.size =  this.totalSearch;
+
+    const page = Math.ceil(this.totalSearch / search.size);
+
+    for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {
+        search.page = i;
+        await this.getDataExport(search);
+    }
+
+    search.page = 0;
+    console.log(this.arrExport);
+    const data = [];
+    // tslint:disable-next-line:no-shadowed-variable
+    this.arrExport.forEach((elements) => {
+      data.push({
+        'Mã Trường': elements.schoolCode ,
+        'Tên Trường': elements.schoolName ,
+        'Mã khoa': elements.facultyCode,
+        'Tên khoa': elements.facultyName,
+        'Mã lớp': elements.classCode,
+        'Tên lớp': elements.className,
+        'Mã học sinh': elements.studentCode,
+        'Tên học sinh': elements.studentName,
+        'Kỳ thanh toán': elements.term,
+
+        'Mã Phí': elements.costCode,
+        'Số tiền': elements.amount,
+        'Ngày gửi': elements.paymentDate,
+        'Người gửi': elements.paymentBy,
+        'Trạng Thái': elements.status === 0 ? 'Chưa đóng' : (elements.status === 1 ? 'Đã đóng' : 'Đang xử lý'),
+        'Ngày tạo': elements.createdAt
+      });
+    });
+    this.excelService.exportAsExcelFile(data, 'DSHP');
+    this.isProcessLoadExcel = 0;
+    return;
   }
 }

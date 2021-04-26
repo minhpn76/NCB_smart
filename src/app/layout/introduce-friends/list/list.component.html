@@ -300,6 +300,10 @@
                         >
                             <i class="fa fa-search"></i>&nbsp;Tìm kiếm
                         </button>
+                        <button class="btn btn-success" (click)="exportExcel()">
+                            <i *ngIf="isProcessLoadExcel === 1" class="fa fa-spinner font-20"></i>
+                            <i *ngIf="isProcessLoadExcel === 0" class="fa fa-file"></i>&nbsp;Xuất excel
+                        </button>
                     </div>
                 </div>
 
