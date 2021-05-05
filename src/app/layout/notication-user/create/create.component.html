@@ -6,19 +6,36 @@
         <div class="col-md-8">
             <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
-                    <label for="create" class="col-sm-5 col-form-label">Tên thông báo:</label>
+                    <label for="create" class="col-sm-5 col-form-label">Tên thông báo(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <input formControlName="title" class="form-control col-lg-12" placeholder="Tên thông báo" />
+                        <input formControlName="title" class="form-control col-lg-12" placeholder="Tên thông báo" [ngClass]="{'is-invalid':submitted && Form.title?.errors}"/>
+                        <div *ngIf="submitted && Form?.title?.errors" class="invalid-feedback">
+                            <div *ngIf="Form.title?.errors?.required">Tên thông báo là bắt buộc</div>
+                            <!-- <div *ngIf="Form.title?.hasError('whitespace')">Tên thông báo không hợp lệ</div> -->
+                        </div>
                     </div>
                 </div>
+
                 <div class="form-group row">
-                    <label for="search" class="col-sm-5 col-form-label">Nội dung(<span
+                    <label for="search" class="col-sm-5 col-form-label">Nội dung trong ứng dụng(<span
                             class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <ckeditor style="object-fit: cover" placeholder="Nội dung..." [config]="ckConfig" formControlName="content"></ckeditor>
+                        <ckeditor style="object-fit: cover" placeholder="Nội dung..." [config]="ckConfig" formControlName="content" [ngClass]="{'is-invalid-ckeditor':submitted && Form.content?.errors}"></ckeditor>
                         <div *ngIf="submitted && Form.content.errors" class="invalid-feedback">
-                            <div *ngIf="Form.content?.errors?.required">Nội dung là bắt buộc</div>
-                            <div *ngIf="Form.content.hasError('whitespace')">Nội dung không hợp lệ</div>
+                            <div *ngIf="Form.content?.errors?.required">Nội dung trong ứng dụng là bắt buộc</div>
+                            <div *ngIf="Form.content.hasError('whitespace')">Nội dung trong ứng dụng không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="search" class="col-sm-5 col-form-label">Nội dung ngoài ứng dụng(<span
+                            class="text-danger">*</span>):</label>
+                    <div class="col-sm-7">
+                        <textarea formControlName="contentWOApp" rows="10" class="w-100 form-control" [ngClass]="{'is-invalid':submitted && Form.contentWOApp?.errors}"></textarea>
+                        <div *ngIf="submitted && Form.contentWOApp.errors" class="invalid-feedback">
+                            <div *ngIf="Form.contentWOApp?.errors?.required">Nội dung ngoài ứng dụng là bắt buộc</div>
+                            <div *ngIf="Form.contentWOApp.hasError('whitespace')">Nội dung ngoài ứng dụng không hợp lệ</div>
                         </div>
                     </div>
                 </div>
@@ -56,7 +73,8 @@
                             }" />
                         <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
-                                Giá trị lặp là bắt buộc
+                                <!-- Giá trị lặp là bắt buộc -->
+                                Giá trị thời gian là bắt buộc
                             </div>
                         </div>
                     </div>
@@ -66,7 +84,8 @@
                             }" id="example-time-input" />
                         <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
-                                Giá trị lặp là bắt buộc
+                                <!-- Giá trị lặp là bắt buộc -->
+                                Giá trị thời gian là bắt buộc
                             </div>
                         </div>
                     </div>
@@ -81,7 +100,7 @@
                     </div>
 
                     <div class="col-sm-7 input-group" *ngIf="Form.repeatType.value === '3'">
-                        <select class="form-select" formControlName="repeatDate"   aria-label="Default select example">
+                        <select class="form-select" formControlName="repeatDate" aria-label="Default select example">
                             <option selected>Chọn Ngày</option>
                             <option *ngFor="let date of listDates" [value]="date.code">{{date.value}}</option>
                         </select>
@@ -90,16 +109,17 @@
                             }" id="example-month-input" />
                         <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
-                                Giá trị lặp là bắt buộc
+                                <!-- Giá trị lặp là bắt buộc -->
+                                Giá trị thời gian là bắt buộc
                             </div>
                         </div>
                     </div>
                     <div  class="col-sm-7 input-group" *ngIf="Form.repeatType.value == '4'">
-                        <select class="form-select" formControlName="repeatMonth"   aria-label="Default select example">
+                        <select class="form-select" formControlName="repeatMonth" aria-label="Default select example">
                             <option selected>Chọn Tháng</option>
                             <option *ngFor="let date of listMonth" [value]="date.code">{{date.value}}</option>
                         </select>
-                        <select *ngIf="Form.repeatMonth.value == '02'" class="form-select" formControlName="repeatDate"   aria-label="Default select example">
+                        <select *ngIf="Form.repeatMonth.value == '02'" class="form-select" formControlName="repeatDate" aria-label="Default select example">
                             <option selected>Chọn Ngày</option>
                             <option *ngFor="let date of listDates_28" [value]="date.code">{{date.value}}</option>
                         </select>
@@ -117,7 +137,8 @@
                             }" id="example-year-input" />
                         <div *ngIf="submitted && Form.repeatValue?.errors" class="invalid-feedback">
                             <div *ngIf="Form.repeatValue?.errors?.required">
-                                Giá trị lặp là bắt buộc
+                                <!-- Giá trị lặp là bắt buộc -->
+                                Giá trị thời gian là bắt buộc
                             </div>
                         </div>
                     </div>
@@ -155,13 +176,18 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="create" class="col-sm-5 col-form-label">Trạng thái<span
-                            class="text-danger">(*</span>):</label>
+                    <label for="create" class="col-sm-5 col-form-label">Trạng thái(<span
+                            class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <select formControlName="status" class="form-control">
+                        <select formControlName="status" class="form-control" [ngClass]="{'is-invalid':submitted && Form.status?.errors}">
                             <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">
                                 {{ status.name }}</option>
                         </select>
+                        <div *ngIf="submitted && Form.status?.errors" class="invalid-feedback">
+                            <div *ngIf="Form.status?.errors?.required">
+                                Trạng thái là bắt buộc
+                            </div>
+                        </div>
                     </div>
                 </div>
 

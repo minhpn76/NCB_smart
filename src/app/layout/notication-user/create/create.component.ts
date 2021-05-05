@@ -237,12 +237,19 @@ export class CreateComponent implements OnInit {
         this.dataForm = this.formBuilder.group({
             title: [
                 '',
-                // Validators.compose([
-                //     Validators.required,
-                //     this.helper.noWhitespaceValidator,
-                // ]),
+                Validators.compose([
+                    Validators.required,
+                    // this.helper.noWhitespaceValidator,
+                ]),
             ],
             content: [
+                '',
+                Validators.compose([
+                    Validators.required,
+                    this.helper.noWhitespaceValidator,
+                ]),
+            ],
+            contentWOApp: [
                 '',
                 Validators.compose([
                     Validators.required,
@@ -260,11 +267,11 @@ export class CreateComponent implements OnInit {
             repeatTime: [''],
             repeatMonth: [''],
             repeatDate: [''],
-            repeatValue: [''],
+            repeatValue: ['', Validators.required],
             // repeatValue: [this.mRatesDateS_7],
 
             objectUserType: ['', Validators.compose([Validators.required])],
-            status: [''],
+            status: ['', Validators.required],
             type: '1',
 
             createdAt: [this.mRatesDateS_7],

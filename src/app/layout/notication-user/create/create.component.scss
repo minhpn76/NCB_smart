@@ -53,3 +53,23 @@
     border: 1px solid #ced4da;
     font-size: 13px;
 }
+
+textarea {
+    border-color: #ced4da;
+    &:focus-visible {
+        outline: none;
+    }
+}
+
+.invalid-feedback {
+    display: block;
+}
+
+::ng-deep {
+    .is-invalid-ckeditor {
+        .cke {
+            border-radius: 3px;
+            border-color: #dc3545;
+        }
+    }
+}
