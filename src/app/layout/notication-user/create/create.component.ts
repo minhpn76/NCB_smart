@@ -353,17 +353,14 @@ export class CreateComponent implements OnInit {
         return weekdays[day];
     }
     onSubmit() {
-        if (this.isLoading) {
-            return;
-        }
         this.submitted = true;
         // stop here if form is invalid
         if (this.dataForm.invalid) {
             this.isLoading = false;
             return;
+        } else {
+            this.isLoading = true;
         }
-
-        this.isLoading = true;
 
         let sources = this.dataForm.value.content.match(
             /<img [^>]*src="[^"]*"[^>]*>/gm
@@ -404,6 +401,7 @@ export class CreateComponent implements OnInit {
                 const payload = {
                     title: this.dataForm.value.title,
                     content: this.dataForm.value.content,
+                    contentWOApp: this.dataForm.value.contentWOApp,
                     repeatType: this.dataForm.value.repeatType,
                     repeatDay: this.dataForm.value.repeatDay,
                     repeatTime: this.dataForm.value.repeatTime,
@@ -466,8 +464,10 @@ export class CreateComponent implements OnInit {
                                 );
                             }
                         }
+                        this.isLoading = false;
                     })
                     .catch((err) => {
+                        this.isLoading = false;
                         this.toastr.error(err.json().content, 'Thất bại!');
                     });
             })
