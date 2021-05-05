@@ -234,10 +234,9 @@ export class EditComponent implements OnInit {
         this.dataForm = this.formBuilder.group({
             title: [
                 '',
-                // Validators.compose([
-                //     Validators.required,
-                //     this.helper.noWhitespaceValidator,
-                // ]),
+                Validators.compose([
+                    Validators.required,
+                ]),
             ],
             content: [
                 '',
@@ -253,13 +252,14 @@ export class EditComponent implements OnInit {
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
-            // repeatValue: ['', Validators.compose([Validators.required])],
-            repeatDay: [''],
-            repeatTime: [''],
-            repeatMonth: [''],
-            repeatDate: [''],
-            repeatValue: [''],
-            objectUserType: ['', Validators.compose([Validators.required])],
+
+            repeatValue: ['', Validators.required],
+            repeatDay: ['', Validators.required],
+            repeatTime: ['', Validators.required],
+            repeatMonth: ['', Validators.required],
+            repeatDate: ['', Validators.required],
+            
+            objectUserType: ['', Validators.required],
             status: [''],
 
             // createdAt: [this.mRatesDateS_7],
@@ -269,6 +269,16 @@ export class EditComponent implements OnInit {
 
         this.getItem(this.itemId);
         this.ckConfig = { extraPlugins: 'easyimage, emojione' };
+        // Reset repeatValue
+        this.Form.repeatType.valueChanges.subscribe(value => {
+            this.dataForm.patchValue({
+                repeatDay: null, 
+                repeatDate: null, 
+                repeatMonth: null, 
+                repeatTime: null, 
+                repeatValue: null, 
+            });
+        });
     }
     // modal Danh sách hiện có
     openModal(content) {

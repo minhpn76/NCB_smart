@@ -43,7 +43,7 @@ export class CreateComponent implements OnInit {
         this.loadDate();
     }
     get Form() {
-        return this.dataForm.controls;
+        return this.dataForm && this.dataForm.controls;
     }
     objUpload: any = {};
     isLockSave = false;
@@ -234,12 +234,12 @@ export class CreateComponent implements OnInit {
     _time: any = '';
     _month: any = '';
     ngOnInit() {
+        const isNumber = /^\d+$/;
         this.dataForm = this.formBuilder.group({
             title: [
                 '',
                 Validators.compose([
                     Validators.required,
-                    // this.helper.noWhitespaceValidator,
                 ]),
             ],
             content: [
@@ -263,12 +263,12 @@ export class CreateComponent implements OnInit {
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
-            repeatDay: [''],
-            repeatTime: [''],
-            repeatMonth: [''],
-            repeatDate: [''],
-            repeatValue: ['', Validators.required],
-            // repeatValue: [this.mRatesDateS_7],
+
+            repeatDay: ['', this.Form && this.Form.repeatType.value === '2' ? [Validators.required, Validators.pattern(isNumber)] : null],
+            repeatTime: ['', Validators.required],
+            repeatMonth: ['', [Validators.required, Validators.pattern(isNumber)]],
+            repeatDate: ['', [Validators.required, Validators.pattern(isNumber)]],
+            repeatValue: ['', this.Form && this.Form.repeatType.value === '1' ? Validators.required : null],
 
             objectUserType: ['', Validators.compose([Validators.required])],
             status: ['', Validators.required],
@@ -279,8 +279,23 @@ export class CreateComponent implements OnInit {
             user_notifications: [],
         });
         this.ckConfig = { extraPlugins: 'easyimage, emojione' };
+        // Reset repeatValue
+        this.Form.repeatType.valueChanges.subscribe(value => {
+            this.dataForm.patchValue({
+                repeatDay: null, 
+                repeatDate: null, 
+                repeatMonth: null, 
+                repeatTime: null, 
+                repeatValue: null, 
+            });
+        });
     }
-    openModal(content) {
+
+    private checkRepeatType(num: []): void {
+        
+    }
+
+    public openModal(content) {
         this.modalOp = this.modalService.open(content);
     }
 
@@ -354,6 +369,7 @@ export class CreateComponent implements OnInit {
     }
     onSubmit() {
         this.submitted = true;
+        console.log(this.Form);
         // stop here if form is invalid
         if (this.dataForm.invalid) {
             this.isLoading = false;
