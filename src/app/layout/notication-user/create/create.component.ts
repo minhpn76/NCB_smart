@@ -533,6 +533,12 @@ export class CreateComponent implements OnInit {
             this.closeModal();
         }
     }
+
+    public addEmoji(e) {
+        this.dataForm.patchValue({
+            contentWOApp: this.dataForm.getRawValue().contentWOApp += e.emoji.native, 
+        });
+    }
 }
 
 // upload image ckeditor5
