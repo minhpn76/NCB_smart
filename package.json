@@ -35,6 +35,7 @@
     "angular-emoji-picker-extended": "^0.3.8",
     "chart.js": "2.7.3",
     "ckeditor4-angular": "^2.1.0",
+    "ckeditor4-integrations-common": "^0.2.0",
     "core-js": "2.5.7",
     "cron-editor": "^2.1.7",
     "file-saver": "^2.0.2",
