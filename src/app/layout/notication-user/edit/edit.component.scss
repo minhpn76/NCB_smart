@@ -50,8 +50,16 @@
 }
 
 .form-select{
-    border: 1px solid #ced4da;
+    outline: none;
     font-size: 13px;
+}
+
+textarea {
+    border-color: #ced4da;
+    resize: none;
+    &:focus-visible {
+        outline: none;
+    }
 }
 
 .invalid-feedback {
@@ -65,4 +73,13 @@
             border-color: #dc3545;
         }
     }
+}
+
+.smile-icon {
+    font-size: 25px;
+    cursor: pointer;
+    border-bottom: 1px solid #ced4da;
+    border-right: 1px solid #ced4da;
+    border-left: 1px solid #ced4da;
+    padding: 2px 5px;
 }

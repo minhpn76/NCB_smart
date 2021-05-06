@@ -264,11 +264,11 @@ export class CreateComponent implements OnInit {
                 ]),
             ],
 
-            repeatDay: ['', this.Form && this.Form.repeatType.value === '2' ? [Validators.required, Validators.pattern(isNumber)] : null],
-            repeatTime: ['', Validators.required],
-            repeatMonth: ['', [Validators.required, Validators.pattern(isNumber)]],
-            repeatDate: ['', [Validators.required, Validators.pattern(isNumber)]],
-            repeatValue: ['', this.Form && this.Form.repeatType.value === '1' ? Validators.required : null],
+            repeatDay: [''],
+            repeatTime: [''],
+            repeatMonth: [''],
+            repeatDate: [''],
+            repeatValue: ['', [Validators.required]],
 
             objectUserType: ['', Validators.compose([Validators.required])],
             status: ['', Validators.required],
@@ -279,20 +279,63 @@ export class CreateComponent implements OnInit {
             user_notifications: [],
         });
         this.ckConfig = { extraPlugins: 'easyimage, emojione' };
-        // Reset repeatValue
+        // Handle repeatType
         this.Form.repeatType.valueChanges.subscribe(value => {
+            // Reset
             this.dataForm.patchValue({
-                repeatDay: null, 
-                repeatDate: null, 
-                repeatMonth: null, 
-                repeatTime: null, 
-                repeatValue: null, 
+                repeatValue: null,
+                repeatDay: null,
+                repeatTime: null,
+                repeatDate: null,
+                repeatMonth: null,
             });
+            // Conditional required validation reactive form
+            if (['', '0', '1'].includes(value)) {
+                this.Form['repeatValue'].setValidators([Validators.required]);
+            } else {
+                this.Form['repeatValue'].clearValidators();
+            }
+            if (['2'].includes(value)) {
+                this.Form['repeatDay'].setValidators([Validators.required, Validators.pattern(isNumber)]);
+            } else {
+                this.Form['repeatDay'].clearValidators();
+            }
+            if (['3'].includes(value)) {
+                this.Form['repeatDate'].setValidators([Validators.required, Validators.pattern(isNumber)]);
+            } else {
+                this.Form['repeatDate'].clearValidators();
+            }
+            if (['4'].includes(value)) {
+                this.Form['repeatMonth'].setValidators([Validators.required, Validators.pattern(isNumber)]);
+            } else {
+                this.Form['repeatMonth'].clearValidators();
+            }
+            if (['2', '3', '4'].includes(value)) {
+                this.Form['repeatTime'].setValidators([Validators.required]);
+            } else {
+                this.Form['repeatTime'].clearValidators();
+            }
+            this.Form['repeatValue'].updateValueAndValidity();
+            this.Form['repeatDay'].updateValueAndValidity();
+            this.Form['repeatDate'].updateValueAndValidity();
+            this.Form['repeatMonth'].updateValueAndValidity();
+            this.Form['repeatTime'].updateValueAndValidity();
         });
-    }
-
-    private checkRepeatType(num: []): void {
-        
+        // Handle repeatMonth
+        this.Form.repeatMonth.valueChanges.subscribe(value => {
+            // Reset
+            this.dataForm.patchValue({
+                repeatTime: null,
+                repeatDate: null,
+            });
+            // Conditional required validation reactive form
+            if (['09'].includes(value)) {
+                this.Form['repeatDate'].clearValidators();
+            } else if (value != null) {
+                this.Form['repeatDate'].setValidators([Validators.required, Validators.pattern(isNumber)]);
+            }
+            this.Form['repeatDate'].updateValueAndValidity();
+        })
     }
 
     public openModal(content) {
@@ -369,7 +412,6 @@ export class CreateComponent implements OnInit {
     }
     onSubmit() {
         this.submitted = true;
-        console.log(this.Form);
         // stop here if form is invalid
         if (this.dataForm.invalid) {
             this.isLoading = false;
@@ -468,8 +510,7 @@ export class CreateComponent implements OnInit {
                                 );
                             } else if (result.json().code === '1001') {
                                 this.toastr.error(
-                                    `Người dùng ${
-                                        result.json().description
+                                    `Người dùng ${result.json().description
                                     } không tồn tại trong hệ thống`,
                                     'Thất bại!'
                                 );
@@ -552,7 +593,7 @@ export class CreateComponent implements OnInit {
 
     public addEmoji(e) {
         this.dataForm.patchValue({
-            contentWOApp: this.dataForm.getRawValue().contentWOApp += e.emoji.native, 
+            contentWOApp: this.dataForm.getRawValue().contentWOApp += e.emoji.native,
         });
     }
 }
@@ -563,7 +604,6 @@ export class UploadAdapter {
     constructor(loader) {
         this.loader = loader;
     }
-
     upload() {
         return this.loader.file.then(
             (file) =>

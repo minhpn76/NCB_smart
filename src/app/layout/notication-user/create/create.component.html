@@ -30,7 +30,7 @@
                     <label for="search" class="col-sm-5 col-form-label">Nội dung ngoài ứng dụng (<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <div>
-                            <textarea formControlName="contentWOApp" rows="6" class="w-100 form-control" [ngClass]="{'is-invalid':submitted && Form.contentWOApp?.errors}"></textarea>
+                            <textarea formControlName="contentWOApp" rows="6" class="w-100 form-control" [ngClass]="{'is-invalid':submitted && Form.contentWOApp?.errors}" maxlength="1024"></textarea>
                             <i class="fa fa-smile-o smile-icon" [autoClose]="'outside'" [ngbPopover]="popContent" popoverClass="d-table"></i>
                         </div>
                         <div *ngIf="submitted && Form.contentWOApp.errors" class="invalid-feedback">
@@ -121,7 +121,7 @@
                     </div>
 
                     <div  class="col-sm-7 input-group" *ngIf="Form.repeatType.value == '4'">
-                        <select class="form-select form-control col-2" formControlName="repeatMonth" aria-label="Default select example" [ngClass]="{'is-invalid': submitted && Form.repeatMonth?.errors }">
+                        <select class="form-select form-control col-2" formControlName="repeatMonth" aria-label="Default select example" [ngClass]="{'is-invalid': submitted && Form?.repeatMonth?.errors }">
                             <option selected>Chọn Tháng</option>
                             <option *ngFor="let date of listMonth" [value]="date.code">{{date.value}}</option>
                         </select>
@@ -163,7 +163,6 @@
                                 Đối tượng áp dụng là bắt buộc
                             </div>
                         </div>
-
                     </div>
                 </div>
 
