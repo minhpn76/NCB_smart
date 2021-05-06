@@ -231,15 +231,22 @@ export class EditComponent implements OnInit {
         this.route.params.subscribe((params) => {
             this.itemId = params.itemId;
         });
+        const isNumber = /^\d+$/;
         this.dataForm = this.formBuilder.group({
             title: [
                 '',
-                // Validators.compose([
-                //     Validators.required,
-                //     this.helper.noWhitespaceValidator,
-                // ]),
+                Validators.compose([
+                    Validators.required,
+                ]),
             ],
             content: [
+                '',
+                Validators.compose([
+                    Validators.required,
+                    this.helper.noWhitespaceValidator,
+                ]),
+            ],
+            contentWOApp: [
                 '',
                 Validators.compose([
                     Validators.required,
@@ -253,13 +260,14 @@ export class EditComponent implements OnInit {
                     this.helper.noWhitespaceValidator,
                 ]),
             ],
-            // repeatValue: ['', Validators.compose([Validators.required])],
+
             repeatDay: [''],
             repeatTime: [''],
             repeatMonth: [''],
             repeatDate: [''],
             repeatValue: [''],
-            objectUserType: ['', Validators.compose([Validators.required])],
+
+            objectUserType: ['', Validators.required],
             status: [''],
 
             // createdAt: [this.mRatesDateS_7],
@@ -269,6 +277,63 @@ export class EditComponent implements OnInit {
 
         this.getItem(this.itemId);
         this.ckConfig = { extraPlugins: 'easyimage, emojione' };
+        // Handle repeatType
+        this.Form.repeatType.valueChanges.subscribe(value => {
+            // Reset
+            this.dataForm.patchValue({
+                repeatValue: null,
+                repeatDay: null,
+                repeatTime: null,
+                repeatDate: null,
+                repeatMonth: null,
+            });
+            // Conditional required validation reactive form
+            if (['','0', '1'].includes(value)) {
+                this.Form['repeatValue'].setValidators([Validators.required]);
+            } else {
+                this.Form['repeatValue'].clearValidators();
+            }
+            if (['2'].includes(value)) {
+                this.Form['repeatDay'].setValidators([Validators.required, Validators.pattern(isNumber)]);
+            } else {
+                this.Form['repeatDay'].clearValidators();
+            }
+            if (['3'].includes(value)) {
+                this.Form['repeatDate'].setValidators([Validators.required, Validators.pattern(isNumber)]);
+            } else {
+                this.Form['repeatDate'].clearValidators();
+            }
+            if (['4'].includes(value)) {
+                this.Form['repeatMonth'].setValidators([Validators.required, Validators.pattern(isNumber)]);
+            } else {
+                this.Form['repeatMonth'].clearValidators();
+            }
+            if (['2', '3', '4'].includes(value)) {
+                this.Form['repeatTime'].setValidators([Validators.required]);
+            } else {
+                this.Form['repeatTime'].clearValidators();
+            }
+            this.Form['repeatValue'].updateValueAndValidity();
+            this.Form['repeatDay'].updateValueAndValidity();
+            this.Form['repeatDate'].updateValueAndValidity();
+            this.Form['repeatMonth'].updateValueAndValidity();
+            this.Form['repeatTime'].updateValueAndValidity();
+        });
+        // Handle repeatMonth
+        this.Form.repeatMonth.valueChanges.subscribe(value => {
+            // Reset
+            this.dataForm.patchValue({
+                repeatTime: null,
+                repeatDate: null,
+            });
+            // Conditional required validation reactive form
+            if (['09'].includes(value)) {
+                this.Form['repeatDate'].clearValidators();
+            } else if(value != null) {
+                this.Form['repeatDate'].setValidators([Validators.required, Validators.pattern(isNumber)]);
+            }
+            this.Form['repeatDate'].updateValueAndValidity();
+        })
     }
     // modal Danh sách hiện có
     openModal(content) {
@@ -302,17 +367,14 @@ export class EditComponent implements OnInit {
     }
     // truyền đi các thông tin trong danh sách
     onSubmit() {
-        if (this.isLoading) {
-            return;
-        }
-
         this.submitted = true;
         // stop here if form is invalid
         if (this.dataForm.invalid) {
             this.isLoading = false;
             return;
+        } else {
+            this.isLoading = true;
         }
-        this.isLoading = true;
 
         // lay link blob
         let sources = this.dataForm.value.content.match(
@@ -346,7 +408,7 @@ export class EditComponent implements OnInit {
                         .catch((err) => {
                             reject(err);
                         });
-                        console.log('sources', sources);
+                    console.log('sources', sources);
 
                 })
             );
@@ -356,6 +418,7 @@ export class EditComponent implements OnInit {
                 const payload = {
                     title: this.dataForm.value.title,
                     content: this.dataForm.value.content,
+                    contentWOApp: this.dataForm.value.contentWOApp,
                     repeatType: this.dataForm.value.repeatType,
                     repeatDay: this.dataForm.value.repeatDay,
                     repeatTime: this.dataForm.value.repeatTime,
@@ -408,8 +471,10 @@ export class EditComponent implements OnInit {
                                 );
                             }
                         }
+                        this.isLoading = false;
                     })
                     .catch((err) => {
+                        this.isLoading = false;
                         this.toastr.error(err.json().body, 'Thất bại!');
                     });
             })
@@ -463,6 +528,7 @@ export class EditComponent implements OnInit {
                 this.dataForm.patchValue({
                     title: body.title,
                     content: body.content,
+                    contentWOApp: body.contentWOApp,
                     repeatType: body.repeatType,
                     repeatValue: Helper.formatDateTimeEdit(
                         body.repeatValue,
@@ -493,6 +559,12 @@ export class EditComponent implements OnInit {
             .catch((err) => {
                 this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
             });
+    }
+    
+    public addEmoji(e) {
+        this.dataForm.patchValue({
+            contentWOApp: this.dataForm.getRawValue().contentWOApp += e.emoji.native,
+        });
     }
 }
 
