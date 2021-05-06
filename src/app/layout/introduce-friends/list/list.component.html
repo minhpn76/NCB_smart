@@ -307,48 +307,80 @@
                     </div>
                 </div>
 
-                <div class="row mt-3">
+                <div class="row mt-50">
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <label for="search" class="col-sm-2 col-form-label">Hiển thị:</label>
+                                <select class="form-control col-sm-2" [(ngModel)]="search.size" (change)="changePageSize()">
+                                    <option *ngFor="let page_size of listPageSizeNCC" [value]="page_size">{{page_size}}</option>
+                                </select> &nbsp;
+                                <label for="search" class=" col-form-label">Bản ghi</label>  
+                        </div>
+                    </div> 
+                </div>
+
+                <div class="row"> 
+                   
                     <div class="col-md-12 table-responsive Flipped">
+                        
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th scope="col">STT</th>
+                                    <th scope="col">STT</th> 
                                     <th
                                         scope="col"
-                                        [class.active]="order === 'title'"
-                                        (click)="setOrder('title')"
+                                        [class.active]="order === 'createdAt'"
+                                        (click)="setOrder('createdAt')"
                                     >
-                                        Cấu hình giới thiệu
+                                        Ngày
                                         <span [hidden]="reverse">▼</span>
                                         <span [hidden]="!reverse">▲</span>
                                     </th>
+                                    <th
+                                    scope="col"
+                                    [class.active]="order === 'createdAt'"
+                                    (click)="setOrder('createdAt')"
+                                >
+                                    Company
+                                    <span [hidden]="reverse">▼</span>
+                                    <span [hidden]="!reverse">▲</span>
+                                </th>
+                                    <th
+                                    scope="col"
+                                    [class.active]="order === 'rootUserCif'"
+                                    (click)="setOrder('rootUserCif')"
+                                >
+                                    Cif người được giới thiệu
+                                    <span [hidden]="reverse">▼</span>
+                                    <span [hidden]="!reverse">▲</span>
+                                </th>
                                     <th
                                         scope="col"
                                         [class.active]="order === 'rootUserName'"
-                                        (click)="setOrder('title')"
+                                        (click)="setOrder('rootUserName')"
                                     >
-                                        Tên người giới thiệu
+                                        Tên người được giới thiệu
                                         <span [hidden]="reverse">▼</span>
                                         <span [hidden]="!reverse">▲</span>
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        [class.active]="order === 'rootUserCif'"
-                                        (click)="setOrder('rootUserCif')"
-                                    >
-                                        Cif người giới thiệu
-                                        <span [hidden]="reverse">▼</span>
-                                        <span [hidden]="!reverse">▲</span>
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        [class.active]="order === 'targetUserCif'"
-                                        (click)="setOrder('targetUserCif')"
-                                    >
-                                        Cif người được giới thiệu
-                                        <span [hidden]="reverse">▼</span>
-                                        <span [hidden]="!reverse">▲</span>
-                                    </th>
+                                    </th>  
+                                <th
+                                    scope="col"
+                                    [class.active]="order === 'rootUserCif'"
+                                    (click)="setOrder('rootUserCif')"
+                                >
+                                    Cif người giới thiệu
+                                    <span [hidden]="reverse">▼</span>
+                                    <span [hidden]="!reverse">▲</span>
+                                </th>
+                                <th
+                                scope="col"
+                                [class.active]="order === 'targetUserName'"
+                                (click)="setOrder('targetUserName')"
+                            >
+                                Tên người giới thiệu
+                                <span [hidden]="reverse">▼</span>
+                                <span [hidden]="!reverse">▲</span>
+                            </th>
                                     <th
                                         scope="col"
                                         [class.active]="order === 'targetUserCif'"
@@ -380,21 +412,22 @@
                                         <span [hidden]="reverse">▼</span>
                                         <span [hidden]="!reverse">▲</span>
                                     </th>
+                                    
+                                    
                                     <th
-                                        scope="col"
-                                        [class.active]="order === 'createdAt'"
-                                        (click)="setOrder('createdAt')"
-                                    >
-                                        Ngày tạo
-                                        <span [hidden]="reverse">▼</span>
-                                        <span [hidden]="!reverse">▲</span>
-                                    </th>
-                                    <th scope="col" [class.active]="order === 'createdBy'" (click)="setOrder('createdBy')">
-                                        Người tạo
-                                        <span [hidden]="reverse">▼</span>
-                                        <span [hidden]="!reverse">▲</span>
-                                    </th>
-
+                                    scope="col"
+                                    [class.active]="order === 'title'"
+                                    (click)="setOrder('title')"
+                                >
+                                    Cấu hình giới thiệu
+                                    <span [hidden]="reverse">▼</span>
+                                    <span [hidden]="!reverse">▲</span>
+                                </th>
+                                <th scope="col" [class.active]="order === 'createdBy'" (click)="setOrder('createdBy')">
+                                    Người tạo
+                                    <span [hidden]="reverse">▼</span>
+                                    <span [hidden]="!reverse">▲</span>
+                                </th>
 
 
                                 </tr>
@@ -405,7 +438,7 @@
                                     *ngIf="isProcessLoadNCC == 1"
                                     class="text-center"
                                 >
-                                    <td colspan="11">
+                                    <td colspan="12">
                                         <i
                                             class="fa fa-spin fa-spinner font-30"
                                         ></i>
@@ -428,32 +461,31 @@
                                 >
                                     <td scope="row">
                                         {{ i + 1 }}
-                                    </td>
-
-                                    <td>{{ findNameConfig(data?.referFriendConfigId).title }}</td>
-                                    <td>{{ data?.rootUserName }}</td>
+                                    </td> 
+                                    <td>{{ helper.formatFullDateTime(data?.createdAt) }}</td> 
+                                    <td>{{data?.brnHold}}</td> 
                                     <td>{{ data?.rootUserCif }}</td>
+                                    <td>{{ data?.rootUserName  }}</td>
                                     <td>{{ data?.targetUserCif }}</td>
+                                    <td>{{ data?.targetUserName}}</td>  
                                     <td>{{ data?.partnerCode }}</td>
                                     <td>{{ data?.promotionCode }}</td>
                                     <td>
                                         <span class="badge badge-success" *ngIf="data.status === '1'">Thành công</span>
                                         <span class="badge badge-danger" *ngIf="data.status === '0'">Thất bại</span>
-                                    </td>
-                                    <!-- <td>{{ helper.formatDate(data?.createdAt) }}</td> -->
-                                    <td>{{ helper.formatFullDateTime(data?.createdAt) }}</td>
+                                    </td> 
+                                    <td>{{ findNameConfig(data?.referFriendConfigId)?.title }}</td>
                                     <td>{{ data?.createdBy }}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-
+                <div class="row mt-3"> 
+                    <div class="col-md-12"> 
                         <ngb-pagination *ngIf="totalSearchNCC> 0 && totalSearchNCC > search.size" [collectionSize]="totalSearchNCC"
-                            [pageSize]="search.size" [(page)]="search.page" [maxSize]="10" [rotate]="true"
-                            [boundaryLinks]="true" (pageChange)="loadPageNCC($event)">
+                            [(page)]="search.page" [pageSize]="search.size"    [rotate]="true" [boundaryLinks]="true" 
+                            (pageChange)="loadPageNCC($event)">
                         </ngb-pagination>
                     </div>
                 </div>

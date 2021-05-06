@@ -17,10 +17,9 @@ export class ListComponent implements OnInit {
     constructor(private ncbService: NCBService, private excelService: ExcelService, public toastr: ToastrService, public helper: Helper) {
         this.loadDate();
     }
+    // note: đảo ngược root(Người giời thiệu) với taget(Người được giới thiệu), vì app đang bị sai. yêu cầu của BA 28/04/2021
     isProcessLoad: any = 0;
-    isProcessLoadNCC: any = 0;
     totalSearch: any = 0;
-    totalSearchNCC: any = 0;
     order = 'title';
     reverse = false;
     isShowCreate = false;
@@ -50,12 +49,14 @@ export class ListComponent implements OnInit {
         size: 10,
         page: 0,
     };
-
-
+    isProcessLoadNCC: any = 0;
+    totalSearchNCC: any = 0;
+    listPageSizeNCC: any = [10, 20, 30, 40, 50];
+    // search của của danh sách giới thiệu
     search: any = {
         rootUserCif: '',
         targetUserCif: '',
-        start: '',
+        start:  '',
         end: '',
         status: '',
         page: 0,
@@ -120,19 +121,24 @@ export class ListComponent implements OnInit {
           this.getListData(this.search_config);
           this.search_config.page = page;
         }
-      }
+    }
     tranferDate(params) {
         const tempMonth = (params.month < 10 ? '0' : '') + params.month;
         const tempDay = (params.day < 10 ? '0' : '') + params.day;
         return params.year + '/' + tempMonth + '/' + tempDay;
     }
     getListNCC(params) {
+        debugger;
         if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
             params.end = this.tranferDate(this.mRatesDateS_7);
             params.start = this.tranferDate(this.mRatesDateS);
+            params.page = this.search.page;
+            params.size = Number(this.search.size);
         }
         this.listDataNCC = [];
         this.isProcessLoadNCC = 1;
+
+        console.log(params);
         // xu ly
         this.ncbService
             .getListFriends(params)
@@ -157,159 +163,51 @@ export class ListComponent implements OnInit {
         if (page_number !== this.search.previous_page) {
           this.search.page = page_number;
           this.search.previous_page = page_number;
-          this.getListNCC(this.search);
+          this.getListNCC(this.onfilterVer2(this.search));
           this.search.page = page;
         }
       }
 
     keyDownFunction(event) {
-        if (event.keyCode === 13) {
-          this.onSearch(this.search);
-        }
+        return;
     }
     onSearch(payload) {
-        if (payload.rootUserCif !== '' && payload.targetUserCif !== '' && payload.status !== '') {
-            payload.page = 0;
-            this.getListNCC(payload);
-        } else if (payload.rootUserCif !== '' && payload.targetUserCif === '' && payload.status === '') {
-            payload.page = 0;
-            const temp: any = {
-                    rootUserCif: payload.rootUserCif,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                this.getListNCC(temp);
-        } else if (payload.rootUserCif === '' && payload.targetUserCif !== '' && payload.status === '') {
-            payload.page = 0;
-            const temps: any = {
-                    targetUserCif: payload.targetUserCif,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                this.getListNCC(temps);
-        } else if (payload.rootUserCif === '' && payload.targetUserCif === '' && payload.status !== '') {
-            payload.page = 0;
-            const tempsr: any = {
-                    status: payload.status,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                this.getListNCC(tempsr);
-        } else if (payload.rootUserCif !== '' && payload.targetUserCif === '' && payload.status !== '') {
-            payload.page = 0;
-            const tempsr: any = {
-                    rootCif: payload.rootUserCif,
-                    status: payload.status,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                this.getListNCC(tempsr);
-        } else if (payload.rootUserCif !== '' && payload.targetUserCif !== '' && payload.status === '') {
-            payload.page = 0;
-            const tempCT: any = {
-                    targetUserCif: payload.targetUserCif,
-                    rootUserCif: payload.rootUserCif,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                this.getListNCC(tempCT);
-        } else if (payload.rootUserCif === '' && payload.targetUserCif !== '' && payload.status !== '') {
-            payload.page = 0;
-            const tempCT: any = {
-                    targetUserCif: payload.targetUserCif,
-                    status: payload.status,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                this.getListNCC(tempCT);
-        } else {
-            this.getListNCC(this.listDataNCC);
-        }
-    }
-    onfilter(payload) {
-        if (payload.rootUserCif !== '' && payload.targetUserCif !== '' && payload.status !== '') {
-            payload.page = 0;
-           return payload;
-        } else if (payload.rootUserCif !== '' && payload.targetUserCif === '' && payload.status === '') {
-            payload.page = 0;
-            const temp: any = {
-                    rootUserCif: payload.rootUserCif,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                return temp;
-        } else if (payload.rootUserCif === '' && payload.targetUserCif !== '' && payload.status === '') {
-            payload.page = 0;
-            const temps: any = {
-                    targetUserCif: payload.targetUserCif,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                return temps;
-        } else if (payload.rootUserCif === '' && payload.targetUserCif === '' && payload.status !== '') {
-            payload.page = 0;
-            const tempsr: any = {
-                    status: payload.status,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                return tempsr;
-        } else if (payload.rootUserCif !== '' && payload.targetUserCif === '' && payload.status !== '') {
-            payload.page = 0;
-            const tempsr: any = {
-                    rootCif: payload.rootUserCif,
-                    status: payload.status,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                return tempsr;
-        } else if (payload.rootUserCif !== '' && payload.targetUserCif !== '' && payload.status === '') {
-            payload.page = 0;
-            const tempCT: any = {
-                    targetUserCif: payload.targetUserCif,
-                    rootUserCif: payload.rootUserCif,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                return tempCT;
-        } else if (payload.rootUserCif === '' && payload.targetUserCif !== '' && payload.status !== '') {
-            payload.page = 0;
-            const tempCT: any = {
-                    targetUserCif: payload.targetUserCif,
-                    status: payload.status,
-                    fromDate: payload.fromDate,
-                    toDate: payload.referParttoDatenerCode,
-                    page: payload.page,
-                    size: payload.size
-                };
-                return tempCT;
-        } else {
-            return this.listDataNCC;
-        }
-    }
+        this.search.rootUserCif = payload.rootUserCif;
+        this.search.targetUserCif = payload.targetUserCif;
+        this.search.status = payload.status;
+        this.search.page = 0;
+        this.search.size = payload.size;
 
+        this.getListNCC(this.onfilterVer2(payload));
+
+    }
+    onfilterVer2(payload) {
+        const temp: any = {
+            targetUserCif: '',
+            status: '',
+            rootUserCif: '',
+
+            fromDate: payload.start,
+            toDate: payload.end,
+            page: payload.page,
+            size: payload.size
+        };
+        if (payload.rootUserCif !== '') {
+            temp.rootUserCif = payload.rootUserCif;
+        }
+        if (payload.targetUserCif !== '') {
+            temp.targetUserCif = payload.targetUserCif;
+        }
+        if (payload.status !== '') {
+            temp.status = payload.status;
+        }
+        return temp;
+    }
+    changePageSize() {
+        this.search.page = 0;
+        this.getListNCC(this.onfilterVer2(this.search));
+
+    }
     deleteItem(event, index, id) {
         Swal.fire({
             title: 'Bạn có chắc chắn xoá?',
@@ -337,7 +235,7 @@ export class ListComponent implements OnInit {
     }
     getDataExcel(search): Promise<any> {
         const promise = new Promise((resolve, reject) => {
-          this.ncbService.getListFriends(this.onfilter(search))
+          this.ncbService.getListFriends(this.onfilterVer2(search))
               .then((result) => {
                   console.log(result);
                   const body = result.json().body;
@@ -354,7 +252,7 @@ export class ListComponent implements OnInit {
         this.arrExport = [];
         this.isProcessLoadExcel = 1;
         const search = Object.assign({start: null, end: null}, this.search);
-        search.size = 1000;
+        search.size = this.totalSearch;
         if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
           search.end = this.tranferDate(this.mRatesDateS_7);
           search.start = this.tranferDate(this.mRatesDateS);
@@ -363,9 +261,9 @@ export class ListComponent implements OnInit {
         search.end = this.tranferDate(this.mRatesDateS_7);
         search.start = this.tranferDate(this.mRatesDateS);
 
-        const page = Math.ceil(this.totalSearch / search.size);
-
-        for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {
+        const page = Math.ceil(this.totalSearchNCC / search.size);
+        console.log('So trang =>' + page);
+        for (let i = 1; i <= (page <= 0 ? 0 : page); i++) {
             search.page = i;
             await this.getDataExcel(search);
         }
@@ -373,17 +271,21 @@ export class ListComponent implements OnInit {
         search.page = 0;
         console.log(this.arrExport);
         const data = [];
+        console.log('DataCT=>' + this.listData);
         this.arrExport.forEach((element) => {
           data.push({
             'STT': element.id,
-            'ID chương trình': element.referFriendConfigId,
-            'Tên Người giới thiệu': element.rootUserName,
-            'CIF Người giới thiệu': element.rootUserCif,
-            'CIF Người được giới thiệu': element.targetUserCif,
+            'Ngày': element.createdAt,
+            'Company': element.brnHold,
+            'CIF Người được giới thiệu': element.rootUserCif,
+            'Tên người được giới thiệu': element.rootUserName,
+            'CIF người giới thiệu': element.targetUserCif,
+            'Tên người giới thiệu': element.targetUserName,
             'Mã đối tác': element.partnerCode,
             'Mã khuyến mại': element.promotionCode,
-            'Trạng Thái': (element.status === 0 ? 'Thành công' : 'Thất bại'),
-            'Ngày tạo': element.createdAt
+            'Trạng Thái': (element.status === 0 ? 'Thất bại' : 'Thành công'),
+            'ID chương trình': element.referFriendConfigId,
+            'Tên chương trình': this.findNameConfig(element.referFriendConfigId).title,
           });
         });
         this.excelService.exportAsExcelFile(data, 'list_registered_service');

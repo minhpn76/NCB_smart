@@ -2253,4 +2253,27 @@ export class NCBService {
             method: 'GET',
         });
     }
+    getlistPushContent (): Promise<any> {
+        const url = `${API_URL}/pushContent/getAll`;
+        return this.auth.authRequest({
+            url: url,
+            method: 'GET',
+        });
+    }
+    getdetailPushContent(serviceCode): Promise<any> {
+        const url = `${API_URL}/pushContent/detail`;
+        return this.auth.authRequest({
+            url: url,
+            Params: serviceCode,
+            method: 'GET',
+        });
+    }
+    updatePushContent(serviceCode): Promise<any> {
+        const url = `${API_URL}/pushContent/update`;
+        return this.auth.authRequest({
+            url: url,
+            Params: serviceCode,
+            method: 'GET',
+        });
+    }
 }

@@ -110,7 +110,7 @@ export class ReporttuitionComponent implements OnInit {
   }
   getBatchs() {
     this.listBatch = [];
-    this.listBatch.push({ batchCode: ''});
+    this.listBatch.push({ batchCode: '---Tất cả---'});
     this.ncbService.getlistHpBatch(null).then((result) => {
       const body = result.json().body.content;
       this.re_search.batchCode = body[0].batchCode.toString();
@@ -125,6 +125,8 @@ export class ReporttuitionComponent implements OnInit {
   }
   /*Câ[j nhat lại ham sert tai day] */
   onSearch(payload) {
+
+     if (payload.batchCode === '---Tất cả---') {payload.batchCode = ''; }
 
     this.listData = [];
     this.isProcessLoad = 1;
@@ -149,7 +151,7 @@ export class ReporttuitionComponent implements OnInit {
   getListData(params) {
     this.listData = [];
     this.isProcessLoad = 1;
-
+    if (params.batchCode === '---Tất cả---') {params.batchCode = ''; }
     // xu ly
     this.ncbService.getListHpTuition(params).then((result) => {
       setTimeout(() => {
@@ -176,37 +178,32 @@ export class ReporttuitionComponent implements OnInit {
 
   }
 
-  async getDataExport(params) {
-    this.isProcessLoadExcel = 1;
-    await this.ncbService.getListHpTuition(params).then((result) => {
-      setTimeout(() => {
-        const body = result.json().body;
-        if (body === null) { return; }
-        this.arrExport = body.content;
-        this.isProcessLoadExcel = 0;
-        console.log(this.arrExport);
-      }, 300);
-    }).catch(err => {
-      this.isProcessLoad = 0;
-      this.listData = [];
-      this.totalSearch = 0;
-      this.toastr.error('Không lấy được danh sách dữ liệu. Vui lòng liên hệ khối Công nghệ để được hỗ trợ', 'Lỗi hệ thống!');
+  getDataExcel(params): Promise<any> {
+    if (params.batchCode = 'Tất cả') {params.batchCode = ''; }
+    const promise = new Promise((resolve, reject) => {
+      this.ncbService.getListHpTuition(params).then((result) => {
+        setTimeout(() => {
+          this.arrExport = this.arrExport.concat(result.json().body.content);
+              resolve();
+        }, 300);
+      }).catch(err => {
+        resolve();
+      });
     });
+    return promise;
   }
-
   async exportDataHocPhi() {
     this.arrExport = [];
     this.isProcessLoadExcel = 1;
-    const search = Object.assign(this.re_search);
-    search.size =  this.totalSearch;
+    const search = Object.assign({}, this.re_search);
+    search.size = this.totalSearch;
 
     const page = Math.ceil(this.totalSearch / search.size);
 
-    for (let i = 0; i <= (page <= 0 ? 0 : page); i++) {
+    for (let i = 1; i <= (page <= 0 ? 0 : page); i++) {
         search.page = i;
-        await this.getDataExport(search);
+        await this.getDataExcel(search);
     }
-
     search.page = 0;
     console.log(this.arrExport);
     const data = [];
@@ -222,17 +219,16 @@ export class ReporttuitionComponent implements OnInit {
         'Mã học sinh': elements.studentCode,
         'Tên học sinh': elements.studentName,
         'Kỳ thanh toán': elements.term,
-
         'Mã Phí': elements.costCode,
         'Số tiền': elements.amount,
-        'Ngày gửi': elements.paymentDate,
-        'Người gửi': elements.paymentBy,
+        'Ngày đóng': elements.paymentDate,
+        'Người đóng': elements.paymentBy,
         'Trạng Thái': elements.status === 0 ? 'Chưa đóng' : (elements.status === 1 ? 'Đã đóng' : 'Đang xử lý'),
-        'Ngày tạo': elements.createdAt
+
       });
     });
-    this.excelService.exportAsExcelFile(data, 'DSHP');
-    this.isProcessLoadExcel = 0;
+      this.excelService.exportAsExcelFile(data, 'DSHP');
+      this.isProcessLoadExcel = 0;
     return;
   }
 }
