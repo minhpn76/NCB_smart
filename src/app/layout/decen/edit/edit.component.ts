@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -111,6 +112,17 @@ export class EditComponent implements OnInit {
         if (this.obj.description.indexOf('[') > -1) {
           if (this.obj.description.indexOf('CRONJOB') > -1) {
             this.listRoles = JSON.parse(this.obj.description) ? JSON.parse(this.obj.description) : '';
+
+            if (this.listRoles.length !== AppSettings.listRoles.length) {
+              debugger;
+              AppSettings.listRoles.forEach(element => {
+                if (this.listRoles.find(e => e.code === element.code) === undefined) {
+                  this.listRoles.push(element);
+                }
+              });
+            }
+
+
           } else {
             const array_temp = JSON.parse(this.obj.description);
             array_temp.push({
@@ -153,6 +165,8 @@ export class EditComponent implements OnInit {
             setTimeout(() => {this.router.navigateByUrl('/decen'); }, 500);
             resolve();
           }
+        } else if (result.status === 403) {
+          this.toastr.error(result.message, 'Vui lòng đăng nhập lại!');
         } else {
           this.toastr.error(result.message, 'Thất bại!');
           resolve();

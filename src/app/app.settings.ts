@@ -324,6 +324,17 @@ export class AppSettings {
             menu: 'KHACH_HANG',
         },
         {
+            code: 'NOTIFY_SODU',
+            name: 'Cấu hình TB số dư',
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            isA: false,
+            menu: 'KHACH_HANG',
+        },
+        {
             code: 'P_PROMO',
             name: 'DTTG ưu đãi',
             isAll: false,

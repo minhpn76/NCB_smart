@@ -187,13 +187,14 @@
                 <div class="row mt-3">
                     <div class="col-md-6">
                         <div class="form-group row">
+                        
                             <label for="search" class="col-sm-4 col-form-label"
                                 >Người giới thiệu</label
                             >
                             <div class="col-sm-6">
                                 <input
                                     class="form-control col-lg-12"
-                                    [(ngModel)]="search.rootUserCif"
+                                    [(ngModel)]="search.targetUserCif"
                                     (keydown)="keyDownFunction($event)"
                                     itrim
                                     type="text"
@@ -211,7 +212,7 @@
                             <div class="col-sm-6">
                                 <input
                                     class="form-control col-lg-12"
-                                    [(ngModel)]="search.targetUserCif"
+                                    [(ngModel)]="search.rootUserCif"
                                     (keydown)="keyDownFunction($event)"
                                     itrim
                                     type="text"
@@ -423,7 +424,7 @@
                                     <span [hidden]="reverse">▼</span>
                                     <span [hidden]="!reverse">▲</span>
                                 </th>
-                                <th scope="col" [class.active]="order === 'createdBy'" (click)="setOrder('createdBy')">
+                                <th hidden scope="col" [class.active]="order === 'createdBy'" (click)="setOrder('createdBy')">
                                     Người tạo
                                     <span [hidden]="reverse">▼</span>
                                     <span [hidden]="!reverse">▲</span>
@@ -475,7 +476,7 @@
                                         <span class="badge badge-danger" *ngIf="data.status === '0'">Thất bại</span>
                                     </td> 
                                     <td>{{ findNameConfig(data?.referFriendConfigId)?.title }}</td>
-                                    <td>{{ data?.createdBy }}</td>
+                                    <td hidden>{{ data?.createdBy }}</td>
                                 </tr>
                             </tbody>
                         </table>

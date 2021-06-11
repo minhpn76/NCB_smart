@@ -1,6 +1,6 @@
 {
   "name": "NCB_smart",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "license": "Apache",
   "scripts": {
     "ng": "ng",

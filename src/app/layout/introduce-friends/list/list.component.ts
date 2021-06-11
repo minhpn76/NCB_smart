@@ -128,7 +128,6 @@ export class ListComponent implements OnInit {
         return params.year + '/' + tempMonth + '/' + tempDay;
     }
     getListNCC(params) {
-        debugger;
         if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
             params.end = this.tranferDate(this.mRatesDateS_7);
             params.start = this.tranferDate(this.mRatesDateS);
@@ -186,9 +185,8 @@ export class ListComponent implements OnInit {
             targetUserCif: '',
             status: '',
             rootUserCif: '',
-
-            fromDate: payload.start,
-            toDate: payload.end,
+            start: payload.start,
+            end: payload.end,
             page: payload.page,
             size: payload.size
         };
@@ -233,9 +231,9 @@ export class ListComponent implements OnInit {
             }
         });
     }
-    getDataExcel(search): Promise<any> {
-        const promise = new Promise((resolve, reject) => {
-          this.ncbService.getListFriends(this.onfilterVer2(search))
+    async getDataExcel(search): Promise<any> {
+        const promise = await new Promise((resolve, reject) =>  {
+              this.ncbService.getExportFriends(this.onfilterVer2(search))
               .then((result) => {
                   console.log(result);
                   const body = result.json().body;
@@ -252,7 +250,7 @@ export class ListComponent implements OnInit {
         this.arrExport = [];
         this.isProcessLoadExcel = 1;
         const search = Object.assign({start: null, end: null}, this.search);
-        search.size = this.totalSearch;
+
         if (this.mRatesDateS_7 !== undefined && this.mRatesDateS !== undefined) {
           search.end = this.tranferDate(this.mRatesDateS_7);
           search.start = this.tranferDate(this.mRatesDateS);
@@ -260,22 +258,19 @@ export class ListComponent implements OnInit {
         }
         search.end = this.tranferDate(this.mRatesDateS_7);
         search.start = this.tranferDate(this.mRatesDateS);
-
-        const page = Math.ceil(this.totalSearchNCC / search.size);
-        console.log('So trang =>' + page);
-        for (let i = 1; i <= (page <= 0 ? 0 : page); i++) {
-            search.page = i;
-            await this.getDataExcel(search);
-        }
-
         search.page = 0;
+        console.log('So trang =>' + search.page );
+        search.size = this.totalSearchNCC;
+        await this.getDataExcel(search);
         console.log(this.arrExport);
         const data = [];
         console.log('DataCT=>' + this.listData);
+         let istt = 0;
         this.arrExport.forEach((element) => {
+            istt = istt + 1;
           data.push({
-            'STT': element.id,
-            'Ngày': element.createdAt,
+            'STT':  istt,
+            'Ngày': this.helper.formatFullDateTime(element.createdAt , 1 ),
             'Company': element.brnHold,
             'CIF Người được giới thiệu': element.rootUserCif,
             'Tên người được giới thiệu': element.rootUserName,
@@ -285,7 +280,8 @@ export class ListComponent implements OnInit {
             'Mã khuyến mại': element.promotionCode,
             'Trạng Thái': (element.status === 0 ? 'Thất bại' : 'Thành công'),
             'ID chương trình': element.referFriendConfigId,
-            'Tên chương trình': this.findNameConfig(element.referFriendConfigId).title,
+            // tslint:disable-next-line:max-line-length
+            'Tên chương trình': this.findNameConfig(element.referFriendConfigId) == null ? '' : this.findNameConfig(element.referFriendConfigId).title,
           });
         });
         this.excelService.exportAsExcelFile(data, 'list_registered_service');

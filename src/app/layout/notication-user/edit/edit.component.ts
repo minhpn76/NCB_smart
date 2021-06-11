@@ -215,7 +215,7 @@ export class EditComponent implements OnInit {
     isLoading: Boolean = false;
 
     CanlendarDate = '04/08/2015';
-
+    dodaiNoidung: any = 0;
     public onReady(editor) {
         editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
             return new UploadAdapter(loader);
@@ -233,12 +233,7 @@ export class EditComponent implements OnInit {
         });
         const isNumber = /^\d+$/;
         this.dataForm = this.formBuilder.group({
-            title: [
-                '',
-                Validators.compose([
-                    Validators.required,
-                ]),
-            ],
+            title: [''],
             content: [
                 '',
                 Validators.compose([
@@ -288,7 +283,7 @@ export class EditComponent implements OnInit {
                 repeatMonth: null,
             });
             // Conditional required validation reactive form
-            if (['','0', '1'].includes(value)) {
+            if (['', '0', '1'].includes(value)) {
                 this.Form['repeatValue'].setValidators([Validators.required]);
             } else {
                 this.Form['repeatValue'].clearValidators();
@@ -329,11 +324,11 @@ export class EditComponent implements OnInit {
             // Conditional required validation reactive form
             if (['09'].includes(value)) {
                 this.Form['repeatDate'].clearValidators();
-            } else if(value != null) {
+            } else if (value != null) {
                 this.Form['repeatDate'].setValidators([Validators.required, Validators.pattern(isNumber)]);
             }
             this.Form['repeatDate'].updateValueAndValidity();
-        })
+        });
     }
     // modal Danh sách hiện có
     openModal(content) {
@@ -415,6 +410,9 @@ export class EditComponent implements OnInit {
         }
         Promise.all(promise)
             .then((success) => {
+                if (this.filelist.length > 0) {
+                    this.dataForm.value.user_notifications = this.filelist;
+                }
                 const payload = {
                     title: this.dataForm.value.title,
                     content: this.dataForm.value.content,
@@ -427,9 +425,7 @@ export class EditComponent implements OnInit {
                     repeatValue: this.dataForm.value.repeatValue,
                     objectUserType: this.dataForm.value.objectUserType,
                     status: this.dataForm.value.status,
-                    userNotifications: this.dataForm.value.user_notifications
-                        ? this.dataForm.value.user_notifications
-                        : this.filelist,
+                    userNotifications: this.dataForm.value.user_notifications ,
                     type: '1',
                 };
                 console.log('payload', payload.content);
@@ -447,6 +443,15 @@ export class EditComponent implements OnInit {
                 if (payload.repeatType === '4') {
                     payload.repeatValue = `${payload.repeatMonth}-${payload.repeatDate}T${payload.repeatTime}`;
                 }
+                console.log(payload.userNotifications);
+                if (payload.objectUserType === '1' && payload.userNotifications.length <= 0) {
+                    this.toastr.error(
+                        'File dữ liệu giới hạn không được để trống',
+                        'Thất bại!'
+                    );
+                    this.isLoading = false;
+                    return;
+                }
 
                 this.ncbService
                     .updateNoticationUser(this.itemId, payload)
@@ -461,10 +466,10 @@ export class EditComponent implements OnInit {
                                     this.router.navigateByUrl('/notifications');
                                 }, 500);
                             } else if (result.json().code === '909') {
-                                this.toastr.error(
-                                    'Dữ liệu đã tồn tại',
-                                    'Thất bại!'
+                                this.toastr.error( 'Dữ liệu đã tồn tại',  'Thất bại!'
                                 );
+                            } else if (result.json().code === '1001') {
+                                this.toastr.error( 'UserName:' + result.json().description + ' không tồn tại!',  'Thất bại!');
                             } else {
                                 this.toastr.error(
                                     'Thêm mới thất bại',
@@ -515,11 +520,15 @@ export class EditComponent implements OnInit {
                     raw: true,
                 });
                 this.filelist = arraylist;
+                console.log(this.filelist);
                 this.dataForm.value.user_coupon = arraylist;
             };
             this.temp.loading = false;
             this.closeModal();
         }
+    }
+    couttext() {
+        this.dodaiNoidung =  this.dataForm.value.content.length;
     }
     getItem(params) {
         this.ncbService
@@ -561,7 +570,7 @@ export class EditComponent implements OnInit {
                 this.toastr.error('Không lấy được dữ liệu', 'Thất bại');
             });
     }
-    
+
     public addEmoji(e) {
         this.dataForm.patchValue({
             contentWOApp: this.dataForm.getRawValue().contentWOApp += e.emoji.native,

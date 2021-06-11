@@ -1959,6 +1959,14 @@ export class NCBService {
             method: 'GET',
         });
     }
+    getExportFriends(params): Promise<any> {
+        const url = `${API_URL}/refer-friend/exportfriends`;
+        return this.auth.authRequest({
+            url: url,
+            params: params,
+            method: 'GET',
+        });
+    }
     // referal code partner
     getListReferalCodePartner(params): Promise<any> {
         const url = `${API_URL}/referral-code-partners`;
@@ -2261,19 +2269,19 @@ export class NCBService {
         });
     }
     getdetailPushContent(serviceCode): Promise<any> {
-        const url = `${API_URL}/pushContent/detail`;
+        const url = `${API_URL}/pushContent/detail?serviceCode=${serviceCode}`;
         return this.auth.authRequest({
             url: url,
-            Params: serviceCode,
             method: 'GET',
         });
     }
-    updatePushContent(serviceCode): Promise<any> {
+    updatePushContent(body): Promise<any> {
         const url = `${API_URL}/pushContent/update`;
         return this.auth.authRequest({
             url: url,
-            Params: serviceCode,
-            method: 'GET',
+            data: body,
+            method: 'PUT',
+            application: true,
         });
     }
 }

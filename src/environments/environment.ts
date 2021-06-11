@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-   apiUrl: 'https://cmsmobile.ncb-bank.vn:8443/NCB-smart'
+  //  apiUrl: 'https://cmsmobile.ncb-bank.vn:8443/NCB-smart'
 };
 
 /*

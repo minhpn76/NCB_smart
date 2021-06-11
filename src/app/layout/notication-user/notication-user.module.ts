@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -6,6 +7,8 @@ import { ListComponent } from './list/list.component';
 import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
 import { PageHeaderModule } from '../../shared';
+import { CauhinhsoduEditComponent } from './cauhinhsodu-edit/cauhinhsodu-edit.component';
+import { CauhinhsoduComponent } from './cauhinhsodu/cauhinhsodu.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -20,7 +23,7 @@ import { EmojiService } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @NgModule({
-  declarations: [ListComponent, CreateComponent, EditComponent],
+  declarations: [ListComponent, CreateComponent, EditComponent, CauhinhsoduEditComponent, CauhinhsoduComponent],
   imports: [
     CommonModule, NotificationUserRoutingModule, PageHeaderModule, NgbModule,
     FormsModule,

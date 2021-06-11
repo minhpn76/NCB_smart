@@ -229,19 +229,14 @@ export class CreateComponent implements OnInit {
     listNotifications: any = [...listNotify];
 
     isLoading: Boolean = false;
-
+    dodaiNoidung: any = 0;
     _day: any = '';
     _time: any = '';
     _month: any = '';
     ngOnInit() {
         const isNumber = /^\d+$/;
         this.dataForm = this.formBuilder.group({
-            title: [
-                '',
-                Validators.compose([
-                    Validators.required,
-                ]),
-            ],
+            title: [''],
             content: [
                 '',
                 Validators.compose([
@@ -335,8 +330,9 @@ export class CreateComponent implements OnInit {
                 this.Form['repeatDate'].setValidators([Validators.required, Validators.pattern(isNumber)]);
             }
             this.Form['repeatDate'].updateValueAndValidity();
-        })
+        });
     }
+
 
     public openModal(content) {
         this.modalOp = this.modalService.open(content);
@@ -489,7 +485,17 @@ export class CreateComponent implements OnInit {
                     payload.repeatValue = `${payload.repeatMonth}-${payload.repeatDate}T${payload.repeatTime}`;
                 }
 
+
                 // trả về link uploadimg ckeditor
+                console.log('check' + payload.userNotifications);
+                if (payload.objectUserType === '1' && payload.userNotifications.length <= 0) {
+                    this.toastr.error(
+                        'File dữ liệu giới hạn không được để trống',
+                        'Thất bại!'
+                    );
+                    this.isLoading = false;
+                    return;
+                }
 
                 this.ncbService
                     .createNoticationUser(payload)
@@ -590,7 +596,9 @@ export class CreateComponent implements OnInit {
             this.closeModal();
         }
     }
-
+    couttext() {
+        this.dodaiNoidung =  this.dataForm.value.content.length;
+    }
     public addEmoji(e) {
         this.dataForm.patchValue({
             contentWOApp: this.dataForm.getRawValue().contentWOApp += e.emoji.native,

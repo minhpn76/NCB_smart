@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { NCBService } from '../../../services/ncb.service';
 import { ToastrService } from 'ngx-toastr';
 import { OrderPipe } from 'ngx-order-pipe';
+import { Helper } from '../../../helper';
 
 @Component({
   selector: 'app-cauhinhsodu',
   templateUrl: './cauhinhsodu.component.html',
-  styleUrls: ['./cauhinhsodu.component.scss']
+  styleUrls: ['./cauhinhsodu.component.scss'],
+  providers: [NCBService, Helper],
 })
 export class CauhinhsoduComponent implements OnInit {
 
@@ -22,6 +24,7 @@ export class CauhinhsoduComponent implements OnInit {
   totalSearch: any = 0;
 
   ngOnInit() {
+    this.onSearch();
   }
   onSearch() {
     this.listData = [];

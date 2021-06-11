@@ -1,3 +1,4 @@
+import { from } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HttpModule} from '@angular/http';
@@ -17,6 +18,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 
+import { SecureTrustService } from './secure-trust.service';
 
 @NgModule({
     imports: [
@@ -37,6 +39,7 @@ import { AuthService } from './services/auth.service';
         ItrimDirective,
         InunberDirective,
         IemailDirective,
+        SecureTrustService
     ],
     providers: [
         AuthGuard, AuthService

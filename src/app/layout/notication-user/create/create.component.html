@@ -9,19 +9,23 @@
                     <label for="create" class="col-sm-5 col-form-label">Tên thông báo (<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <input formControlName="title" class="form-control col-lg-12" placeholder="Tên thông báo" [ngClass]="{'is-invalid':submitted && Form.title?.errors}"/>
-                        <div *ngIf="submitted && Form?.title?.errors" class="invalid-feedback">
-                            <div *ngIf="Form.title?.errors?.required">Tên thông báo là bắt buộc</div>
-                        </div>
+                       
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="search" class="col-sm-5 col-form-label">Nội dung trong ứng dụng (<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
-                        <ckeditor style="object-fit: cover" placeholder="Nội dung..." [config]="ckConfig" formControlName="content" [ngClass]="{'is-invalid-ckeditor':submitted && Form.content?.errors}"></ckeditor>
+                        <ckeditor style="object-fit: cover" maxlength="3000" (ngModelChange)="couttext()" placeholder="Nội dung..." [config]="ckConfig" formControlName="content" [ngClass]="{'is-invalid-ckeditor':submitted && Form.content?.errors}"></ckeditor>
                         <div *ngIf="submitted && Form.content.errors" class="invalid-feedback">
                             <div *ngIf="Form.content?.errors?.required">Nội dung trong ứng dụng là bắt buộc</div>
                             <div *ngIf="Form.content.hasError('whitespace')">Nội dung trong ứng dụng không hợp lệ</div>
+                            <div *ngIf="Form.content.errors.maxlength">
+                                Nội dung trong ứng dụng  dài hơn 3000 
+                            </div> 
+                        </div>
+                        <div>
+                            Nội dung dài {{dodaiNoidung}} /3000 kí tự
                         </div>
                     </div>
                 </div>
@@ -30,12 +34,15 @@
                     <label for="search" class="col-sm-5 col-form-label">Nội dung ngoài ứng dụng (<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
                         <div>
-                            <textarea formControlName="contentWOApp" rows="6" class="w-100 form-control" [ngClass]="{'is-invalid':submitted && Form.contentWOApp?.errors}" maxlength="1024"></textarea>
+                            <textarea formControlName="contentWOApp" maxlength="1000" rows="6" class="w-100 form-control" [ngClass]="{'is-invalid':submitted && Form.contentWOApp?.errors}" maxlength="1024"></textarea>
                             <i class="fa fa-smile-o smile-icon" [autoClose]="'outside'" [ngbPopover]="popContent" popoverClass="d-table"></i>
                         </div>
                         <div *ngIf="submitted && Form.contentWOApp.errors" class="invalid-feedback">
                             <div *ngIf="Form.contentWOApp?.errors?.required">Nội dung ngoài ứng dụng là bắt buộc</div>
                             <div *ngIf="Form.contentWOApp.hasError('whitespace')">Nội dung ngoài ứng dụng không hợp lệ</div>
+                            <div *ngIf="Form.contentWOApp.errors.maxlength">
+                                Nội dung ngoài ứng dụng  dài hơn 1000 kí tự
+                              </div>
                         </div>
                         <ng-template #popContent>
                             <emoji-mart (emojiClick)="addEmoji($event)"></emoji-mart>
