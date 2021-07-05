@@ -6,7 +6,7 @@
     </app-page-header>
     <div class="row">
         <div class="col-md-8">
-            <form [formGroup]="provinceForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="bankForm" (ngSubmit)="onSubmit()">
                 <div class="form-group row">
                     <label for="search" class="col-sm-4 col-form-label">Mã ngân hàng chuyển khoản(<span class="text-danger">*</span>):</label>
                     <div class="col-sm-7">
@@ -82,6 +82,41 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Hình ảnh(<span class="text-danger">*</span>):</label>
+                    <div class="col-sm-8">
+                        <div class="custom-file">
+                            <input
+                                type="file"
+                                class="custom-file-input"
+                                id="inputGroupFile01"
+                                placeholder="Hình ảnh"
+                                type="file"
+                                name="img"
+                                accept="image/*"
+                                (change)="handleFileInput($event.target.files, $event)"
+                                aria-describedby="inputGroupFileAddon01"
+                            />
+                            <label *ngIf="tempNameImg === ''" class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            <label *ngIf="tempNameImg !== ''" class="custom-file-label" for="inputGroupFile01">{{tempNameImg}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="search" class="col-sm-4 col-form-label">Link logo</label>
+                    <div class="col-sm-8">
+                        <input
+                            formControlName="url_img"
+                            class="form-control col-lg-12"
+                            placeholder="Link logo"
+                            [ngClass]="{ 'is-invalid': submitted && Form.url_img.errors }"
+                        />
+                        <div *ngIf="submitted && Form.img_url.errors" class="invalid-feedback">
+                            <div *ngIf="Form.url_img.errors.required">Link logo là bắt buộc</div>
+                            <div *ngIf="Form.url_img.hasError('whitespace')">Link logo khộng hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-7">
                         <button class="btn btn-success mr-3"><i class="fa
@@ -90,7 +125,12 @@
                                 class="fa fa-close"></i>&nbsp;Huỷ</button>
                     </div>
                 </div>
+               
             </form>
+        </div>
+        <div class="col-md-4">
+            <img style="border: 1px dashed #004e96;padding: 5px;" *ngIf="tempUrl === ''" src="assets/images/preiview-img.jpg" height=200 width=200/>
+            <img style="border: 1px dashed #004e96;padding: 5px;"  *ngIf="tempUrl !== ''" [src]="tempUrl" height="200" width=200>
         </div>
     </div>
 </div>

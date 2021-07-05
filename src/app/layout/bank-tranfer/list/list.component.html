@@ -71,6 +71,9 @@
                         <span [hidden]="reverse">▼</span>
                         <span [hidden]="!reverse">▲</span>
                     </th>
+                    <th scope="col">
+                       Logo
+                    </th>
                     <th scope="col"
                         [class.active]="order === 'status'"
                         (click)="setOrder('status')"
@@ -97,22 +100,25 @@
                         </th>
                         <td>{{data?.bankCode}}</td>
                         <td>{{data?.bankName}}</td>
+                        <td> 
+                            <img src="{{data?.url_img}}" width="50px" height="50px" alt="{{data?.bankName}}" >
+                        </td>
                         <td>
-                            <span *ngIf="data.status == 'A'" class="badge badge-success">Active</span>
-                            <span *ngIf="data.status == 'D'" class="badge badge-danger">Deactive</span>
-
-
+                            <span *ngIf="data.status == 'W'" class="badge badge-warning">Chờ duyệt</span>
+                            <span *ngIf="data.status == 'A'" class="badge badge-success">Hoạt động(đã duyệt)</span>
+                            <span *ngIf="data.status == 'D'" class="badge badge-danger">Đã xóa(hủy duyệt)</span>
+ 
                         </td>
                         <td>
                             <a data-toggle="tool-tip" title="Chỉnh sửa" class="mr2- cursor-pointer text-blue" routerLink="/bank-tranfer/edit/{{data.bankCode}}">
                                 <i class="fa fa-edit"></i>
                             </a>
 
-                            <span data-toggle="tool-tip" title="Thay đổi trạng thái" class="mr-2 cursor-pointer text-warning"  *ngIf="data.status == 'A'">
+                            <span data-toggle="tool-tip" title="Hủy duyệt, ngừng hoạt động" class="mr-2 cursor-pointer text-warning"  *ngIf="data.status == 'A'">
                                 <i class="fa fa-recycle" (click)="deActiveItem(1, i, data.bankCode)"></i>
                             </span>
-                            <span data-toggle="tool-tip" title="Thay đổi trạng thái" class="mr-2 cursor-pointer text-warning"  *ngIf="data.status == 'D'">
-                                <i class="fa fa-recycle" (click)="updateActiveItem(1, i, data)"></i>
+                            <span data-toggle="tool-tip" title="Phê duyệt" class="mr-2 cursor-pointer text-warning"  *ngIf="data.status == 'W'">
+                                <i class="fa fa-recycle" (click)="ActiveItem(1, i, data.bankCode)"></i>
                             </span>
                             <span data-toggle="tool-tip" title="Xóa" class="mr-2 cursor-pointer text-danger">
                                 <i class="fa fa-trash" (click)="deleteItem(1, i, data.bankCode)"></i>

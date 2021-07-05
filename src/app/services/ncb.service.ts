@@ -163,6 +163,14 @@ export class NCBService {
             method: 'DELETE',
         });
     }
+    ActiveBankTranfer(params): Promise<any> {
+        const url = `${API_URL}/bank-transfer/Active`;
+        return this.auth.authRequest({
+            url: url,
+            params: params,
+            method: 'DELETE',
+        });
+    }
     deActiveBankTranfer(params): Promise<any> {
         const url = `${API_URL}/bank-transfer/deActive`;
         return this.auth.authRequest({
@@ -2282,6 +2290,16 @@ export class NCBService {
             data: body,
             method: 'PUT',
             application: true,
+        });
+    }
+    uploadFileLogoBank(file): Promise<any> {
+        const formData: FormData = new FormData();
+        formData.append('img', file, file.name);
+        const url = `${API_URL}/img/uploadFileLogoBank`;
+        return this.auth.authRequestFile({
+            url: url,
+            data: formData,
+            method: 'POST',
         });
     }
 }

@@ -37,11 +37,15 @@ export class ListComponent implements OnInit {
       code: '',
     },
     {
-      name: 'Active',
+      name: 'Chờ duyệt',
+      code: 'W',
+    },
+    {
+      name: 'Hoạt động, đã duyệt',
       code: 'A',
     },
     {
-      name: 'Deactive',
+      name: 'Xóa, hủy duyệt',
       code: 'D',
     }
   ];
@@ -155,6 +159,43 @@ export class ListComponent implements OnInit {
             }
           } else {
             this.toastr.error('Deactive thất bại', 'Lỗi hệ thống!');
+          }
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Huỷ bỏ',
+          'Dữ liệu được bảo toàn :)',
+          'error'
+        );
+      }
+    });
+  }
+  ActiveItem(event, index, code) {
+    Swal.fire({
+      title: 'Bạn có chắc chắn phê duyệt Ngân Hàng này?',
+      text: 'Dữ liệu đã thay đổi trạng thái vẫn có thể sửa lại',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Đồng ý',
+      cancelButtonText: 'Không, trở lại'
+    }).then((result) => {
+      if (result.value) {
+        // tslint:disable-next-line:no-shadowed-variable
+        this.ncbService.ActiveBankTranfer({ bankCode: code }).then((result) => {
+          if (result.status === 200) {
+            if (result.json().code === '00') {
+              Swal.fire(
+                'Đã phê duyệt!',
+                'Dữ liệu đã thay đổi.',
+                'success'
+              );
+              this.re_search.page = 0;
+              this.onSearch(this.re_search);
+            } else {
+              this.toastr.error('Phê duyệt thất bại', 'Lỗi hệ thống!');
+            }
+          } else {
+            this.toastr.error('Phê duyệt thất bại', 'Lỗi hệ thống!');
           }
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {

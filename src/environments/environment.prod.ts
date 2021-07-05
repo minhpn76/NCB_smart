@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-   apiUrl: 'http://localhost:8900/NCB-smart'
+   apiUrl: 'http://10.1.62.31:443/NCB-smart'
 };
