@@ -1,0 +1,104 @@
+<div></div>
+<app-page-header [heading]="'Số đẹp'" [heading_second]="'thêm mới mã phí số đẹp'"[url_heading]="'/nice-ac-fee'"> </app-page-header>
+<div class="row">
+    <div class="col-md-10" style="margin:0px auto">
+        <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+            <div class="form-group row">
+                <label for="code" class="col-sm-4 col-form-label"> Loại tài khoản(<span class="text-danger">*</span>):</label>
+                <div class="col-sm-6">
+                    <input
+                        formControlName="code"
+                        class="form-control col-lg-12"
+                        placeholder="Loại tài khoản"
+                        
+                        [ngClass]="{ 'is-invalid': submitted && Form.code.errors }"
+                    />
+                    <div *ngIf="submitted && Form.costCode.errors" class="invalid-feedback">
+                        <div *ngIf="Form.code.hasError('whitespace')"> Loại tài khoản  không hợp lệ</div>
+                        <div *ngIf="Form.code.errors.required"> Loại tài khoản là bắt buộc</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label"> Tên loại tài khoản(<span class="text-danger">*</span>):</label>
+                <div class="col-sm-6">
+                    <input
+                        formControlName="description"
+                        class="form-control col-lg-12" 
+                        placeholder="Tên loại tài khoản"
+                        [ngClass]="{ 'is-invalid': submitted && Form.description.errors }"
+                    />
+                    <div *ngIf="submitted && Form.description.errors" class="invalid-feedback">
+                        <div *ngIf="Form.description.hasError('whitespace')"> Tên loại tài khoản không hợp lệ</div>
+                        <div *ngIf="Form.description.errors.required"> Tên loại tài khoản là bắt buộc</div>
+                    </div>
+                </div>
+            </div> 
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label"> Mã phí(<span class="text-danger">*</span>):</label>
+                <div class="col-sm-6">
+                    <input
+                      formControlName="chg_id" 
+                        class="form-control col-lg-12"
+                      
+                        placeholder="Mã phí"
+                        [ngClass]="{ 'is-invalid': submitted && Form.chg_id.errors }"
+                    />
+                    <div *ngIf="submitted && Form.chg_id.errors" class="invalid-feedback">
+                        <div *ngIf="Form.chg_id.hasError('whitespace')"> Mã phí không hợp lệ</div>
+                        <div *ngIf="Form.chg_id.errors.required">  Mã phí là bắt buộc</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Số tiền(<span class="text-danger">*</span>):</label>
+                <div class="col-sm-6">
+                    <input
+                        formControlName="chg_amt"
+                        class="form-control col-lg-12"
+                        pattern="[0-9]*"
+                        placeholder="Số tiền"
+                        [ngClass]="{ 'is-invalid': submitted && Form.chg_amt.errors }"
+                    />
+                    <div *ngIf="submitted && Form.chg_amt.errors" class="invalid-feedback">
+                        <div *ngIf="Form.chg_amt.hasError('whitespace')">	Số tiền không hợp lệ</div>
+                        <div *ngIf="Form.chg_amt.errors.required"> 	Số tiền là bắt buộc</div>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label"> Loại tiền(<span class="text-danger">*</span>):</label>
+                <div class="col-sm-6">
+                    <input
+                        formControlName="ccy"
+                        class="form-control col-lg-12"
+                        
+                        placeholder="Tên thanh toán"
+                        [ngClass]="{ 'is-invalid': submitted && Form.ccy.errors }"
+                    />
+                    <div *ngIf="submitted && Form.ccy.errors" class="invalid-feedback">
+                        <div *ngIf="Form.ccy.hasError('whitespace')"> Loại tiền không hợp lệ</div>
+                        <div *ngIf="Form.ccy.errors.required"> Loại tiền là bắt buộc</div>
+                    </div>
+                </div>
+            </div>
+          
+            <div class="form-group row">
+                <label for="search" class="col-sm-4 col-form-label">Trạng thái:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" aria-readonly="true" formControlName="status" name="status">
+                        <option *ngFor="let status of listStatus" [value]="status.code" selected="selected">{{ status.name }}</option>
+                    </select>
+                </div>
+            </div> 
+            <div class="form-group row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-7">
+                    <button class="btn btn-success mr-3"><i class="fa fa-save"></i>&nbsp;Lưu lại</button>
+                    <button class="btn btn-light" (click)="resetForm()"><i class="fa fa-close"></i>&nbsp;Huỷ</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

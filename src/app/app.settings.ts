@@ -180,6 +180,17 @@ export class AppSettings {
             menu: 'THAM_SO',
         },
         {
+            code: 'NICEACFEE_APP',
+            name: 'Mã phí số đẹp',
+            isAll: false,
+            isC: false,
+            isR: false,
+            isU: false,
+            isD: false,
+            isA: false,
+            menu: 'THAM_SO',
+        },
+        {
             code: 'DIEU_KHOAN',
             name: 'DK sử dụng',
             isAll: false,

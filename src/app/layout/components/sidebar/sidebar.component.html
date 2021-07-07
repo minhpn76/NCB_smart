@@ -262,6 +262,14 @@
                             <span>Version App lzi</span>
                         </a>
                     </li>
+                    <li *ngIf="thamso.code === 'NICEACFEE_APP' && thamso.isAll ===
+                        true">
+                        <a [routerLink]="['/nice-ac-fee']" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item">
+                            <i class="fas fa-mobile"></i>&nbsp;
+                            <span>Mã phí số đẹp</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
         </div>

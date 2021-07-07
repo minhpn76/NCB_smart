@@ -2302,4 +2302,43 @@ export class NCBService {
             method: 'POST',
         });
     }
+    // ma phi tai khoan so dep
+
+     getListNiceAcfee(params): Promise<any> {
+        const url = `${API_URL}/niceaccout/get-niceaccout`;
+        return this.auth.authRequest({
+            url: url,
+            params: params,
+            method: 'GET',
+        });
+    }
+    createNiceAcfee(body): Promise<any> {
+        const url = `${API_URL}/niceaccout/save-niceaccout`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: 'POST',
+            application: true,
+        });
+    }
+    getdetailtNiceAcfee(code: any): Promise<any> {
+        const url = `${API_URL}/niceaccout/detail-niceaccout?idnice=${code}`;
+        return this.auth.authRequest({ url: url, method: 'GET' });
+    }
+    updateNiceAcfee(body: any): Promise<any> {
+        const url = `${API_URL}/niceaccout/update-niceaccout`;
+        return this.auth.authRequest({
+            url: url,
+            data: body,
+            method: 'PUT',
+            application: true,
+        });
+    }
+    deleteNiceAcfee(code: any): Promise<any> {
+        const url = `${API_URL}/niceaccout/delete-niceaccout?idnice=${code}`;
+        return this.auth.authRequest({
+            url: url,
+            method: 'DELETE',
+        });
+    }
 }
